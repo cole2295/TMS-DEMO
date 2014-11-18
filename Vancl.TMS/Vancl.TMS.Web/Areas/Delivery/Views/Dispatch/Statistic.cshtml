@@ -1,0 +1,10 @@
+﻿@model Vancl.TMS.Model.Transport.Dispatch.ViewDispatchStatisticModel
+@{
+    Layout = null;
+    ViewBag.Title = "Statistic";
+}
+总单量：@Model.TotalCount &nbsp; 
+调度完成：@Model.DispatchedCount &nbsp; 
+待调度：@Model.PreDispatchCount &nbsp; 
+无法识别：@Model.UnrecognizedCount &nbsp; 
+超期滞留：@Model.ExtendedStayCount 

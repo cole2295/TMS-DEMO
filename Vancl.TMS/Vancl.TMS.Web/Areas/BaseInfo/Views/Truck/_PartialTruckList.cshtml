@@ -1,0 +1,95 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.BaseInfo.Truck.ViewTruckModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnTruckListRefresh" })
+        </li>
+        <li class="toolbtn"><a class="add" href="javascript:AddTruck();">新增</a> </li>
+        <li class="toolbtn"><a class="modify" href="javascript:UpdateTruck();">修改</a>
+        </li>
+        <li class="toolbtn"><a class="expand" href="#">导出</a>
+        </li>
+        <li class="toolbtn"><a class="off" href="javascript:SetDisabled();">停用</a>
+        </li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="LinePlanTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    序号
+                </th>
+                <th>
+                    车牌号
+                </th>
+                <th>
+                    GPS号码
+                </th>
+                <th>
+                    省份
+                </th>
+                <th>
+                    城市
+                </th>
+                <th>
+                    配送商
+                </th>
+                <th>
+                    停用标志
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model==null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var truckModel = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox"  value="@truckModel.TBID" />
+                    </td>
+                    <td>
+                        @truckModel.TBID
+                    </td>
+                    <td>
+                        @truckModel.TruckNO
+                    </td>
+                    <td>
+                        @truckModel.GPSNO
+                    </td>
+                    <td>
+                        @truckModel.ProvinceName
+                    </td>
+                    <td>
+                        @truckModel.CityName
+                    </td>
+                    <td>
+                        @truckModel.DistributionName
+                    </td>
+                    <td>
+                        @(truckModel.IsDeleted?"停用":"启用")
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    ViewBag.UpdateTargetId = "LinePlanTableList";
+    ViewBag.OnBegin = "beforeSend";
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

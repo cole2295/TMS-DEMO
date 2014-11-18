@@ -1,0 +1,164 @@
+﻿@model List<Vancl.TMS.Model.BaseInfo.Line.ViewLinePlanModel>
+@{
+    ViewBag.Title = "选择线路";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.page.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function cancel() {
+            ymPrompt.doHandler("create", true, { action: 'create', result: 'cancel' })
+        }
+
+        function selectItem() {
+            if ($(":radio:checked").length) {
+                var lineID = $(":radio:checked").val();
+                var lpid = $(":radio:checked").attr("lpid")
+                ymPrompt.doHandler("ok", true, { lineID: lineID,LPID:lpid });
+            } else {
+                alert("请选择一条线路!");
+            }
+        }
+
+        $(function () {
+            $("#tbList tbody tr").click(function () {
+                $(":radio", $(this)).attr("checked", "checked");
+            }).dblclick(function () {
+                selectItem();
+            });
+        });
+    </script>
+}
+<div id="DataList" class="DataGirdPanel">
+    <div class="tablelist" style="height: 280px;">
+    <table class="DataTable  center" id="tbList">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+
+                </th>
+                <th>
+                    线路编号
+                </th>
+                <th>
+                    始发站
+                </th>
+                <th>
+                    目的地
+                </th>
+                @*<th>
+                            始发站城市
+                        </th>*@
+                <th>
+                    目的地城市
+                </th>
+                <th>
+                    承运商
+                </th>
+                <th>
+                    运输方式
+                </th>
+                @*<th>
+                            提货到库考核点
+                        </th>
+                        <th>
+                            离库考核点
+                        </th>*@
+                <th>
+                    到货时效
+                </th>
+                @*<th>
+                            保险费率
+                        </th>
+                        <th>
+                            最低收费
+                        </th>
+                        <th>
+                            超远提货费
+                        </th>*@
+                <th>
+                    优先级
+                </th>
+                <th>
+                    线路类型
+                </th>
+                <th>
+                    货物类型
+                </th>
+            </tr>
+        </thead>
+        <tbody style="cursor: pointer;">
+            @{
+                if (Model.Count == 0)
+                {
+                    ViewBag.ColumnCount = 11;
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="radio" name="LineID" lpid="@item.LPID" value="@item.LineID" @(ViewBag.LineID == item.LineID ? "checked" : "") />
+                    </td>
+                    <td>
+                        @item.LineID
+                    </td>
+                    <td>
+                        @item.DepartureName
+                    </td>
+                    <td>
+                        @item.ArrivalName
+                    </td>
+                    @*<td>
+                                @item.DepartureCityName
+                            </td>*@
+                    <td>
+                        @item.ArrivalCityName
+                    </td>
+                    <td>
+                        @item.CarrierName
+                    </td>
+                    <td>
+                        @Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription(item.TransportType)
+                    </td>
+                    @*<td>
+                                @item.ArrivalAssessmentTime.ToString()
+                            </td>
+                            <td>
+                                @item.LeaveAssessmentTime.ToString()
+                            </td>*@
+                    <td>
+                        @item.ArrivalTiming.ToString()H
+                    </td>
+                    @*<td>
+                                @item.InsuranceRate.ToString()
+                            </td>
+                            <td>
+                                @item.LowestPrice.ToString()
+                            </td>
+                            <td>
+                                @item.LongPickPrice.ToString()+"元/公斤"
+                            </td>*@
+                    <td>
+                        @Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription(item.Priority)
+                    </td>
+                    <td>
+                        @Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription(item.LineType)
+                    </td>
+                    <td>@(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.GoodsType>((int)item.LineGoodsType))</td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+    </div>
+</div>
+<div class="center" style="padding: 5px">
+    <input type="button" value="确定" class="button" onclick="selectItem()" />
+</div>

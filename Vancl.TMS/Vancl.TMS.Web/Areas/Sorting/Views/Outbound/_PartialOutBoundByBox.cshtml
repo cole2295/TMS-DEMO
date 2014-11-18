@@ -1,0 +1,74 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.Outbound.ViewOutBoundByBoxModel>
+<div class="toolbar">
+    <ul>
+        @*<li class="toolbtn">@Ajax.ActionLink("刷新", "SearchOutboundByBox", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })</li>*@
+        <li class="toolbtn"><a href="javascript:Outbound();" class="expand">出库</a></li>
+    </ul>
+    @if (Model != null)
+    {
+        <div id="InboundingCount" class="blue fright">
+            【总数量】<span class="red">@(Model.Sum(m => m.BillCount).ToString())</span> &nbsp;&nbsp;&nbsp; 【总重量】<span
+                class="red">@Model.Sum(m => m.Weight).ToString("f2")</span>
+        </div>
+    }
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable MultiSelect" id="tblBillInfo">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    序号
+                </th>
+                <th>
+                    箱号
+                </th>
+                <th>
+                    装箱时间
+                </th>
+                <th>
+                    运单数量
+                </th>
+                <th>
+                    总重量(KG)
+                </th>
+                <th>
+                    运单信息
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                <tr>
+                    <td class="CbxColumn">
+                        <input type="checkbox" BoxNo = "@Model[i].BoxNo" />
+                    </td>
+                    <td class="center">
+                        @(i + 1)
+                    </td>
+                    <td class="center">
+                        @Model[i].BoxNo
+                    </td>
+                    <td class="center">
+                        @Model[i].PackTime.ToString("yyyy-MM-dd HH:mm:ss")
+                    </td>
+                    <td class="center">
+                        @Model[i].BillCount
+                    </td>
+                    <td class="center">
+                        @Model[i].Weight.ToString("f2")
+                    </td>
+                    <td class="center">
+                        <a href="javascript:ShowBoxDetail('@Model[i].BoxNo')">运单信息</a>
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "承运商列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <style type="text/css" title="currentStyle">
+			@@import "@Url.Content("~/Scripts/plugins/DataTables/css/DataTables.css")";
+			@@import "@Url.Content("~/Scripts/plugins/DataTables/extras/ColVis/css/ColVis.css")";
+			@@import "@Url.Content("~/Scripts/plugins/DataTables/extras/TableTools/css/TableTools.css")";
+	</style>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/DataTables/js/jquery.dataTables.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/DataTables/extras/TableTools/js/TableTools.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/DataTables/extras/ColVis/js/ColVis.min.js")"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            dataTable = $('#DataTables1').dataTable({            
+		        "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "@Url.Action("AjaxHandler")",
+               // "sAjaxSource": "/Common/id.txt",                
+                "aoColumns": [
+                        { "sName": "ID",
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "fnRender": function (oObj) {
+                                return '<input type="checkbox" value="'+oObj.aData[0]+'" />';
+                            }
+                        },
+                        { "sName": "COMPANY_NAME" },
+                        { "sName": "ADDRESS" },
+                        { "sName": "TOWN" }
+                    ],
+
+                "bSort": false,
+                "sScrollY": 300,
+                "sPaginationType": "full_numbers",
+                "sDom": '<"toolbar"TCfr>t<"botbar"pli>',
+                "oTableTools": {
+                    "sSwfPath": "@Url.Content("~/Scripts/plugins/DataTables/extras/TableTools/swf/copy_cvs_xls_pdf.swf")",
+                    "aButtons": [ 
+				        {"sExtends": "copy","sButtonText": "复制"},  
+				        {"sExtends": "print","sButtonText": "打印"}, 
+				        {"sExtends":    "collection","sButtonText": "导出","aButtons":    [ "csv", "xls", "pdf" ]} 
+                     ]
+                },
+                "oLanguage": {
+	                "sProcessing": "数据加载中，请等待...",
+	                "sLengthMenu": "每页显示 _MENU_ 条数据",
+	                "sZeroRecords": "没有可显示数据",
+	                "sInfo": "显示第 _START_ - _END_ / _TOTAL_ 条数据",
+	                "sInfoEmpty": "显示 0 条数据",
+	                "sInfoFiltered": "",
+	                "sInfoPostFix": "",
+	                "sSearch": "搜索",
+	                "sUrl": "",
+	                "oPaginate": {
+		                "sFirst":    "首页",
+		                "sPrevious": "上一页",
+		                "sNext":     "下一页",
+		                "sLast":     "尾页"
+	                }
+                },
+                "fnDrawCallback": function (oSettings) {
+                //    if (oSettings.bSorted || oSettings.bFiltered) {
+                        for (var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
+                            var h = '<input type="checkbox" />';
+                            $('td:eq(0)', oSettings.aoData[oSettings.aiDisplay[i]].nTr)
+                            //    .html(h)
+                                .addClass("CbxColumn");
+                //        }
+                    }
+                },
+	            "oColVis": {
+                  //  "activate": "mouseover",
+                    "buttonText": "&nbsp;",
+                    "aiExclude": [ 0,1 ],
+                    "bRestore": true,
+			        "sAlign": "right"
+	            }
+            });
+        
+            $(window).bind('resize', function () {
+                    var height = document.getElementsByTagName("html")[0].offsetHeight;
+                    var searchHeight = 0 ;
+                    if($("#search").is(":visible")){
+                        searchHeight = $("#search").height();
+                    }
+                    height = height - 170 - searchHeight;
+                    $("#DataTableCon .dataTables_scrollBody").height(height);
+                    dataTable.fnAdjustColumnSizing(false);
+            } ).resize();
+
+            
+        });
+
+            
+    </script>
+}
+@section search
+{
+    <input id="txtStart" type="text" class="date" />
+    <input id="txtEnd" type="text" class="date" />
+    &nbsp;&nbsp; 处理状态：
+    <select>
+        <option>申请中...</option>
+        <option>业务审批中</option>
+        <option>业务审批已通过</option>
+    </select>
+    <input type="button" class="button" value="查询" />
+}
+@section list
+{
+    <div id="DataTableCon">
+        <table cellpadding="0" cellspacing="0" border="0" class="DataTable" id="DataTables1">
+            <thead>
+                <tr>
+                    <th class="CbxColumn">
+                        <input type="checkbox" />
+                    </th>
+                    <th>
+                        Company name
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>
+                        Town
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Vancl.RFD.LMS.PDA">
+</Property><Property Name="解决方案文件" Value="D:\vancl\work\svn\LMS\Vancl.TMS.PDA\Vancl.RFD.LMS.PDA.sln">
+</Property><Property Name="Date" Value="2012年7月20日">
+</Property><Property Name="Time" Value="11:10">
+</Property></Properties><Event ErrorLevel="0" Project="RFD.LMS.PDA.Web" Source="Vancl.RFD.LMS.PDA.Web\RFD.LMS.PDA.Web.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.PDA.Web" Source="Vancl.RFD.LMS.PDA.Web\RFD.LMS.PDA.Web.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.SortCenter.API" Source="Vancl.RFD.LMS.SortCenter.API\RFD.LMS.SortCenter.API.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.SortCenter.API" Source="Vancl.RFD.LMS.SortCenter.API\RFD.LMS.SortCenter.API.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.BLL.Proxy" Source="Vancl.RFD.LMS.BLL.Proxy\RFD.LMS.BLL.Proxy.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.BLL.Proxy" Source="Vancl.RFD.LMS.BLL.Proxy\RFD.LMS.BLL.Proxy.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.PDA.Core" Source="Vancl.RFD.LMS.PDA.Core\RFD.LMS.PDA.Core.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.PDA.Core" Source="Vancl.RFD.LMS.PDA.Core\RFD.LMS.PDA.Core.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Vancl.RFD.LMS.PDA.Test" Source="Vancl.RFD.LMS.PDA.Test\Vancl.RFD.LMS.PDA.Test.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="Vancl.RFD.LMS.PDA.Test" Source="Vancl.RFD.LMS.PDA.Test\Vancl.RFD.LMS.PDA.Test.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="LMS.Util" Source="..\RFD.LMS\trunk\LMS.Util\LMS.Util.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="LMS.Util" Source="..\RFD.LMS\trunk\LMS.Util\LMS.Util.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.AdoDao" Source="..\RFD.LMS\trunk\RFD.LMS.AdoDao\RFD.LMS.AdoDao.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.AdoDao" Source="..\RFD.LMS\trunk\RFD.LMS.AdoDao\RFD.LMS.AdoDao.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.Domain" Source="..\RFD.LMS\trunk\RFD.LMS.Domain\RFD.LMS.Domain.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.Domain" Source="..\RFD.LMS\trunk\RFD.LMS.Domain\RFD.LMS.Domain.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="LMS.AdoNet" Source="..\RFD.LMS\trunk\LMS.AdoNet\LMS.AdoNet.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="LMS.AdoNet" Source="..\RFD.LMS\trunk\LMS.AdoNet\LMS.AdoNet.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.Model" Source="..\RFD.LMS\trunk\RFD.LMS.Model\RFD.LMS.Model.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.Model" Source="..\RFD.LMS\trunk\RFD.LMS.Model\RFD.LMS.Model.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.Service" Source="..\RFD.LMS\trunk\RFD.LMS.Service\RFD.LMS.Service.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.Service" Source="..\RFD.LMS\trunk\RFD.LMS.Service\RFD.LMS.Service.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.ServiceImpl" Source="..\RFD.LMS\trunk\RFD.LMS.ServiceImpl\RFD.LMS.ServiceImpl.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="RFD.LMS.ServiceImpl" Source="..\RFD.LMS\trunk\RFD.LMS.ServiceImpl\RFD.LMS.ServiceImpl.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="" Source="Vancl.RFD.LMS.PDA.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="Vancl.RFD.LMS.PDA.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.PDA.Web" Source="Vancl.RFD.LMS.PDA.Web\RFD.LMS.PDA.Web.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.BLL.Proxy" Source="Vancl.RFD.LMS.BLL.Proxy\RFD.LMS.BLL.Proxy.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.SortCenter.API" Source="Vancl.RFD.LMS.SortCenter.API\RFD.LMS.SortCenter.API.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event><Event ErrorLevel="0" Project="RFD.LMS.PDA.Core" Source="Vancl.RFD.LMS.PDA.Core\RFD.LMS.PDA.Core.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event><Event ErrorLevel="0" Project="Vancl.RFD.LMS.PDA.Test" Source="Vancl.RFD.LMS.PDA.Test\Vancl.RFD.LMS.PDA.Test.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event></UpgradeLog>

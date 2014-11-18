@@ -1,0 +1,187 @@
+﻿@model  Vancl.TMS.Model.Report.ComplexReport.ViewComplexReportPageModel
+@{
+    ViewBag.Title = "综合报表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //自定义显示
+        function CustomerSetting() {
+            //alert("自定义显示");
+        }
+
+        //导出数据
+        function exportData(){
+            var querystring = $("#Page_SearchList form[data-ajax=true]").data(TMS.Page.Data_ajax_SearchData);
+            if(querystring == undefined
+                || querystring == null){
+                   ymPrompt.alert({title:'提示',message:'请先执行查询!'});
+                    return;
+            }
+            location.href = "@Url.Action("Export")?"+querystring;
+        }
+
+        function showLogs(deliveryNo){
+            ymPrompt.win('@Url.Action("ShowLogs/")' + deliveryNo,
+                              800, 400, '日志', null, null, null, { id: 1 });
+            return;
+        }
+
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <div>
+                <table class="tb_insert Fixed">
+                    <tr>
+                        <th>
+                            <label for="txtDepartureStartTime">
+                                发货时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DepartureStartTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtDepartureEndTime">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DepartureEndTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            出发地
+                        </th>
+                        <td>
+                            <input id="DepartureName" name="DepartureName" type="text" onclick="TMS.Page.SelectStation(this,'#DepartureID');"
+                                class="textbox selectDeparture" />
+                            <input id="DepartureID" name="DepartureID" type="hidden" />
+                        </td>
+                        <th>
+                            <label for="ComplexReportDeliveryStatus">
+                                状态</label>
+                        </th>
+                        <td>@Html.DropDownList("ComplexReportDeliveryStatus", "--请选择--")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="txtExparrivalStartTime">
+                                预计到货时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("ExparrivalStartTime", "", new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtExparrivalEndTime">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("ExparrivalEndTime", "", new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtArrival">
+                                目的地</label>
+                        </th>
+                        <td>
+                            <input id="txtArrival" name="Arrival" type="text" class="textbox" readonly="readonly"
+                                onclick="TMS.Page.SelectStation(this,'#ArrivalID','#DepartureID');" />
+                            <input id="ArrivalID" name="ArrivalID" type="hidden" />
+                        </td>
+                        <th>
+                            <label for="IsDelay">
+                                是否延误</label>
+                        </th>
+                        <td>@Html.DropDownList("IsDelay", "--请选择--")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="txtDesreceiveStartTime">
+                                实际到货时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DesreceiveStartTime", "", new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtDesreceiveEndTime">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DesreceiveEndTime", "", new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="CarrierID">
+                                承运商</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("CarrierID", null, "--请选择--", new { style = "width:100px" })
+                        </td>
+                        <th>
+                            <label>
+                                延误时长</label>
+                        </th>
+                        <td>
+                            <input id="txtDelaytimeStart" name="DelaytimeStart" style="width: 60px" class="StartRegion"
+                                maxlength="6" />
+                            ~
+                            <input id="txtDelaytimeEnd" name="DelaytimeEnd" style="width: 60px" class="EndRegion"
+                                maxlength="6" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="LostType">
+                                丢失类型</label>
+                        </th>
+                        <td>@Html.DropDownList("LostType", "--请选择--")
+                        </td>
+                        <th>
+                            <label for="txtDeliveryNo">
+                                提货单号</label>
+                        </th>
+                        <td>
+                            <input id="txtDeliveryNo" name="DeliveryNo" type="text" class="textbox" />
+                        </td>
+                        <th>
+                            <label for="txtCustWaybillNo">
+                                物流单号</label>
+                        </th>
+                        <td>
+                            <input id="txtCustWaybillNo" name="CustWaybillNo" type="text" class="textbox" />
+                        </td>
+                        <th>
+                            <label for="txtBoxNo">
+                                箱号</label>
+                        </th>
+                        <td>
+                            <input id="txtBoxNo" name="BoxNo" type="text" class="textbox" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="txtFormCode">
+                                运单号</label>
+                        </th>
+                        <td>
+                            <input id="txtFormCode" name="FormCode" type="text" class="textbox" />
+                        </td>
+                        <td colspan="6">
+                            <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                            <input id="btnExport" type="button" name="btnExport" value="导出" class="button" onclick="exportData()" />
+                            <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialComplexReportList", Model); }
+    </div>
+}

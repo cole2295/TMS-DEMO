@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.AssignModel" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.AssignModel" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfAssignInfoForWds">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssignInfoForWds" nillable="true" type="tns:AssignInfoForWds" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAssignInfoForWds" nillable="true" type="tns:ArrayOfAssignInfoForWds" />
+  <xs:complexType name="AssignInfoForWds">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Area" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AreaId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AssignDistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BackFund" type="xs:decimal" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentDistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCompanyId" type="xs:int" />
+      <xs:element minOccurs="0" name="GoodsCategory" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GoodsProperty" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsCOD" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPOS" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MerchantId" type="xs:int" />
+      <xs:element minOccurs="0" name="NeedFund" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OrderNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderType" type="xs:int" />
+      <xs:element minOccurs="0" name="Province" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReplaceType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendSortCenterId" type="xs:int" />
+      <xs:element minOccurs="0" name="SortingCenterId" type="xs:int" />
+      <xs:element minOccurs="0" name="WareHouseId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AssignInfoForWds" nillable="true" type="tns:AssignInfoForWds" />
+</xs:schema>

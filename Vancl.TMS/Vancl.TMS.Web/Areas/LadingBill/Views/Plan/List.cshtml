@@ -1,0 +1,258 @@
+﻿@using Vancl.TMS.Model.Common
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.LadingBill.LB_PLANDTO>
+@{
+    ViewBag.Title = "提货计划列表 ";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <link href="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/UC_Widget.js"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.page.js")" type="text/javascript"></script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        商家
+                    </th>
+                    <td>
+                        <div id="waybillSource_div" chknumber="1" distributioncode="rfd">
+                        </div>
+                    </td>
+                    <th>
+                        仓库
+                    </th>
+                    <td>
+                        <select id="WAREHOUSEID" name="WAREHOUSEID">
+                            <option value="0">--请选择--</option>
+                        </select>
+                        <img id="waiting_img" style="display: none" src="../../../../Content/images/027.gif"
+                            alt="等待" />
+                    </td>
+                    <th>
+                        状态
+                    </th>
+                    <td>
+                        @Html.DropDownList("Status", "--请选择--")
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        提货公司
+                    </th>
+                    <td>
+                        <div id="BillQuery_div" chknumber="1">
+                        </div>
+                    </td>
+                    <th>
+                        提货部门
+                    </th>
+                    <td>
+                        <input type="text" name="txtDept" value="" id="txtDept" />
+                    </td>
+                    <th>
+                    </th>
+                    <td>
+                                                <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                    </td>
+                </tr>
+               
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialSearchList", Model); }
+    </div>
+}
+<script type="text/javascript">
+        //添加提货计划
+        function createPlan() {
+            TMS.Page.Serialize("divSearchCondition", "btnSearch");
+            location = "Create";
+        }
+
+        //end 添加
+        var merchantid_select="";
+        var isBindwayBill = "1";
+      
+        $(document).ready(function() {
+            $.ajaxSetup({
+                cache: false,
+                beforeSend: function(xhr) {
+                    $("#Loading").show();
+                },
+                complete: function(XHR, TS) {
+                    XHR = null;
+                    $("#Loading").hide();
+                    warehousebin();
+                }
+            });
+          $("#waybillSource_div").mouseover(function() {
+                if (isBindwayBill == "2") {
+                    return;
+                }
+
+              warehousebin();
+              
+              isBindwayBill = "2";
+          });
+             
+        });
+
+        
+      function warehousebin() {
+
+          $("input[name='ChkwaybillSource']").each(function() {
+
+              $(this).click(function() {
+                  if (merchantid_select == $("#waybillSource_List_hide").val()) {
+                      return;
+                  }
+                  merchantid_select = $("#waybillSource_List_hide").val();
+                  if (merchantid_select == "") {
+                      $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                      return;
+                  }
+                  $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                  $.ajax({
+                      type: "get",
+                      cache: false,
+                      url: "/LadingBill/WareHouse/GetWarehousebyMerchantid/?merchantid=" + merchantid_select,
+                      beforeSend: function(XMLHttpRequest) {
+                          $("#waiting_img").show();
+                      },
+                      success: function(data, textStatus) {
+                          $.each(data, function(i, item) {
+
+                              jQuery("#WAREHOUSEID").append("<option value='" + item.WAREHOUSECODE + "'>" + item.WAREHOUSENAME + "</option>");
+                          });
+
+                          $("#waiting_img").hide();
+                      },
+                      complete: function(XMLHttpRequest, textStatus) {
+
+                          //HideLoading();
+                      },
+                      error: function() {
+                          //请求出错处理
+                      }
+                  });
+              });
+          });
+      }
+
+        //修改提货计划
+
+        function modifyPlan(planId) {
+            if (typeof(planId) == "undefined") {
+                var arr = TMS.Page.CheckDataTableChecked();
+                if (arr) {
+                    planId = arr.eq(0).val();
+                } else {
+                    return;
+                }
+            }
+            TMS.Page.Serialize("divSearchCondition", "btnSearch");
+            window.location = "Edit/" + planId;
+        }
+
+//end 修改
+
+        //查看日志
+
+        function ShowOperateLog(parameters) {
+            return false;
+        }
+
+        //启用、停用
+
+        function SetEnabled(isEnabled) {
+            var op = isEnabled ? "启用" : "停用";
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if (arr) {
+                var planids = "";
+                arr.each(function() {
+                    planids += $(this).attr("PlanID") + ",";
+                });
+                var parms = {};
+                
+                parms.planids = planids.substr(0, planids.length - 1);
+                parms.isEnabled = isEnabled;
+                ymPrompt.confirmInfo({
+                    title: '询问',
+                    message: '你确定要' + op + '选择的 ' + arr.length + ' 项？',
+                    handler: function(tp) {
+                        if (tp == 'ok') {
+                            $.ajax({
+                                url: "@Url.Action("SetEnable")",
+                                data: parms,
+                                dataType: "json",
+                                success: function(data) {
+                                    if (data.IsSuccess) {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnPlanListRefresh").click();
+                                    } else {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error: function() {
+                                    ymPrompt.errorInfo({ title: '提示', message: op + "操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
+//end 删除
+
+        //删除线路计划
+
+        function DeletePlan() {
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if (arr) {
+                var planids = "";
+                arr.each(function() {
+                    planids += $(this).val() + ",";
+                });
+                ymPrompt.confirmInfo({
+                    title: '询问',
+                    message: '你确定要删除选择的 ' + arr.length + ' 项？',
+                    handler: function(tp) {
+                        if (tp == 'ok') {
+                            $.ajax({
+                                url: "@Url.Action("Delete")",
+                                data: "planids=" + planids.substr(0, planids.length - 1),
+                                dataType: "json",
+                                success: function(data) {
+                                    if (data.IsSuccess) {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                       
+                                    } else {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                    $("#btnPlanListRefresh").click();
+                                },
+                                error: function() {
+                                    ymPrompt.errorInfo({ title: '提示', message: "删除操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+</script>

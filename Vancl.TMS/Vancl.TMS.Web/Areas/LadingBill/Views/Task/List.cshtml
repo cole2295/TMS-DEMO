@@ -1,0 +1,425 @@
+﻿@using Vancl.TMS.Model.Common
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.LadingBill.TaskViewModel>
+@{
+    ViewBag.Title = "任务列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <link href="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/UC_Widget.js"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.page.js")" type="text/javascript"></script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th style="width: 130px">
+                        <select id="predictTime_sl" name="predictTime_sl" style="width: 130px">
+                            <option value="0" selected="selected">计划提货时间</option>
+                            <option value="1">提货完成时间</option>
+                        </select>
+                    </th>
+                    <td>
+                        <input id="startDate" name="startDate" class="Wdate" readonly="readonly" type="text"
+                               onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" value="@DateTime.Now.ToString("yyyy-MM-dd 00:00:00")"/>
+                    </td>
+                    <th>
+                        <label for="S_DepartureID">
+                            ————
+                        </label>
+                    </th>
+                    <td>
+                        <input id="endDate" name="endDate" class="Wdate" readonly="readonly" type="text"
+                               onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startDate\')}'})" value="@DateTime.Now.ToString("yyyy-MM-dd 23:59:59")"/>
+                    </td>
+                    <th>
+                        状态
+                    </th>
+                    <td>
+                        <select id="taskStatus" name="taskStatus" style="width: 80px">
+                            <option value="0" selected="selected">全部</option>
+                            <option value="1">新任务</option>
+                            <option value="2">已完成</option>
+                            <option value="3">已考核</option>
+                            <option value="4">已取消</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        商家
+                    </th>
+                    <td>
+                        <div id="waybillSource_div" chknumber="1" distributioncode="rfd" >
+                        </div>
+                    </td>
+                    <th>
+                        仓库
+                    </th>
+                    <td>
+                        <select id="WAREHOUSEID" name="WAREHOUSEID">
+                            <option value="0">--请选择--</option>
+                        </select>
+                        <img id="waiting_img" style="display: none" src="../../../../Content/images/027.gif"
+                            alt="等待" />
+                    </td>
+                    <th>
+                        任务编号
+                    </th>
+                    <td>
+                        <input type="text" id="TASKCODE" name="TASKCODE" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        提货公司
+                    </th>
+                    <td>
+                        <div id="BillQuery_div" chknumber="1">
+                        </div>
+                    </td>
+                    <th>
+                        提货部门
+                    </th>
+                    <td>
+                        <input type="text" id="DEPARTMENT" name="DEPARTMENT" />
+                    </td>
+                    <td colspan="2">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="导出" class="button" onclick="exportData()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialTaskList", Model); }
+    </div>
+}
+    
+<script type="text/javascript">
+   //导出数据
+        function exportData(){
+            var querystring = $("#Page_SearchList form[data-ajax=true]").data(TMS.Page.Data_ajax_SearchData);
+            var TotalItemCount = $("#TotalItemCount").val();
+            if(querystring == undefined
+                || querystring == null){
+                   ymPrompt.alert({title:'提示',message:'请先执行查询!'});
+                    return;
+            }
+            location.href = "@Url.Action("Export")?"+querystring+"&TotalItemCount="+TotalItemCount;
+        }
+   var merchantid_select = "";
+   var isBindwayBill = "1";
+        
+    $(document).ready(function(){
+
+        $.ajaxSetup({
+            cache: false,
+            beforeSend: function (xhr) {
+                $("#Loading").show();
+
+            },
+            complete: function (XHR, TS) {
+                XHR = null;
+                $("#Loading").hide();
+                warehousebin();
+            }
+        });
+
+        // 在这里写你的代码...
+     
+          $("#waybillSource_div").mouseover(function() {
+              $("input[name='button']").click(function() {
+                  isBindwayBill = "1";
+              });
+
+                if (isBindwayBill == "2") {
+                    return;
+                }
+
+              warehousebin();
+
+              isBindwayBill = "2";
+          });
+              
+
+
+          $("#txtWAREHOUSE").click(function() {
+     
+            var mechantid = $("#waybillSource_List_hide ").val();
+            if (mechantid == "") {
+                alert("请先选择商家");
+                return;
+            }
+            if (mechantid == "undefined") {
+                return;
+            }
+            window.TMS.Page.WareHouse($(this), '#WAREHOUSEID', mechantid);
+        });
+    });
+      
+          function warehousebin() {
+
+        $("input[name='ChkwaybillSource']").each(function () {
+
+            $(this).click(function () {
+                if (merchantid_select == $("#waybillSource_List_hide").val()) {
+                    return;
+                }
+                merchantid_select = $("#waybillSource_List_hide").val();
+                if (merchantid_select == "") {
+                    $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                    return;
+                }
+                $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                $.ajax({
+                    type: "get",
+                    cache: false,
+                    url: "/LadingBill/WareHouse/GetWarehousebyMerchantid/?merchantid=" + merchantid_select,
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#waiting_img").show();
+                    },
+                    success: function (data, textStatus) {
+                        $.each(data, function (i, item) {
+
+                            jQuery("#WAREHOUSEID").append("<option value='" + item.WAREHOUSECODE + "'>" + item.WAREHOUSENAME + "</option>");
+                        });
+
+                        $("#waiting_img").hide();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+
+                        //HideLoading();
+                    },
+                    error: function () {
+                        //请求出错处理
+                    }
+                });
+            });
+        });
+
+    }
+
+        function createLine() {
+            window.TMS.Page.Serialize("divSearchCondition", "btnSearch");
+            window.location = "Create";
+        }
+
+        //查看日志
+
+        function ShowOperateLog(parameters1, parameters2) {
+            return;
+        }
+
+        //重新指派
+        function reinstall() {
+           
+            try {
+                var arr = TMS.Page.CheckDataTableChecked();
+                if (arr) {
+                    var todiscode = arr.eq(0).attr("todis");
+                    var taskid = arr.eq(0).attr("taskid");
+                    var tmail= arr.eq(0).attr("email");
+                    if (arr.eq(0).attr("taskstatus") != "1") {
+                        alert("只能对新任务进行重新指派");
+                        return;
+                    }
+
+                    var url = "@Url.Action("Reinstall", "task", new { area = "LadingBill" })?taskid=" + taskid + "&todiscode=" + todiscode + "&tmail=" + tmail;
+
+                    ymPrompt.win({
+                        message: url,
+                        width: 560,
+                        height: 400,
+                        title: '重新指派',
+                        maxBtn: false,
+                        minBtn: false,
+                        iframe: true,
+                        handler: function(tp, result) {
+                            if (tp == "ok") {
+                                if (result.IsSuccess) {
+                                    setTimeout(function() {
+                                        ymPrompt.succeedInfo({ title: '修改成功', message: result.Message });
+                                        $("#btnLinePlanListRefresh").click();
+                                    }, 10);
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch(e) {
+                alert(e);
+            }
+        }        
+
+        
+        //考核
+        function AuditTask() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if (arr) {
+                var taskid = arr.eq(0).attr("taskid");
+                if (arr.eq(0).attr("taskstatus") != "2" && arr.eq(0).attr("taskstatus") != "3") {
+                    alert("只能对已完成的任务进行考核");
+                    return;
+                }
+                var url = "@Url.Action("Audit", "task", new { area = "LadingBill" })?taskid=" + taskid;
+                ymPrompt.win({
+                    message: url,
+                    width: 860,
+                    height: 440,
+                    title: '提货考核',
+                    maxBtn: false,
+                    minBtn: false,
+                    iframe: true,
+                    handler: function(tp, result) {
+                        if (tp == "ok") {
+                            if (result.IsSuccess) {
+                                setTimeout(function() {
+                                    ymPrompt.succeedInfo({ title: '考核成功', message: result.Message });
+                                    $(".refresh").click();
+                                }, 10);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        
+        //启用、停用
+        function SetEnabled(isEnabled) {
+            var op = isEnabled ? "恢复" : "取消";
+            var arr = window.TMS.Page.CheckDataTableChecked(false);
+           
+            if (arr) {
+                var lineids = "";
+                var taskcode = "";
+                arr.each(function() {
+                    if (op == "取消") {
+                        if ($(this).attr("taskstatus") != "1") {
+                        taskcode += $(this).attr("taskcode") + ",";
+                    }
+                    } else {
+                        if ($(this).attr("taskstatus") != "4") {
+                        taskcode += $(this).attr("taskcode") + ",";
+                    }
+                    }
+                    
+                    lineids += $(this).attr("taskid") + ",";
+                });
+              
+                if (taskcode != "") {
+                    if (op == "取消") {
+                    ymPrompt.errorInfo({ title: '提示', message: "只能对新任务进行取消操作" });
+                    }
+                    else
+                    {
+                    ymPrompt.errorInfo({ title: '提示', message: "只能对已取消任务进行恢复" });
+                    }
+                    return;
+                }
+
+                var parms = {};
+                parms.lineids = lineids.substr(0, lineids.length - 1);
+                parms.isEnabled = isEnabled;
+                ymPrompt.confirmInfo({
+                    title: '询问',
+                    message: '你确定要' + op + '选择的 ' + arr.length + ' 项？',
+                    handler: function(tp) {
+                        if (tp == 'ok') {
+                            $.ajax({
+                                url: "@Url.Action("SetEnable")",
+                                data: parms,
+                                dataType: "json",
+                                success: function(data) {
+
+                                    if (data.IsSuccess) {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnLinePlanListRefresh").click();
+                                    } else {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error: function() {
+                                    ymPrompt.errorInfo({ title: '提示', message: op + "操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
+        //批量审核
+        function Audit(approveStatus) {
+            var obj = $(".CbxColumn:not('th') :checked");
+            var lpid = "";
+            var effectiveTime = "";
+            if (obj.length == 0) {
+                ymPrompt.alert({ title: "提示", message: "请至少选择一项进行操作！" });
+                return;
+            }
+            var taskCode = "";
+            obj.each(function() {
+                lpid += $(this).attr("taskid") + ",";
+                if ($(this).attr("taskstatus") != "2") {
+                    taskCode += $(this).attr("taskcode") + ",";
+                }
+                effectiveTime = $(this).next().next().val();
+            });
+            if (taskCode != "") {
+                ymPrompt.errorInfo({ title: '提示', message: "只能对已完成任务进行批量考核" });
+                return;
+            }
+
+            if (typeof(lpid) == "undefined" || lpid == "" || effectiveTime == "") {
+                return;
+            }
+            var op = approveStatus == 1 ? "审核" : "驳回";
+            var parms = {};
+            parms.lpids = lpid.substr(0, lpid.length - 1);
+            parms.ApproveStatus = approveStatus;
+
+            ymPrompt.confirmInfo({
+                title: '询问',
+                message: '你确定要' + op + '选择的 ' + obj.length + ' 项？',
+                handler: function(tp) {
+                    if (tp == 'ok') {
+                        $.ajax({
+                            url: '@Url.Action("AuditTask")',
+                            data: parms,
+                            dataType: "json",
+                            success: function(data) {
+                                if (data.IsSuccess) {
+                                    ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                    //刷新列表
+                                    $("#btnLinePlanListRefresh").click();
+                                } else {
+                                    ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                }
+                            },
+                            error: function() {
+                                ymPrompt.errorInfo({ title: '提示', message: "审核操作失败!" });
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function handle()
+        {
+        }
+</script>

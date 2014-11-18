@@ -1,0 +1,142 @@
+﻿@using Vancl.TMS.Model.Common
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Sorting.RangeDefined.ViewRangeDefinedSearchListModel>
+@{
+    ViewBag.Title = "分拣范围";
+    ViewBag.SearchTitle = "搜索项";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script src="@Url.Content("~/scripts/pages/sorting/RangeDefined.js?" + DateTime.Now.ToString("yyyyMMdd"))" type="text/javascript"></script>
+    @*todo:控件*@
+    <link href="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/UC_Widget.js"></script>
+    @*todo：Fei后期可删除*@
+    <link href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/simple_gray/ymPrompt.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_source.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        //添加分拣范围
+        function AddRange() {
+            ymPrompt.win({
+                message: "@Url.Action("AddRangeDefined")",
+                width: 530,
+                height: 550,
+                title: '添加分拣范围',
+                handler: function(tp, data) {
+                    if (tp == "ok") {
+                        //刷新列表
+                        alert("保存成功！");
+                        $("#btnSearchRangeListRefresh").click();
+                    }
+                    if (tp == "IsFail") {
+                        alert("保存失败！");
+                    }
+                    if (tp == "IsExist") {
+                        //alert("你将要添加的分拣范围定义已存在！");
+                        alert(data.Message);
+                        //ymPrompt.alert({ title: '提示', message: '你将要添加的分拣范围定义已存在！' });
+                    }
+
+                },
+                maxBtn: false,
+                minBtn: false,
+                iframe: true
+            });
+        }
+
+        //删除分拣范围定义
+
+        function DeleteRange() {
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if (arr) {
+                var ids = "";
+                arr.each(function() {
+                    ids += $(this).attr("id")+",";
+                });
+                ymPrompt.confirmInfo({
+                    title: '询问',
+                    message: '你确定要删除选择的 ' + arr.length + ' 项？',
+                    handler: function(tp) {
+                        if (tp == 'ok') {
+                            $.ajax({
+                                url: "@Url.Action("Delete")",
+                                data: "ids=" + ids.substr(0, ids.length - 1),
+                                dataType: "json",
+                                success: function(data) {
+                                    if (data.IsSuccess) {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnSearchRangeListRefresh").click();
+                                    } else {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error: function() {
+                                    ymPrompt.errorInfo({ title: '提示', message: "删除操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert">
+                <tr>
+                    <th>
+                        分拣中心
+                    </th>
+                    <td>@Html.DropDownList("SortingCenterList")
+                    </td>
+                </tr>
+                <tr id="trSortingCenterSelect">
+                    <th>
+                        分拣范围 &nbsp
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="1"
+                               id="rdoSortingCenter" style="margin-left: 50px;" checked="checked" />分拣中心
+                    </th>
+                    <td>
+                        @Html.DropDownList("SortingCenterListWithoutSelf")
+                    </td>
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="2"
+                               id="rdoStation" />配送站
+                    </th>
+                    <td>
+                        @{Html.RenderPartial("CityAndStation");}
+                    </td>
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="3"
+                               id="rdoDistribution" style="margin-left: 50px;" />配送商
+                    </th>
+                    <td>
+                        @*@Html.DropDownList("DistributorList")*@
+                        <div id="BillQuery_div" DistributionCode="@ViewBag.DistributionCode">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                    </td>
+                    <td colspan="2">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" onclick="return ValidateSearchCondition();" />
+                        @*<input id="btnExport" type="button" value="导出" class="button" onclick="return exportRangeDefine();" />*@
+                    </td>
+                </tr>
+                @*<input type="hidden" id="distributionIds" name="distributionIds"/>*@
+            </table>
+        }
+    </div>
+}
+@section list{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{ Html.RenderPartial("_PartialSearchRangeList",Model);}
+    </div>
+}

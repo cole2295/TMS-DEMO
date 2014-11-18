@@ -1,0 +1,341 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Transport.Dispatch.ViewDispatchModel>
+@{
+    ViewBag.Title = "运输调度";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <style type="text/css">
+        #dispatchStatInfo
+        {
+            float: right;
+            line-height: 30px;
+            margin-right: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        //撤销
+        function RejectDispatch() {
+            var obj = TMS.Page.CheckDataTableChecked(false);
+            if(!obj) return;
+            var deliveryNo="";
+            var isContinue=true;;
+            obj.each(function () {
+                if($(this).attr("Status")!=2)
+                {
+                    ymPrompt.alert({title:'提示',message:'只能撤销已调度的提货单！'});
+                    isContinue=false;
+                    return false;
+                }
+                deliveryNo  += $(this).attr("DeliveryNo")+",";
+            });
+            if(!isContinue)
+            {
+                return;
+            }
+            deliveryNo=deliveryNo.substr(0,deliveryNo.length-1);
+            ymPrompt.confirmInfo({ message: "你确定要撤销调度",  title: '询问',
+                handler: function (tp, data) {
+                    if (tp == "ok") {
+                        $.ajax({
+                            url:"@Url.Action("Reject")",
+                            type:"POST",
+                            data:{deliveryNo:deliveryNo},
+                            dataType:"json",
+                            success:function(result, textStatus, jqXHR){
+                                if(result.IsSuccess){                                    
+                                    ymPrompt.succeedInfo({ title: '撤销成功', message: result.Message })
+                                    //刷新列表
+                                    $("#btnListRefresh").click();      
+                                }
+                                else{
+                                    ymPrompt.errorInfo({ title: '撤销失败', message: result.Message })
+                                }
+                            }
+                        });                                          
+                    }
+                }
+            });
+        }
+
+        //删除
+        function DeleteDispatch() {
+            var obj = TMS.Page.CheckDataTableChecked(false);
+            if(!obj) return;
+            var did="";
+            var isContinue=true;;
+            obj.each(function () {
+                if($(this).attr("Status")!=1)
+                {
+                    ymPrompt.alert({title:'提示',message:'只能删除待调度的提货单！'});
+                    isContinue=false;
+                    return false;
+                }
+                did  += $(this).attr("did")+",";
+            });
+            if(!isContinue)
+            {
+                return;
+            }
+            did=did.substr(0,did.length-1);
+            ymPrompt.confirmInfo({ message: "你确定要删除",  title: '询问',
+                handler: function (tp, data) {
+                    if (tp == "ok") {
+                        $.ajax({
+                            url:"@Url.Action("Delete")",
+                            type:"POST",
+                            data:{dids:did},
+                            dataType:"json",
+                            success:function(result, textStatus, jqXHR){
+                                if(result.IsSuccess){                                    
+                                    ymPrompt.succeedInfo({ title: '删除成功', message: result.Message })
+                                    //刷新列表
+                                    $("#btnListRefresh").click();      
+                                }
+                                else{
+                                    ymPrompt.errorInfo({ title: '删除失败', message: result.Message })
+                                }
+                            }
+                        });                                          
+                    }
+                }
+            });
+        }
+
+        //修改
+        function UpdateDispatch()
+        {
+            var obj = TMS.Page.CheckDataTableChecked();
+            if(obj)
+            {
+                var status= obj.attr("Status");
+                var deliveryNo= obj.attr("DeliveryNo");
+                var lpid = obj.attr("lpid");
+                if(status!=2)
+                {
+                    ymPrompt.alert({title:'提示',message:'只能修改已调度的提货单！'});
+                    return;
+                }
+                TMS.Page.Serialize("divSearchCondition");
+                var urlParam=TMS.Page.ParseParamToUrl("divSearchCondition");
+                window.location ='@Url.Action("Update")?deliveryNo='+deliveryNo+'&lpid='+lpid+"&preParams="+urlParam; 
+            }
+        }
+
+        //添加调度
+        function AddDispatch()
+        {
+            var obj = TMS.Page.CheckDataTableChecked();
+            if(obj)
+            {
+                var status=obj.attr("Status");
+                var lpid=obj.attr("lpid");
+                var departureID=obj.attr("DepartureID");
+                var arrivalID=obj.attr("ArrivalID");
+                var lineGoodsType=obj.attr("LineGoodsType");
+                var waybillNo=obj.attr("WaybillNo");
+                var did=obj.attr("did");
+                if(status==2)
+                {
+                    ymPrompt.alert({title:'提示',message:'不能调度已调度的提货单！'});
+                    return;
+                }
+                TMS.Page.Serialize("divSearchCondition");
+                var urlParam=TMS.Page.ParseParamToUrl("divSearchCondition");
+                window.location ='@Url.Action("Outbound")?lpid='+lpid+"&departureID="+departureID+"&arrivalID="+arrivalID+"&lineGoodsType="+lineGoodsType+"&preParams="+urlParam+"&waybillNo="+waybillNo+"&did="+did; 
+            }
+        }
+        
+        //打印提货单
+        function PrintDeliveryNo(){
+            var obj = TMS.Page.CheckDataTableChecked();
+            if(obj)
+            {
+                var status=obj.attr("Status");
+                var DeliveryNo=obj.attr("DeliveryNo");
+                if(status!=2)
+                {
+                    ymPrompt.alert({title:'提示',message:'只能打印已调度的提货单！'});
+                    return;
+                }
+                openWindow('@Url.Action("Print", "Print")/?DeliveryNo='+DeliveryNo, 'PrintDeliveryNo',800,600);
+            }
+        }
+
+        //补录信息
+        function Replenish(){
+            var obj = TMS.Page.CheckDataTableChecked(true);
+            if(!obj) return;
+            if($(obj).attr("Status")!=2)
+            {
+                ymPrompt.alert({title:'提示',message:'只能补录已调度的提货单！'});
+                return;
+            }
+            var deliveryNo  = $(obj).attr("DeliveryNo");
+            
+            ymPrompt.win({ title: '补录调度信息',
+                message: '@Url.Action("Replenish")/' + deliveryNo, 
+                iframe: true,
+                width: 680, height: 300,
+                handler: function (tp, data) {
+                    if (tp == "Add") {
+                      //  var strData = JSON.stringify(data);
+                      //  $("#hidDelayCriteria").val(strData);
+                      //  showDelayCriteriaList();
+                    }
+                }
+            })
+        }
+
+        
+        //修改物流单号
+        function ModifyWaybillNo() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if (arr) {
+                if(arr.eq(0).attr("Status")!=2)
+                {
+                    ymPrompt.alert({title:'提示',message:'只能修改已调度提货单的物流单号！'});
+                    return;
+                }
+                var deliveryNo = arr.eq(0).attr("DeliveryNO");
+                var waybillNo = arr.eq(0).attr("CarrierWaybillNO");
+                var url = "@Url.Action("InputWaybillNo", "Dispatch", new { area = "Delivery" })?DeliveryNO="+deliveryNo+"&WaybillNo="+waybillNo;
+                ymPrompt.win({ message: url, width: 360, height: 240, title: '请输入运单号码',maxBtn: false, minBtn: false, iframe: true,
+                    handler: function (tp, result) {
+                        if (tp == "ok") {
+                            if(result.IsSuccess){
+                                setTimeout(function(){
+                                    ymPrompt.succeedInfo({ title: '修改成功', message: result.Message });
+                                    $(".refresh").click();   
+                                },10);
+                            }
+                        }                        
+                    }
+                });
+            }
+        }
+
+        //确认调度Ex
+        function confirmDispatchEx(){
+            if($("#hidLPID").val()=="" || $("#hidLPID").val()==0){        
+                ymPrompt.errorInfo({ title: '提示', message: '请选择运输计划!' })
+                return;
+            }
+            var waybillno = $("#hidWaybillNo").val();      
+            var deliveryNo = $("#hidDeliveryNo").val();
+            var lpid =parseInt($("#hidLPID").val());
+            var op= $("#hidOP").val();
+            var did=$("#hidDID").val();
+            $.ajax({
+                url:"@Url.Action("ConfirmDispatchEx")",
+                type:"POST",
+                cache:false,
+                data:{deliveryNo:deliveryNo,waybillno:waybillno,lpid:lpid,did:did},
+                dataType:"json",
+                error:function(result){
+                    ymPrompt.errorInfo({ title: '调度失败', message: result.Message });                                
+                },
+                success:function(result, textStatus, jqXHR){
+                    if(result.IsSuccess){                                    
+                        ymPrompt.confirmInfo({ title: '调度成功', message: result.Message+"<br/>你是否要打印该提货单？",
+                            handler:function(tp){
+                                if(tp=="ok"){
+                                    var DeliveryNo = $("#hidDeliveryNo").val().trim();
+                                    openWindow('@Url.Action("Print", "Print")/?DeliveryNo='+DeliveryNo, 'PrintDeliveryNo',800,600);
+                                }
+                                if($("#hidPreParams").val()!="")
+                                {
+                                    location = "@Url.Action("List")?isReturn=1&"+ unescape($("#hidPreParams").val());
+                                }
+                                else
+                                {
+                                    location = "@Url.Action("List")";
+                                }
+                            } 
+                        });
+                    }
+                    else{
+                        ymPrompt.errorInfo({ title: '调度失败', message: result.Message })
+                    }
+                }
+            });
+        }
+        
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <div>
+                <table class="tb_insert Fixed">
+                    <tr>
+                        <th>
+                            <label for="CarrierID">
+                                承运商</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("CarrierID", null, "--请选择--", new { style = "width:100px" })
+                        </td>
+                        <th>
+                            <label for="txtCreateDate">
+                                创建时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("StartTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtCreateDateTo">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("EndTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="DispatchingPageStatus">
+                                调度状态</label>
+                        </th>
+                        <td>@Html.DropDownList("DispatchingPageStatus", "--请选择--")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="TransportType">
+                                运输方式</label>
+                        </th>
+                        <td>@Html.DropDownList("TransportType", "--请选择--")
+                        </td>
+                        <th>
+                            <label for="txtDeparture">
+                                出发地</label>
+                        </th>
+                        <td>
+                            <input id="txtDeparture" name="Departure" type="text" class="textbox selectDeparture"
+                                readonly="readonly" onclick="TMS.Page.SelectStation(this,'#DepartureID');" />
+                            <input id="DepartureID" name="DepartureID" type="hidden" />
+                        </td>
+                        <th>
+                            <label for="txtArrival">
+                                目的地</label>
+                        </th>
+                        <td>
+                            <input id="txtArrival" name="Arrival" type="text" class="textbox" readonly="readonly"
+                                onclick="TMS.Page.SelectStation(this,'#ArrivalID','#DepartureID');" />
+                            <input id="ArrivalID" name="ArrivalID" type="hidden" />
+                        </td>
+                        <td colspan="2">
+                            <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                            <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialDispatchList", Model); }
+    </div>
+}

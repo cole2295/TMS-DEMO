@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "承运商列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <style type="text/css">
+        body
+        {
+            overflow: hidden;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/dmm-green/ymPrompt.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.js")"></script>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/plugins/zTree/css/zTreeStyle.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/zTree/js/jquery.ztree.all-3.0.min.js")"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+         dataTable = InitDataTable({
+            "target":'#DataTables1',
+            "sAjaxSource": "@Url.Action("AjaxHandler")",
+//            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+//                $('td:eq(0)',nRow).addClass("CbxColumn")
+//                    .html('<input type="checkbox" value="'+aData[0]+'" />');
+//                $('td:eq(4)',nRow).width(250);
+//                return nRow;
+//            },
+            "fnServerParams": function ( aoData ) {
+                aoData.push( { "name": "start", "value": $("#txtStart").val() } );
+                aoData.push( { "name": "end", "value": $("#txtEnd").val() +"你好"} );
+            }
+         });        
+        $(window).bind('resize', function () {
+                var height = document.getElementsByTagName("html")[0].offsetHeight;
+                var searchHeight = 0 ;
+                if($("#search").is(":visible")){
+                    searchHeight = $("#search").height();
+                }
+                height = height - 170 - searchHeight;
+                $("#DataTableCon .dataTables_scrollBody").height(height);
+                dataTable.fnAdjustColumnSizing(false);
+            }).resize();            
+
+            $("#btnsearch").click(function(){
+                dataTable.fnDraw(false);
+            });    
+
+            $("#btnAlert").click(function(){
+                ymPrompt.alert({title:'alert',message:'alert演示'});
+            });
+
+            $("#btnConfirm").click(function(){
+                ymPrompt.confirmInfo({icoCls:'',msgCls:'confirm'
+                    ,message:"<center><br/>请输入公司名称：<br><br><input type='text' id='myInput' onfocus='this.select()' /></center>"
+                    ,title:'公司名称',height:150});
+            });
+            
+           var zTreeObj;
+           // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+		var setting = {
+			async: {
+				enable: true,
+				url:"@Url.Action("AjaxTreeHandler")",
+				autoParam:["id", "name=n", "level=lv"],
+				otherParam:{"otherParam":"zTreeAsyncTest"},
+				dataFilter: filter
+			},
+            callback:{
+                onAsyncError : function(){alert("onAsyncError");},
+                onAsyncSuccess : function(){alert("onAsyncSuccess");}
+            }
+		};
+
+		function filter(treeId, parentNode, childNodes) {
+			if (!childNodes) return null;
+			for (var i=0, l=childNodes.length; i<l; i++) {
+				childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			}
+			return childNodes;
+		}
+           // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+           var zNodes = [
+           {name:"test1", open:true, children:[
+              {name:"test1_1"}, {name:"test1_2"}]},
+           {name:"test2", open:true, children:[
+              {name:"test2_1",isParent:true}, {name:"test2_2",isParent:true}]}
+           ];
+
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting,zNodes);
+
+
+        });            
+    </script>
+}
+@section search
+{
+    <div style="height: 40px">
+        <input id="txtStart" type="text" class="date textbox" label="申请时间" />
+        <input id="txtEnd" type="text" class="date textbox" label="到" />
+        @*<div style="float: left">
+            &nbsp;&nbsp; 处理状态：
+            <select>
+                <option>申请中...</option>
+                <option>业务审批中</option>
+                <option>业务审批已通过</option>
+            </select>
+        </div>*@
+        <input id="search" type="button" value="查询" class="button" />
+        <input id="btnsearch" type="button" value="ajax" class="button" />
+        <input id="btnAlert" type="button" value="alert" class="button" />
+        <input id="btnConfirm" type="button" value="confirm" class="button" />
+        <div style="clear: both; position: relative; display:block;">
+            <input id="txtTree" type="text" class="textbox" /><button type="button" onclick="$('#treeCon').toggle();">选择节点</button>
+            <div id="treeCon" style="height: 300px; width: 250px; overflow: auto; position: absolute; z-index: 2; display:none;
+                background: #fff; border: 1px solid #ddd; left: 0; top: 22px;">
+                <ul id="treeDemo" class="ztree">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="divAddCarrier" style="display: none;">
+        <input id="txtStart1" type="text" class="date textbox" label="申请时间" />
+        <input id="txtEnd1" type="text" class="date textbox" label="到" />
+    </div>
+}
+@section list
+{
+    <div id="DataTableCon">
+        <table cellpadding="0" cellspacing="0" border="0" class="DataTable" id="DataTables1">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        公司名称
+                    </th>
+                    <th>
+                        公司地址
+                    </th>
+                    <th>
+                        开始时间
+                    </th>
+                    <th>
+                        结束时间
+                    </th>
+                    <th>
+                        所属省份
+                    </th>
+                    <th>
+                        所属省份
+                    </th>
+                    <th>
+                        所属省份
+                    </th>
+                    <th>
+                        所属省份
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,102 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Claim.ViewDelayHandleModel>
+@{
+    ViewBag.Title = "到货延误复议申请列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //到货延误复议申请
+        function DelayHandle() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if (arr) {
+                var DHID = arr.attr("DHID");
+                var note = arr.attr("DelayHandleNote");
+                var delayID = arr.attr("DelayID");
+                ymPrompt.win('@Url.Action("DelayHandle")' + "?DHID=" + DHID + "&applyNote=" + note + "&DelayID=" + delayID, 
+                    450, 280, '到货延误复议处理',handle, null, null, { id: 1 });
+            }
+        }
+        function handle(tp, data) {
+            if (tp == "Success") {
+                setTimeout(function () {
+                    if (data.IsSuccess) {
+                        ymPrompt.succeedInfo({ title: '成功', message: data.Message });
+                        //刷新列表
+                        $("#btnRefresh").click();
+                    }
+                    else {
+                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                    }
+                }, 100);
+            }
+        }
+
+        //添加搜索数据
+        function beforeSend(xhr, settings) {
+            var data = $("form").data(TMS.Page.Data_ajax_SearchData);
+            if (data) {
+                settings.data += "&" + data;
+            }
+        }
+        $(function () {
+        }); 
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        <label for="CreateDateBegin">
+                            发货时间
+                        </label>
+                    </th>
+                    <td>
+                        @Html.TextBox("CreateDateBegin", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="CreateDateEnd">
+                            到</label>
+                    </th>
+                    <td>
+                        @Html.TextBox("CreateDateEnd", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="S_DeliveryNO">
+                            提货单号
+                        </label>
+                    </th>
+                    <td>
+                        <input id="S_DeliveryNO" name="S_DeliveryNO" type="text" class="textbox" />
+                    </td>
+                    <th>
+                        <label for="S_CarrierWaybillNO">
+                            物流单号
+                        </label>
+                    </th>
+                    <td>
+                        <input id="S_CarrierWaybillNO" name="S_CarrierWaybillNO" type="text" class="textbox" />
+                    </td>
+                    <td>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+@*<label for="txtContacter">
+                目的地
+            </label>
+            <input id="arrivalName" type="text" class="drop textbox" onclick="TMS.Page.SelectStation(this,'#S_ArrivalID','to');" />
+            <input id="S_ArrivalID" name="S_ArrivalID" type="hidden" />*@
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialDelayHandleApplyList", Model); }
+    </div>
+}

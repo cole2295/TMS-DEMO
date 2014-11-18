@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<quartz xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 				version="1.0"
+				overwrite-existing-jobs="true">
+  <!--<job>
+    <job-detail>
+      <name>CreateTaskService</name>
+      <job-type>LB_PanlService.CreateTaskService,LB_PanlService</job-type>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>CreateTaskService</name>
+        <job-name>CreateTaskService</job-name>
+        <start-time>1999-06-28T18:15:00+02:00</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>60000</repeat-interval>
+      </simple>
+    </trigger>
+  </job>-->
+
+
+
+  <job>
+    <job-detail>
+      <name>CreateTaskService</name>
+      <job-type>LB_PanlService.CreateTaskService, LB_PanlService</job-type>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>cronCreateTaskService</name>
+        <job-name>CreateTaskService</job-name>
+        <!--每天的1凌晨-->
+        <cron-expression>0 0 1 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+
+
+  <job>
+    <job-detail>
+      <name>UpIsCreate</name>
+      <job-type>LB_PanlService.UpIsCreate, LB_PanlService</job-type>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>cronCreateTaskService</name>
+        <job-name>UpIsCreate</job-name>
+        <!--每天的9点和16点，触发一次-->
+        <cron-expression>15 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  
+   
+</quartz>

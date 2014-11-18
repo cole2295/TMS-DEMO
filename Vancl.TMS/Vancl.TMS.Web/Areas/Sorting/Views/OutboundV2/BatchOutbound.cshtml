@@ -1,0 +1,269 @@
+﻿@{
+    ViewBag.Title = "操作项";    
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")" type="text/javascript"></script>
+    <script id="tmpBatchList" type="text/html">
+        <tr>
+            <td>
+                ${FormCode}
+            </td>
+            <td>
+                ${CustomerOrder}
+            </td>
+            <td>
+                ${OutboundDes}
+            </td>
+            <td>
+                ${OutboundStatus}
+            </td>
+            <td>
+                ${Message}
+            </td>
+        </tr>
+    </script>
+    <script id="tmpBoxList" type="text/html">
+        <tr>
+            <td>
+                ${BoxNo}
+            </td>
+            <td>
+                ${SucceedCount}
+            </td>
+            <td>
+                ${OutboundDes}
+            </td>
+            <td>
+                ${BoxOutboundStatus}
+            </td>
+            <td>
+                ${Message}
+            </td>
+        </tr>
+    </script>
+    <style type="text/css">
+        .tb_insert tr th
+        {
+            width: 130px;
+            text-align: right;
+        }
+        .cur
+        {
+            font-size: large !important;
+            font-weight: bolder !important;
+        }
+        .tbPrintList
+        {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+        .tbPrintList thead th
+        {
+            background: #eee;
+            border: 1px solid #ddd;
+            font-size: 16px
+        }
+        .tbPrintList thead td
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 15px
+
+        }
+        
+        .tbPrintList tbody td
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+           
+        }
+        .passError {
+            text-align: center;
+            border: 1px solid #ddd;
+            color: red;
+        }
+        .curError {
+            text-align: center;
+            border: 1px solid #ddd;
+            font-weight: 700;
+            color: red;
+            font-size: 15px;
+        }
+        
+        .curCorrect {
+            text-align: center;
+            border: 1px solid #ddd;
+            font-weight: 700;
+        }
+    </style>
+    <script src="@Url.Content("~/scripts/pages/sorting/OutboundV2.js?" + DateTime.Now.ToString("yyyyMMdd"))" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>*@
+    <link href="@Url.Content("~/Content/page_frame.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/simple_gray/ymPrompt.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.page.js")" type="text/javascript"></script>
+}
+<div class="search_condition" id="divSearchCondition">
+        <table class="tb_insert">
+            <tr id="trSortingCenterSelect">
+                <th id="thStation">
+                    出库到
+                    <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="0"
+                           id="rdoStation" checked="checked" />配送站
+                </th>
+                <td id="tdStation">
+                    @{Html.RenderPartial("CityAndStation");}
+                </td>
+                <th id="thSortingCenter">
+                    <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="2"
+                           id="rdoSortingCenter" style="" />分拣中心
+                </th>
+                <td id="tdSortingCenter">
+                    @Html.DropDownList("SortingCenterList")
+                </td>
+                <th id="thDistribution">
+                    <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="3"
+                           id="rdoDistribution" style="" />配送商
+                </th>
+                <td id="tdDistribution">
+                    @Html.DropDownList("DistributorList")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <select id="selFormType" >
+                        <option value="0" selected="selected">运单号</option>
+                        <option value="1">箱号</option>
+                    </select>
+                </th>
+                <td colspan="1">
+                </td>
+                <th>
+                    今日出库总数量
+                </th>
+                <td>
+                    <span id="CurrentOpCount" style="font-size: 30px; font-weight: bold;">@ViewBag.CurOutBoundCount</span>
+                </td>
+                <th>
+                    已出库到当前目的地数量
+                </th>
+                <td>
+                    <span id="CurrentDisCount" style="font-size: 30px; font-weight: bold;">0</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="box_title">
+    <h1 class="s">出库运单信息</h1>
+                    
+</div>
+<div class="DataGirdPanel">
+    @*<input id="btnStartOutbound" type="button" value="批量出库" />*@
+ 
+    <div class="toolbar">
+        <ul>
+            <li class="toolbtn"><a href="javascript:(0);" id="btnStartOutbound" class="expand">批量出库</a></li>
+        </ul>
+        <div id="dispatchStatInfo"  style="margin-left: 500px;">
+            <tr>
+                <th>当前状态：</th>
+                <td>
+                    <span id="CurStatus" style="font-size: 14px; color: Blue; font-weight: bold;">已停止</span>
+                </td>
+                <th>共</th>
+                <td>
+                    <span id="TotalInputCount" style="font-size: 14px; color: Blue; font-weight: bold;">0</span>
+                    <span name="UnitName">单</span>
+                </td>
+                <th>成功</th>
+                <td>
+                    <span id="OperateSucceedCount" style="font-size: 14px;color: Green; font-weight: bold;">0</span>
+                    <span name="UnitName">单</span>
+                </td>
+                <th>失败</th>
+                <td>
+                    <span id="OperateErrorCount" style="font-size: 14px; color: red; font-weight: bold;">0</span>
+                    <span name="UnitName">单</span>
+                </td>
+            </tr>
+        </div> 
+    </div>
+    
+    
+<table id="tbInner" style="">
+    <tr>
+        <td style="padding-right: 8px;">
+           <textarea id="txtFormCodeList" style="height:500px;width:200px" rows="30"></textarea>
+        </td>
+        <td valign="top" style="">
+            <table class="tbPrintList" id="tblBillInfo">
+                <thead>
+                    <tr>
+                        <th width="120">
+                            运单号
+                        </th>
+                        <th width="120">
+                            配送单号
+                        </th>
+                        <th width="120">
+                            目的地
+                        </th>
+                        <th width="120">
+                            出库状态
+                        </th>
+                        <th width="200">
+                            信息
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table class="tbPrintList" id="tblBoxInfo" style="display:none">
+            <thead>
+                <tr>
+                    <th width="120">
+                        箱号
+                    </th>
+                    <th width="120">
+                        运单数量
+                    </th>
+                    <th width="120">
+                        目的地
+                    </th>
+                    <th width="120">
+                        出库状态
+                    </th>
+                    <th width="120">
+                        信息
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </td>
+    </tr>
+</table>
+
+    <div style=" float:left;">
+     
+    </div>
+    <div class="tablelist"  style="float:left; width:800px; margin-left:10px;">
+        
+        
+    </div>
+</div>
+    
+@{Html.RenderPartial("_wavMedia");}
+<input type="hidden" id="hdInitData" value="@ViewBag.HiddenValue" />
+<input type="hidden" id="hdFunOutBoundStation" value="@ViewBag.FunOutBoundStation" />
+<input type="hidden" id="hdFunOutBoundDeliverCenter" value="@ViewBag.FunOutBoundDeliverCenter" />
+<input type="hidden" id="hdFunOutBoundCompany" value="@ViewBag.FunOutBoundCompany" />

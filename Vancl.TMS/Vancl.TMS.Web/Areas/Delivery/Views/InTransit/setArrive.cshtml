@@ -1,0 +1,215 @@
+﻿@using Vancl.TMS.Web.WebControls.Mvc;
+@model Vancl.TMS.Web.Areas.Delivery.Models.WaybillArriveViewModel
+@{
+    ViewBag.Title = "提交确认到货";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+
+    var kvList = Vancl.TMS.Util.EnumUtil.EnumHelper.GetEnumValueAndDescriptions<Vancl.TMS.Model.Common.Enums.DelayType>().ToList();
+    var DelayTypeSelectList = kvList.Select(x => new SelectListItem
+       {
+           Selected = false,
+           Text = x.Value,
+           Value = x.Key.ToString(),
+       });
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.tmpl.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function saved(Result) {     
+            ymPrompt.doHandler("ok", true, Result);          
+            top.window.alert(Result.Message);         
+        }
+                
+        function cancel() {
+            ymPrompt.doHandler("create", true, { action: 'create', result: 'cancel' })
+        }
+
+        function onpicked(){
+            var desReceiveDate = $("#DesReceiveDate").val();
+            var expectArrivalDate = $.trim($("#tdExpectArrivalDate").text());
+            var confirmExpArrivalDate = $.trim($("#tdConfirmExpArrivalDate").text());
+            if(desReceiveDate>expectArrivalDate){
+                $("#tdIsDelay").text("是");
+                $(".trDelay").show();
+                resizeWindow(true);
+            }else{
+                $("#tdIsDelay").text("否");
+                $(".trDelay").hide();
+                resizeWindow(false);
+            }
+            if(expectArrivalDate==confirmExpArrivalDate){
+                $("#trConfirmExpArrivalDate").hide();
+            }
+         }
+
+        $(function () {
+        @{
+            if (ViewBag.Result != null)
+            {
+                @:saved(@(new MvcHtmlString(Json.Encode(ViewBag.Result))));
+            }
+            if (Model.IsExpectDelay)
+            {
+                <text>$(".trExpectDelay").show();</text>
+            }
+         }         
+            resizeWindow(@(Model.IsDelay ? "true" : "false"));
+            onpicked();
+        });
+
+        function resizeWindow(isDelay)
+        {
+            if (isDelay && !@( Model.IsExpectDelay ? "true" : "false"))
+            {
+                ymPrompt.resizeWin(500,420);
+            }
+            else if (isDelay && @(Model.IsExpectDelay ? "true" : "false"))
+            {
+                ymPrompt.resizeWin(500,540);
+            }
+            else if(!isDelay && @(Model.IsExpectDelay ? "true" : "false"))
+            {
+                ymPrompt.resizeWin(500,460);
+            }
+            else if(!isDelay && !@(Model.IsExpectDelay ? "true" : "false"))
+            {
+                ymPrompt.resizeWin(500,340);
+            }
+        }
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <table class=" tb_insert">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    @Html.HiddenFor(model => model.DispatchID)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.WaybillNo)
+                </th>
+                <td>
+                    @Model.WaybillNo
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.DeliveryNo)
+                </th>
+                <td>
+                    @Model.DeliveryNo
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.ExpectArrivalDate)
+                </th>
+                <td id="tdExpectArrivalDate">
+                    @(Model.ExpectArrivalDate.HasValue ? Model.ExpectArrivalDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.DesReceiveDate)
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.DesReceiveDate, "{0:yyyy-MM-dd HH:mm:ss}",
+new { @class = "Wdate1", onfocus = ViewBag.ConfirmLimited ? "" : "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:onpicked})", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.DesReceiveDate, "*")
+                </td>
+            </tr>
+            <tr id="trConfirmExpArrivalDate">
+                <th>
+                    @Html.LabelFor(model => model.ConfirmExpArrivalDate)
+                </th>
+                <td id="tdConfirmExpArrivalDate">
+                    @(Model.ConfirmExpArrivalDate.HasValue ? Model.ConfirmExpArrivalDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    是否延误
+                </th>
+                <td id="tdIsDelay">
+                    @(Model.IsDelay ? "是" : "否")
+                </td>
+            </tr>
+            <tr class="trExpectDelay" style="display: none">
+                <th>
+                    @Html.LabelFor(model => model.ExpectDelayTime)
+                </th>
+                <td>
+                    @Model.ExpectDelayTime
+                </td>
+            </tr>
+            <tr class="trExpectDelay" style="display: none">
+                <th>
+                    @Html.LabelFor(model => model.ExpectDelayType)
+                </th>
+                <td>
+                    @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.ExpectDelayType>(Model.ExpectDelayType))
+                </td>
+            </tr>
+            <tr class="trExpectDelay" style="display: none">
+                <th>
+                    @Html.LabelFor(model => model.ExpectDelayDesc)
+                </th>
+                <td>
+                    @Model.ExpectDelayDesc
+                </td>
+            </tr>
+            <tr class="trDelay">
+                <th>
+                    @Html.LabelFor(model => model.DelayType)
+                </th>
+                <td>
+                    @Html.DropDownListFor(model => model.DelayType, DelayTypeSelectList)
+                </td>
+            </tr>
+            <tr class="trDelay">
+                <th>
+                    @Html.LabelFor(model => model.DelayReason)
+                </th>
+                <td>
+                    @Html.TextAreaFor(model => model.DelayReason, new { style = "height:50px; width:200px;" })
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.SignedUser)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.SignedUser)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.SignedUser)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="submit" class="button" value="确认到货"/>
+        <input type="button" class="button" value="关闭" onclick='cancel();' />
+    </div>
+    <div>
+        @{if (ViewBag.Confirm != null)
+          {
+            <ul class="red" style="list-style: disc;">
+                @foreach (string str in ViewBag.Confirm)
+                {
+                    <li>@str</li>
+                }
+            </ul>
+          }
+        }
+    </div>
+}

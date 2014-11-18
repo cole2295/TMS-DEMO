@@ -1,0 +1,99 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.BaseInfo.Carrier.CarrierModel>
+@{
+    ViewBag.Title = "承运商列表";
+    ViewBag.HideSearch = false;
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //新增承运商
+        function addCarrier() {
+            TMS.Page.Serialize("divSearchCondition", "btnSearch");
+            window.location = '@Url.Action("Create")';
+        }
+        //修改承运商
+        function modifyCarrier(carrierId) {
+            if (typeof (carrierId) == "undefined") {
+                var arr = TMS.Page.CheckDataTableChecked();
+                if (arr) {
+                    carrierId = arr.eq(0).val();
+                }
+                else {
+                    return;
+                }
+            }
+            TMS.Page.Serialize("divSearchCondition", "btnSearch");
+            window.location = "Details/" + carrierId;
+        }
+
+        //显示操作日志
+        function ShowOperateLog(KeyValue) {
+            ymPrompt.win('@Url.Action("ShowOperateLog")' + "?CarrierID=" + KeyValue,
+                              880, 310, '查看操作日志', null, null, null, { id: 1 });
+            return;
+        }
+
+        function ShowDelayCriteriaList(carrierID) {
+
+            ymPrompt.win('@Url.Action("SetDelayCriteria")' + "?Param=" + carrierID + "&Operate=view",
+                              800, 310, '查看延误考核标准', null, null, null, { id: 1 });
+            return;
+            $.ajax({
+                url: '@Url.Action("GetDelayCriteriaList")' + "?CarrierID=" + carrierID,
+                data: null,
+                dataType: "json",
+                success: function (data) {
+                    if (data.IsSuccess) {
+                        var delayCriteriaList = data.DelayCriteriaList;
+                    }
+                }
+            });
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        合同编号
+                    </th>
+                    <td>
+                        <input id="txtContractNumber" name="ContractNumber" type="text" class="textbox" />
+                    </td>
+                    <th>
+                        承运商简称
+                    </th>
+                    <td>
+                        <input id="txtCarrierName" name="CarrierName" type="text" class="textbox" />
+                    </td>
+                    <th>
+                        联系人
+                    </th>
+                    <td>
+                        <input id="txtContacter" name="Contacter" type="text" class="textbox" />
+                    </td>
+                    <th>
+                        状态
+                    </th>
+                    <td>
+                        @Html.DropDownList("Status", "--请选择--")
+                    </td>
+                    <td>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialCarrierList", Model); }
+    </div>
+}

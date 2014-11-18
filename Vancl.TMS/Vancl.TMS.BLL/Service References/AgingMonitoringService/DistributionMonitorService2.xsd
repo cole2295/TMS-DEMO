@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://exchange.wuliusys.com/DistributionMonitorService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" />
+  <xs:element name="AddMonitorLog">
+    <xs:annotation>
+      <xs:documentation>操作日志添加</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" minOccurs="0" name="log" nillable="true" type="q1:DistributionOperateLog">
+          <xs:annotation>
+            <xs:documentation>操作日志:&lt;br/&gt;
+            &lt;B&gt;DistributionOperateLog 实体&lt;/B&gt;&lt;br/&gt;
+            WaybillNo 运单号 Int64&lt;br/&gt;
+            Status 操作状态id String&lt;br/&gt;
+            OperateTime 操作时间 DateTime&lt;br/&gt;
+            OperateStation 操作部门id Int32&lt;br/&gt;
+            OperateUser 操作人员 Int32&lt;br/&gt;
+            MerchantId 来源商家 Int32&lt;br/&gt;
+            WaybillType 运单类型0普通 1换货 2退货 String&lt;br/&gt;
+            DistributionCode 来源配送商编码 String&lt;br/&gt;
+            CurrentDistributionCode 当前操作配送商编码 String&lt;br/&gt;
+            Province 当前操作所在省id String&lt;br/&gt;
+            City 当前操作所在市id String&lt;br/&gt;
+            Area  当前操作所在区id String&lt;br/&gt; 
+            TransPortType 运输方式 int?&lt;br/&gt;
+            TransPortStationId城际运输的起终站点 int?&lt;br/&gt;
+            ReceiveProvinceId 收件省id String&lt;br/&gt;
+            ReceiveCityId 收件市id String&lt;br/&gt;
+            ReceiveAreaId  收件区id String&lt;br/&gt; 
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddMonitorLogResponse">
+    <xs:annotation>
+      <xs:documentation>操作日志添加</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddMonitorLogResult" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>返回值bool：true 成功,false失败</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

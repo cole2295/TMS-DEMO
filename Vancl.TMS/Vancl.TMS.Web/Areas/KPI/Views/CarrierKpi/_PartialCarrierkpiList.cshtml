@@ -1,0 +1,180 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Delivery.KPIAppraisal.ViewDeliveryAssessmentModel>
+@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">
+            @Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })
+        </li>
+        <li class="toolbtn"><a href="javascript:appraisal();" class="ok">考核</a></li>
+    </ul>
+</div>
+<div class="tablelist center">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="DispatchTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    发货时间
+                </th>
+                <th>
+                    出发地
+                </th>
+                <th>
+                    目的站
+                </th>
+                <th>
+                    目的地城市
+                </th>
+                <th>
+                    订单数量
+                </th>
+                <th>
+                    承运商名
+                </th>
+                <th>
+                    运输方式
+                </th>
+                <th>
+                    到货时效
+                </th>
+                <th>
+                    提货单号
+                </th>
+                <th>
+                    物流单号
+                </th>
+                <th>
+                    货物类型
+                </th>
+                <th>
+                    总价
+                </th>
+                <th>
+                    保价金额
+                </th>
+                <th>
+                    提货单状态
+                </th>
+                <th>
+                    修正预计到货时间
+                </th>
+                <th>
+                    预计到货时间
+                </th>
+                <th>
+                    实际到货时间
+                </th>
+                <th>
+                    延误时长
+                </th>
+                <th>
+                    延误类型
+                </th>
+                <th>
+                    延误原因
+                </th>
+                <th>
+                    复议审核状态
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model == null)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                    if (Model.Count == 0)
+                    {
+                        Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" DeliveryNo="@item.DeliveryNo"/>
+                    </td>
+                    <td>
+                        @item.DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")
+                    </td>
+                    <td>
+                        @item.DepartureName
+                    </td>
+                    <td>
+                        @item.ArrivalName
+                    </td>
+                    <td>
+                        @item.ArrivalCity
+                    </td>
+                    <td>
+                        @item.OrderCount
+                    </td>
+                    <td>
+                        @item.CarrierName
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription(item.TransportType))
+                    </td>
+                    <td>
+                        @item.ArrivalTiming
+                    </td>
+                    <td>
+                        @item.DeliveryNo
+                    </td>
+                    <td>
+                        @item.WaybillNo
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription<Enums.GoodsType>((int)item.LineGoodsType))
+                    </td>
+                    <td>
+                        @item.TotalAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @item.ProtectedPrice.ToString("f2")
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription(item.DeliveryStatus))
+                    </td>
+                    <td>
+                        @item.ConfirmExpArrivalDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td>
+                        @item.ExpectArrivalDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td>
+                        @item.DesReceiveDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td>
+                        @(item.DelayTimeSpan.HasValue ? item.DelayTimeSpan.Value.ToString("f2") : "")
+                    </td>
+                    <td>
+                        @if (item.DelayType.HasValue)
+                        {
+                            @(EnumHelper.GetDescription(item.DelayType.Value))
+                        }
+                    </td>
+                    <td>
+                        @item.DelayReason
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription(item.DelayHandleStatus))
+                    </td>
+                </tr>
+                        }
+                    }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

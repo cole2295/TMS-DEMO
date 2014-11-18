@@ -1,0 +1,32 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Model.Report.ViewReportFilterModel
+@{
+    ViewBag.Title = "自定义筛选";
+    Layout = null;
+}
+<!DOCTYPE html public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<link href="@Url.Content("~/Content/page_frame.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/references/jquery.cookie.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/references/jquery.unobtrusive-ajax.min.js")"></script>
+<html>
+<head>
+    <title>自定义筛选</title>
+</head>
+<body>
+    <div>
+        @{
+            if (Model == null)
+            {
+            <h3>
+                加载报表筛选对象失败,请联系系统管理员</h3>
+            }
+            else
+            {
+                
+            }
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="aa50e1a2-a3e3-4f02-8542-34fce1a46506" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.253.6.46:8612/OrdersForWdsAssign.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OrdersForWdsAssign.xsd" MetadataType="Schema" ID="4c5f4efc-5ab3-41c4-a615-0159f1502029" SourceId="1" SourceUrl="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd4" />
+    <MetadataFile FileName="OrdersForWdsAssign1.xsd" MetadataType="Schema" ID="57bdd0bc-ecaa-4dd1-b491-0d4f98514f2f" SourceId="1" SourceUrl="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd2" />
+    <MetadataFile FileName="OrdersForWdsAssign2.xsd" MetadataType="Schema" ID="95c3193e-5a9f-4b6e-8e8c-b6160a8d5975" SourceId="1" SourceUrl="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd1" />
+    <MetadataFile FileName="OrdersForWdsAssign.wsdl" MetadataType="Wsdl" ID="7dd15a53-9d79-45fd-adf0-02b889126381" SourceId="1" SourceUrl="http://10.253.6.46:8612/OrdersForWdsAssign.svc?wsdl" />
+    <MetadataFile FileName="OrdersForWdsAssign.disco" MetadataType="Disco" ID="613853bb-2afe-4179-a1aa-e7e7c3f2dcf1" SourceId="1" SourceUrl="http://10.253.6.46:8612/OrdersForWdsAssign.svc?disco" />
+    <MetadataFile FileName="OrdersForWdsAssign3.xsd" MetadataType="Schema" ID="639025e7-69da-4d0e-b33d-f8d793eb7236" SourceId="1" SourceUrl="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd0" />
+    <MetadataFile FileName="OrdersForWdsAssign4.xsd" MetadataType="Schema" ID="7e450341-d6ad-4051-8fe6-10d9fb8624df" SourceId="1" SourceUrl="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

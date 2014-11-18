@@ -1,0 +1,31 @@
+﻿@model Vancl.TMS.Model.Common.ResultModel
+@{
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+    if (ViewBag.RedirectAction == null) { ViewBag.RedirectAction = "List"; }
+}
+@section header{
+    <script type="text/javascript">        
+
+        $(function () {
+            @if(Model.IsSuccess){
+                @:saveSuccess();
+            }else{
+                @:saveFailure();
+            }
+        });            
+
+        function saveSuccess() {            
+            ymPrompt.succeedInfo({ title: '成功', message: '@Model.Message!',handler:function(tp){
+                location="@Url.Action(ViewBag.RedirectAction)";                
+            }});
+        } 
+
+        function saveFailure() {            
+            ymPrompt.errorInfo({ title: '失败', message: '@Model.Message!',handler:function(tp){
+                location="@Url.Action(ViewBag.RedirectAction)";                
+            }});
+        }       
+    </script>
+}
+
+

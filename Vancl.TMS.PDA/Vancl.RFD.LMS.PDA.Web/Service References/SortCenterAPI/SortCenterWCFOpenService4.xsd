@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.SortingCenter" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.SortingCenter" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1922/SortCenterWCFOpenService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" />
+  <xs:complexType name="SortCenterInboundArgModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SortCenterIOBaseArgModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsLimitedQuantity" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LimitedInboundCount" type="xs:int" />
+          <xs:element minOccurs="0" name="OpUser" nillable="true" type="tns:SortCenterInboundUserModel" />
+          <xs:element minOccurs="0" name="PreCondition" nillable="true" type="tns:SortCenterInboundPreCondition" />
+          <xs:element minOccurs="0" name="ToStation" nillable="true" type="tns:SortCenterInboundToStationModel" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SortCenterInboundArgModel" nillable="true" type="tns:SortCenterInboundArgModel" />
+  <xs:complexType name="SortCenterIOBaseArgModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FormCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" minOccurs="0" name="WCFFormType" type="q1:WCFEnumCommon.SortCenterIOFormType" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SortCenterIOBaseArgModel" nillable="true" type="tns:SortCenterIOBaseArgModel" />
+  <xs:complexType name="SortCenterInboundUserModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SortCenterUserModel">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SortCenterInboundUserModel" nillable="true" type="tns:SortCenterInboundUserModel" />
+  <xs:complexType name="SortCenterUserModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistributionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="UserId" type="xs:int" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" minOccurs="0" name="WCFCompanyFlag" type="q2:WCFEnumCommon.CompanyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SortCenterUserModel" nillable="true" type="tns:SortCenterUserModel" />
+  <xs:complexType name="SortCenterInboundPreCondition">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" minOccurs="0" name="WCFPreStatus" type="q3:WCFEnumCommon.WayBillStatusEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SortCenterInboundPreCondition" nillable="true" type="tns:SortCenterInboundPreCondition" />
+  <xs:complexType name="SortCenterInboundToStationModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SortCenterToStationModel">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SortCenterInboundToStationModel" nillable="true" type="tns:SortCenterInboundToStationModel" />
+  <xs:complexType name="SortCenterToStationModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCompanyID" type="xs:int" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" minOccurs="0" name="WCFCompanyFlag" type="q4:WCFEnumCommon.CompanyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SortCenterToStationModel" nillable="true" type="tns:SortCenterToStationModel" />
+  <xs:complexType name="SortCenterInBoundViewModel">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" base="q5:ResultModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CustomerBatchNo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CustomerOrder" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InboundCount" type="xs:int" />
+          <xs:element minOccurs="0" name="WarehouseName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SortCenterInBoundViewModel" nillable="true" type="tns:SortCenterInBoundViewModel" />
+</xs:schema>

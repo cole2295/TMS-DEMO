@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="PermissionOpenService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://rfd-lms-ser.vancldb.com:9703/PMSOpenService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://rfd-lms-ser.vancldb.com:9703/PMSOpenService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://rfd-lms-ser.vancldb.com:9703/PMSOpenService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RFD.PMS.Model" />
+      <xsd:import schemaLocation="http://rfd-lms-ser.vancldb.com:9703/PMSOpenService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPermissionOpenService_EmployeeLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmployeeLogin" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_EmployeeLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmployeeLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_AddEmployee_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmployee" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_AddEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmployeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_AddExpressCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddExpressCompany" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_AddExpressCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddExpressCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_AddEmployeeAndSetRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmployeeAndSetRole" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_AddEmployeeAndSetRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmployeeAndSetRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_UpdatePassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePassword" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_UpdatePassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_ResetPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPassword" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_ResetPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployee_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployee" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_SetEmployeeRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetEmployeeRole" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_SetEmployeeRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetEmployeeRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeMenus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeMenus" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeMenus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeMenusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeRoles" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeMenuData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeMenuData" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeMenuData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeMenuDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeRoleData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeRoleData" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetEmployeeRoleData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeRoleDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetGoodsCategoryCodeOfMerchant_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGoodsCategoryCodeOfMerchant" />
+  </wsdl:message>
+  <wsdl:message name="IPermissionOpenService_GetGoodsCategoryCodeOfMerchant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGoodsCategoryCodeOfMerchantResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IPermissionOpenService">
+    <wsdl:operation name="EmployeeLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/EmployeeLogin" message="tns:IPermissionOpenService_EmployeeLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/EmployeeLoginResponse" message="tns:IPermissionOpenService_EmployeeLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddEmployee">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/AddEmployee" message="tns:IPermissionOpenService_AddEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/AddEmployeeResponse" message="tns:IPermissionOpenService_AddEmployee_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddExpressCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/AddExpressCompany" message="tns:IPermissionOpenService_AddExpressCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/AddExpressCompanyResponse" message="tns:IPermissionOpenService_AddExpressCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddEmployeeAndSetRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/AddEmployeeAndSetRole" message="tns:IPermissionOpenService_AddEmployeeAndSetRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/AddEmployeeAndSetRoleResponse" message="tns:IPermissionOpenService_AddEmployeeAndSetRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/UpdatePassword" message="tns:IPermissionOpenService_UpdatePassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/UpdatePasswordResponse" message="tns:IPermissionOpenService_UpdatePassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/ResetPassword" message="tns:IPermissionOpenService_ResetPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/ResetPasswordResponse" message="tns:IPermissionOpenService_ResetPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployee">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployee" message="tns:IPermissionOpenService_GetEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeResponse" message="tns:IPermissionOpenService_GetEmployee_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetEmployeeRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/SetEmployeeRole" message="tns:IPermissionOpenService_SetEmployeeRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/SetEmployeeRoleResponse" message="tns:IPermissionOpenService_SetEmployeeRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeMenus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeMenus" message="tns:IPermissionOpenService_GetEmployeeMenus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeMenusResponse" message="tns:IPermissionOpenService_GetEmployeeMenus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeRoles" message="tns:IPermissionOpenService_GetEmployeeRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeRolesResponse" message="tns:IPermissionOpenService_GetEmployeeRoles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeMenuData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeMenuData" message="tns:IPermissionOpenService_GetEmployeeMenuData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeMenuDataResponse" message="tns:IPermissionOpenService_GetEmployeeMenuData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeRoleData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeRoleData" message="tns:IPermissionOpenService_GetEmployeeRoleData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/GetEmployeeRoleDataResponse" message="tns:IPermissionOpenService_GetEmployeeRoleData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGoodsCategoryCodeOfMerchant">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPermissionOpenService/GetGoodsCategoryCodeOfMerchant" message="tns:IPermissionOpenService_GetGoodsCategoryCodeOfMerchant_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPermissionOpenService/GetGoodsCategoryCodeOfMerchantResponse" message="tns:IPermissionOpenService_GetGoodsCategoryCodeOfMerchant_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IPermissionOpenService" type="tns:IPermissionOpenService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EmployeeLogin">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/EmployeeLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddEmployee">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/AddEmployee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddExpressCompany">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/AddExpressCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddEmployeeAndSetRole">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/AddEmployeeAndSetRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/UpdatePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/ResetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployee">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/GetEmployee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetEmployeeRole">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/SetEmployeeRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeMenus">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/GetEmployeeMenus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeRoles">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/GetEmployeeRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeMenuData">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/GetEmployeeMenuData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeRoleData">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/GetEmployeeRoleData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGoodsCategoryCodeOfMerchant">
+      <soap:operation soapAction="http://tempuri.org/IPermissionOpenService/GetGoodsCategoryCodeOfMerchant" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PermissionOpenService">
+    <wsdl:port name="BasicHttpBinding_IPermissionOpenService" binding="tns:BasicHttpBinding_IPermissionOpenService">
+      <soap:address location="http://rfd-lms-ser.vancldb.com:9703/PMSOpenService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

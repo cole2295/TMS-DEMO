@@ -1,0 +1,217 @@
+﻿@model List<Vancl.TMS.Model.Sorting.Return.MerchantReturnBillViewModel>
+@{
+    //ViewBag.Title = "MerchantReturnBillPrintDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css" media="print">
+        .print
+        {
+            display: inline-block !important;
+        }
+        .noprint
+        {
+            display: none;
+        }
+        #PrintDeliverNo
+        {
+            width: 100%;
+        }
+        .itemSplit
+        {
+            border: 0 !important;
+        }
+        .pageBreak
+        {
+            page-break-after: always;
+        }
+    </style>
+    <style type="text/css">
+        .container
+        {
+            margin: 0 25px;
+        }
+        .GridView
+        {
+            border: 1px solid #888;
+            border-collapse: collapse;
+            width: 97%;
+            line-height: 25px;
+            margin: 10px auto;
+        }
+        .GridView th, .GridView td
+        {
+            border: 1px solid #888;
+            padding: 0 5px;
+            text-align: center;
+        }
+        .GridView td
+        {
+            font-size: x-small;
+        }
+        .GridView th
+        {
+            background: #eee;
+        }
+    </style>
+}
+<div id="p1" class="printBody">
+    <div style="text-align: center; font-size: x-large; font-style: inherit;">
+        <span id="lbtitle">@ViewBag.Title</span>
+    </div>
+    <div style="text-align: center; margin-top: 10px; margin-left:10px; ">
+        <table style=" white-space: nowrap; width:100%;" >
+            <tr>
+                <td style="width:30%; text-align:left;padding-left:15px;">
+                    <span id="lbtruck">运输车辆：</span>
+                </td>
+                <td style="width:30%; text-align:left;">
+                    <span id="lbdriver">运输司机：</span>
+                </td>
+                <td style=" text-align:right; padding-right:15px;">
+                    <span id="lbtime">打印日期：@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <table class="GridView" cellspacing="0" cellpadding="0" border="0" id="GridView1"
+        style="border-collapse: collapse;">
+        @{
+            if (ViewBag.List != null)
+            {
+                var MerchantName = (List<string>)ViewBag.MerchantNames;
+                var BillStatus = (List<string>)ViewBag.BillStatus;
+                foreach (var item in MerchantName)
+                {
+                    var statistic = "";
+                    var merchantCount = 0;
+                    foreach (var status in BillStatus)
+                    {
+                        var flag = false;
+
+                        foreach(var m in ViewBag.List)
+                        {
+                            if (m.MerchantName == item && (m.BillStatus == status || m.BillFormType==status))
+                            {flag = true;     }
+                        }
+                    if(flag)
+                    {
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    订单号
+                </th>
+                <th>
+                    商家名称
+                </th>
+                <th>
+                    发货日期
+                </th>
+                <th>
+                    订单类型
+                </th>
+                <th>
+                    订单状态
+                </th>
+                <th>
+                    应收金额
+                </th>
+                <th>
+                    应退金额
+                </th>
+                <th>
+                    配送员
+                </th>
+                <th>
+                    退货原因
+                </th>
+                <th>
+                    配送商
+                </th>
+            </tr>   
+            }
+            var count = 0;
+                    for (int i = 0; i < ViewBag.List.Count; i++)
+                    {
+                        var MrbModel = ViewBag.List[i];
+                        if (item == MrbModel.MerchantName && (MrbModel.BillStatus == status || MrbModel.BillFormType == status))
+                        {
+                            count++;
+                            merchantCount++;
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @MrbModel.CustomerOrder
+                </td>
+                <td>
+                    @MrbModel.MerchantName
+                </td>
+                <td>
+                    @MrbModel.CreateTime
+                </td>
+                <td>
+                    @MrbModel.BillFormType
+                </td>
+                <td>
+                    @MrbModel.BillStatus
+                </td>
+                <td>
+                    @MrbModel.NeedAmount
+                </td>
+                <td>
+                    @MrbModel.NeedBackAmount
+                </td>
+                <td>
+                    @MrbModel.EmployeeName
+                </td>
+                <td>
+                    @MrbModel.ReturnReason
+                </td>
+                <td>
+                    @MrbModel.DistributionName
+                </td>
+            </tr>
+                        }
+                    }
+                if(flag)
+                    {
+                    statistic += item + status + ": " + count + "单" + " ";
+
+            <tr>
+                <td colspan="15">
+                    @item @status : @count 单
+                </td>
+            </tr>
+            }
+                    }
+            <tr>
+                <td colspan="15">
+                    总计量：@merchantCount 单
+                </td>
+            </tr>
+            <tr>
+                <td colspan="15">
+                    @statistic
+                </td>
+            </tr>
+
+                }
+            <tr>
+                <td colspan="2">
+                    交接人签字：
+                </td>
+                <td colspan="13">
+                    &nbsp;
+                </td>
+            </tr>
+            }
+        }
+    </table>
+</div>
+<div>
+    <input type="button" id="btnPrint" class="noprint" value="打印" onclick="return window.print();" />
+</div>

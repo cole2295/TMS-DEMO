@@ -1,0 +1,74 @@
+﻿@model List<Vancl.TMS.Model.Transport.PreDispatch.ViewPreDispatchModel>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable center MultiSelect" id="scanList">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th style="width: 17%">
+                    批次号/箱号
+                </th>
+                <th style="width: 17%">
+                    商家名称
+                </th>
+                <th style="width: 17%">
+                    出发地
+                </th>
+                <th style="width: 17%">
+                    目的地
+                </th>
+                <th style="width: 17%">
+                    计划运输方式
+                </th>
+                 <th style="width: 17%">
+                    出库时间
+                </th>
+                 <th>
+                    默认线路计划
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model == null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var record = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" PDID="@record.PDID" TPID="@record.TPID" LPID="@record.LPID" BatchNo="@record.BatchNo" Source="@((int)record.Source)" CustomerBatchNo="@record.CustomerBatchNo" DepartureName="@record.DepartureName" DepartureID="@record.DepartureID" ArrivalName="@record.ArrivalName" ArrivalID="@record.ArrivalID" TransportType="@((int)record.TransportType)" TransportTypeDescription="@record.TransportTypeDescription" />
+                    </td>
+                    <td class="center">
+                        @record.CustomerBatchNo
+                    </td>
+                    <td class="center">
+                        @record.MerchantName
+                    </td>
+                    <td class="center">
+                        @record.DepartureName
+                    </td>
+                    <td class="center">
+                        @record.ArrivalName
+                    </td>
+                    <td class="center">
+                        @record.TransportTypeDescription
+                    </td>
+                    <td class="center">
+                        @record.OutBoundTime
+                    </td>
+                    <td class="center">
+                        <a href="#" onclick="showLinePlan('@record.LPID')">查看线路计划</a>
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>

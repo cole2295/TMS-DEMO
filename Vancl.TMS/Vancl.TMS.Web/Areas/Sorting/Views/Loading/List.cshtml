@@ -1,0 +1,200 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Sorting.Loading.BillTruckBatchModel>
+@{
+    ViewBag.Title = "订单装车 ";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        function AddTruck() {
+            location = "CreateTruck";
+        }
+
+        $(function(){
+            $("#S_Driver").change(function(){
+                var DriverID = $(this).val();
+                if(DriverID != "" && DriverID > 0) {
+                     $("#txtDriver").val($("option:selected",$(this)).text());
+                }
+            });
+            $("#txtDriver").blur(function(){
+                var ddlDriver = $("#S_Driver");
+                var ddlOption = $("#S_Driver option");
+                var DriverName = $(this).val();
+                var isValid = false;
+                if(DriverName !="" ){
+                        ddlOption.each(function() {
+                            if ($(this).text() ==DriverName) {
+                                 isValid = true;
+                                ddlDriver.attr("value", $(this).val());
+                                return false;
+                         }
+                    });
+                    if (!isValid) {
+                       alert("你输入的司机姓名不存在，请重新输入！");
+                       $(this).val("");
+                        ddlDriver.attr("value", '');
+                    }
+                }
+            });
+        });
+        function BatchLoading() {
+            var truckValue = $("#S_TruckNo").val();
+            if(truckValue==""){
+                alert("请选择车牌号。");
+                return;
+            }
+            var truckNo = truckValue.split('|')[0];
+            var gpsNo = truckValue.split('|')[1];
+            var driver = $("#S_Driver").val();
+            if(driver == ""){
+                driver = 0;
+            }
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if(arr)
+            {
+                var batchNos = "";
+                arr.each(function(){
+                    batchNos += $(this).val()+",";
+                })
+                ymPrompt.confirmInfo({ 
+                    title: '询问',
+                    message: '你确定要装车吗？',
+                    handler: function (tp) {
+                        if (tp == 'ok') {
+                            parms={};
+                            parms.BatchNos = batchNos.substr(0,batchNos.length-1);
+                            parms.TruckNo = truckNo;
+                            parms.Driver = driver;
+                            parms.GPSNo = gpsNo;
+                            $.ajax({
+                                url:"@Url.Action("BeginLoading")",
+                                data: parms ,
+                                dataType:"json",
+                                success:function(data){
+                                    if(data.IsSuccess)
+                                    {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnBillTruckListRefresh").click();
+                                    }
+                                    else
+                                    {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error:function()
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: "装车操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        客户
+                    </th>
+                    <td>
+                        <select name="S_Source" style="width: 150px">
+                            <option value="">--请选择--</option>
+                            <option value="0">Vancl</option>
+                            <option value="1">Vjia</option>
+                            <option value="2">其他</option>
+                        </select>
+                    </td>
+                    <th>
+                        批次号
+                    </th>
+                    <td>
+                        <input name="BatchNO" id="BatchNO" />
+                    </td>
+                    <th>
+                        出库时间
+                    </th>
+                    <td style="width: 400px">
+                        @Html.TextBox("outBoundBeginTime", DateTime.Now.ToString("yyyy-MM-dd 00:00:00"), new
+                       {
+                           @class = "Wdate1",
+                           onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm'})",
+                           @readonly = "readonly"
+                       })--
+                        @Html.TextBox("outBoundEndTime", DateTime.Now.ToString("yyyy-MM-dd 23:59:59"), new
+                       {
+                           @class = "Wdate1",
+                           onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm'})",
+                           @readonly = "readonly"
+                       })
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        配送商
+                    </th>
+                    <td>
+                        @*@Html.DropDownList("DistributorList")*@
+                        @Html.DropDownList("S_Distribution", (IEnumerable<SelectListItem>)ViewBag.Distribution, "--请选择--", new { style = "width:150px" })
+                    </td>
+                    <th>
+                        运单号
+                    </th>
+                    <td>
+                        <input name="FormCode" id="FormCode" />
+                    </td>
+                    <th>
+                        城市站点
+                    </th>
+                    <td>
+                        @{Html.RenderPartial("CityAndStation");}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="5">
+                        <input type="checkbox" id="ckbShowLoadingBill" name="ckbShowLoadingBill" checked="checked" onchange="$('#btnSearch').click();" />
+                        只显示未装完车订单
+                    </th>
+                    <td>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <table class="tb_insert Fixed">
+        <tr>
+            <th>
+                车牌号
+            </th>
+            <td>@Html.DropDownList("S_TruckNo", (IEnumerable<SelectListItem>)ViewBag.TruckNos, "--请选择--", new { style = "width:120px" })
+            </td>
+            <th>
+                司机
+            </th>
+            <td>
+                @Html.DropDownList("S_Driver", (IEnumerable<SelectListItem>)ViewBag.Drivers, "--请选择--", new { style = "width:120px" })
+            </td>
+            <td>
+                <input type="text" id="txtDriver" value="" style="width: 120px" />
+            </td>
+            <td style="width: 500px">
+                <input id="btnSave" type="button" name="btnSave" value="确定" class="button" onclick="BatchLoading();" />
+            </td>
+        </tr>
+    </table>
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialBillTruckList", Model); }
+    </div>
+}

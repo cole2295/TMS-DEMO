@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A875B9AD-11FD-415A-ACA6-AB4A0BEAA12D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.BLL.Proxy</RootNamespace>
+    <AssemblyName>Vancl.TMS.BLL.Proxy</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="InBoundProxy.cs" />
+    <Compile Include="Service References\TMSAPIService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="UserContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\PMSService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PMSService\PermissionOpenService1.wsdl" />
+    <None Include="Service References\PMSService\PMSOpenService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PMSService\PMSOpenService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PMSService\PMSOpenService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PMSService\PMSOpenService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PMSService\PMSOpenService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.AgentRelationModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.City.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.Distribution.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.Employee.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.ExpressCompany.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.Menu.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.MerchantBaseInfoModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.Notice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.OperationGuide.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.OutMerchantSortingCenter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.Province.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.Role.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.RoleCity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PMSService\Vancl.TMS.BLL.Proxy.PMSService.Station.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TMSAPIService\TMSAPIService.wsdl" />
+    <None Include="Service References\TMSAPIService\TMSAPIService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TMSAPIService\TMSAPIService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TMSAPIService\TMSAPIService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TMSAPIService\TMSAPIService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TMSAPIService\TMSAPIService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TMSAPIService\TMSAPIService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TMSAPIService\Vancl.TMS.BLL.Proxy.TMSAPIService.InboundPreConditionModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TMSAPIService\Vancl.TMS.BLL.Proxy.TMSAPIService.ResultModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TMSAPIService\Vancl.TMS.BLL.Proxy.TMSAPIService.SortCenterToStationModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TMSAPIService\Vancl.TMS.BLL.Proxy.TMSAPIService.SortCenterUserModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TMSAPIService\Vancl.TMS.BLL.Proxy.TMSAPIService.ViewInboundSimpleModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\PMSService\" />
+    <WCFMetadataStorage Include="Service References\TMSAPIService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\RFD.LMS.ServiceImpl.PMSOpenService.Employee.datasource" />
+    <None Include="Properties\DataSources\RFD.LMS.ServiceImpl.PMSOpenService.Menu.datasource" />
+    <None Include="Properties\DataSources\RFD.LMS.ServiceImpl.PMSOpenService.Role.datasource" />
+    <None Include="Service References\PMSService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PMSService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
+    <None Include="Service References\PMSService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.RFD.LMS.PDA.Core\Vancl.TMS.PDA.Core.csproj">
+      <Project>{92672E01-66FA-4059-AD32-7F3A8E64BBA6}</Project>
+      <Name>Vancl.TMS.PDA.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PMSService\PMSOpenService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TMSAPIService\TMSAPIService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TMSAPIService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TMSAPIService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TMSAPIService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,73 @@
+﻿@model List<Vancl.TMS.Model.Sorting.Outbound.OutboundPrintModel>
+<div class="toolbar">
+    <ul>
+@*
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "Print", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })</li>
+*@
+        <li class="toolbtn"><a href="javascript:exportOutbound();" class="expand">导出数据</a></li>
+        <li class="toolbtn"><a href="javascript:sendMail();" class="modify">批量发邮件</a></li>
+        <li class="toolbtn"><a href="javascript:showReceipt();" class="print">打印交接单</a></li>
+    </ul>
+    @if (Model != null)
+    {
+        <div id="dispatchStatInfo" class="blue fright">
+            出库单量共计：@Model.Sum(x => x.PackageNum) 单 &nbsp; 重量合计：@Model.Sum(x => x.BoxWeight)Kg &nbsp;
+            保价金额共计：@Model.Sum(x => x.InsuredAmount)&nbsp; &nbsp;
+        </div>
+    }
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable MultiSelect"
+        id="tblBillInfo">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    站点
+                </th>
+                <th>
+                    批次
+                </th>
+                <th>
+                    单量
+                </th>
+                <th>
+                    重量
+                </th>
+                <th>
+                    站点邮箱地址
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                <tr>
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@item.ExpressCompanyID|@item.BatchNo|@item.Email" />
+                    </td>
+                    <td>
+                        @item.CompanyName
+                    </td>
+                    <td class="center">
+                        <a class="blue" href="javascript:showBatchDetails('@item.BatchNo');">@item.BatchNo</a>
+                    </td>
+                    <td class="center">
+                        @item.PackageNum
+                    </td>
+                    <td class="center">
+                        @item.BoxWeight
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

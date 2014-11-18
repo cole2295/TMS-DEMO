@@ -1,0 +1,62 @@
+﻿@model IList<Vancl.TMS.Model.Claim.Lost.ViewLostOrderModel>
+@{
+    ViewBag.Title = "订单列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //返回选中的订单列表
+        function SaveLostOrder() {
+            var boxNo = Request.QueryString("BoxNo").trim();
+            var orderList = [];
+            var checkedObj = $(".CbxColumn:not('th') :checked");
+            if ($(".CbxColumn:not('th')").length == checkedObj.length) {
+                ymPrompt.doHandler("CheckAll", true, boxNo);
+            }else if(checkedObj.length==0){
+                ymPrompt.doHandler("NoCheck", true, boxNo);
+            }else{
+                checkedObj.each(function () {
+                    var orderObj = {};
+                    orderObj.BoxNo = boxNo;
+                    orderObj.FormCode = $(this).parent().next().html().trim();
+                    orderList.push(orderObj);
+                });
+                ymPrompt.doHandler("CheckPart", true, orderList);
+            }
+        }
+        //初始选中已丢失订单
+        $(function () {
+            var preLostOrder = window.top.UserData
+            var preLostOrderJson = JSON.parse(preLostOrder);
+            var operate = Request.QueryString("Operate").trim();
+            var checkAll = Request.QueryString("CheckAll").trim();
+            $(":checkbox").each(function () {
+                if (operate == "ShowDetail") {
+                    $(this).attr("disabled", "disabled");
+                }
+                if (checkAll == "true") {
+                    $(this).attr("checked", "checked");
+                }
+                else {
+                    var formCode = $(this).parent().next().html().trim();
+                    for (var j = 0; j < preLostOrderJson.length; j++) {
+                        if (preLostOrderJson[j].FormCode == formCode) {
+                            $(this).attr("checked", "checked");
+                        }
+                    }
+                }
+            });
+            if (operate == "ShowDetail") {
+                $("#btnOK").hide();
+            }
+        }); 
+    </script>
+}
+@section list
+{
+    <div id="DelayHandleList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialLostOrderList", Model); }
+    </div>
+}
+
+

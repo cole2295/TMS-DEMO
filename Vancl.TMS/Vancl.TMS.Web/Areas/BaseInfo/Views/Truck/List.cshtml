@@ -1,0 +1,87 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.BaseInfo.Truck.ViewTruckModel>
+@{
+    ViewBag.Title = "车辆查询";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        function AddTruck() {
+            location = "CreateTruck";
+        }
+        function UpdateTruck() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if (arr) {
+                var tbid = arr.eq(0).val();
+                location = "Update/" + tbid;
+            }
+        }
+        //停用
+        function SetDisabled() {
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if(arr)
+            {
+                var ids = "";
+                arr.each(function(){
+                    ids += $(this).val()+",";
+                })
+                ymPrompt.confirmInfo({ 
+                    title: '询问',
+                    message: '你确定要停用选择的 ' + arr.length + ' 项？',
+                    handler: function (tp) {
+                        if (tp == 'ok') {
+                            $.ajax({
+                                url:"@Url.Action("SetDisabled")",
+                                data:"ids="+ids.substr(0,ids.length-1),
+                                dataType:"json",
+                                success:function(data){
+                                    if(data.IsSuccess)
+                                    {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnTruckListRefresh").click();
+                                    }
+                                    else
+                                    {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error:function()
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: "停用操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        <label for="S_TruckNO">
+                            车牌号
+                        </label>
+                    </th>
+                    <td>
+                        <input name="S_TruckNO"/>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialTruckList", Model); }
+    </div>
+}

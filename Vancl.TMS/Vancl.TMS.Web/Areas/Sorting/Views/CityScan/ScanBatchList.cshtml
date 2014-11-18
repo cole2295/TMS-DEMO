@@ -1,0 +1,42 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.CityScan.CityScanExprotModel>
+
+@{
+    ViewBag.Title = "同城单量统计批次明细";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+
+@section head{
+    <style type="text/css">
+        .tableSummary
+        {
+            font-size:16px;
+            font-weight:bold;
+            line-height:30px;
+            width:100%;
+            text-align:center;
+        }
+    </style>
+}
+
+@section list{
+    @if (Model != null && Model.Count > 0)
+    {
+        <table cellpadding="0" cellspacing="0" border="0" class="tableSummary">
+            <tr>
+                <td style="width:30%">批次号：@Request["batchno"]</td>
+                <td style="width:30%">运单总数：@Model.Count</td>
+                <td style="width:30%">应收金额：@Model.Sum(row=>Convert.ToDecimal(row.ReceivableAmount))</td>
+            </tr>
+        </table>
+        <div id="SearchResultList" class="DataGirdPanel">
+            @{Html.RenderPartial("_PartialScanBatchList", Model);}
+        </div>
+    
+    }
+    else
+    {
+        <div style=" width:100%; text-align:center; margin:50px; font-size:20px;">
+           当前批次 @Request["batchno"] 没有查询到信息
+        </div>
+    }
+}

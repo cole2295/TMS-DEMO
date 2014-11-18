@@ -1,0 +1,100 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.ImportRecord.DeliveryInRecordModel>
+@using Vancl.TMS.Util.DateTimeUtil
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnLogListRefresh" })</li>
+        @*<li class="toolbtn"><a class="add" href="javascript:ImportDelivery();">导入提货单</a></li>*@
+        <li class="toolbtn"><a class="barcode" href="javascript:CreateDeliveryByScan();">扫描生成提货单</a></li>
+        <li class="toolbtn"><a class="search" href="javascript:CreateDeliveryByQuery();">查询生成提货单</a></li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect"
+        id="DataTables1">
+        <thead>
+            <tr>
+                <th style="width: 80px;">
+                    系统ID号
+                </th>
+                <th style="width: 80px;">
+                    批次号
+                </th>
+                <th style="width: 100px;">
+                    总记录数
+                </th>
+                <th style="width: 100px;">
+                    失败记录数
+                </th>
+                <th style="width: 100px;">
+                    回执文件
+                </th>
+                <th style="width: 100px;">
+                    创建时间
+                </th>
+                <th style="width: 120px;">
+                    创建人
+                </th>
+                <th style="width: 120px;">
+                    来源
+                </th>
+                <th>
+                    备注
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var record = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="center">
+                        @record.RecordID
+                    </td>
+                    <td class="center">
+                        @record.BatchNo
+                    </td>
+                    <td class="center">
+                        @record.RecordCount
+                    </td>
+                    <td class="center">
+                        @record.FaultCount
+                    </td>
+                    <td class="center">
+                        <a href="#" onclick="downloadfile('@Url.Action("DownLoadErrorFile")?path=@record.FilePath')">下载</a>
+                    </td>
+                    <td class="center">
+                        @record.CreateTime
+                    </td>
+                    <td class="center">
+                        @if(string.IsNullOrWhiteSpace(record.CreateByName))
+                        {
+                            <span>系统服务</span>
+                        }
+                        else
+                        {
+                            <span>@record.CreateByName</span>
+                        }
+                    </td>
+                    <td class="center">
+                        @Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription((Vancl.TMS.Model.Common.Enums.DeliverySource)record.DeliverySource)
+                    </td>
+                    <td class="left">
+                        @record.Note
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

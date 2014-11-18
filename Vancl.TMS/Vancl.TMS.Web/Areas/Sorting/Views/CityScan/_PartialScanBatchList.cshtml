@@ -1,0 +1,47 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.CityScan.CityScanExprotModel>
+
+@{
+    ViewBag.Title = "_PartialScanBatchList";
+}
+
+<div class="tablelist center">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="DispatchTable">
+        <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    运单号
+                </th>
+                <th>
+                    配送站点
+                </th>
+                <th>
+                    配送商家
+                </th>
+                <th>
+                    扫描时间
+                </th>
+                <th>
+                    应收金额
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <tr>
+                    <td>@item.SerialNumber</td>
+                    <td>@item.FormCode</td>
+                    <td>@item.DeliverStationName</td>
+                    <td>@item.MerchantName</td>
+                    <td>@item.ScanTime</td>
+                    <td>@item.ReceivableAmount</td>
+                </tr>
+            }
+            </tbody>
+    </table>
+</div>

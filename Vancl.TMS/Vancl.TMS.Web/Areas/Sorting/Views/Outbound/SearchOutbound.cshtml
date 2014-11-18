@@ -1,0 +1,70 @@
+﻿@model Vancl.TMS.Model.Sorting.Outbound.ViewOutboundSearchListModel
+@{
+    ViewBag.Title = "查询出库";
+    ViewBag.SearchTitle = "查询出库项";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script src="@Url.Content("~/scripts/pages/sorting/Outbound.js?" + DateTime.Now.ToString("yyyyMMdd"))" type="text/javascript"></script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert">
+                <tr id="trSortingCenterSelect">
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="0"
+                            id="rdoStation" checked="checked" />分拣站点：
+                    </th>
+                    <td>
+                        @{Html.RenderPartial("CityAndStation");}
+                    </td>
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="2"
+                            id="rdoSortingCenter" style="margin-left: 50px;" />二级分拣：
+                    </th>
+                    <td>
+                        @Html.DropDownList("SortingCenterList")
+                    </td>
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="3"
+                            id="rdoDistribution" style="margin-left: 50px;" />配送商：
+                    </th>
+                    <td>
+                        @Html.DropDownList("DistributorList")
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="txtInboundStartTime">
+                            入库时间</label>
+                    </th>
+                    <td>
+                        <input id="txtInboundStartTime" name="InboundStartTime" type="text" class="textbox" value="@DateTime.Now.ToString("yyyy-MM-dd 00:00:00")"
+                            readonly="readonly" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                    </td>
+                    <th>
+                        <label for="txtInboundEndTime">
+                            到</label>
+                    </th>
+                    <td>
+                        <input id="txtInboundEndTime" name="InboundEndTime" type="text" class="textbox" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd 23:59:59")"
+                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                    </td>
+                    <td colspan="2">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button"  onclick="return ValidateSearchCondition();"/>
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialSearchOutboundList", Model); }
+    </div>
+}

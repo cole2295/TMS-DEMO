@@ -1,0 +1,153 @@
+﻿@model List<Vancl.TMS.Model.Sorting.Return.ReturnBillSortingDetailModel>
+@{
+    ViewBag.Title = "箱号明细";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/references/jquery-barcode-2.0.2.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var value = $("#barcode").attr("barcode");
+            $("#barcode").barcode(value, "code128", { barWidth: 1, barHeight: 40 })
+            var width = 0;
+            $("#barcode>div:not(:last-child)").each(function () {
+                width += parseInt($(this).outerWidth());
+            });
+            $("#barcode").width(width + 10);
+        });
+    </script>
+    <style type="text/css" media="print">
+        .print
+        {
+            display: inline-block !important;
+        }
+        .noprint
+        {
+            display: none;
+        }
+        #PrintDeliverNo
+        {
+            width: 100%;
+        }
+        .itemSplit
+        {
+            border: 0 !important;
+        }
+        .pageBreak
+        {
+            page-break-after: always;
+        }
+    </style>
+    <style type="text/css">
+        .container
+        {
+            margin: 0 25px;
+        }
+        .GridView
+        {
+            border: 1px solid #888;
+            border-collapse: collapse;
+            width: 97%;
+            line-height: 25px;
+            margin: 10px auto;
+        }
+        .GridView th, .GridView td
+        {
+            border: 1px solid #888;
+            padding: 0 5px;
+            text-align: center;
+        }
+        .GridView th
+        {
+            background: #eee;
+        }
+    </style>
+}
+<div id="p1" class="printBody">
+    <table class="GridView" cellspacing="0" cellpadding="0" border="0" id="GridView1"
+        style="border-collapse: collapse;">
+        <tr>
+            @{
+            
+                var box = (Vancl.TMS.Model.Sorting.Return.BillReturnBoxInfoModel)ViewBag.Box;
+                    //ViewContext.Writer.Write(box.BoxNo);
+            }
+            <td colspan="2">
+                <div id="barcode" barcode="@box.BoxNo" style="margin:5px auto 5px;">
+                </div>
+            </td>
+            <td colspan="2">
+                发货日期：@box.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                上级接货部门
+            </td>
+            <td>@box.ReturnTo
+            </td>
+            <td>
+                当前操作部门
+            </td>
+            <td>@box.CurrentDeptName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                运单数量
+            </td>
+            <td>@box.BillNum
+            </td>
+            <td>
+                总重量(Kg)
+            </td>
+            <td>@box.Weight
+            </td>
+        </tr>
+        <tr>
+            <th>
+                运单号明细
+            </th>
+            <th>
+                重量(Kg)
+            </th>
+            <th>
+                运单号明细
+            </th>
+            <th>
+                重量(Kg)
+            </th>
+        </tr>
+        @{  for (int i = 0; i < Model.Count; )
+            {   
+            <tr>
+                @{for (int j = i; j < Model.Count; j++, i = j)
+                  {
+                      if (i != 0 && i % 2 == 0)
+                      {
+                          break;
+                      }
+                    <td>@Model[j].FormCode
+                    </td>
+                    <td>
+                        @Model[j].Weight
+                    </td>                    
+                  }
+                   if (i == Model.Count && i % 2 == 1)
+                      {
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>  
+                      }
+                }
+            </tr>    
+            }
+        }
+    </table>
+</div>
+<div>
+    <input type="button" id="btnPrint" value="打印" class="noprint" onclick="return window.print();" />
+</div>

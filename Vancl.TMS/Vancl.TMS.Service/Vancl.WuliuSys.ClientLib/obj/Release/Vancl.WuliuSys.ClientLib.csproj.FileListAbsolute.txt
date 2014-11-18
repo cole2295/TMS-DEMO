@@ -1,0 +1,11 @@
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\bin\Release\Vancl.WuliuSys.ClientLib.dll.config
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\bin\Release\Vancl.WuliuSys.ClientLib.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\bin\Release\Vancl.WuliuSys.ClientLib.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\bin\Release\Ionic.Zip.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\bin\Release\Ionic.Zip.xml
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\obj\Release\Vancl.WuliuSys.ClientLib.csprojResolveAssemblyReference.cache
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\obj\Release\Vancl.WuliuSys.ClientLib.Properties.ClientLibResource.resources
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\obj\Release\Vancl.WuliuSys.ClientLib.WeighComp.WeighComponent.resources
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\obj\Release\Vancl.WuliuSys.ClientLib.csproj.GenerateResource.Cache
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\obj\Release\Vancl.WuliuSys.ClientLib.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientLib\obj\Release\Vancl.WuliuSys.ClientLib.pdb

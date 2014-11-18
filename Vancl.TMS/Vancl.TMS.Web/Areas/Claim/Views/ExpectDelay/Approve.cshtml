@@ -1,0 +1,106 @@
+﻿@using Vancl.TMS.Web.WebControls.Mvc;
+@model Vancl.TMS.Model.Claim.ViewExpectDelayModel
+@{
+    ViewBag.Title = "处理延迟交货申请";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.tmpl.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">        
+        function createSuccess(Result) {      
+            ymPrompt.doHandler("ok", true, { action: 'create', result: Result })
+        }
+                
+        function cancel() {
+            ymPrompt.doHandler("cancel", true, { action: 'create', result: 'cancel' })
+        }
+        
+        function approve(isPass) {
+            $("#hidApproveResult").val(isPass?"true":"false");
+            $("form").submit();
+        }
+
+        function AjaxSuccess(data, textStatus, jqXHR) {
+            ymPrompt.doHandler("ok", true, data);
+        }
+    </script>
+}
+@using (Ajax.BeginForm(new AjaxOptions { OnSuccess = "AjaxSuccess", OnFailure = "AjaxError", LoadingElementId = "Loading" }))
+{
+    <table class=" tb_insert">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    @Html.HiddenFor(model => model.DispatchID)
+                    <input id="hidApproveResult" type="hidden" name="ApproveResult" />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    提货单号
+                </th>
+                <td>
+                    @Model.DeliveryNo
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    预计延误时长
+                </th>
+                <td>
+                    @Model.DelayTime
+                    (单位：小时)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    预计延误类型
+                </th>
+                <td>
+                    @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.ExpectDelayType>(Model.ExpectDelayType.ToString()))
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    预计延误原因
+                </th>
+                <td>
+                    @Model.DelayDesc
+                </td>
+            </tr>
+            @if (Model.ApproveStatus != Vancl.TMS.Model.Common.Enums.ApproveStatus.NotApprove)
+            {
+                <tr>
+                    <th>
+                        审核状态
+                    </th>
+                    <td>
+                        <span class="red">
+                            @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.ApproveStatus>(Model.ApproveStatus.ToString()))
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        @if (Model.ApproveStatus == Vancl.TMS.Model.Common.Enums.ApproveStatus.NotApprove)
+        {
+            <input type="button" class="button" value="通过" onclick='approve(true);' />
+            <input type="button" class="button" value="不通过" onclick='approve(false);' />
+        }
+        else
+        {
+            <input type="button" class="button" value="关闭" onclick='cancel();' />
+        }
+    </div>
+    <div>
+    </div>
+}

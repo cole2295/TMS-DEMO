@@ -1,0 +1,137 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Delivery.InTransit.ViewInTransitModel>
+@{
+    ViewBag.Title = "运输在途列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">    
+        //修改
+        function updateDispatch()
+        {
+            var obj = TMS.Page.CheckDataTableChecked();
+            if(obj)
+            {
+                var deliveryNo= obj.attr("DeliveryNo");
+                var dispatchID= obj.attr("DispatchID");
+                var desReceiveDate= obj.attr("DesReceiveDate");
+                ymPrompt.win({ message: "@Url.Action("SetWaybillInfo")/"+dispatchID, width: 360, height: 300, title: '录入基本信息',
+                    handler: function (tp, data) {
+                        if (tp == "ok") {
+                            //刷新列表
+                            $("#btnCarrierListRefresh").click();                        
+                        }
+                    }, maxBtn: false, minBtn: false, iframe: true
+                }); 
+            }
+        }
+
+        function setArrive() {
+            var obj = TMS.Page.CheckDataTableChecked();
+            if(obj)
+            {
+                var desReceiveDate= obj.attr("DesReceiveDate");
+                var dispatchID= obj.attr("DispatchID");
+
+                if($.trim(desReceiveDate)=="" && @(ViewBag.ConfirmLimited ? "true" : "false")){                    
+                    ymPrompt.alert({title:'提示',message:'该提货单还未到货！'});
+                }
+                else{
+                    ymPrompt.win({ message: "@Url.Action("setArrive")/"+dispatchID, width: 380, height: 340, title: '确认到货',
+                        handler: function (tp, data) {
+                            if (tp == "ok") {
+                                //刷新列表
+                                $("#btnCarrierListRefresh").click();                        
+                            }
+                        }, maxBtn: false, minBtn: false, iframe: true
+                    });         
+                }
+            }   
+        }
+
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <div>
+                <table class="tb_insert Fixed">
+                    <tr>
+                        <th>
+                            <label for="txtDeliveryNO">
+                                提货单号</label>
+                        </th>
+                        <td>
+                            <input id="txtDeliveryNO" name="DeliveryNO" type="text" class="textbox" />
+                        </td>
+                        <th>
+                            <label for="txtWaybillNO">
+                                物流单号</label>
+                        </th>
+                        <td>
+                            <input id="txtWaybillNO" name="WaybillNO" type="text" class="textbox" />
+                        </td>
+                        <th>
+                            <label for="CarrierID">
+                                承运商</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("CarrierID", null, "--请选择--", new { style = "width:100px" })
+                        </td>
+                        <th>
+                            <label for="txtArrivalCity">
+                                到达城市</label>
+                        </th>
+                        <td>
+                            <input id="txtArrivalCity" name="ArrivalCity" type="text" class="textbox" />
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="txtDeliveryTimeBegin">
+                                发货时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DeliveryTimeBegin", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtDeliveryTimeEnd">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DeliveryTimeEnd", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtExpectTimeBegin">
+                                预计到货时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("ExpectTimeBegin","", new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+
+                        </td>
+                        <th>
+                            <label for="txtExpectTimeEnd">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("ExpectTimeEnd","", new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <td>
+                            <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                            <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialInTransitList", Model); }
+    </div>
+}

@@ -1,0 +1,17 @@
+﻿*{margin:0;padding:0;border:1;font-weight:inherit;font-style:inherit;font-size:100%;font-family:simsun;}
+ul,dl{list-style-type:none;margin:0px;padding:0px;}
+.select{width:140px;height:auto;float:left; font-size:12px; margin-right:5px;}
+.btn-success{width:auto;height:28px;float:left; overflow:hidden}
+.btn-success_l{width:4px;height:28px;float:left;background:url(../images/xuanzhe_pic.png) no-repeat;}
+.btn-success_c{width:auto;height:28px;float:left;background:url(../images/xuanzhe_center.gif);line-height:28px;color:#fff;padding:0 5px;cursor:pointer;}
+.btn-success_c span{line-height:30px; height:30px; font-weight:bold;}
+.btn-success_c a{color:#fff;text-decoration:none;}
+.btn-success_c a:hover{color:#fff;text-decoration:none;}
+.btn-success_r{width:26px;height:28px;float:left;}
+.btn-success_r span{width:26px;height:28px;float:left;background:url(../images/xuanzhe_inco.jpg) no-repeat; cursor:pointer; }
+.btn-success_r a:hover{background:url(../images/xuanzhe_inco.jpg) no-repeat 0 -28px;}
+.btn-success_r span.hover{background:url(../images/xuanzhe_inco.jpg) no-repeat 0 -28px;}
+.dropdown-menu{width:auto;height:auto;float:left;border:1px solid #777;padding:2px 0;border-radius:5px;display:none;margin-top:1px;position:absolute; top:28px; left:0px; z-index:999; background-color:#fff;    }
+.dropdown-menu li{float:left;line-height:24px;height:24px;color:#555;overflow:hidden; cursor:pointer; padding-left:10px;}
+.dropdown-menu li.hover{color:#fff; background:#0088cc;}
+ 

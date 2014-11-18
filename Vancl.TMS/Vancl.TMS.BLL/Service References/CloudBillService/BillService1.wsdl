@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BillService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" />
+      <xsd:import schemaLocation="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IBillService_GetWaybillModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillModel" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillInfoByWaybillNo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillInfoByWaybillNo" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillInfoByWaybillNo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillInfoByWaybillNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillInfoByCustomerOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillInfoByCustomerOrder" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillInfoByCustomerOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillInfoByCustomerOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillTakeSendInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillTakeSendInfo" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillTakeSendInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillTakeSendInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillTakeSendInfoList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillTakeSendInfoList" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillTakeSendInfoList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillTakeSendInfoListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillSignInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillSignInfo" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillSignInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillSignInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillSignInfoList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillSignInfoList" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillSignInfoList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillSignInfoListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetTurnStationModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTurnStationModel" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetTurnStationModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTurnStationModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_WaybillReturnInfoList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WaybillReturnInfoList" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_WaybillReturnInfoList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WaybillReturnInfoListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillReturnModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillReturnModel" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillReturnModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillReturnModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillReturnInfoModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillReturnInfoModel" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillReturnInfoModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillReturnInfoModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillBackDetailPrintModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillBackDetailPrintModel" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillBackDetailPrintModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillBackDetailPrintModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetTransitBoxModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTransitBoxModel" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetTransitBoxModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTransitBoxModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetReturnWaybillStatistic_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReturnWaybillStatistic" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetReturnWaybillStatistic_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReturnWaybillStatisticResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetphoneMessageTemplate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetphoneMessageTemplate" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetphoneMessageTemplate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetphoneMessageTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_IsWaybillLoading_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsWaybillLoading" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_IsWaybillLoading_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsWaybillLoadingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillByBatchNoOrFormCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillByBatchNoOrFormCode" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_GetWaybillByBatchNoOrFormCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaybillByBatchNoOrFormCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_IsWaybillReturning_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsWaybillReturning" />
+  </wsdl:message>
+  <wsdl:message name="IBillService_IsWaybillReturning_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsWaybillReturningResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IBillService">
+    <wsdl:operation name="GetWaybillModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillModel" message="tns:IBillService_GetWaybillModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillModelResponse" message="tns:IBillService_GetWaybillModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillInfoByWaybillNo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillInfoByWaybillNo" message="tns:IBillService_GetWaybillInfoByWaybillNo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillInfoByWaybillNoResponse" message="tns:IBillService_GetWaybillInfoByWaybillNo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillInfoByCustomerOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillInfoByCustomerOrder" message="tns:IBillService_GetWaybillInfoByCustomerOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillInfoByCustomerOrderResponse" message="tns:IBillService_GetWaybillInfoByCustomerOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillTakeSendInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillTakeSendInfo" message="tns:IBillService_GetWaybillTakeSendInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillTakeSendInfoResponse" message="tns:IBillService_GetWaybillTakeSendInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillTakeSendInfoList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillTakeSendInfoList" message="tns:IBillService_GetWaybillTakeSendInfoList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillTakeSendInfoListResponse" message="tns:IBillService_GetWaybillTakeSendInfoList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillSignInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillSignInfo" message="tns:IBillService_GetWaybillSignInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillSignInfoResponse" message="tns:IBillService_GetWaybillSignInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillSignInfoList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillSignInfoList" message="tns:IBillService_GetWaybillSignInfoList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillSignInfoListResponse" message="tns:IBillService_GetWaybillSignInfoList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTurnStationModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetTurnStationModel" message="tns:IBillService_GetTurnStationModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetTurnStationModelResponse" message="tns:IBillService_GetTurnStationModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WaybillReturnInfoList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/WaybillReturnInfoList" message="tns:IBillService_WaybillReturnInfoList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/WaybillReturnInfoListResponse" message="tns:IBillService_WaybillReturnInfoList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillReturnModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillReturnModel" message="tns:IBillService_GetWaybillReturnModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillReturnModelResponse" message="tns:IBillService_GetWaybillReturnModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillReturnInfoModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillReturnInfoModel" message="tns:IBillService_GetWaybillReturnInfoModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillReturnInfoModelResponse" message="tns:IBillService_GetWaybillReturnInfoModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillBackDetailPrintModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillBackDetailPrintModel" message="tns:IBillService_GetWaybillBackDetailPrintModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillBackDetailPrintModelResponse" message="tns:IBillService_GetWaybillBackDetailPrintModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransitBoxModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetTransitBoxModel" message="tns:IBillService_GetTransitBoxModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetTransitBoxModelResponse" message="tns:IBillService_GetTransitBoxModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReturnWaybillStatistic">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetReturnWaybillStatistic" message="tns:IBillService_GetReturnWaybillStatistic_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetReturnWaybillStatisticResponse" message="tns:IBillService_GetReturnWaybillStatistic_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetphoneMessageTemplate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetphoneMessageTemplate" message="tns:IBillService_GetphoneMessageTemplate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetphoneMessageTemplateResponse" message="tns:IBillService_GetphoneMessageTemplate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsWaybillLoading">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/IsWaybillLoading" message="tns:IBillService_IsWaybillLoading_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/IsWaybillLoadingResponse" message="tns:IBillService_IsWaybillLoading_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillByBatchNoOrFormCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/GetWaybillByBatchNoOrFormCode" message="tns:IBillService_GetWaybillByBatchNoOrFormCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/GetWaybillByBatchNoOrFormCodeResponse" message="tns:IBillService_GetWaybillByBatchNoOrFormCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsWaybillReturning">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBillService/IsWaybillReturning" message="tns:IBillService_IsWaybillReturning_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBillService/IsWaybillReturningResponse" message="tns:IBillService_IsWaybillReturning_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IBillService" type="tns:IBillService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWaybillModel">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillInfoByWaybillNo">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillInfoByWaybillNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillInfoByCustomerOrder">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillInfoByCustomerOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillTakeSendInfo">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillTakeSendInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillTakeSendInfoList">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillTakeSendInfoList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillSignInfo">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillSignInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillSignInfoList">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillSignInfoList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTurnStationModel">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetTurnStationModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WaybillReturnInfoList">
+      <soap:operation soapAction="http://tempuri.org/IBillService/WaybillReturnInfoList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillReturnModel">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillReturnModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillReturnInfoModel">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillReturnInfoModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillBackDetailPrintModel">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillBackDetailPrintModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransitBoxModel">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetTransitBoxModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReturnWaybillStatistic">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetReturnWaybillStatistic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetphoneMessageTemplate">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetphoneMessageTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsWaybillLoading">
+      <soap:operation soapAction="http://tempuri.org/IBillService/IsWaybillLoading" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaybillByBatchNoOrFormCode">
+      <soap:operation soapAction="http://tempuri.org/IBillService/GetWaybillByBatchNoOrFormCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsWaybillReturning">
+      <soap:operation soapAction="http://tempuri.org/IBillService/IsWaybillReturning" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BillService">
+    <wsdl:port name="BasicHttpBinding_IBillService" binding="tns:BasicHttpBinding_IBillService">
+      <soap:address location="http://exchange.wuliusys.com/CloudBillService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

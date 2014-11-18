@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<services domain="baseService" desc="基础服务">
+  <!--业务层服务-->
+  <service name="MERCHANTWAREHOUSEBLL" className="Vancl.TMS.BLL.LadingBill.MERCHANTWAREHOUSEBLL" desc="提货计划服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.LadingBill.IMERCHANTWAREHOUSEBLL" />
+  <service name="LB_PLANBLL" className="Vancl.TMS.BLL.LadingBill.LB_PLANBLL" desc="提货计划服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.LadingBill.ILB_PLANBLL" />
+  <service name="LB_TASKBLL" className="Vancl.TMS.BLL.LadingBill.LB_TASKBLL" desc="提货任务服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.LadingBill.ILB_TASKBLL" />
+
+
+  <service name="FileProcessingBLL" className="Vancl.TMS.BLL.History.FileProcessingBLL" desc="文件操作" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.History.IFileProcessingBLL" />
+  <service name="BillTemplatePrintBLL" desc="面单模板打印" serviceName="Vancl.TMS.IBLL.Sorting.BillPrint.IBillTemplatePrintBLL" loadFrom="Vancl.TMS.BLL.dll" className="Vancl.TMS.BLL.Sorting.BillPrint.BillTemplatePrintBLL" />
+  <service name="PermissionBLL" desc="" serviceName="Vancl.TMS.IBLL.Common.IPermissionBLL" loadFrom="Vancl.TMS.BLL.dll" className="Vancl.TMS.BLL.Common.PermissionBLL" />
+  <service name="DistributionBLL" desc="" serviceName="Vancl.TMS.IBLL.BaseInfo.IDistributionBLL" loadFrom="Vancl.TMS.BLL.dll" className="Vancl.TMS.BLL.BaseInfo.DistributionBLL" />
+  <service name="EmployeeBLL" desc="" serviceName="Vancl.TMS.IBLL.BaseInfo.IEmployeeBLL" loadFrom="Vancl.TMS.BLL.dll" className="Vancl.TMS.BLL.BaseInfo.EmployeeBLL" />
+  <service name="VerificationCode" className="Vancl.TMS.BLL.Common.FileVerificationBLL" desc="验证码操作" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Common.IVerificationCode" />
+  <service name="DispTransitionBLL" className="Vancl.TMS.BLL.Transport.Dispatch.DispTransitionBLL" desc="提货单交接信息逻辑层服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Transport.Dispatch.IDispTransitionBLL" />
+  <service name="OperateLogBLL" className="Vancl.TMS.BLL.Log.OperateLogBLL" desc="操作日志逻辑层服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Log.ILogBLL;Vancl.TMS.Model.Log.OperateLogModel,Vancl.TMS.Model" />
+  <service name="DeliveryFlowLogBLL" className="Vancl.TMS.BLL.Log.DeliveryFlowLogBLL" desc="提货单日志服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Log.ILogBLL;Vancl.TMS.Model.Log.DeliveryFlowLogModel,Vancl.TMS.Model" />
+  <service name="CarrierBLL" className="Vancl.TMS.BLL.BaseInfo.CarrierBLL" desc="承运商逻辑层服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.ICarrierBLL" />
+  <service name="LinePlanBLL" className="Vancl.TMS.BLL.BaseInfo.LinePlanBLL" desc="线路计划逻辑层服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.ILinePlanBLL" />
+  <service name="AdministrationBLL" className="Vancl.TMS.BLL.AdministrationRegion.AdministrationBLL" desc="承运商适用范围服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.AdministrationRegion.IAdministrationBLL" />
+  <service name="ExpressCompanyBLL" className="Vancl.TMS.BLL.BaseInfo.ExpressCompanyBLL" desc="组织架构服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.IExpressCompanyBLL" />
+  <service name="LineFixedPriceBLL" className="Vancl.TMS.BLL.BaseInfo.LineFixedPriceBLL" desc="线路固定价格服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.ILineFixedPriceBLL" />
+  <service name="LineFormulaPriceBLL" className="Vancl.TMS.BLL.BaseInfo.LineFormulaPriceBLL" desc="线路公式价格服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.ILineFormulaPriceBLL" />
+  <service name="LineLadderPriceBLL" className="Vancl.TMS.BLL.BaseInfo.LineLadderPriceBLL" desc="线路阶梯价格服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.ILineLadderPriceBLL" />
+  <service name="TransportPlanBLL" className="Vancl.TMS.BLL.Transport.Plan.TransportPlanBLL" desc="运输计划服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Transport.Plan.ITransportPlanBLL" />
+  <service name="DelayHandleBLL" className="Vancl.TMS.BLL.Claim.DelayHandleBLL" desc="" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Claim.IDelayHandleBLL" />
+  <service name="ExpectDelayBLL" className="Vancl.TMS.BLL.Claim.ExpectDelayBLL" desc="预计延迟交货申请" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Claim.IExpectDelayBLL" />
+  <service name="CarrierWaybillBLL" className="Vancl.TMS.BLL.Delivery.InTransit.CarrierWaybillBLL" desc="承运商运单表" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Delivery.InTransit.ICarrierWaybillBLL" />
+  <service name="SiteAssBLL" className="Vancl.TMS.BLL.Delivery.Spot.SiteAssBLL" desc="发货现场管理" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Delivery.Spot.ISiteAssBLL" />
+  <service name="LostBLL" className="Vancl.TMS.BLL.Claim.LostBLL" desc="丢失管理" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Claim.ILostBLL" />
+  <service name="DeliveryAssessmentBLL" className="Vancl.TMS.BLL.Delivery.KPIAppraisal.DeliveryAssessmentBLL" desc="KPI考核" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Delivery.KPIAppraisal.IDeliveryAssessmentBLL" />
+  <service name="UserContextBLL" className="Vancl.TMS.BLL.Common.UserContextBLL" desc="用户服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Common.IUserContextBLL" />
+  <service name="TransPointBLL" className="Vancl.TMS.BLL.Common.TransPointBLL" desc="运输节点服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Common.ITransPointBLL" />
+  <service name="ChatBLL" className="Vancl.TMS.BLL.Chat.ChatBLL" desc="聊天服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Chat.IChatBLL" />
+  <service name="Lms2TmsSyncBLL" className="Vancl.TMS.BLL.Synchronous.InSync.Lms2TmsSyncBLL" desc="分拣同步LMS到TMS服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Synchronous.ILms2TmsSyncBLL" />
+  <service name="Tms2LmsSyncBLL" className="Vancl.TMS.BLL.Synchronous.OutSync.Tms2LmsSyncBLL" desc="分拣同步TMS到LMS服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Synchronous.ITms2LmsSyncBLL" />
+  <service name="MerchantBLL" className="Vancl.TMS.BLL.BaseInfo.MerchantBLL" desc="商家服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.IMerchantBLL" />
+  <service name="BillPrintBLL" className="Vancl.TMS.BLL.Sorting.BillPrint.BillPrintBLL" desc="运单打印" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.BillPrint.IBillPrintBLL" />
+  <service name="WeighReviewSearchService" className="Vancl.TMS.BLL.Sorting.Search.WeighReviewSearchService" desc="称重复核查询" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Search.IWeighReviewSearchService" />
+  <service name="ReturnBLL" className="Vancl.TMS.BLL.Sorting.Return.ReturnBLL" desc="退货分拣称重装箱" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Return.IReturnBLL" />
+  <service name="BillReturnDetailInfoBLL" className="Vancl.TMS.BLL.Sorting.Return.BillReturnDetailInfoBLL" desc="退货分拣单号信息" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Return.IBillReturnDetailInfoBLL" />
+  <service name="BillReturnBoxInfoBLL" className="Vancl.TMS.BLL.Sorting.Return.BillReturnBoxInfoBLL" desc="退货分拣装箱信息" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Return.IBillReturnBoxInfoBLL" />
+  <service name="BillReturnBLL" className="Vancl.TMS.BLL.Sorting.Return.BillReturnBLL" desc="返货入库" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Return.IBillReturnBLL" />
+  <service name="MerchantReturnBLL" className="Vancl.TMS.BLL.Sorting.Return.MerchantReturnBLL" desc="返货入库" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Return.IMerchantReturnBLL" />
+  <service name="CityScanBLL" className="Vancl.TMS.BLL.Sorting.CityScan.CityScanBLL" desc="同城单量扫描" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.CityScan.ICityScanBLL" />
+  <!-- <service name="ReturnSearchBLL" className="Vancl.TMS.BLL.Sorting.Search.ReturnSearchBLL" desc="退货查询" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Search.IReturnSearchBLL" /> -->
+  <!--同步服务相关BEGIN-->
+  <service name="InBoundMonitorBLL" className="Vancl.TMS.BLL.JobMonitor.InBoundMonitorBLL" desc="入库同步服务监控逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.JobMonitor.IInBoundMonitorBLL" />
+  <service name="OutBoundMonitorBLL" className="Vancl.TMS.BLL.JobMonitor.OutBoundMonitorBLL" desc="出库同步服务监控逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.JobMonitor.IOutBoundMonitorBLL" />
+  <service name="outboundBLL" className="Vancl.TMS.BLL.Synchronous.OutboundBLL" desc="出库同步逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Synchronous.IOutboundBLL" />
+  <service name="InboundBLL" className="Vancl.TMS.BLL.Synchronous.InboundBLL" desc="入库同步逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Synchronous.IInboundBLL" />
+  <service name="PreDispatchBLL" className="Vancl.TMS.BLL.Transport.Dispatch.PreDispatchBLL" desc="预调度逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Transport.Dispatch.IPreDispatchBLL" />
+  <!--同步服务相关END-->
+  <service name="InTransitBLL" className="Vancl.TMS.BLL.Delivery.InTransit.InTransitBLL" desc="发货在途逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Delivery.InTransit.IInTransitBLL" />
+  <service name="DispatchBLL" className="Vancl.TMS.BLL.Transport.Dispatch.DispatchBLL" desc="运输调度逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Transport.Dispatch.IDispatchBLL" />
+  <service name="ComplexReportBLL" className="Vancl.TMS.BLL.Report.ComplexReport.ComplexReportBLL" desc="综合报表业务接口" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Report.ComplexReport.IComplexReportBLL" />
+  <service name="reportFilterBLL" className="Vancl.TMS.BLL.Report.ReportFilterBLL" desc="报表筛选业务服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Report.IReportFilterBLL" />
+  <service name="ServiceLogBLL" className="Vancl.TMS.BLL.Log.ServiceLogBLL" desc="拣运同步服务日志" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Log.IServiceLogBLL" />
+  <service name="BillBLL" className="Vancl.TMS.BLL.BaseInfo.BillBLL" desc="系统运单业务逻辑" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.IBillBLL" />
+  <service name="SortingPackingBLL" className="Vancl.TMS.BLL.Sorting.Inbound.SortingPackingBLL" desc="分拣装箱逻辑层" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Inbound.ISortingPackingBLL" />
+  <service name="BatchBLL" className="Vancl.TMS.BLL.Log.BatchBLL" desc="批次信息" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Log.IBatchBLL" />
+  <!--装车业务相关BEGIN-->
+  <service name="TruckBLL" className="Vancl.TMS.BLL.BaseInfo.TruckBLL" desc="车辆基础信息维护业务逻辑" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BaseInfo.ITruckBLL" />
+  <service name="BillTruckBLL" className="Vancl.TMS.BLL.Sorting.Loading.BillTruckBLL" desc="装车业务逻辑" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Loading.IBillTruckBLL" />
+  <!--装车业务相关END-->
+  <service name="SC_InboundBLL" className="Vancl.TMS.BLL.Sorting.Inbound.InboundBLL" desc="分拣入库业务接口" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Inbound.IInboundBLL" />
+  <service name="SC_InboundBLLV2" className="Vancl.TMS.BLL.Sorting.Inbound.InboundBLLV2" desc="分拣入库业务接口V2" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Inbound.IInboundBLLV2" />
+  <service name="InboundQueueBLL" className="Vancl.TMS.BLL.Sorting.Inbound.InboundQueueBLL" desc="拣运入库队列业务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Inbound.IInboundQueueBLL" />
+  <service name="InboundSMSQueueBLL" className="Vancl.TMS.BLL.Sorting.Inbound.InboundSMSQueueBLL" desc="拣运入库短信队列业务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Inbound.IInboundSMSQueueBLL" />
+  <service name="SMSSender" className="Vancl.TMS.BLL.SMS.SMSSenderBLL" desc="通用短信发送服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.SMS.ISMSSender" />
+  <service name="SC_OutboundBLL" className="Vancl.TMS.BLL.Sorting.Outbound.OutboundBLL" desc="分拣出库业务服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Outbound.IOutboundBLL" />
+  <service name="SC_OutboundBLLV2" className="Vancl.TMS.BLL.Sorting.Outbound.OutboundBLLV2" desc="分拣出库业务服务V2" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Sorting.Outbound.IOutboundBLLV2" />
+  <service name="DeliveryImportBLL" className="Vancl.TMS.BLL.DeliveryImport.DeliveryImportBLL" desc="提货单录入记录业务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.DeliveryImport.IDeliveryImportBLL" />
+  <service name="CarrierAccountReportBLL" className="Vancl.TMS.BLL.Report.CarrierAccountReportBLL" desc="承运商财务结算逻辑" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Report.ICarrierAccountReportBLL" />
+  <service name="DeliveryDataEntranceBLL" className="Vancl.TMS.BLL.Delivery.DataInteraction.Entrance.DeliveryDataEntranceBLL" desc="TMS数据交互数据入口接口" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Delivery.DataInteraction.Entrance.IDeliveryDataEntranceBLL" />
+  <service name="Proxy4Cloud" className="Vancl.TMS.BLL.OutServiceProxy.Proxy4CloudBLL" desc="Proxy4Cloud" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.OutServiceProxy.IProxy4Cloud" />
+  <service name="Tms2ThridPartyBLL" className="Vancl.TMS.BLL.Synchronous.ThridPartySync.Tms2ThridPartyBLL" desc="Tms2ThridPartyBLL" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Synchronous.ITms2ThridPartyBLL" />
+  <!--业务层服务END-->
+  <!--SQL SERVER数据层服务-->
+  <!--同步服务相关BEGIN-->
+  <service name="InboundLMSDAL" className="Vancl.TMS.DAL.Sql2008.Synchronous.InboundLMSDAL" desc="入库同步LMS数据层" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.Synchronous.IInboundLMSDAL" />
+  <service name="lmsOutboundDAL" className="Vancl.TMS.DAL.Oracle.Synchronous.OutboundLMSDAL" desc="出库同步LMS数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Synchronous.IOutboundLMSDAL" />
+  <!--同步服务相关END-->
+  <!--分拣同步服务相关BEGIN-->
+  <service name="Lms2TmsSyncLMSDAL" className="Vancl.TMS.DAL.Sql2008.Synchronous.Lms2TmsSyncLMSDAL" desc="分拣同步LMS到TMS的LMS数据层" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.Synchronous.ILms2TmsSyncLMSDAL" />
+  <service name="Tms2LmsSyncLMSDAL" className="Vancl.TMS.DAL.Sql2008.Synchronous.Tms2LmsSyncLMSDAL" desc="分拣同步TMS到LMS的LMS数据层" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.Synchronous.ITms2LmsSyncLMSDAL" />
+  <!--分拣同步服务相关END-->
+  <service name="LMSWaybillDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WaybillDAL" desc="LMS物流sql主库LMSWaybillDAL_SQL" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillDAL" />
+  <service name="LMSInboundDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.InboundDAL" desc="物流主库Inbound SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IInboundDAL" />
+  <service name="LMSOperateLogDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.OperateLogDAL" desc="物流主库操作日志数据库SQL实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IOperateLogDAL" />
+  <service name="LMSWaybill_SortCenterDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.Waybill_SortCenterDAL" desc="物流主库分拣关系SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybill_SortCenterDAL" />
+  <service name="LMSWaybillStatusChangeLogDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WaybillStatusChangeLogDAL" desc="物流主库状态变更日志SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillStatusChangeLogDAL" />
+  <service name="WaybillThirdPartyInfoDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WaybillThirdPartyInfoDAL" desc="物流主库面单称重打印SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillThirdPartyInfoDAL" />
+  <service name="WaybillTruckDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WaybillTruckDAL" desc="物流主库WaybillTruckDAL_SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillTruckDAL" />
+  <service name="GPSOrderDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.GPSOrderDAL" desc="物流主库GPSOrderDAL_SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IGPSOrderDAL" />
+  <service name="GpsOrderStatusDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.GpsOrderStatusDAL" desc="物流主库GpsOrderStatusDAL_SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IGpsOrderStatusDAL" />
+  <service name="LMSOutboundDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.OutboundDAL" desc="LMS物流主库outbound[sql]数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IOutboundDAL" />
+  <service name="LMS_SYN_FMS_CODDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.LMS_SYN_FMS_CODDAL" desc="LMS物流主库LMS_SYN_FMS_COD[sql]数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.ILMS_SYN_FMS_CODDAL" />
+  <service name="LMSBatchDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.BatchDAL" desc="LMS物流主库Batch[SQL]数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IBatchDAL" />
+  <service name="TakeSendInfoDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WaybillTakeSendInfoDAL" desc="LMS物流主库WaybillTakeSendInfoDAL[SQL]数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillTakeSendInfoDAL" />
+  <service name="LMSWayBillReturnBoxDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WaybillReturnBoxInfoDAL" desc="物流主库ReturnBox SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillReturnBoxInfoDAL" />
+  <service name="LMSWayBillReturnDetailDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WaybillReturnDetailInfoDAL" desc="物流主库ReturnDetail SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillReturnDetailInfoDAL" />
+  <service name="LMSWayBillReturnDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.WayBillReturnDAL" desc="物流主库ReturnDetail SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.IWayBillReturnDAL" />
+  <service name="LMSTransitBoxDAL_SQL" className="Vancl.TMS.DAL.Sql2008.LMS.TransitBoxDAL" desc="物流主库TransitBox SQL数据层实现" loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.LMS.ITransitBoxDAL" />
+  <!--SQL SERVER数据层服务END-->
+  <!--ORACLE数据层服务-->
+  <service name="MERCHANTWAREHOUSEDAL" desc="" serviceName="Vancl.TMS.IDAL.LadingBill.IMERCHANTWAREHOUSEDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.LadingBill.MERCHANTWAREHOUSEDAL" />
+  <service name="LB_PLANDAL" desc="" serviceName="Vancl.TMS.IDAL.LadingBill.ILB_PLANDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.LadingBill.LB_PLANDAL" />
+  <service name="LB_TASKDAL" desc="" serviceName="Vancl.TMS.IDAL.LadingBill.ILB_TASKDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.Model.LadingBill.OracleDAL.LB_TASKDAL" />
+
+
+  <service name="AdministrationDAL" desc="" serviceName="Vancl.TMS.IDAL.AdministrationRegion.IAdministrationDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.AdministrationRegion.AdministrationDAL" />
+  <service name="DistributionDAL" desc="" serviceName="Vancl.TMS.IDAL.BaseInfo.IDistributionDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.BaseInfo.DistributionDAL" />
+  <service name="CarrierDAL" desc="承运商数据层服务" serviceName="Vancl.TMS.IDAL.BaseInfo.ICarrierDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.BaseInfo.Carrier.CarrierDAL" />
+  <service name="DelayCriteriaDAL" desc="承运商延迟考核标准数据层服务" serviceName="Vancl.TMS.IDAL.BaseInfo.IDelayCriteriaDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.BaseInfo.Carrier.DelayCriteriaDAL" />
+  <service name="LinePlanDAL" desc="线路计划数据层服务" serviceName="Vancl.TMS.IDAL.BaseInfo.ILinePlanDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.BaseInfo.Line.LinePlanDAL" />
+  <service name="ExpressCompanyDAL" desc="组织架构数据层服务" serviceName="Vancl.TMS.IDAL.BaseInfo.IExpressCompanyDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.BaseInfo.ExpressCompanyDAL" />
+  <service name="SerialNumberGenerateFormulaDAL" desc="序列号生成函数数据层服务" serviceName="Vancl.TMS.IDAL.Formula.Common.ISerialNumberGenerateFormulaDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.Formula.Common.SerialNumberGenerateFormulaDAL" />
+  <service name="CoverageDAL" desc="承运商适用范围数据层服务" serviceName="Vancl.TMS.IDAL.BaseInfo.Carrier.ICoverageDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" className="Vancl.TMS.DAL.Oracle.BaseInfo.Carrier.CoverageDAL" />
+  <service name="LineFixedPriceDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.Line.LineFixedPriceDAL" desc="线路固定价格数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.Line.ILineFixedPriceDAL" />
+  <service name="LineFormulaPriceDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.Line.LineFormulaPriceDAL" desc="线路公式价格数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.Line.ILineFormulaPriceDAL" />
+  <service name="LineLadderPriceDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.Line.LineLadderPriceDAL" desc="线路阶梯价格数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.Line.ILineLadderPriceDAL" />
+  <service name="DeliveryFlowLogDAL" className="Vancl.TMS.DAL.Oracle.Log.DeliveryFlowLogDAL" desc="流程日志数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Log.ILogDAL;Vancl.TMS.Model.Log.DeliveryFlowLogModel,Vancl.TMS.Model" />
+  <service name="OperateLogDAL" className="Vancl.TMS.DAL.Oracle.Log.OperateLogDAL" desc="操作日志数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Log.ILogDAL;Vancl.TMS.Model.Log.OperateLogModel,Vancl.TMS.Model" />
+  <service name="TransportPlanDAL" className="Vancl.TMS.DAL.Oracle.Transport.Plan.TransportPlanDAL" desc="运输计划数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Transport.Plan.ITransportPlanDAL" />
+  <service name="TransportPlanDetailDAL" className="Vancl.TMS.DAL.Oracle.Transport.Plan.TransportPlanDetailDAL" desc="运输计划明细数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Transport.Plan.ITransportPlanDetailDAL" />
+  <service name="DelayHandleDAL" className="Vancl.TMS.DAL.Oracle.Claim.DelayHandleDAL" desc="延误处理数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Claim.IDelayHandleDAL" />
+  <service name="ExpectDelayDAL" className="Vancl.TMS.DAL.Oracle.Claim.ExpectDelayDAL" desc="预计延迟交货申请" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Claim.IExpectDelayDAL" />
+  <service name="CarrierWaybillDAL" className="Vancl.TMS.DAL.Oracle.Delivery.InTransit.CarrierWaybillDAL" desc="承运商运单表" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.InTransit.ICarrierWaybillDAL" />
+  <service name="SiteAssDAL" className="Vancl.TMS.DAL.Oracle.Delivery.Spot.SiteAssDAL" desc="发货现场管理" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.Spot.ISiteAssDAL" />
+  <service name="LostDAL" className="Vancl.TMS.DAL.Oracle.Claim.LostDAL" desc="丢失管理" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Claim.ILostDAL" />
+  <service name="LostDetailDAL" className="Vancl.TMS.DAL.Oracle.Claim.LostDetailDAL" desc="丢失明细管理" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Claim.ILostDetailDAL" />
+  <service name="DeliveryAssessmentDAL" className="Vancl.TMS.DAL.Oracle.Delivery.KPIAppraisal.DeliveryAssessmentDAL" desc="KPI考核数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.KPIAppraisal.IDeliveryAssessmentDAL" />
+  <service name="AssFixedPriceDAL" className="Vancl.TMS.DAL.Oracle.Delivery.KPIAppraisal.AssFixedPriceDAL" desc="KPI考核固定价格数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.KPIAppraisal.IAssFixedPriceDAL" />
+  <service name="AssFormulaPriceDAL" className="Vancl.TMS.DAL.Oracle.Delivery.KPIAppraisal.AssFormulaPriceDAL" desc="KPI考核公式价格数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.KPIAppraisal.IAssFormulaPriceDAL" />
+  <service name="AssLadderPriceDAL" className="Vancl.TMS.DAL.Oracle.Delivery.KPIAppraisal.AssLadderPriceDAL" desc="KPI考核阶梯价格数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.KPIAppraisal.IAssLadderPriceDAL" />
+  <service name="DispTransitionDAL" className="Vancl.TMS.DAL.Oracle.Transport.Dispatch.DispTransitionDAL" desc="提货单交接信息数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Transport.Dispatch.IDispTransitionDAL" />
+  <service name="OrderDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.OrderDAL" desc="订单信息数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.IOrderDAL" />
+  <service name="MerchantDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.MerchantDAL" desc="商家管理" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.IMerchantDAL" />
+  <service name="BillDALForBillPrint" className="Vancl.TMS.DAL.Oracle.Sorting.BillPrint.BillDALForBillPrint" desc="面单打印" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.BillPrint.IBillDALForBillPrint" />
+  <service name="BillInfoDAL" className="Vancl.TMS.DAL.Oracle.Sorting.BillPrint.BillInfoDAL" desc="面单打印" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.BillPrint.IBillInfoDAL" />
+  <service name="BillWeighDAL" className="Vancl.TMS.DAL.Oracle.Sorting.BillPrint.BillWeighDAL" desc="面单打印" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.BillPrint.IBillWeighDAL" />
+  <service name="BillReturnDetailInfoDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Return.BillReturnDetailInfoDAL" desc="退货分拣称重装箱" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Return.IBillReturnDetailInfoDAL" />
+  <service name="BillReturnBoxInfoDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Return.BillReturnBoxInfoDAL" desc="退货分拣称重装箱" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Return.IBillReturnBoxInfoDAL" />
+  <service name="BillReturnDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Return.BillReturnDAL" desc="退货分拣称重装箱" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Return.IBillReturnDAL" />
+  <service name="WeighReviewSearchDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Search.WeighReviewSearchDAL" desc="称重复核查询" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Search.IWeighReviewSearchDAL" />
+  <service name="OutsourcingLogDAL" className="Vancl.TMS.DAL.Oracle.Log.OutsourcingLogDAL" desc="外包日志" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Log.IOutsourcingLogDAL" />
+  <service name="BillPrintTemplateDAL" className="Vancl.TMS.DAL.Oracle.Sorting.BillPrint.BillPrintTemplateDAL" desc="面单打印模板" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.BillPrint.IBillPrintTemplateDAL" />
+  <service name="BillPrintFieldDAL" className="Vancl.TMS.DAL.Oracle.Sorting.BillPrint.BillPrintFieldDAL" desc="面单打印模板" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.BillPrint.IBillPrintFieldDAL" />
+  <service name="CityScanDAL" className="Vancl.TMS.DAL.Oracle.Sorting.CityScan.CityScanDAL" desc="同城单量扫描" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.CityScan.ICityScanDAL" />
+  <!--同步服务相关BEGIN-->
+  <service name="InboundTMSDAL" className="Vancl.TMS.DAL.Oracle.Synchronous.InboundTMSDAL" desc="入库同步TMS数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Synchronous.IInboundTMSDAL" />
+  <service name="tmsOutboundDAL" className="Vancl.TMS.DAL.Oracle.Synchronous.OutboundTMSDAL" desc="出库同步TMS数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Synchronous.IOutboundTMSDAL" />
+  <service name="PreDispatchDAL" className="Vancl.TMS.DAL.Oracle.Transport.Dispatch.PreDispatchDAL" desc="预调度数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Transport.Dispatch.IPreDispatchDAL" />
+  <!--同步服务相关END-->
+  <service name="InTransitDAL" className="Vancl.TMS.DAL.Oracle.Delivery.InTransit.InTransitDAL" desc="发货在途管理" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.InTransit.IInTransitDAL" />
+  <service name="DelayDAL" className="Vancl.TMS.DAL.Oracle.Delivery.InTransit.DelayDAL" desc="到货延误信息" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Delivery.InTransit.IDelayDAL" />
+  <!--运输调度BEGIN-->
+  <service name="DispatchDAL" className="Vancl.TMS.DAL.Oracle.Transport.Dispatch.DispatchDAL" desc="运输调度主数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Transport.Dispatch.IDispatchDAL" />
+  <service name="DispatchDetailDAL" className="Vancl.TMS.DAL.Oracle.Transport.Dispatch.DispatchDetailDAL" desc="运输调度提货单箱明细数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Transport.Dispatch.IDispatchDetailDAL" />
+  <service name="DispOrderDetailDAL" className="Vancl.TMS.DAL.Oracle.Transport.Dispatch.DispOrderDetailDAL" desc="运输调度提货单订单明细数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Transport.Dispatch.IDispOrderDetailDAL" />
+  <!--运输调度END-->
+  <service name="BoxDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.BoxDAL" desc="箱主表数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.IBoxDAL" />
+  <service name="complexReportDAL" className="Vancl.TMS.DAL.Oracle.Report.ComplexReport.ComplexReportDAL" desc="综合报表数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Report.ComplexReport.IComplexReportDAL" />
+  <service name="reportFilterDAL" className="Vancl.TMS.DAL.Oracle.Report.ReportFilterDAL" desc="报表筛选数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Report.IReportFilterDAL" />
+  <!--分拣同步服务相关BEGIN-->
+  <service name="Lms2TmsSyncTMSDAL" className="Vancl.TMS.DAL.Oracle.Synchronous.InSync.Lms2TmsSyncTMSDAL" desc="分拣同步LMS到TMS的TMS数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Synchronous.ILms2TmsSyncTMSDAL" />
+  <service name="Tms2LmsSyncTMSDAL" className="Vancl.TMS.DAL.Oracle.Synchronous.OutSync.Tms2LmsSyncTMSDAL" desc="分拣同步TMS到LMS的TMS数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Synchronous.ITms2LmsSyncTMSDAL" />
+  <!--分拣同步服务相关END-->
+  <service name="ServiceLogDAL" className="Vancl.TMS.DAL.Oracle.Log.ServiceLogDAL" desc="拣运同步服务日志数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Log.IServiceLogDAL" />
+  <service name="BillDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.BillDAL" desc="系统运单数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.IBillDAL" />
+  <service name="BillChangeLogDAL" className="Vancl.TMS.DAL.Oracle.Log.BillChangeLogDAL" desc="拣运状态改变日志表数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Log.IBillChangeLogDAL" />
+  <service name="BatchDAL" className="Vancl.TMS.DAL.Oracle.Log.BatchDAL" desc="批次信息数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Log.IBatchDAL" />
+  <!--装车业务相关BEGIN-->
+  <service name="TruckDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.TruckDAL" desc="车辆基础信息数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.ITruckDAL" />
+  <service name="BillTruckDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Loading.BillTruckDAL" desc="装车数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Loading.IBillTruckDAL" />
+  <service name="GPSBillDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Loading.GPSBillDAL" desc="GPS数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Loading.IGPSBillDAL" />
+  <!--装车业务相关END-->
+  <service name="SortCenterDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Common.SortCenterDAL" desc="分拣通用的数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Common.ISortCenterDAL" />
+  <service name="InboundDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Inbound.InboundDAL" desc="入库数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Inbound.IInboundDAL" />
+  <service name="InboundQueueDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Inbound.InboundQueueDAL" desc="入库队列数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Inbound.IInboundQueueDAL" />
+  <service name="InboundSMSQueueDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Inbound.InboundSMSQueueDAL" desc="入库短信队列数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Inbound.IInboundSMSQueueDAL" />
+  <service name="LMSWaybillDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WaybillDAL" desc="LMS物流主库WaybillDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillDAL" />
+  <service name="LMSInboundDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.InboundDAL" desc="物流主库Inbound ORACLE数据库实现层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IInboundDAL" />
+  <service name="LMSOperateLogDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.OperateLogDAL" desc="物流主库操作日志数据层ORACLE实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IOperateLogDAL" />
+  <service name="LMSWaybill_SortCenterDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.Waybill_SortCenterDAL" desc="物流主库分拣关系ORACKE数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybill_SortCenterDAL" />
+  <service name="LMSWaybillStatusChangeLogDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WaybillStatusChangeLogDAL" desc="物流主库状态变更日志表oracle数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillStatusChangeLogDAL" />
+  <service name="EmployeeDAL" className="Vancl.TMS.DAL.Oracle.BaseInfo.EmployeeDAL" desc="员工信息数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.BaseInfo.IEmployeeDAL" />
+  <service name="SortingPackingDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Inbound.SortingPackingDAL" desc="装箱SortingPackingDAL" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Inbound.ISortingPackingDAL" />
+  <service name="WaybillThirdPartyInfoDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WaybillThirdPartyInfoDAL" desc="物流主库面单称重打印SQL数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillThirdPartyInfoDAL" />
+  <service name="SC_OutboundDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Outbound.OutboundDAL" desc="分拣出库oracle数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Outbound.IOutboundDAL" />
+  <service name="SC_OutboundV2DAL" className="Vancl.TMS.DAL.Oracle.Sorting.Outbound.OutboundV2DAL" desc="分拣出库oracle数据层服务V2" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Outbound.IOutboundV2DAL" />
+  <service name="SC_OutboundBatchDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Outbound.OutboundBatchDAL" desc="出库批次oracle数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Outbound.IOutboundBatchDAL" />
+  <service name="SC_OutboundBatchV2DAL" className="Vancl.TMS.DAL.Oracle.Sorting.Outbound.OutboundBatchV2DAL" desc="出库批次oracle数据层服务V2" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Outbound.IOutboundBatchV2DAL" />
+  <service name="SC_SYN_TMS_OutboxDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Outbound.SC_SYN_TMS_OutboxDAL" desc="分拣同步到TMS城际运输数据层服务" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Outbound.ISC_SYN_TMS_OutboxDAL" />
+  <service name="WaybillTruckDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WaybillTruckDAL" desc="物流主库WaybillTruckDAL_Oracle数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillTruckDAL" />
+  <service name="GPSOrderDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.GPSOrderDAL" desc="物流主库GPSOrderDAL_Oracle数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IGPSOrderDAL" />
+  <service name="GpsOrderStatusDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.GpsOrderStatusDAL" desc="物流主库GpsOrderStatusDAL_Oracle数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IGpsOrderStatusDAL" />
+  <service name="LMS_SYN_FMS_CODDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.LMS_SYN_FMS_CODDAL" desc="LMS物流主库LMS_SYN_FMS_COD[oracle]数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.ILMS_SYN_FMS_CODDAL" />
+  <service name="LMSOutboundDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.OutboundDAL" desc="LMS物流主库outbound[oracle]数据层实现" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IOutboundDAL" />
+  <service name="LMSBatchDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.BatchDAL" desc="LMS物流主库BatchDAL[oracle]实现层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IBatchDAL" />
+  <service name="SC_SYN_TMS_InorderDAL" className="Vancl.TMS.DAL.Oracle.Sorting.Inbound.SC_SYN_TMS_InorderDAL" desc="SC_SYN_TMS_Inorder[Oracle]数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Sorting.Inbound.ISC_SYN_TMS_InorderDAL" />
+  <service name="TakeSendInfoDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WaybillTakeSendInfoDAL" desc="LMS物流主库WaybillTakeSendInfoDAL[oracle]实现层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillTakeSendInfoDAL" />
+  <service name="DeliveryImportDAL" className="Vancl.TMS.DAL.Oracle.DeliveryImport.DeliveryImportDAL" desc="提货单录入数据层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.DeliveryImport.IDeliveryImportDAL" />
+  <service name="CarrierAccountReportDAL" className="Vancl.TMS.DAL.Oracle.Report.CarrierAccountReportDAL" desc="财务结算报表" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.Report.ICarrierAccountReportDAL" />
+  <!--逆向流程Oracle服务-->
+  <service name="LMSWayBillReturnBoxDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WaybillReturnBoxInfoDAL" desc="物流主库WaybillReturnBox ORACLE数据库实现层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillReturnBoxInfoDAL" />
+  <service name="LMSWayBillReturnDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WayBillReturnDAL" desc="物流主库WaybillReturn ORACLE数据库实现层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWayBillReturnDAL" />
+  <service name="LMSWayBillReturnDetailDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.WaybillReturnDetailInfoDAL" desc="物流主库WaybillReturnDetail ORACLE数据库实现层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.IWaybillReturnDetailInfoDAL" />
+  <service name="LMSTransitBoxDAL_Oracle" className="Vancl.TMS.DAL.Oracle.LMS.TransitBoxDAL" desc="物流主库TransitBox ORACLE数据库实现层" loadFrom="Vancl.TMS.DAL.Oracle.dll" serviceName="Vancl.TMS.IDAL.LMS.ITransitBoxDAL" />
+
+  <!--流程自定义限制-->
+  <service name="LimitSubjectChecker" className="Vancl.TMS.BLL.CustomizeFlow.Checker.LimitSubjectChecker" desc="流程自定义限制条件（限制主体）" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.CustomizeFlow.IChecker" />
+  <service name="LimitSubjectByAssign" className="Vancl.TMS.BLL.CustomizeFlow.Checker.LimitSubjectByAssign" desc="流程自定义限制条件（根据分单限制主体）" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.CustomizeFlow.IChecker" />
+  <service name="LimitSubjectByAssignOrByBox" className="Vancl.TMS.BLL.CustomizeFlow.Checker.LimitSubjectByAssignOrByBox" desc="流程自定义限制条件（根据分单或装箱目的地限制主体）" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.CustomizeFlow.IChecker" />
+  <service name="LimitSubjectBySortingDefinedOrByBox" className="Vancl.TMS.BLL.CustomizeFlow.Checker.LimitSubjectBySortingDefinedOrByBox" desc="流程自定义限制条件（根据分拣范围或装箱目的地限制主体）" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.CustomizeFlow.IChecker" />
+  <service name="LimitSubjectBySortingDefined" className="Vancl.TMS.BLL.CustomizeFlow.Checker.LimitSubjectBySortingDefined" desc="流程自定义限制条件（根据分拣范围限制主体）" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.CustomizeFlow.IChecker" />
+  <service name="LimitSubjectByAssignInbound" className="Vancl.TMS.BLL.CustomizeFlow.Checker.LimitSubjectByAssignInbound" desc="流程自定义限制条件（状态=已分配配送商才可入库 ）" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.CustomizeFlow.IChecker" />
+  <service name="LimitSubjectByAssignStationInbound" className="Vancl.TMS.BLL.CustomizeFlow.Checker.LimitSubjectByAssignStationInbound" desc="流程自定义限制条件（已分配至当前配送商时，状态=已分配配送站才可入库 ）" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.CustomizeFlow.IChecker" />
+    
+  <!--dps到tms同步-->
+  <service name="Dps2Tms" className="Vancl.TMS.BLL.Synchronous.Dps2TmsSync.Dps2Tms" desc="DPS到TMS同步服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Synchronous.IDps2Tms" />
+  <service name="DpsNotice" className="Vancl.TMS.BLL.Log.DpsNotice.DpsNotice" desc="根据通知更新TMS服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.Log.IDpsNotice" />
+
+</services>

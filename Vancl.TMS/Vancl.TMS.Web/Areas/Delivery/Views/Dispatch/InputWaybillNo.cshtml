@@ -1,0 +1,68 @@
+﻿@model Vancl.TMS.Web.Areas.Delivery.Models.InputWaybillNoModel
+@{
+    ViewBag.Title = "输入物流单号码";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <style type="text/css">
+        #WaybillNo
+        {
+            width: 200px;
+            height: 32px;
+            line-height: 32px;
+            font-size: 26px;
+            margin: 15px auto;
+        }
+    </style>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function cancel() {
+            ymPrompt.doHandler("cancel", true)
+        }
+
+        function AjaxOnSuccess(data, status, xhr) {
+            if (data.IsSuccess) {
+                ymPrompt.doHandler("ok",true, data)
+            } else {
+                alert(data.Message);
+            }
+        }
+
+        $(function () {
+            $("#WaybillNo").select().focus();
+
+@if (string.IsNullOrWhiteSpace(Model.DeliveryNo))
+{//出库时直接返回，不用提交到后端
+<text>
+            $("form").submit(function () {
+                //    if ($(this).valid()) {
+                ymPrompt.doHandler("ok", true, { action: 'InputWaybillNo', result: 'ok', WaybillNo: $("#WaybillNo").val() })
+                return false;
+                //    }
+            });
+</text>
+}
+        })
+    </script>
+}
+@using (Ajax.BeginForm(new AjaxOptions { LoadingElementId = "Loading", OnFailure = "AjaxError", OnSuccess = "AjaxOnSuccess" }))
+{
+    @Html.HiddenFor(m => m.DeliveryNo)
+    <div id="UpdateTarget">
+        <label style="line-height: 40px; font-size: 16px;">
+            请输入运单号码
+        </label>
+        <div class="center">
+            @Html.TextBoxFor(m => m.WaybillNo)
+            <br />
+            @Html.ValidationMessageFor(m => m.WaybillNo)
+        </div>
+        <div class="split">
+        </div>
+        <div class="center">
+            <input type="submit" class="button" value="确定" />
+            <input type="button" class="button" value="取消" onclick="cancel()" />
+        </div>
+    </div>
+}

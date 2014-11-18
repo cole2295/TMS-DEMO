@@ -1,0 +1,221 @@
+﻿@{
+    ViewBag.Title = "面单校验";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+<script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")" type="text/javascript"></script>
+<style type="text/css">
+    #TbInput
+    {
+        margin: 30px auto;
+        line-height: 35px;
+        font-size: 28px;
+        text-align: center;
+    }
+    #TbInput tfoot td
+    {
+        border-bottom: 1px solid #ddd;
+    }
+    tr.Success
+    {
+        background: #b7ef9a;
+    }
+    tr.Failure
+    {
+        background: red;
+    }
+    tr.Warning
+    {
+        background: yellow;
+    }
+    #TbInput input
+    {
+        height: 28px;
+        width: 200px;
+        margin: 10px 20px;
+        font-size: 22px;
+        text-align: center;
+    }
+    
+    .bgFocus
+    {
+        background: #eee;
+    }
+    #TdResult
+    {
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<h2 class="center">
+    请依次录入订单号和运单号进行校验</h2>
+<table id="TbInput">
+    <thead>
+        <tr>
+            <th class="cellOrderNo">
+                商家订单号
+            </th>
+            <th class="cellFormCode">
+                系统运单号
+            </th>
+            <td>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="cellOrderNo">
+                <input id="TxtOrderNo" type="text" />
+            </td>
+            <td class="cellFormCode">
+                <input id="TxtFormCode" type="text" />
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                校验成功：<span id="SuccessCount">0</span>单，校验失败：<span id="FailureCount">0</span>单@*，警告：<span id="WarningCount">0</span>单*@
+            </td>
+            <td>
+                <input id="BtnReStat" type="button" value="重新统计" onclick="reStat()" />
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        @*
+        <tr class="Success">
+            <td>
+                1213324324
+            </td>
+            <td>
+                234234234
+            </td>
+            <td>
+                通过
+            </td>
+        </tr>
+        *@
+    </tfoot>
+</table>
+@{Html.RenderPartial("_wavMedia");}
+<script id="ValidateItemTemplate" type="text/x-jquery-tmpl">
+        <tr class="{{if Result==1}}Success{{else}}{{if Result==2}}Warning{{else}}Failure{{/if}}{{/if}}">
+            <td>
+                ${CustomerOrder}
+            </td>
+            <td>                
+                ${FormCode}
+            </td>
+            <td>
+                ${Message}
+            </td>
+        </tr>
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#TxtOrderNo").focus(function () {
+            $(".cellOrderNo").addClass("bgFocus");
+            $(this).select();
+        }).blur(function () {
+            $(".cellOrderNo").removeClass("bgFocus");
+        }).focus();
+        $("#TxtFormCode").focus(function () {
+            $(".cellFormCode").addClass("bgFocus");
+            $(this).select();
+        }).blur(function () {
+            $(".cellFormCode").removeClass("bgFocus");
+        });
+
+        $("#TxtOrderNo").keyup(function (event) {
+            if (event.keyCode == '13') {
+                $("#TxtFormCode").focus();
+            }
+        });
+        $("#TxtFormCode").keyup(function (event) {
+            if (event.keyCode == '13') {
+                Validate();
+            }
+        });
+    });
+
+    var ValidateSuccess = [];
+
+    function Validate() {
+        $("body").focus();
+
+        var customerOrder = $.trim($("#TxtOrderNo").val());
+        if (customerOrder == "") {
+            alert("输入订单号不能为空！");
+            $("#TxtOrderNo").focus();
+            return;
+        }
+        var formCode = $.trim($("#TxtFormCode").val());
+        if (formCode == "") {
+            alert("输入运单号不能为空！");
+            $("#TxtFormCode").focus();
+            return;
+        }
+        for(var i in ValidateSuccess){
+            var CustomerOrder = ValidateSuccess[i].CustomerOrder;
+            var FormCode = ValidateSuccess[i].FormCode;
+            if(CustomerOrder==customerOrder&&FormCode==formCode){
+                //已验证通过
+                showInfo(customerOrder,formCode,1,"重复验证通过");
+                SucceessNotice();
+                return;
+            }
+        }
+
+        function showInfo(customerOrder,formCode,result,message){        
+                var tpl = $("#ValidateItemTemplate").tmpl({CustomerOrder:customerOrder,FormCode: formCode,Result:result,Message:message });
+                $("#TbInput tfoot").prepend(tpl);
+                var validateInfo = {CustomerOrder:customerOrder,FormCode: formCode};
+                $("#TbInput tfoot tr:gt(5)").remove();
+                $("#TxtOrderNo").val("").focus();
+                $("#TxtFormCode").val("");
+        }
+
+        //开始提交到服务端验证
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Validate")",
+            data: { customerOrder: customerOrder, formCode: formCode },
+            success: function (rm) {
+                showInfo(customerOrder,formCode,rm.Result,rm.Message);
+                if(rm.Result==1){
+                    var count = parseInt($("#SuccessCount").text());
+                    $("#SuccessCount").text(count+1);
+                    var validateInfo = {CustomerOrder:customerOrder,FormCode: formCode};
+                    ValidateSuccess.push(validateInfo);
+                    SucceessNotice();
+                }
+                else if(rm.Result==2){
+                    var count = parseInt($("#WarningCount").text());
+                    $("#WarningCount").text(count+1);
+                    ErrorNotice();
+                    alert(rm.Message);
+                }else// if(rm.Result==0)
+                {
+                    var count = parseInt($("#FailureCount").text());
+                    $("#FailureCount").text(count+1);
+                    ErrorNotice();
+                    alert(rm.Message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("提交验证出错:\r" + textStatus + "\r" + errorThrown);
+                $("#TxtOrderNo").focus();
+                ErrorNotice();
+            }
+        });
+    }
+
+    function reStat(){
+        ValidateSuccess = [];
+        $("#SuccessCount,#FailureCount,#WarningCount").text(0);
+        $("#TbInput tfoot").empty();
+        $("#TxtOrderNo").focus();
+        SucceessNotice();
+    }
+
+</script>

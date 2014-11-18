@@ -1,0 +1,666 @@
+﻿@model Vancl.TMS.Model.Transport.Plan.ViewTansportEditorModel
+@{
+    ViewBag.Title = "新增运输计划";
+}
+<!DOCTYPE html public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/page_frame.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/plugins/textbox/textbox.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/TMS.Util.js?" + DateTime.Now.ToString("yyyyMMdd"))" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/TMS.Page.js?" + DateTime.Now.ToString("yyyyMMdd"))" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var transPlan = new Object();
+
+        var currentTransitNum;
+        var currentLineNum;
+
+        $(function setTransitNum(){
+         if($("#valueIsTransit").val()=="True")
+         {
+          $("#selectTransitNum").val($("#valueTransitNum").val());
+         }
+       
+        });
+        function openNewWindow(ActionName,DepartureID,ArrivalID,GoodsType,LineID,LindIndex,Title,handler,width,height)
+        {
+            var strParam = "DepartureID="+DepartureID+"&ArrivalID="+ArrivalID+"&GoodsType="+GoodsType+"&LineID="+LineID+"&LindIndex="+LindIndex;
+            ymPrompt.win({ message: ActionName+"?"+strParam, width: width, height: height, title: Title, handler:handler,maxBtn: false, minBtn: false, iframe: true} );
+        }
+
+        function selectTransit(tp,data)
+        {
+            if (tp == "SelectNode") {
+                if(currentTransitNum>0 )
+                {
+                    $("#valueTransit"+currentTransitNum).val(data.id);
+                    $("#txtTransitName"+currentTransitNum).val(data.name);
+                    //总
+                    var arrId=new Array();
+                    var arrName=new Array();
+                    //alert($("#spTransit").html())
+                    for(var i=1;i<=$("#selectTransitNum").val();i++){
+                        arrId[arrId.length]=$("#valueTransit"+i).val()+",";
+                        arrName[arrName.length]=$("#txtTransitName"+i).val()+",";
+                    }
+                    $("#valueTransit").val(arrId.join("").substring(0,arrId.join("").length-1));
+                    $("#txtTransitName").val(arrName.join("").substring(0,arrName.join("").length-1));
+                    //alert($("#valueTransit").val());
+                    //alert($("#txtTransitName").val());
+                }
+                else
+                {
+                    alert("没有找到中转站赋值对象");
+                }
+            }
+            Init();
+        }
+
+        //每个操作结束后调用
+        function Init()
+        {
+            bindTransPlan();
+            initUI();
+        }
+
+        function Save(actionStr)
+        {
+            Init();
+            var error = checkData();
+            if(error == "")
+            {
+                doSave(actionStr);
+            }
+            else
+            {
+                ymPrompt.errorInfo({ title: '提示', message: error });
+            }
+        }
+
+        function doSave(actionStr) {
+            var url = "@Url.Action("Save")";
+            var data     = {
+                DepartureID: transPlan.DepartureID,
+                ArrivalID: transPlan.ArrivalID,
+                TransitID: transPlan.TransitID,
+                TransitLines: transPlan.LineArray.join(","),
+                GoodsType: transPlan.GoodsType,
+                Line1: transPlan.Line1,
+                Line2: transPlan.Line2,
+                DeadLine: transPlan.DeadLine,
+                EffectiveTime: transPlan.EffectiveTime,
+                OperateType: actionStr,
+                TpId: @ViewBag.TpId
+                };
+            $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    success: function(ref) {
+                        if (ref == "") {
+                            ymPrompt.succeedInfo({
+                                title: '提示',
+                                message: "保存成功",
+                                handler: function() {
+                                    setTimeout(function() {
+                                        location.href = "@Url.Action("List")";
+                                    }, 100);
+                                }
+                            });
+                        } else {
+                            ymPrompt.errorInfo({ title: '提示', message: ref });
+                        }
+                    }
+                });
+        }
+
+        function bindTransPlan()
+        {
+            transPlan.DepartureID = $("#valueDepartureID").val();
+            transPlan.DepartureName = $("#txtDepartureName").val();
+            transPlan.ArrivalID = $("#valueArrival").val();
+            transPlan.ArrivalName = $("#txtArrivalName").val();
+            transPlan.TransitID = $("#valueTransit").val();
+            transPlan.TransitName = $("#txtTransitName").val();
+            transPlan.IsTransit = $("#valueIsTransit").val();
+            transPlan.GoodsType = $("#valueGoodsType").val()==""?"0":$("#valueGoodsType").val();
+            transPlan.DeadLine = $("#txtDeadLine").val();
+            transPlan.Line1 = $("#valueFirstLine").val();
+            transPlan.Line2 = $("#valueSecendLine").val();
+            transPlan.EffectiveTime = $("#txtEffectiveTime").val();
+            transPlan.TransitNum = $("#selectTransitNum").val();
+            transPlan.Lines= $("#valueLines").val();
+            if(transPlan.Lines!="'undefined'"&&transPlan.Lines!="" )
+            {
+                transPlan.LineArray= $("#valueLines").val().split(",");
+            }
+            else
+            {
+                transPlan.LineArray=new Array();
+            }
+            
+        }
+
+        function initUI()
+        {
+            if(transPlan.DepartureName == "")
+            {
+                $("#textDeparture").text("始发地[未设置]");
+                $("#txtDeparture").val("");
+            }
+            else
+            {
+                $("#textDeparture").text(transPlan.DepartureName);
+                $("#txtDeparture").val(transPlan.DepartureName);
+            }
+            
+            if(transPlan.ArrivalName == "")
+            {
+                $("#textArrival").text("目的地[未设置]");
+                $("#txtArrival").val("");
+            }
+            else
+            {
+                $("#textArrival").text(transPlan.ArrivalName);
+                $("#txtArrival").val(transPlan.ArrivalName);
+            }
+            if(transPlan.IsTransit=="False")
+            {
+                $("#spanTransitNum").hide();
+                $("#spTransit").hide();
+                $("#cbIsTransit").removeAttr("checked");
+            }
+            else
+            {
+                $("#spanTransitNum").show();
+                $("#spTransit").show();
+                $("#cbIsTransit").attr("checked")=="checked";
+                var transitList=new Array();
+                for(var i=1;i<=$("#selectTransitNum").val();i++){
+                    transitList[transitList.length]='<span id="spTransit'+i+'">';
+                    transitList[transitList.length]='<span id="textTransit'+i+'" style="cursor: hand" onclick="setTransit('+i+')" title="点击设置或修改中转站">';
+                    var transitName=GetTransitName(i);
+                    if(transitName==undefined || transitName=="")
+                        transitList[transitList.length]='中转站'+i+'[未设置]</span>';
+                    else
+                        transitList[transitList.length]=transitName+'</span>';
+                    transitList[transitList.length]=' <img src="@Url.Content("~/Content/images/background/arrows_red.gif")" alt="线路'+(i+1)+'"';
+                    transitList[transitList.length]= '  title="点击此处查看或修改线路'+(i+1)+'" style="cursor:hand" onclick="setLine('+(i+1)+')" />';
+                    transitList[transitList.length]='<input type="hidden" id="valueTransit'+i+'" value="'+GetTransitId(i)+'" />';
+                    transitList[transitList.length]='<input type="hidden" id="txtTransitName'+i+'" value="'+transitName+'" />';
+                    transitList[transitList.length]='</span>';
+                }
+                $("#spTransit").html(transitList.join(''));
+            }
+
+            if(transPlan.GoodsType=="")
+                $("#txtLineType").val("0");
+            else
+                $("#txtLineType").val(transPlan.GoodsType);
+        }
+
+        function needTransit()
+        {
+            if($("#cbIsTransit").attr("checked")=="checked")
+            {
+                $("#valueIsTransit").val("True");
+            }
+            else
+            {
+                $("#valueIsTransit").val("False");
+            }
+            //当中转次数发生变化，需要重新设置中转站
+            $("#txtTransitName").val("");
+            $("#valueTransit").val("");
+            $("#valueFirstLine").val("");
+            $("#valueSecendLine").val("");
+            $("#valueLines").val("");
+              
+            Init();
+        }
+
+        $(function(){
+            $(":input[id^='GoodsType_']").change(
+                function()
+                {
+                    var value = 0;
+                    $(":input:checked[id^='GoodsType_']").each(function(){
+                        var v = parseInt($(this).val());   
+                        value |= v;                 
+                    });
+                    $("#valueGoodsType").val(value.toString());
+
+                    Init();
+                }  
+            );
+
+            $("#dropDeadLineType").change(function()
+            {
+                switch($("#dropDeadLineType").val())
+                {
+                    case "0":
+                        break;
+                    case "1":
+                        $("#valueDeadLine").val("@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")");
+                        $("#txtDeadLine").val("@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")");
+                        break;
+                    case "2":
+                        $("#valueDeadLine").val("@DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")");
+                        $("#txtDeadLine").val("@DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")");
+                        break;
+                    case "3":
+                        $("#valueDeadLine").val("@DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd")");
+                        $("#txtDeadLine").val("@DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd")");
+                        break;
+                    case "4":
+                        $("#valueDeadLine").val("@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")");
+                        $("#txtDeadLine").val("@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")");
+                        break;
+                    case "5":
+                        $("#valueDeadLine").val("@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")");
+                        $("#txtDeadLine").val("@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")");
+                        break;
+
+                }
+                Init();
+            });
+
+            Init();
+        });
+
+        function selectFirstLinePlan(tp,data)
+        {
+            if (tp == "ok") {
+                $("#valueFirstLine").val(data.lineID);
+                Init();
+            }
+        }
+
+        function selectSecendLinePlan(tp,data)
+        {
+            if (tp == "ok") {
+                $("#valueSecendLine").val(data.lineID);
+                Init();
+            }
+        }
+        function selectLinePlan(tp,data)
+        {
+            if (tp == "ok") {
+                if(currentLineNum==1)
+                {
+                     $("#valueFirstLine").val(data.lineID);
+                }
+               
+                if(currentLineNum==2)
+                {
+                     $("#valueSecendLine").val(data.lineID);
+                }
+                transPlan.LineArray[currentLineNum-1]=data.lineID;
+                if(transPlan.LineArray.length==1)
+                {
+                    $("#valueLines").val(transPlan.LineArray.join("")); 
+                }
+                else{
+                 $("#valueLines").val(transPlan.LineArray.join(",")); 
+                }
+             
+                Init();
+            }
+        }
+
+        function checkData()
+        {
+            if(transPlan.DepartureID == "")
+                return "始发站不能为空";
+            if(transPlan.ArrivalID == "")
+                return "目的地不能为空";
+            if(transPlan.GoodsType == "")
+                return "货物类型不能为空";
+
+            if(transPlan.IsTransit=="True"&&transPlan.TransitNum)
+            {   
+                if(parseInt(transPlan.TransitNum)>=1)
+                {
+                    var error="";
+                    var $list=$('span[id^=textTransit]');
+                    $list.each(function(index,element){
+                        if( $(this).text().replace(/中转站[0-9]+\[未设置\]/g,"")=="")
+                        {
+                            error=  "请先设置第"+(index+1)+"个中转站!";
+                            return false;
+                        }
+                        } );
+                    if(error!="")
+                    {
+                        return error;
+                    }
+                     
+                }
+
+
+                if(transPlan.LineArray.length!=(parseInt(transPlan.TransitNum)+1))
+                {
+                    return "请先设置第"+(transPlan.LineArray.length+1)+"条线路!";
+                }
+                var error2="";
+                $.each(transPlan.LineArray, function(i,val){      
+                 if(!val)
+                 {
+                      error2= "请先设置第"+(i+1)+"条线路!";
+                     return false;
+                 };
+                 });  
+                if(error2!="")
+                {
+                    return error2;
+                }
+                     
+
+            }
+            if(transPlan.TransitID!="")
+            {
+                if(transPlan.Line1=="")
+                    return "第一条线路未设置";
+                //if(transPlan.Line2=="")
+                 //   return "第二条线路未设置";
+            }
+            else
+            {
+                if(transPlan.Line1=="")
+                    return "您还未设置线路";
+            }
+             
+            
+            if(transPlan.DeadLine=="")
+                return "请设置一个截至日期";
+
+            if(transPlan.EffectiveTime=="")
+                return "请设置一个生效时间";
+            if(Date.parse(transPlan.EffectiveTime.split('-').join('/'))>Date.parse(transPlan.DeadLine.split('-').join('/')))
+                return "生效时间必须小于截至日期";
+
+            return "";
+        }
+
+        function setLine(m)
+        {
+            currentLineNum=m;
+            if($(":checked[name='GoodsType']").length==0){
+                ymPrompt.errorInfo({ title: '提示', message: '请先选择货物类型!' });
+                return;
+            }
+
+            if(transPlan.IsTransit=="True"&&transPlan.TransitNum)
+            {   
+                if(parseInt(transPlan.TransitNum)>=1)
+                {
+                    var error="";
+                    var $list=$('span[id^=textTransit]');
+                    $list.each(function(index,element){
+                        if( $(this).text().replace(/中转站[0-9]+\[未设置\]/g,"")=="")
+                        {
+                            error=  "请先设置第"+(index+1)+"个中转站!";
+                            return false;
+                        }
+                        } );
+                    if(error!="")
+                    {
+                        return error;
+                    }
+                     
+                }
+
+                 
+            }
+            
+            if(transPlan.DepartureID !="" && transPlan.ArrivalID!="")
+            {
+                var action="@Url.Action("CreateLinePlanList")";
+                var departureId="";
+                var arrivalId="";
+                if(!($("#cbIsTransit").attr("checked")=="checked"))
+                {
+                    if(m==1)
+                    {
+                        departureId=transPlan.DepartureID;
+                        arrivalId=transPlan.ArrivalID;
+                        openNewWindow(action,departureId,arrivalId,transPlan.GoodsType,transPlan.Line1,m,"选择线路",selectLinePlan,800,400);
+                    }
+                }
+                else
+                {
+                    if(transPlan.TransitID!="")
+                    {
+                        if(m==1)
+                        {
+                            departureId=transPlan.DepartureID;
+                            arrivalId=transPlan.TransitID[0];
+                            openNewWindow(action,departureId,arrivalId,transPlan.GoodsType,transPlan.Line1,m,"选择线路",selectLinePlan,800,400);
+                        }
+                        else
+                        {
+                            if (m == (parseInt(transPlan.TransitNum)+1)) {
+                                departureId = GetTransitId(m-1);
+                                arrivalId = transPlan.ArrivalID;
+                            } else {
+                                departureId = GetTransitId(m-1);
+                                arrivalId =  GetTransitId(m);
+                            }
+                        
+                        
+                            
+                            openNewWindow(action,departureId,arrivalId,transPlan.GoodsType,transPlan.LineArray[m-1],m,"选择线路",selectLinePlan,800,400);
+                        }
+                    }
+                    else
+                    {
+                        ymPrompt.errorInfo({ title: '提示', message: '请先设置中转站!' });
+                        return;
+                    }
+                }
+
+                Init();
+            }
+            else
+            {
+                ymPrompt.errorInfo({ title: '提示', message: '请先设置始发地和目的地!' });
+                return;
+            }
+        }
+
+        function setTransit(transitNum){
+            if(transPlan.DepartureID!="" && transPlan.ArrivalID!="")
+            {
+                //第二个中转站开始验证
+                if(transitNum>1)
+                {
+                    if($("#textTransit"+(transitNum-1)).text().replace(/中转站[0-9]+\[未设置\]/g,"")=="")
+                    {
+                        ymPrompt.errorInfo({ title: '提示', message: '请先设置第'+(transitNum-1)+'个中转站!' });
+                        return;
+                    }
+                }
+                var departureId="";
+                var arrivalId="";
+                if (transitNum > 1) {
+                    departureId = GetTransitId(transitNum - 1);
+                }//一次以上的中转 找上一中转站为出发地 
+                else departureId = transPlan.DepartureID;
+
+                if(transitNum<transPlan.TransitNum){arrivalId="-2";} //目的地为空
+                else{arrivalId=transPlan.ArrivalID;}//最后一次中转的 目的地以实际目的地
+                currentTransitNum = transitNum;
+                
+                var action="@Url.Action("CreateTransitStationList")";
+                openNewWindow(action,departureId,arrivalId,transPlan.GoodsType,"",currentTransitNum,"选择中转站",selectTransit,260,400);
+            }
+            else
+            {
+                ymPrompt.errorInfo({ title: '提示', message: '请先设置始发地和目的地!' });
+                return;
+            }
+        }
+        
+        function GetTransitId(n){
+            if($("#valueTransit").val()=="") return "";
+            var arrId = $("#valueTransit").val().split(',');
+            //alert("n:"+n+";allId:"+$("#valueTransit").val()+";allId length:"+arrId.length+";id value:"+arrId[n-1])
+            return arrId[n-1];//下标从0开始
+        }
+
+        function GetTransitName(n){
+            if($("#txtTransitName").val()=="") return "";
+            var arrName = $("#txtTransitName").val().split(',');
+            //alert("n:"+n+";allName:"+$("#txtTransitName").val()+";arrName length:"+arrName.length+";name value:"+arrName[n-1])
+            return arrName[n-1];//下标从0开始
+        }
+
+    
+
+        function selectArrival(tp,data)
+        {
+            if (tp == "SelectTreeNode") {
+                $('#textArrival,#txtArrivalName').each(function () {
+                    if ($(this).is("input")) {
+                        $(this).val(data.text);
+                    }
+                    else {
+                        $(this).text(data.text);
+                    }
+                });
+                $("#valueArrival").val(data.id);
+            }
+            Init();
+        }
+
+        function selectDeparture(tp,data)
+        {
+            if (tp == "SelectTreeNode") {
+                $('#textDeparture,#txtDepartureName').each(function () {
+                    if ($(this).is("input")) {
+                        $(this).val(data.text);
+                    }
+                    else {
+                        $(this).text(data.text);
+                    }
+                });
+                $("#valueDepartureID").val(data.id);
+            }
+            Init();
+        }
+        function setDeparture(){
+            TMS.Page.SelectStation('#textDeparture,#txtDepartureName','#valueDepartureID',null,selectDeparture);
+            //Init();
+        }
+        function setArrival(){
+            TMS.Page.SelectStation('#textArrival,#txtArrivalName','#valueArrival','#valueDepartureID',selectArrival);
+        }
+    </script>
+</head>
+<body>
+    <div class="container " style="border:0px solid red; width:100%;">
+        <div class="box">
+            <div class="box_title">
+                <h1 class="l">
+                    基础设置</h1>
+            </div>
+            <div class="search_condition">
+                <table class="tb_insert ">
+                    <tr>
+                        <th>
+                            货物类型
+                        </th>
+                        <td>
+                            @Html.EditorFor(model => model.GoodsType, "Enum_CheckboxList")
+                        </td>
+                        <th>
+                            生效时间
+                        </th>
+                        <td>
+                            @Html.TextBox("txtEffectiveTime", string.Format("{0:yyyy-MM-dd HH:mm}", Model.EffectiveTime.ToString("yyyy-MM-dd HH:mm")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-{%d+0}'})" })
+                        </td>
+                        <th>
+                            截至日期
+                        </th>
+                        <td>
+                            @Html.DropDownList("dropDeadLineType", (List<SelectListItem>)ViewBag.DeadLineType)
+                            @Html.TextBox("txtDeadLine", string.Format("{0:yyyy-MM-dd}", Model.DeadLine.ToString("yyyy-MM-dd")), new { @class = "Wdate1", onfocus = "WdatePicker({minDate:'%y-%M-{%d+0}'})" })
+                            <label>
+                                <input style="padding-left:30px" id="cbIsTransit" name="IsTransit" type="checkbox" onchange="needTransit()" checked="@(Model.IsTransifer ? "checked" : "")" />
+                                <span>需中转</span>
+                            </label>
+                            <span id="spanTransitNum">
+                                <select id="selectTransitNum" name="TransitNum" onchange="needTransit()">
+                                    <option id="1">1</option><option id="2">2</option><option id="3">3</option><option id="4">4</option>
+                                </select>次
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="DataListTable">
+            @{
+                    //   Html.RenderPartial("_PartialChooseLineList", Model);
+            }
+        </div>
+        @*<div>
+            <div class="split">
+            </div>
+            <div class="center">
+                <input type="button" value="返回列表" class="button" onclick="location.href='list'" /></div>
+        </div>*@
+        <!-- 线路信息 -->
+        <div class="box">
+            <div class="box_title">
+                <h1 class="l">
+                    线路信息</h1>
+            </div>
+            <div class="center" style="padding: 50px 10px; font-size: 16px; border:0px solid red;">
+                <span id="textDeparture" style="cursor: hand" onclick="setDeparture()" title="点击设置或修改始发地">始发</span>
+                <img src="@Url.Content("~/Content/images/background/arrows_red.gif")" alt="线路1" title="点击此处查看或修改线路1" style="cursor:hand" onclick="setLine(1)" />
+                <span id="spTransit"></span>
+                <span id="textArrival" style="cursor: hand" onclick="setArrival()" title="点击设置或修改目的地">目的</span>
+                <input type="hidden" id="valueDepartureID" value="@(Model.DepartureID == 0 ? "" : Model.DepartureID.ToString())" />
+                <input type="hidden" id="valueTransit" value="@(Model.TransitStationMulti == null ? "" : Model.TransitStationMulti)" />
+                <input type="hidden" id="valueArrival" value="@(Model.ArrivalID == 0 ? "" : Model.ArrivalID.ToString())" />
+                <input type="hidden" id="valueGoodsType" value="@((int)Model.GoodsType)" />
+                <input type="hidden" id="valueFirstLine" value="@Model.Line1" />
+                <input type="hidden" id="valueSecendLine" value="@Model.Line2" />
+                <input type="hidden" id="valueLines" value="@Model.Lines" />
+                <input type="hidden" id="txtDepartureName" value="@Model.DepartureName" />
+                <input type="hidden" id="txtTransitName" value="@Model.TransitStationName" />
+                <input type="hidden" id="txtArrivalName" value="@Model.ArrivalName" />
+                <input type="hidden" id="valueIsTransit" value="@Model.IsTransifer" />
+                <input type="hidden" id="valueDeadLine" value="@Model.DeadLine.ToString("yyyy-MM-dd")" />
+                <input type="hidden" id="valueEffectiveTime" value="@Model.EffectiveTime.ToString("yyyy-MM-dd HH:mm")" />
+                <input type="hidden" id="valueTransitNum" value="@(Model.TransitStationMulti == null ? "0":Model.TransitStationMulti.Split(',').Length.ToString())" />
+            </div>
+        </div>
+        <div class="split">
+        </div>
+        <div class="center" style="padding: 5px">
+            <input type="button" value="返回列表" class="button" onclick="location='@Url.Action("List")'" />
+            <input type="button" value="保存运输计划" class="button" onclick="Save('@ViewBag.OperateType')" />
+        </div>
+        <div style="padding: 15px">
+            <ul>
+                <li style="font-size: x-large; font-weight: bold; line-height: 40px; color: #3275aa">
+                    操作说明</li>
+                <li style="font-weight: bold; line-height: 30px; color: #3275aa">1.请先点击<label style="cursor: hand;
+                    color: red" onclick="setDeparture()">[始发地]</label>修改或设置运输计划的始发地</li>
+                <li style="font-weight: bold; line-height: 30px; color: #3275aa">2.然后点击<label style="cursor: hand;
+                    color: red" onclick="setArrival()">[目的地]</label>修改或设置运输计划的目的地</li>
+                <li style="font-weight: bold; line-height: 30px; color: #3275aa">3.如需中转,请先勾选<font
+                    color="red">[需中转]</font>选项然后点击<font color="red">[中转站]</font>设置或修改中转站<font color="red">(注:必须先确定始发地和目的地才能设置中转站)</font></li>
+                <li style="font-weight: bold; line-height: 30px; color: #3275aa">4.点击<font color="red">[箭头符号]</font>设置或修改两点之间的线路</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

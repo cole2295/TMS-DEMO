@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.16.6.27:83/CloudBillService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" />
+  <xs:import schemaLocation="http://10.16.6.27:83/CloudBillService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="GetWaybillInfoByWaybillNo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="waybillNo" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillInfoByWaybillNoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillInfoByWaybillNoResult" nillable="true" type="q1:WaybillInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillInfoByCustomerOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerOrder" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="merchantId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillInfoByCustomerOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillInfoByCustomerOrderResult" nillable="true" type="q2:WaybillInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillTakeSendInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="waybillNo" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillTakeSendInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillTakeSendInfoResult" nillable="true" type="q3:WaybillTakeSendInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillTakeSendInfoList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="waybillNoList" nillable="true" type="q4:ArrayOflong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillTakeSendInfoListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillTakeSendInfoListResult" nillable="true" type="q5:ArrayOfWaybillTakeSendInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillSignInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="waybillNo" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillSignInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillSignInfoResult" nillable="true" type="q6:WaybillSignInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillSignInfoList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="waybillNoList" nillable="true" type="q7:ArrayOflong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillSignInfoListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillSignInfoListResult" nillable="true" type="q8:ArrayOfWaybillSignInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTurnStationModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="KeyID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTurnStationModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetTurnStationModelResult" nillable="true" type="q9:TurnStationModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WaybillReturnInfoList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="SearchModel" nillable="true" type="q10:WaybillReturnSearchModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WaybillReturnInfoListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="WaybillReturnInfoListResult" nillable="true" type="q11:ArrayOfWaybillReturnInfoViewModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillReturnModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="waybillNo" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillReturnModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillReturnModelResult" nillable="true" type="q12:WaybillReturnEntity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillReturnInfoModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="waybillNo" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillReturnInfoModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillReturnInfoModelResult" nillable="true" type="q13:WaybillReturnInfoEntity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillBackDetailPrintModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BoxNo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaybillBackDetailPrintModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" minOccurs="0" name="GetWaybillBackDetailPrintModelResult" nillable="true" type="q14:ArrayOfBackDetailPrintModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

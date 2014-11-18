@@ -1,0 +1,87 @@
+﻿@using Vancl.TMS.Web.WebControls.Mvc;
+@model Vancl.TMS.Web.Areas.Claim.Models.ApplyForExpectDelayViewModel
+@{
+    ViewBag.Title = "录入延迟交货申请";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+    var ExpectDelayTypeSelectList = Vancl.TMS.Util.EnumUtil.EnumHelper.GetEnumValueAndDescriptions<Vancl.TMS.Model.Common.Enums.ExpectDelayType>()
+        .ToList().Select(x => new SelectListItem
+        {
+            Selected = false,
+            Text = x.Value,
+            Value = x.Key.ToString(),
+        });
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.tmpl.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">        
+        function createSuccess(Result) {            
+            ymPrompt.doHandler("ok", true, { action: 'create', result: Result });
+        }
+                
+        function cancel() {
+            ymPrompt.doHandler("cancel", true, { action: 'create', result: 'cancel' });
+        } 
+        
+        function AjaxSuccess(data, textStatus, jqXHR) {
+            ymPrompt.doHandler("ok", true, data);            
+        }
+    </script>
+}
+@using (Ajax.BeginForm(new AjaxOptions { OnSuccess = "AjaxSuccess", OnFailure = "AjaxError", LoadingElementId = "Loading" }))
+{
+    <table class=" tb_insert">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    @Html.HiddenFor(model => model.DispatchID)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.DeliveryNo)
+                </th>
+                <td>
+                    @Model.DeliveryNo
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.DelayTime)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.DelayTime, new { style = "width:50px;" })
+                    (单位：小时)
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    预计延误类型
+                </th>
+                <td>
+                    @Html.DropDownListFor(model => model.ExpectDelayType, ExpectDelayTypeSelectList)
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    预计延误原因
+                </th>
+                <td>
+                    @Html.TextAreaFor(model => model.DelayDesc, new { style = "height:45px; width:160px;" })
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="submit" class="button" value="提交申请" />
+        <input type="button" class="button" value="关闭" onclick='cancel();' />
+    </div>
+    <div>
+    </div>
+}

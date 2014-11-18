@@ -1,0 +1,70 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model List<Vancl.TMS.Model.Log.OperateLogModel>
+@{
+    Layout = null;
+}
+<!DOCTYPE html public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<link href="@Url.Content("~/Content/page_frame.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/references/jquery.cookie.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/references/jquery.unobtrusive-ajax.min.js")"></script>
+<html>
+<head>
+    <title>操作日志内容</title>
+</head>
+<body>
+<div class="DataGirdPanel">
+    <div class="tablelist">
+        <table cellpadding="0" cellspacing="0" border="0" class="DataTable  center" id="OperateLogTable" style="min-width:auto;">
+            <thead>
+                <tr>
+                    <th>
+                        操作类型
+                    </th>
+                    <th>
+                        操作内容
+                    </th>
+                    <th>
+                        操作人
+                    </th>
+                    <th>
+                        操作时间
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model == null || Model.Count <= 0)
+                    {
+                        Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            var operatelog = Model[i];
+
+                    <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                        <td style=" width:10%; ">
+                            @(EnumHelper.GetDescription<Enums.LogOperateType>(operatelog.OperateType))
+                        </td>
+                        <td style=" width:70%; white-space:normal;">
+                            @(new MvcHtmlString((operatelog.Note ?? "").Replace("];", "]<br/>")))
+                        </td>
+                        <td style=" width:10%; ">
+                            @operatelog.Operator
+                        </td>
+                        <td style=" width:10%; ">
+                            @operatelog.OperateTime
+                        </td>
+                    </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>
+</body>
+</html>

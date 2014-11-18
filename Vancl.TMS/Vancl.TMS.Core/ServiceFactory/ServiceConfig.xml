@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<services  domain="baseService" desc="基础服务">
+  <service name="TestBll" className="Vancl.TMS.BLL.TestBll"  desc="DTO字典服务"  loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.ITest;Vancl.TMS.Model.BaseInfo.CarriersModel, Vancl.TMS.Model"/>
+  <service name="TestBllExt" className="Vancl.TMS.BLL.TestBllExt"  desc="DTO字典服务"  loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.ITest;Vancl.TMS.Model.BaseInfo.TestModel, Vancl.TMS.Model"/>
+  <service name="ExpressCompanyBLL" className="Vancl.TMS.BLL.BasicInfo.ExpressCompanyBLL"  desc="DTO字典服务"  loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.BasicInfo.IExpressCompanyBLL;Vancl.TMS.Model.BaseInfo.TestModel, Vancl.TMS.Model"/>
+  <service name="ExpressCompanyDAL" className="Vancl.TMS.DAL.Sql2008.BaseInfo.ExpressCompanyDAL"  desc="DTO字典服务"  loadFrom="Vancl.TMS.DAL.Sql2008.dll" serviceName="Vancl.TMS.IDAL.BasicInfo.IExpressCompanyDAL;Vancl.TMS.Model.BaseInfo.ExpressCompanyModel, Vancl.TMS.Model"/>
+  <service name="TestBllExt" className="Vancl.TMS.BLL.TestBllExt"  desc="DTO字典服务" loadFrom="Vancl.TMS.BLL.dll" serviceName="Vancl.TMS.IBLL.ITest;Vancl.TMS.Model.BaseInfo.TestModel,Vancl.TMS.Model;Vancl.TMS.Model.BaseInfo.TestModel,Vancl.TMS.Model"/>
+</services>

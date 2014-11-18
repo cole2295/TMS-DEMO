@@ -1,0 +1,6 @@
+﻿body
+{
+}
+.button{ border:1px solid #3275AA; margin:0; padding:0 5px;*padding:0; color:#fff; line-height:23px; *line-height:20px; background:#7CC1ED url('../images/btn_Bg.gif') 50% top;
+border-radius: 3px;
+}

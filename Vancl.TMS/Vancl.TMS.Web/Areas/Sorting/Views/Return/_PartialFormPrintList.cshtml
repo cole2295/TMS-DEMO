@@ -1,0 +1,62 @@
+﻿@model List<Vancl.TMS.Model.Sorting.Return.BillReturnBoxInfoModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "FormPrint", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })</li>
+        <li class="toolbtn"><a href="javascript:showReceipt();" class="print">交接表打印</a></li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect"
+        id="tblBillInfo">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th width="30px">
+                    箱号
+                </th>
+                <th>
+                    当前部门
+                </th>
+                <th>
+                    返货目的地
+                </th>
+                <th>
+                    退货订单数量
+                </th>
+                <th>
+                    操作时间
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                <tr>
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@item.BoxNo" />
+                    </td>
+                    <td class="center">
+                        <a class="blue" href="javascript:showBatchDetails('@item.BoxNo');">@item.BoxNo</a>
+                    </td>
+                    <td class="center">
+                        @item.CurrentDeptName
+                    </td>
+                    <td class="center">
+                        @item.ReturnTo
+                    </td>
+                    <td class="center">
+                        @item.BillNum
+                    </td>
+                     <td class="center">
+                        @item.CreateTime
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

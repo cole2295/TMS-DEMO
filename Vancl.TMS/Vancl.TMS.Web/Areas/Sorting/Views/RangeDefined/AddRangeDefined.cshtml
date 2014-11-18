@@ -1,0 +1,114 @@
+﻿@using Vancl.TMS.Model.Common
+@{
+    ViewBag.Title = "添加分拣范围";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/page_frame.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/simple_gray/ymPrompt.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/UC_Widget.js"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.page.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/LadingBill/formverify.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/plugins/calendar/skin/WdatePicker.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    
+    <script src="@Url.Content("~/scripts/pages/sorting/RangeDefined.js?" + DateTime.Now.ToString("yyyyMMdd"))" type="text/javascript"></script>
+    <script type="text/javascript">
+        function cancel() {
+            ymPrompt.doHandler("create", true, { action: 'create', result: 'cancel' });
+        }
+
+        function AjaxSuccess(data, textStatus, jqXHR) {
+            if (data.IsSuccess) {
+                ymPrompt.doHandler("ok", true, data);
+                //ymPrompt.doHandler("cancle", true);
+            } else {
+                if (data.Message == "保存失败") {
+                    ymPrompt.doHandler("IsFail", false, data);
+                } else 
+                {
+                    //ymPrompt.doHandler("cancle", true);
+                    //ymPrompt.alert({ title: '提示', message: '该提货单还未到货！' });
+                    ymPrompt.doHandler("IsExist", false, data);
+                }
+                
+            }
+        }
+
+        $(function () {
+            //单选change事件
+            $('.sortingCenterSelect').change(function () {
+                $("#trSortingCenterSelect1 select").val(-1);
+                $("#trSortingCenterSelect2 select").val(-1);
+                $("#trSortingCenterSelect3 select").val(-1);
+                $('.sortingCenterSelect').each(function () {
+                    var o = $(this).parent().next().find("select");
+                    if (typeof ($(this).attr("checked")) == "undefined"
+                        || $(this).attr("checked") == ""
+                        || !$(this).attr("checked")) {
+                        o.attr("disabled", "disabled");
+                    } else {
+                        o.removeAttr("disabled");
+                    }
+                });
+            });
+            $("#selCityAndStation_City").attr("disabled", "disabled");
+            $("#selCityAndStation_Station").attr("disabled", "disabled");
+            //$("#BillQuery_div").attr("disabled", "disabled");
+        });
+    </script>
+}
+@using (Ajax.BeginForm(new AjaxOptions {OnSuccess = "AjaxSuccess", OnFailure = "AjaxError", LoadingElementId = "Loading"}))
+{
+    <table class=" tb_insert">
+        <tr>
+            <th>分拣中心</th>
+            <td>@Html.DropDownList("SortingCenterList")</td>
+        </tr>
+        <br />
+        <tr>
+            <th>分拣范围</th>
+        </tr>
+        <tr id="trSortingCenterSelect1">
+            <th>
+                <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="1"
+                       id="rdoSortingCenter" checked="checked" />分拣中心
+            </th>
+            <td>
+                @Html.DropDownList("SortingCenterListWithoutSelf")
+            </td>
+        </tr>
+        <tr id="trSortingCenterSelect2">
+            <th>
+                <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="2"
+                       id="rdoStation"/>配送站
+            </th>
+            <td>
+                @{Html.RenderPartial("CityAndStation");}
+            </td>
+        </tr>
+        <tr id="trSortingCenterSelect3">
+            <th>
+                <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="3"
+                       id="rdoDistribution" />配送商
+            </th>
+            <td>
+                <div id="BillQuery_div" chknumber="1" DistributionCode="@ViewBag.DistributionCode">
+                </div>
+            </td>
+        </tr>
+        @*<input type="hidden" id="distributionIds" name="distributionIds"/>*@
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="submit" class="button" value="保存" onclick="return ValidateAddCondition();" />
+        <input type="button" class="button" value="关闭" onclick='cancel();' />
+    </div>
+}

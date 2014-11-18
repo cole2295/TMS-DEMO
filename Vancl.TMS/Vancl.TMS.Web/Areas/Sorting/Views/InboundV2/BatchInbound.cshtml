@@ -1,0 +1,261 @@
+﻿@using Vancl.TMS.Model.BaseInfo
+@{
+    ViewBag.Title = "操作项";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header
+{
+    <style type="text/css">
+        .ContainerItem
+        {
+            text-align: center;
+            border-bottom: solid 1px #ccc;
+            padding: 10px 0px 10px 0px;
+            min-height: 30px;
+        }
+        .Info
+        {
+            color: blue;
+        }
+        .Error
+        {
+            color: Red;
+        }
+        .Success
+        {
+            color: Green;
+        }
+        .Warning
+        {
+            color: Chocolate;
+        }
+        #CilentServiceInfo
+        {
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid gray;
+            color: gray;
+        }
+        
+        #tbInner
+        {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            line-height: 28px;
+        }
+        
+        .tbPrintList
+        {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+        }
+       
+        .tbPrintList thead th
+        {
+            background: #eee;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        .tbPrintList thead td
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 12px;
+        }
+        .tbPrintList tbody td
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+          
+        }
+        .passError
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+            color: red;
+        }
+        .curError
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+            font-weight: 700;
+            color: red;
+            font-size: 20px
+        }
+        .curCorrect
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+            font-weight: 700;
+        }
+        #PrintList
+        {
+            height: 330px;
+            overflow: auto;
+        }
+        .left
+        {
+            float: left;
+            display: inline;
+        }
+        .center
+        {
+            float: left;
+            display: inline;
+        }
+        .right
+        {
+            float: right;
+            display: inline;
+        }
+    </style>
+    <script src="@Url.Content("~/Scripts/pages/sorting/BatchInboundV2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")" type="text/javascript"></script>
+    <script id="tmpSimpleList" type="text/html">
+        <tr>
+            <td>
+                ${FormCode}
+            </td>
+            <td>
+                ${DeliverCode}
+            </td>
+            <td>
+                ${Status}
+            </td>
+            <td>
+                ${Message}
+            </td>
+        </tr>
+    </script>
+}
+<table id="tbInput" class="tb_insert">
+    <tr>
+        <th>
+            <select id="selFormType" name="ScanType">
+                <option value="0" selected="selected">运单号</option>
+                <option value="2">配送单号</option>
+            </select>
+        </th>
+        <td style="width: 100px">
+        </td>
+        <th style="width: 60px;">
+            商家
+        </th>
+        <td>
+            <select id="Merchant" style="width: 200px; font-size: 14px!important;">
+                @{
+                    var MerchantList = (IList<Vancl.TMS.Model.BaseInfo.MerchantModel>)ViewBag.MerchantList;
+                    if (MerchantList.Count != 1)
+                    {
+                    <option isneedweight="True" value="0">--全部--</option>
+                    }
+                    foreach (MerchantModel merchant in MerchantList)
+                    {             
+                    <option value ="@merchant.ID" 
+                            @*@(merchant.ID==26?"Selected":"")*@
+                                IsSkipPrintBill="@merchant.IsSkipPrintBill" 
+                                IsNeedWeight ="@merchant.IsNeedWeight"  
+                                IsCheckWeight="@merchant.IsCheckWeight" 
+                                CheckWeight="@merchant.CheckWeight">
+                        @merchant.Name
+                    </option>
+                    }
+                }
+            </select>
+        </td>
+        <th style="width: 80px;">
+            称重重量
+        </th>
+        <td>
+            <input id="txtBillWeight" type="text" name="BillWeight" maxlength="10" style="width: 80px;
+                text-align: right; padding-right: 3px;" onkeyup="clearNoNum(this)" />
+        </td>
+        <th style="width: 60px;">
+            选择模板
+        </th>
+        <td>
+            <select id="Template" style="width: 200px; font-size: 14px!important;">
+                @if (ViewBag.PrintTemplates != null)
+                {
+                    foreach (Vancl.TMS.Model.Sorting.BillPrint.BillPrintTemplateModel tpl in ViewBag.PrintTemplates)
+                    {
+                    <option value="@tpl.Id" @(tpl.IsDefault ? "selected" : "")>
+                        @(tpl.IsDefault ? "(默认)" : "")@tpl.Name
+                    </option>
+                    }
+                }
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+        </td>
+        <th>
+            今日入库数:
+        </th>
+        <td>
+            <span id="TotalCount" style="font-size: 30px; font-weight: bold;">@ViewBag.TotalCount</span>
+        </td>
+    </tr>
+</table>
+<div class="box_title">
+    <h1 class="s">
+        入库运单信息</h1>
+</div>
+<div id="SearchResultList" class="DataGirdPanel">
+    <div class="toolbar">
+        <ul>
+            <li class="toolbtn"><a href="javascript:(0);" id="btnStartInboundV2" class="expand">
+                批量入库</a></li>
+        </ul>
+        <div style="margin-left: 500px; font-size: 14px;">
+            当前状态：<span id="lbStatus" style="color: Blue; font-weight: bold;">已停止</span> &nbsp;&nbsp;&nbsp;总共:
+            <span id="lbTotalCount" style="color: Blue; font-weight: bold;">0</span>单 &nbsp;&nbsp;&nbsp;已入库:
+            <span id="lbInboundCount" style="color: Green; font-weight: bold;">0</span>单 &nbsp;&nbsp;&nbsp;入库失败:
+            <span id="lbInboundFailureCount" style="color: Red; font-weight: bold;">0</span>单</div>
+    </div>
+</div>
+<table id="tbInner" style="">
+    <tr>
+        <td style="padding-right: 8px;">
+            <textarea id="txtCodeInput" rows="100" style="width: 200px; height: 360px;"></textarea>
+        </td>
+        <td valign="top" style="">
+            <table id="tableinfo" class="tbPrintList">
+                <thead>
+                    <tr>
+                        <th width="120">
+                            输入单号
+                        </th>
+                        <th width="120">
+                            运单号
+                        </th>
+                        <th width="120">
+                            入库状态
+                        </th>
+                        <th width="200">
+                            信息
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+<div class="ContainerItem">
+    <div id="MessageLabel" style="font-size: 40px; font-weight: bold;" class="">
+        @*信息显示处*@
+    </div>
+    <div id="PrintLabel" style="font-size: 40px; font-weight: bold;" class="">
+        @*信息显示处*@
+    </div>
+</div>
+<h2 id="CilentServiceInfo">
+    未能连接到本地打印称重服务，不能进行打印和实时称重！ 请联系技术支持检查服务是否正常启动或重新安装服务。 <a href="/Update/ClientService.zip"
+        class="red">点击下载安装文件</a>
+</h2>
+@{Html.RenderPartial("_wavMedia");}

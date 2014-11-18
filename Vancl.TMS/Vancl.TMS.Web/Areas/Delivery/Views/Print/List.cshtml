@@ -1,0 +1,160 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Transport.Dispatch.ViewDeliveryPrintModel>
+@{
+    ViewBag.Title = "提货单列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <style type="text/css">
+        #dispatchStatInfo
+        {
+            float: right;
+            line-height: 30px;
+            margin-right: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+        });
+
+        
+        //打印提货单
+        function PrintDeliveryNo(){
+            var obj = TMS.Page.CheckDataTableChecked(false);
+            if(obj)
+            {
+                var str="";
+                $(obj).each(function(){
+                    str +="DeliveryNo="+$(this).attr("DeliveryNo")+"&";
+                });
+                var DeliveryNo=obj.attr("DeliveryNo");
+                openWindow('@Url.Action("Print")/?'+str, 'PrintDeliveryNo',800,600);
+            }
+        }
+
+        //补录信息
+        function Replenish(){
+            var obj = TMS.Page.CheckDataTableChecked(true);
+            if(!obj) return;
+
+            var deliveryNo  = $(obj).attr("DeliveryNo");
+            
+            ymPrompt.win({ title: '补录调度信息',
+                message: '@Url.Action("Transition")/' + deliveryNo, 
+                iframe: true,
+                width: 680, height: 300,
+                handler: function (tp, data) {
+                    if (tp == "ok") { 
+                        setTimeout(function(){
+                            if(data.IsSuccess){
+                                ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                $(".refresh").click();   
+                            }else{
+                                ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                            }
+                        },10);
+                    }
+                }
+            })
+        }
+        
+        //修改物流单号
+        function ModifyWaybillNo() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if (arr) {
+                var deliveryNo = arr.eq(0).attr("DeliveryNO");
+                var waybillNo = arr.eq(0).attr("CarrierWaybillNO");
+                var url = "@Url.Action("InputWaybillNo", "Dispatch", new { area = "Delivery" })?DeliveryNO="+deliveryNo+"&WaybillNo="+waybillNo;
+                ymPrompt.win({ message: url, width: 360, height: 240, title: '请输入运单号码',maxBtn: false, minBtn: false, iframe: true,
+                    handler: function (tp, result) {
+                        if (tp == "ok") {
+                            if(result.IsSuccess){
+                                setTimeout(function(){
+                                    ymPrompt.succeedInfo({ title: '修改成功', message: result.Message });
+                                    $(".refresh").click();   
+                                },10);
+                            }
+                        }                        
+                    }
+                });
+            }
+        }
+        
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <div>
+                <table class="tb_insert Fixed">
+                    <tr>
+                        <th>
+                            <label for="CarrierID">
+                                承运商</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("CarrierID", null, "--请选择--", new { style = "width:100px" })
+                        </td>
+                        <th>
+                            <label for="txtCreateDate">
+                                调度时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("StartTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtCreateDateTo">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("EndTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="DispatchingPageStatus">
+                                调度状态</label>
+                        </th>
+                        <td>@Html.DropDownList("DeliveryStatus", "--请选择--")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="TransportType">
+                                运输方式</label>
+                        </th>
+                        <td>@Html.DropDownList("TransportType", "--请选择--")
+                        </td>
+                        <th>
+                            <label for="txtDeparture">
+                                出发地</label>
+                        </th>
+                        <td>
+                            <input id="txtDeparture" name="Departure" type="text" class="textbox selectDeparture" readonly="readonly"
+                                onclick="TMS.Page.SelectStation(this,'#DepartureID');" />
+                            <input id="DepartureID" name="DepartureID" type="hidden" />
+                        </td>
+                        <th>
+                            <label for="txtArrival">
+                                目的地</label>
+                        </th>
+                        <td>
+                            <input id="txtArrival" name="Arrival" type="text" class="textbox" readonly="readonly"
+                                onclick="TMS.Page.SelectStation(this,'#ArrivalID','#DepartureID');" />
+                            <input id="ArrivalID" name="ArrivalID" type="hidden" />
+                        </td>
+                        <td colspan="2">
+                            <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                            <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialDispatchList", Model); }
+    </div>
+}

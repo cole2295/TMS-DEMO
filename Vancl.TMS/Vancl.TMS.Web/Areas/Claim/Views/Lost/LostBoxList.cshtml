@@ -1,0 +1,193 @@
+﻿@model IList<Vancl.TMS.Model.Claim.Lost.ViewLostBoxModel>
+@{
+    ViewBag.Title = "丢失箱号列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+    //var preLostOrderDetail  = ViewBag.PreLostOrderDetail;
+    var actionURL="";
+    var allLostURL = "";
+    if (ViewBag.Operate == "update")
+    {
+        actionURL = Url.Action("UpdateLost");
+        allLostURL = Url.Action("UpdateAllLost");
+    }
+    else
+    {
+        actionURL = Url.Action("AddLost");
+        allLostURL = Url.Action("AddAllLost");
+    }
+}
+@section head{
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var preLostOrderDetail = '@ViewBag.PreLostOrderDetail';
+        var preLostOrderJson = JSON.parse(preLostOrderDetail);
+        //查看丢失详情
+        function ShowOrderDetail(boxNO) {
+            var result = [];
+            for (var i = 0; i < preLostOrderJson.length; i++) {
+                if (preLostOrderJson[i].BoxNo == boxNO) {
+                    result.push(preLostOrderJson[i]);
+                }
+            }
+            var preLostOrder = JSON.stringify(result);
+            window.top.UserData = preLostOrder;
+            var checkAll = false;
+            var obj = $(".CbxColumn :checked:not('.CheckAll')");
+            obj.each(function () {
+                if ($(this).attr("BoxNO") == boxNO) {
+                    checkAll = true;
+                    return false;
+                }
+            })
+            ymPrompt.win('@Url.Action("LostOrderList")' + "?BoxNO=" + boxNO + "&Operate=@(ViewBag.Operate)" + "&CheckAll=" + checkAll,
+                    450, 480, '丢失订单列表', handle, null, null, { id: 1 });
+        }
+        function handle(tp, data) {
+            var temp = [];
+            if (tp == "CheckPart") {
+                for (var i = 0; i < preLostOrderJson.length; i++) {
+                    if (preLostOrderJson[i].BoxNo != data[0].BoxNo) {
+                        temp.push(preLostOrderJson[i]);
+                    }
+                }
+                for (var j = 0; j < data.length; j++) {
+                    temp.push(data[j]);
+                }
+                preLostOrderJson = temp;
+                SetCheckbox(data[0].BoxNo ,"1");
+            } else if (tp == "CheckAll") {
+                SetCheckbox(data,"2");
+            }else if(tp=="NoCheck"){
+                for (var i = 0; i < preLostOrderJson.length; i++) {
+                    if (preLostOrderJson[i].BoxNo != data) {
+                        temp.push(preLostOrderJson[i]);
+                    }
+                }
+                preLostOrderJson = temp;
+                SetCheckbox(data,"0");
+            }
+        }
+        $(function () {
+            $(":checkbox").each(function () {
+                if ($(this).val() == "1") {
+                    this.indeterminate = true;
+                } else if ($(this).val() == "2") {
+                    this.checked = true;
+                }
+            });
+        });
+        function Gray(c) {
+            switch (c.value) {
+                case "0":
+                case "1":
+                    SetCheckBoxState(c,"2");
+                    break;
+                case "2":
+                    SetCheckBoxState(c, "0");
+                    var boxNo = $(c).attr("BoxNO");
+                    var temp = [];
+                    for (var i = 0; i < preLostOrderJson.length; i++) {
+                        if (preLostOrderJson[i].BoxNo != boxNo) {
+                            temp.push(preLostOrderJson[i]);
+                        }
+                    }
+                    preLostOrderJson = temp;
+                    break;
+            }
+        }
+        function AddLost() {
+            var lost = {};
+            lost.DeliveryNo = Request.QueryString("DeliveryNo");
+            var strBoxNo="";
+            $(":checkbox:checked").each(function(){
+                strBoxNo+=$(this).parent().next().html().trim()+",";
+            });
+            lost.BoxNo = strBoxNo.substring(0,strBoxNo.length-1);
+            var strOrder = "";
+            for(var i=0;i<preLostOrderJson.length;i++){
+                strOrder += preLostOrderJson[i].FormCode+",";
+            }
+            lost.FormCode = strOrder.substring(0, strOrder.length - 1);
+            if (lost.FormCode == "" && lost.BoxNo == "" && "@(ViewBag.Operate)" != "update") {
+                ymPrompt.succeedInfo({ title: '提示', message: "请至少设置一项丢失信息！" });
+                return;
+            }
+            $.ajax({
+                url: "@actionURL",
+                data: lost,
+                dataType: "json",
+                type: "POST",
+                success: function (data) {
+                    if (data.IsSuccess) {
+                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                    }
+                    else {
+                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                    }
+                },
+                error: function () {
+                    ymPrompt.errorInfo({ title: '提示', message: '添加丢失信息失败!' });
+                }
+            });
+        }
+        function AddAllLost() {
+            var deliveryNO = Request.QueryString("DeliveryNo");
+            ymPrompt.confirmInfo({
+                title: '询问',
+                message: '你确定要将该提货单标记为全部丢失吗？',
+                handler: function (tp) {
+                    if (tp == 'ok') {
+                        $.ajax({
+                            url: "@allLostURL",
+                            data: "DeliveryNo=" + deliveryNO,
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.IsSuccess) {
+                                    ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                }
+                                else {
+                                    ymPrompt.errorInfo({ title: '提示', message: data.Message })
+                                }
+                            },
+                            error: function () {
+                                ymPrompt.errorInfo({ title: '提示', message: "保存失败!" });
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        function SetCheckbox(boxNo,state)
+        {
+           $(":checkbox").each(function () {
+                if ($(this).parent().next().html().trim() == boxNo) {
+                    SetCheckBoxState(this,state);
+                }
+            });
+        }
+        function SetCheckBoxState(c,state)
+        {
+             c.value = state;
+             switch (state) {
+                case "0":
+                    c.indeterminate = false;
+                    c.checked = false;
+                    break;
+                case "1":
+                    c.indeterminate = true;
+                    c.checked = false;
+                    break;
+                case "2":
+                    c.indeterminate = false;
+                    c.checked = true;
+                    break;
+            }
+        }
+    </script>
+}
+@section list
+{
+    <div id="DelayHandleList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialLostBoxList", Model); }
+    </div>
+}

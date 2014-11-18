@@ -1,0 +1,87 @@
+﻿@model Object
+@{
+    ViewBag.Title = "出库打印";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script src="@Url.Content("~/scripts/pages/sorting/OutboundPrint.js?201301041647")" type="text/javascript"></script>
+}
+@section search
+{
+<div class="search_condition" id="divSearchCondition">
+<form id="FormExport" action="@Url.Action("Export")" method="post">
+    <input id="hidBatchNos" name="batchNos" type="hidden" />
+</form>
+    @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+    {
+        <table class="tb_insert">
+            <tr id="trSortingCenterSelect">
+                <th>
+                    <label>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="0"
+                            id="rdoStation" checked="checked" />分拣站点：</label>
+                </th>
+                <td>
+                    @{Html.RenderPartial("CityAndStation");}
+                </td>
+                <th>
+                    <label>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="2"
+                            id="rdoSortingCenter" />二级分拣：</label>
+                </th>
+                <td>
+                    @Html.DropDownList("SortingCenterList")
+                </td>
+                <th>
+                    <label>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="3"
+                            id="rdoDistribution" />配送商：</label>
+                </th>
+                <td>
+                    @Html.DropDownList("DistributorList")
+                </td>
+                <th>
+                    运单号
+                </th>
+                <td>
+                    @Html.TextBox("WaybillNo")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    入库时间
+                </th>
+                <td>
+                            <input id="txtBeginTime" name="BeginTime" type="text" readonly="readonly" style="width:125px;" value="@DateTime.Now.Date.ToString("yyyy-MM-dd HH:mm:ss")"
+                                onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                                
+                 </td>
+                <th>
+                    到
+                </th>
+                <td>
+                            <input id="txtEndTime" name="EndTime" type="text" readonly="readonly" style="width:125px;" value="@DateTime.Now.Date.AddDays(1).AddSeconds(-1).ToString("yyyy-MM-dd HH:mm:ss")"
+                                onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />   
+                </td>
+                <th>
+                    批次号
+                </th>
+                <td>
+                    @Html.TextBox("BatchNo")
+                </td>
+                <th></th>
+                <td>
+                    <input id="BtnSearch" type="submit" name="BtnSearch" value="查询数据" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialPrintList", Model); }
+    </div>
+}

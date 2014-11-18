@@ -1,0 +1,74 @@
+﻿@*@model Vancl.TMS.Model.Sorting.RangeDefined.ViewRangeDefinedSearchListModel*@
+@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Sorting.RangeDefined.ViewRangeDefinedSearchListModel>
+<div class="toolbar">
+    <ul style=" margin-left:50px;">
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "SearchRange", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnSearchRangeListRefresh" })
+        </li>
+        <li class="toolbtn"><a href="javascript:AddRange();" class="add">添加</a></li>
+        <li class="toolbtn"><a href="javascript:DeleteRange();" class="del">删除</a></li>
+        <li class="toolbtn"><a href="javascript:exportRangeDefine();" class="expand">导出</a></li>
+    </ul>
+</div>
+<div class="tablelist">
+    <form id="FormExport" action="@Url.Action("Export")" method="post">
+        <input type="hidden" id="rangeIds" name="rangeIds"/>
+        <input type="hidden" id="ExportChooseType" name="ExportChooseType" value="@ViewBag.chooseType" />
+    </form>
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable MultiSelect"  id="tblBillInfo">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    分拣中心
+                </th>
+                <th>
+                    分拣范围
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                //if (Model == null)
+                //{
+                //    Html.RenderPartial("_PartialDataTableEmptyRow",null);
+                //}
+                //else if (Model.Count == 0)
+                //{
+                //    var list = new List<Vancl.TMS.Model.Sorting.RangeDefined.ViewRangeDefinedSearchListModel>();
+                //    Html.RenderPartial("_PartialDataTableEmptyRow", list);
+                //}
+                if (Model == null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="CbxColumn">
+                                <input type="checkbox" ID = "@item.RangeDefinedId" />
+                            </td>
+                            <td>
+                                @item.SortingCenter
+                            </td>
+                            <td>
+                                @item.RangeDefined
+                            </td>
+                        </tr>
+                    }
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    ViewBag.UpdateTargetId = "RangeList";
+    ViewBag.OnBegin = "beforeSend";
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

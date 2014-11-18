@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<quartz xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				version="1.0"
+				overwrite-existing-jobs="true">
+  <!--job Batch -->
+  <job>
+    <job-detail>
+      <name>job11</name>
+      <group>g11</group>
+      <job-type>Vancl.TMS.Schedule.OutBoundWriteImpl.OutboundWritejob,  Vancl.TMS.Schedule.OutBoundWriteImpl</job-type>
+      <!--编号类型1.箱号,2.批次号,默认为箱号-->
+      <job-data-map>
+        <entry>
+          <key>NoType</key>
+          <value>2</value>
+        </entry>
+        <entry>
+          <key>Remaider</key>
+          <value>0</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>t11</name>
+        <group>t11</group>
+        <job-name>job11</job-name>
+        <job-group>g11</job-group>
+        <start-time>2011-08-23T14:08:50</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>6000</repeat-interval>
+      </simple>
+    </trigger>
+  </job>
+</quartz>

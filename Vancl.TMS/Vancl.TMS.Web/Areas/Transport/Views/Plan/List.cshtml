@@ -1,0 +1,239 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Transport.Plan.ViewTransportPlanModel>
+@{
+    ViewBag.Title = "运输计划列表";
+    ViewBag.HideSearch = false;
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <style type="text/css">
+        .tbCarrierList
+        {
+            border-collapse: collapse;
+            margin: 5px;
+            font-size: 12px;
+        }
+        .tbCarrierList th
+        {
+            background: #eff !important;
+            font-weight: normal;
+        }
+        .tbCarrierList tbody tr:hover
+        {
+            background: none !important;
+        }
+        .trExtend
+        {
+            display: none;
+        }
+        .trExtend:hover
+        {
+            background: none !important;
+        }
+        .trParentExtend
+        {
+            background: #F9FBE4 !important;
+        }
+    </style>
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function(){
+            //默认显示计划线路 
+            $("#tbPlanList tbody a.icon_plus").click();
+        });
+
+        //新规运输计划
+        function createTransportPlan()
+        {
+            TMS.Page.Serialize("divSearchCondition","btnSearch");
+            window.location='@Url.Action("Create")'; 
+        }
+
+        //显示操作日志
+        function ShowOperateLog(KeyValue) {
+            ymPrompt.win('@Url.Action("ShowOperateLog")' + "?TPID=" + KeyValue,
+                              880, 310, '查看操作日志', null, null, null, { id: 1 });
+            return;
+        }
+
+        //修改运输计划
+        function updateTransportPlan()
+        {
+            var obj = TMS.Page.CheckDataTableChecked();
+            if(obj) 
+            {
+                if( obj.attr("CanUpdate")==0)
+                {
+                    ymPrompt.errorInfo({ title: '提示', message: "不能修改已启用并且已生效的运输计划！" });
+                    return;
+                }
+                var id = obj.val();
+                TMS.Page.Serialize("divSearchCondition","btnSearch");
+                window.location='@Url.Action("Details")/'+id; 
+            }
+        }
+
+        //删除运输计划
+        function deleteTransportPlan() {
+            var obj = TMS.Page.CheckDataTableChecked(false);
+            if(!obj) return;
+            var ids = "";
+            var isContinue=true;
+            obj.each(function () {
+                if($(this).attr("CanUpdate")==0)
+                {
+                    ymPrompt.errorInfo({ title: '提示', message: "不能删除已启用并且已生效的运输计划！" });
+                    isContinue=false;
+                    return false;
+                }
+                ids += $(this).val() + ",";
+            });
+            if(!isContinue) return;
+            ids = ids.substr(0,ids.length-1);
+            ymPrompt.confirmInfo({ 
+                title: '询问',
+                message: '你确定要删除选择的 ' + obj.length + ' 项？',
+                handler: function (tp) {
+                    if (tp == 'ok') {
+                        $.ajax({
+                            url:"@Url.Action("Delete")",
+                            data:"ids="+ids,
+                            dataType:"json",
+                            success:function(data){
+                                if(data.IsSuccess)
+                                {
+                                    ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                    //刷新列表
+                                    $("#btnListRefresh").click();
+                                }
+                                else
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                }
+                            },
+                            error:function()
+                            {
+                                ymPrompt.errorInfo({ title: '提示', message: '删除操作失败!' });
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        //启用停用运输计划 isEnabled:0.停用 1.启用
+        function setIsEnabled(isEnabled)
+        {
+            var obj = TMS.Page.CheckDataTableChecked(false);
+            if(!obj) return;
+            var ids = "";
+            var strPre=isEnabled==0?"停用":"启用";
+            obj.each(function () {
+                ids += $(this).val() + ",";
+            });
+            ids = ids.substr(0,ids.length-1);
+            ymPrompt.confirmInfo({ 
+                title: '询问',
+                message: '你确定要'+strPre+'选择的 ' + obj.length + ' 项？',
+                handler: function (tp) {
+                    if (tp == 'ok') {
+                        $.ajax({
+                            url:"@Url.Action("SetIsEnabled")",
+                            data:"listID="+ids+"&isEnabled="+isEnabled,
+                            dataType:"json",
+                            success:function(data){
+                                if(data.IsSuccess)
+                                {
+                                    ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                    //刷新列表
+                                    $("#btnListRefresh").click();
+                                }
+                                else
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                }
+                            },
+                            error:function()
+                            {
+                                ymPrompt.errorInfo({ title: '提示', message: strPre+'操作失败!' });
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        //添加搜索数据
+        function beforeSend(xhr, settings) {
+            var data = $("form").data(TMS.Page.Data_ajax_SearchData);
+            if (data) {
+                settings.data += "&" + data;
+            }
+        }
+
+        function showCarrier(elem,tpid){
+            $(elem).toggleClass("icon_sub");
+            $(elem).parents("tr:eq(0)").toggleClass("trParentExtend").next().toggle();
+            if($(elem).is(".icon_sub")){
+                $.ajax({
+                    url:"@Url.Action("LineList")/"+tpid,
+                    success:function(data, textStatus, jqXHR){
+                        $(elem).parents("tr:eq(0)").next("tr").find(".tdLineList").html(data);
+                    },
+                    cache: false,
+                    beforeSend: false,
+                    complete: false
+                });
+            }
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        有效期
+                    </th>
+                    <td>
+                        <input id="txtDeadline" name="Deadline" class="textbox" onfocus="WdatePicker()" />
+                    </td>
+                    <th>
+                        始发地
+                    </th>
+                    <td>
+                        <input id="txtDeparture" name="DepartureName" type="text" class="textbox selectDeparture"
+                            onclick="TMS.Page.SelectStation(this,'#hidDepartureID');" />
+                        <input id="hidDepartureID" name="DepartureID" type="hidden" />
+                    </td>
+                    <th>
+                        目的地
+                    </th>
+                    <td>
+                        <input id="txtArrival" name="ArrivalName" type="text" class="textbox" onclick="TMS.Page.SelectStation(this,'#hidArrivalID','#hidDepartureID');" />
+                        <input id="hidArrivalID" name="ArrivalID" type="hidden" />
+                    </td>
+                    <th>
+                        计划状态
+                    </th>
+                    <td>
+                        @Html.DropDownList("Status", "--请选择--")
+                    </td>
+                    <td>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialPlanList", Model); }
+    </div>
+}

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="RFD.LMS.SortCenter.OpenService.SortCenterOpenService" CodeBehind="SortCenterOpenService.svc.cs" %>

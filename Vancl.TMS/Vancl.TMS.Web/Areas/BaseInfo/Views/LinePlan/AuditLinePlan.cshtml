@@ -1,0 +1,68 @@
+﻿@model Vancl.TMS.Web.Areas.BaseInfo.Models.LinePlanViewModel
+@{
+    ViewBag.Title = "线路计划审核";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="/Scripts/lib/jquery-1.7.1.min.js"></script>
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function AuditLinePlan(approveStatus)
+        {
+            var lpid = Request.QueryString("lpid");
+            var effectiveTime = $("#EffectiveTime").val();
+            if(approveStatus==1)
+            {
+                if(effectiveTime.trim()=="")
+                {
+                    alert("生效时间不能为空！");
+                    return;
+                }
+            }
+            $.ajax({
+                type: "POST",
+                url:"@Url.Action("AuditLinePlan")"+'/'+lpid+"?ApproveStatus="+approveStatus+"&EffectiveTime="+effectiveTime,
+                dataType:"json",
+                success:function(data){
+//                    ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                    ymPrompt.doHandler("OK", true ,data);
+                }
+            });
+        }
+        $(function () {
+            var effectiveTime = new Date(Request.QueryString("EffectiveTime"));
+            $("#EffectiveTime").val(effectiveTime.getFullYear()+"-"+(effectiveTime.getMonth()+1)+"-"+effectiveTime.getDate());
+        }); 
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <table class="com_w100pen tb_insert" id="test">
+        <thead>
+            <tr>
+                <th colspan="2">
+                @Html.HiddenFor(model => model.LPID)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 100px;">
+                    生效时间
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.EffectiveTime, new { @class = "Wdate1", 
+                        onfocus = "WdatePicker({skin: 'blue',minDate:'%y-%M-{%d+1}'})", @readonly="readonly" })
+                    @Html.ValidationMessageFor(model => model.EffectiveTime)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="button" class="button" value="通过" onclick="AuditLinePlan(1);" />
+        <input type="button" class="button" value="驳回" onclick="AuditLinePlan(2);" />
+    </div>
+}

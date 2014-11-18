@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<quartz xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				version="1.0"
+				overwrite-existing-jobs="true">
+  <!--job OutBoundMonitorJob -->
+  <job>
+    <job-detail>
+      <name>job1</name>
+      <group>g1</group>
+      <job-type>Vancl.TMS.Schedule.MonitorImpl.OutBoundMonitorJob,  Vancl.TMS.Schedule.MonitorImpl</job-type>
+      <job-data-map>
+        <entry>
+          <key>TemplateFileName</key>
+          <value>OutboundMonitorTemplate.txt</value>
+        </entry>
+        <!--TODO: 正式环境必须修改项-->
+        <entry>
+          <key>EmailSubjectName</key>
+          <value>TMS 出库同步服务Monitor(本机测试)</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>t1</name>
+        <group>t1</group>
+        <job-name>job1</job-name>
+        <job-group>g1</job-group>
+        <start-time>2011-08-23T14:08:50</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>3600000</repeat-interval>
+        <!--<repeat-interval>3000</repeat-interval>-->
+      </simple>
+    </trigger>
+  </job>
+  <!--job InBoundMonitorJob -->
+  <job>
+    <job-detail>
+      <name>job2</name>
+      <group>g2</group>
+      <job-type>Vancl.TMS.Schedule.MonitorImpl.InBoundMonitorJob,  Vancl.TMS.Schedule.MonitorImpl</job-type>
+      <job-data-map>
+        <entry>
+          <key>TemplateFileName</key>
+          <value>InboundMonitorTemplate.txt</value>
+        </entry>
+        <!--TODO: 正式环境必须修改项-->
+        <entry>
+          <key>EmailSubjectName</key>
+          <value>TMS 入库同步服务Monitor(本机测试)</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>t2</name>
+        <group>t2</group>
+        <job-name>job2</job-name>
+        <job-group>g2</job-group>
+        <start-time>2011-08-23T14:08:50</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>3600000</repeat-interval>
+        <!--<repeat-interval>3000</repeat-interval>-->
+      </simple>
+    </trigger>
+  </job>
+</quartz>

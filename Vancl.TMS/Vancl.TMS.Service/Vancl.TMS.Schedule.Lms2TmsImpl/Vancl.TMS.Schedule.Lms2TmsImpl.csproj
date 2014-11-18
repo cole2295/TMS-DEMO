@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EB891E12-4B67-48C0-A745-54C8722A8147}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.Schedule.Lms2TmsImpl</RootNamespace>
+    <AssemblyName>Vancl.TMS.Schedule.Lms2TmsImpl</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Quartz">
+      <HintPath>..\..\lab\Quartz.NET-1.0-RC3\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Consts.cs" />
+    <Compile Include="Lms2TmsJob.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuartzManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Vancl.TMS.BLL\Vancl.TMS.BLL.csproj">
+      <Project>{CD008682-46E5-4D34-9725-4DDEC49C27D4}</Project>
+      <Name>Vancl.TMS.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vancl.TMS.Core\Vancl.TMS.Core.csproj">
+      <Project>{8C7CAD7F-BF41-4A20-AC70-07FB0E2E8F53}</Project>
+      <Name>Vancl.TMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vancl.TMS.IBLL\Vancl.TMS.IBLL.csproj">
+      <Project>{D69B4050-2F39-4B7F-A9A0-8F8BA8A66103}</Project>
+      <Name>Vancl.TMS.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vancl.TMS.Model\Vancl.TMS.Model.csproj">
+      <Project>{2EC92CCF-4212-4CA0-98C8-590382689660}</Project>
+      <Name>Vancl.TMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lms2TmsConfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

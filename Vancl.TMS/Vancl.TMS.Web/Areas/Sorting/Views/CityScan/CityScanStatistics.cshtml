@@ -1,0 +1,80 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Sorting.CityScan.CityScanModel>
+
+@{
+    ViewBag.Title = "同城单量统计";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+
+@section head{
+    <script type="text/javascript">
+        function ExprotScan() {
+            var list = TMS.Page.GetDataTableChecked();
+            if (list.length == 0) {
+                alert("请至少选择一个需要导出的批次！"); return;
+            }
+            var batchNo = "";
+            list.each(function () {
+                batchNo += $(this).val() + ",";
+            });
+            $("#hidBatchNos").val(batchNo);
+            $("#FormExport").submit();
+        }
+
+        //打印交接单
+        function PrintScan() {
+            var list = TMS.Page.GetDataTableChecked();
+            if (list.length == 0) {
+                alert("请至少选择一个需要打印的批次！"); return;
+            }
+            var batchNo = "";
+            list.each(function () {
+                batchNo += "batchNo=" + $(this).val()+ "&";
+            });
+            openWindow('CityScanPrint?' + batchNo, 'CityScanPrint', 800, 600);
+        }
+
+        function ViewDetail(batchno) {
+            var url = '@Url.Action("ScanBatchList")' + "?batchno=" + batchno;
+            ymPrompt.win(url, 900, 480, '同城单量统计批次明细',
+                        null, null, null, { id: batchno });
+        }
+    </script>
+}
+
+@section search{
+<form id="FormExport" action="@Url.Action("ExportScan")" method="post">
+    <input id="hidBatchNos" name="batchNos" type="hidden" />
+</form>
+<div class="search_condition" id="divSearchCondition">
+    @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+    {
+    <table class="tb_insert Fixed" border="0">
+        <tr>
+            <th>分拣中心</th>
+            <td>
+                <span id="DeptName">@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).DeptName)</span>
+                <input type="hidden" id="DeptID" value="@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).DeptID)" />
+                <input type="hidden" id="UserID" value="@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).ID)" />
+            </td>
+            <th>批次号</th>
+            <td colspan="3"><input type="text" id="txtBatchNo" name="BatchNo" size="20" /></td>
+        </tr>
+        <tr>
+            <th>扫描时间</th>
+            <td> @Html.TextBox("ScanStartTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    到
+                 @Html.TextBox("ScanEndTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })</td>
+            <th>运单号</th>
+            <td><input type="text" id="txtFormCode" name="FormCode" size="20" /></td>
+            <td><input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" /></td>
+        </tr>
+    </table>
+    }
+</div>
+}
+
+@section list{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialCityScanStatisticsList", Model);}
+    </div>
+}

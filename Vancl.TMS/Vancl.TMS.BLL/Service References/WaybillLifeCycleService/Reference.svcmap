@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="73a85202-5ccd-43d2-be9e-1f1d1bc695d0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.16.112.115:8612/WaybillLifeCycleService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WaybillLifeCycleService.disco" MetadataType="Disco" ID="39561b43-9ce1-425b-9d11-269a07f43e92" SourceId="1" SourceUrl="http://10.16.112.115:8612/WaybillLifeCycleService.svc?disco" />
+    <MetadataFile FileName="WaybillLifeCycle.wsdl" MetadataType="Wsdl" ID="7ad1cb2a-a389-420e-a57a-57d2cedcf373" SourceId="1" SourceUrl="http://10.16.112.115:8612/WaybillLifeCycleService.svc?wsdl" />
+    <MetadataFile FileName="WaybillLifeCycleService.xsd" MetadataType="Schema" ID="1091797b-d492-4b98-a8cc-c70b1013b1a0" SourceId="1" SourceUrl="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd3" />
+    <MetadataFile FileName="WaybillLifeCycleService1.xsd" MetadataType="Schema" ID="8ee9cee4-d41a-4c67-a859-880bbd414aca" SourceId="1" SourceUrl="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd2" />
+    <MetadataFile FileName="WaybillLifeCycleService2.xsd" MetadataType="Schema" ID="7b3d85f2-0289-431b-a310-3a0b46f40e47" SourceId="1" SourceUrl="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd1" />
+    <MetadataFile FileName="WaybillLifeCycleService3.xsd" MetadataType="Schema" ID="3ffbf16d-e3df-47a3-b5b2-1cd421584350" SourceId="1" SourceUrl="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

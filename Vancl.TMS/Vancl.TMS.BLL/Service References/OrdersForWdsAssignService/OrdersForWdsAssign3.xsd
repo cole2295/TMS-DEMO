@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.AssignModel" />
+  <xs:import schemaLocation="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.ForWDS" />
+  <xs:element name="GetWaitAssignDistributionOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="assignStatus" type="xs:int" />
+        <xs:element minOccurs="0" name="top" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaitAssignDistributionOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.AssignModel" minOccurs="0" name="GetWaitAssignDistributionOrdersResult" nillable="true" type="q1:ArrayOfAssignInfoForWds" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaitAssignStationOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="assignStatus" type="xs:int" />
+        <xs:element minOccurs="0" name="top" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWaitAssignStationOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.AssignModel" minOccurs="0" name="GetWaitAssignStationOrdersResult" nillable="true" type="q2:ArrayOfAssignInfoForWds" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignDistribution">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fromDistributionCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="curDistributionCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="assignType" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignDistributionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AssignDistributionResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignStation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="stationId" type="xs:int" />
+        <xs:element minOccurs="0" name="assignType" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignStationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AssignStationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAssignDistribution">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAssignDistributionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsAssignDistributionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAssignStation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAssignStationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsAssignStationResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignDistributionOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.ForWDS" minOccurs="0" name="condition" nillable="true" type="q3:DQQueryCondition" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignDistributionOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAssignDistributionOrdersResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataTable" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+              <xs:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignStationOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.ForWDS" minOccurs="0" name="condition" nillable="true" type="q4:SQQueryCondition" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignStationOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAssignStationOrdersResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataTable" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+              <xs:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OutBound">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="status" type="xs:int" />
+        <xs:element minOccurs="0" name="currentDistributionCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OutBoundResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OutBoundResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignDistributionChange">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="currentDistributionCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="assignDistributionCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignDistributionChangeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AssignDistributionChangeResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsOutBound">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderno" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="currentDistributionCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsOutBoundResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsOutBoundResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignFail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="failAssignType" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssignFailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AssignFailResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignDistribution">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignDistributionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAssignDistributionResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignStation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAssignStationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAssignStationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,350 @@
+﻿@using Vancl.TMS.Web.Areas.BaseInfo.Controllers;
+@using Vancl.TMS.Model.Common
+@model Vancl.TMS.Web.Areas.BaseInfo.Models.LinePlanViewModel
+@{
+    if (ViewBag.Operate == "NewLine")
+    {
+        ViewBag.Title = "新增线路";
+    }
+    else if (ViewBag.Operate == "NewLinePlan")
+    {
+        ViewBag.Title = "新增线路计划";
+    }
+    else if (ViewBag.Operate == "Update")
+    {
+        ViewBag.Title = "修改线路计划";
+    }
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var priceType = 0;
+        $(function () {
+            if($("#LineExpression").val()==""){
+                $(".ExpressionType").removeAttr("checked");
+            }
+            @{
+                if (ViewBag.IsRepeat != null && ViewBag.IsRepeat)
+                {
+                    @:createMessage("已存在该类型的线路，始发地、目的地、承运商、货物类型不能重复！");
+                }
+                if (ViewBag.Operate != null && ViewBag.Operate != "NewLine")
+                {
+                    <text>
+                    createReadonly();
+                    </text>
+                    if (ViewBag.Operate == "Update")
+                    {
+                        @:$("#btnSubmit").val("修改");
+                    }
+                }
+            }
+            priceType = '@(Model == null ? "-1" : ((int)Model.ExpressionType).ToString())';
+        })
+        //弹出设置运费窗体
+        function SetExpression(elem) {
+            var ExpressionType = $(elem).val();
+            var LineExpression = $("#LineExpression").val();
+            window.top.UserData = "";
+            if(priceType==ExpressionType){
+                window.top.UserData = $("#LineExpression").val();
+            }
+            if (ExpressionType == 0) {
+                ymPrompt.win('@Url.Action("SetFixedPrice")' , 450, 280, '设置固定价格',
+                    SetExpressionResult, null, null, { id: 1 });
+            }
+            else if (ExpressionType == 1) {
+                ymPrompt.win('@Url.Action("SetLadderPrice")', 800, 380, '设置阶梯价格',
+                    SetExpressionResult, null, null, { id: 1 });
+            }
+            else if (ExpressionType == 2) {
+                ymPrompt.win('@Url.Action("SetFormulaPrice")', 780, 480, '设置公式价格',
+                    SetExpressionResult, null, null, { id: 1 });
+            }
+        }
+        //暂存已设置运费
+        function SetExpressionResult(tp, data) {
+            if (tp == "AddFixedPrice") {
+                $("#LineExpression").val(JSON.stringify(data));
+                priceType="0";
+            }else if(tp == "AddLadderPrice"){
+                $("#LineExpression").val(JSON.stringify(data));
+                priceType="1";
+            }else if(tp == "AddFormulaPrice"){
+                $("#LineExpression").val(JSON.stringify(data));
+                priceType="2";
+            }else{
+                $(".ExpressionType").each(function(){
+                    $(this).removeAttr("checked");
+                });
+                $(".ExpressionType").each(function()
+                {
+                 //   alert(priceType);
+                //    alert($(this).val());
+                    if($(this).val()==priceType)
+                    {
+                        $(this).attr("checked","checked");
+                    }
+                })
+            }
+        }
+        function createSuccess(msg) {            
+            ymPrompt.succeedInfo({ title: '成功', message: msg ,handler:function(tp){
+                CloseCurrentTab();                
+            }});
+        }
+        function createMessage(msg){
+            ymPrompt.succeedInfo({ title: '失败', message: msg ,handler:function(tp){ }});
+        }
+        function createReadonly(){
+            $("#DepartureName").attr("disabled","disabled");
+            $("#ArrivalName").attr("disabled","disabled");
+            $("#CarrierID").attr("disabled","disabled");
+            $(".rdbGoodsType").each(function(){
+                $(this).attr("disabled","disabled");
+            });
+            $("input[name='TransportType']").attr("disabled","disabled");
+            $("input[name='BusinessType']").attr("disabled","disabled");
+        }
+        function OnSubmit()
+        {
+            $("#DepartureName").attr("disabled",false);
+            $("#ArrivalName").attr("disabled",false);
+            $("#CarrierID").attr("disabled",false);
+            $(".rdbGoodsType").each(function(){
+                $(this).attr("disabled",false);
+            });
+            $("input[name='TransportType']").attr("disabled",false);
+            $("input[name='BusinessType']").attr("disabled",false);
+            return true;
+        }
+//        function ClearTextBox()
+//        {
+//            $("#ArrivalAssessmentTime").val("");
+//            $("#LeaveAssessmentTime").val("");
+//            $("#ArrivalTiming").val("");
+//            $("#InsuranceRate").val("");
+//            $("#LowestPrice").val("");
+//            $("#LongDeliveryPrice").val("");
+//            $("#LongPickPrice").val("");
+//            $("#LongTransferRate").val("");
+//            $("#EffectiveTime").val("");
+//            $("#LineExpression").val("");
+//        }
+
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <table class="tb_insert">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    @if (ViewBag.Operate != "NewLine")
+                    {
+                        @Html.HiddenFor(model => model.LPID)
+                    }
+                    @Html.HiddenFor(model => model.LineID)
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.LineExpression)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.DepartureID)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.DepartureName, new { onclick = "TMS.Page.SelectStation(this,'#DepartureID');", @readonly = "readonly", @class = "selectDeparture" })
+                    <span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.DepartureName)
+                    @Html.HiddenFor(model => model.DepartureID)
+                    @Html.ValidationMessageFor(model => model.DepartureID)
+                </td>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.ArrivalID)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.ArrivalName, new { onclick = "TMS.Page.SelectStation(this,'#ArrivalID','#DepartureID');", @readonly = "readonly" })
+                    <span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.ArrivalName)
+                    @Html.HiddenFor(model => model.ArrivalID)
+                    @Html.ValidationMessageFor(model => model.ArrivalID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.CarrierID)
+                </th>
+                @{
+                    if (ViewBag.Operate != null && ViewBag.Operate == "NewLine")
+                    {
+                    <td>
+                        @Html.DropDownListFor(model => model.CarrierID, (IEnumerable<SelectListItem>)ViewBag.Carriers, "--请选择--", new { style = "width:170px" })
+                        <span style="color: Red">*</span>
+                        @Html.ValidationMessageFor(model => model.CarrierID)
+                    </td>
+                    }
+                    else
+                    { 
+                    <td>
+                        @Html.TextBoxFor(model => model.CarrierName, new { disabled = "disabled" })
+                        @Html.HiddenFor(model => model.CarrierID)
+                        <span style="color: Red">*</span>
+                        @Html.ValidationMessageFor(model => model.CarrierID)
+                    </td>
+                    }
+                }
+                <th>
+                    @Html.LabelFor(model => model.TransportType)
+                </th>
+                <td>
+                    @Html.RadioButtonList("TransportType")<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.TransportType)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.ArrivalAssessmentTime)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.ArrivalAssessmentTime, "{0:HH:mm}", new
+               {
+                   @class = "Wdate1",
+                   onfocus = "WdatePicker({skin: 'blue',dateFmt:'HH:mm'})",
+                   @readonly = "readonly"
+               }) (时:分)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.ArrivalAssessmentTime)
+                </td>
+                <th>
+                    @Html.LabelFor(model => model.LeaveAssessmentTime)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.LeaveAssessmentTime, "{0:HH:mm}", new
+               {
+                   @class = "Wdate1",
+                   onfocus = "WdatePicker({skin: 'blue',dateFmt:'HH:mm'})",
+                   @readonly = "readonly"
+               }) (时:分)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.LeaveAssessmentTime)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.ArrivalTiming)
+                </th>
+                <td>
+                    @Html.EditorFor(model => model.ArrivalTiming) (小时)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.ArrivalTiming)
+                </td>
+                <th>
+                    @Html.LabelFor(model => model.InsuranceRate)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.InsuranceRate)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.InsuranceRate)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.LowestPrice)
+                </th>
+                <td>
+                    @Html.EditorFor(model => model.LowestPrice) (元)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.LowestPrice)
+                </td>
+                <th>
+                    @Html.LabelFor(model => model.LongDeliveryPrice)
+                </th>
+                <td>
+                    @Html.EditorFor(model => model.LongDeliveryPrice) (元)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.LongDeliveryPrice)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.LongPickPrice)
+                </th>
+                <td>
+                    @Html.EditorFor(model => model.LongPickPrice) (元)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.LongPickPrice)
+                </td>
+                <th>
+                    @Html.LabelFor(model => model.LongTransferRate)
+                </th>
+                <td>
+                    @Html.EditorFor(model => model.LongTransferRate)<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.LongTransferRate)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.Priority)
+                </th>
+                <td>
+                    @Html.RadioButtonList("Priority")<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.Priority)
+                </td>
+                <th>
+                    @Html.LabelFor(model => model.LineType)
+                </th>
+                <td>
+                    @Html.RadioButtonList("LineType")<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.LineType)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.LineGoodsType)
+                </th>
+                <td>
+                    @Html.CheckBoxList("LineGoodsType", null, null, new { @class = "rdbGoodsType" })<span
+                        style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.LineGoodsType)
+                </td>
+                <th>
+                    @Html.LabelFor(model => model.ExpressionType)
+                </th>
+                <td>
+                    <label>
+                        @Html.RadioButtonList("ExpressionType", null, null, new { @class = "ExpressionType", onclick = "SetExpression(this)" })
+                        <span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.ExpressionType)
+                    @Html.ValidationMessageFor(model => model.LineExpression)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.BusinessType)
+                </th>
+                <td>
+                    @Html.RadioButtonList("BusinessType")<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.BusinessType)
+                </td>
+                <th>
+                    @Html.LabelFor(model => model.EffectiveTime)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.EffectiveTime, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "Wdate1",
+                   onfocus = "WdatePicker({skin: 'blue',minDate:'%y-%M-{%d+1}'})",
+                   @readonly = "readonly"
+               })<span style="color: Red">*</span>
+                    @Html.ValidationMessageFor(model => model.EffectiveTime)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="submit" class="button" value="添加" onclick='OnSubmit();' id="btnSubmit" />
+        <input type="button" class="button" value="返回列表" onclick='location="@Url.Action("List")"' />
+    </div>
+}

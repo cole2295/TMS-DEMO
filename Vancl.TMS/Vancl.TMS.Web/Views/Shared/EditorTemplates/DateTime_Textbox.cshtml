@@ -1,0 +1,18 @@
+﻿@model DateTime?
+@{
+    string oldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    string prefix = oldPrefix;
+    if (string.IsNullOrWhiteSpace(prefix))
+    {
+        prefix = Model.GetType().Name;
+    }
+
+    ViewData.TemplateInfo.HtmlFieldPrefix = string.Empty;
+    
+    @Html.TextBox(prefix,
+            ViewData.TemplateInfo.FormattedModelValue,
+            ViewData
+        )
+
+    ViewData.TemplateInfo.HtmlFieldPrefix = oldPrefix;
+}

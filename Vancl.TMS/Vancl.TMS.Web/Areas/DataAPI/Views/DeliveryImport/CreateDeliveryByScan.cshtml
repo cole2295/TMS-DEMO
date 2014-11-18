@@ -1,0 +1,332 @@
+﻿@model Vancl.TMS.Web.Areas.DataAPI.Models.ScanBatchNoModel
+@{
+    ViewBag.Title = "扫描创建提货单";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")  " type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/lib/json2.js")  " type="text/javascript"></script>
+    <script id="tmpSimpleList" type="text/x-jquery-tmpl">
+        <tr>
+                <td>
+                    ${CustomerBatchNo}
+                </td>
+                <td>
+					${MerchantName}
+				</td>
+				<td>
+					${DepartureName}
+				</td>
+                <td>
+					${ArrivalName}
+				</td>
+                <td>
+					${TransportTypeDescription}
+				</td>
+                <td>
+                    ${OutBoundTimeString}					
+				</td>
+                <td>
+					<a href="#" onclick="showLinePlan('${LPID}')">查看线路计划</a>
+				</td>
+			</tr>
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/references/jquery.validate.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")"></script>
+    <script type="text/javascript">
+        // 数组第一次出现指定元素值的位置 
+Array.prototype.indexOf = function (o) {
+    for (var i = 0; i < this.length; i++) if (this[i] == o) return i;
+    return -1;
+}
+
+Array.prototype.hasSameBatchNo = function (batchNo) {
+    for (var i = 0; i < this.length; i++) if (this[i].CustomerBatchNo == batchNo) return true;
+    return false;
+}
+
+Array.prototype.hasDeffTransportType = function () {
+    for (var i = 0; i < this.length; i++) if (this[0].TransportTypeDescription != this[i].TransportTypeDescription) return true;
+    return false;
+}
+
+Array.prototype.hasDiffLinePlan = function () {
+    for (var i = 0; i < this.length; i++) if (this[0].LPID != this[i].LPID) return true;
+    return false;
+}
+
+//运输方式
+var currentList = new Array();
+
+$(function () {
+    $("#BatchNo").keydown(function (e) {
+        if (e.which != 13) {
+            return;
+        }
+        if ($("#S_DepartureID").val() == "") {
+            alert("出发地不能为空或所有站点!");
+            return;
+        }
+        if ($("#S_ArrivalID").val() == "") {
+            alert("目的地不能为空或所有站点!");
+            return;
+        }
+        var batchNo = $.trim($("#BatchNo").val());
+        if (currentList.hasSameBatchNo(batchNo)) {
+            alert("批次号/箱号" + batchNo + "已存在.");
+            return;
+        }
+        $("#BatchNo").val(batchNo);
+        $("form").submit();
+    });
+})
+
+function scanSuccess(data) {
+    if (data == null) return;
+    if (data.HasError) {
+        alert(data.Message);
+        return;
+    }
+    $("#tmpSimpleList").tmpl(data).appendTo("#scanList tbody");
+    var count = parseInt($("#sp_count").text());
+    if (!isNaN(count)) $("#sp_count").text(count + 1);
+    currentList.push(data);
+    $("#BatchNo").val("");
+}
+
+function scanFailure(jqXHR, textStatus, errorThrown) {
+    alert(jqXHR.responseText);
+}
+
+function resetDepartrueAndArrival(){
+    if (currentList.length > 0) {
+        if (confirm("存在未处理的数据,确认更改出发地/目的地?")) {
+            resetPage()
+            return true;
+        }
+        return false;
+    }
+    return true;
+}
+
+function resetPage() {
+    currentList = new Array();
+    $("#scanList tbody").html("");
+    $("#sp_count").text("0");
+    $("#BatchNo").val("");
+}
+
+function createDelivery() {
+    if(currentList.length>0){
+        if (currentList.hasDeffTransportType()) {
+            if (!confirm("存在默认运输方式不同的批次号/箱号,是否合并?")) return;
+        }
+        if (currentList.hasDiffLinePlan()) {
+            if (!confirm("存在默认线路计划不同的批次号/箱号,请选择一条线路计划.")) return;
+            else {
+                chooseLinePlan();
+            }
+        }
+        else{
+            if(!confirm("使用默认线路计划?")){
+                chooseLinePlan();
+            }
+            else{
+                $("#input_lpid").val(currentList[0].LPID);
+                create();
+            }
+        }
+    }
+    else
+    {
+        alert("请至少扫描一个批次号/箱号");
+    }
+}
+
+function create()
+{
+    if($("#input_lpid").val()!="0")
+    {
+        var model = new Object();
+        model.LPID = $("#input_lpid").val();
+        model.DepartureID = $("#S_DepartureID").val();
+        model.ArrivalID = $("#S_ArrivalID").val();
+        model.Source = 5;
+        model.Details = currentList;
+        $.ajax({
+            url: "@Url.Action("CreateDelivery")",
+            data: JSON.stringify(model),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            type: 'POST',
+            success: function (result) {
+                if (result == null || result == undefined) {
+                    ymPrompt.errorInfo({
+                        message: '异步调用出错[返回result=null].'
+                    });
+                    return;
+                }
+                if (result.IsSuccess) {
+                    resetPage();
+                    alert("提货单生成成功.");
+                } else {
+                    ymPrompt.errorInfo({
+                        message: result.Message
+                    });
+                    return;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                ymPrompt.errorInfo({
+                    message: '调用后台服务失败' + textStatus + errorThrown
+                });
+            }
+        });
+    }
+    else{
+        alert("线路计划获取失败.");
+    }
+}
+
+function chooseLinePlan(){
+    var DepartureID = $("#S_DepartureID").val();
+    var ArrivalID = $("#S_ArrivalID").val();
+    var url = "@Url.Action("CreateLinePlanList", "Plan", new { Area = "Transport" })?DepartureID=" + DepartureID + "&ArrivalID=" + ArrivalID;
+    ymPrompt.win({
+        message: url,
+        width: 800,
+        height: 420,
+        title: "选择线路计划",
+        maxBtn: false,
+        minBtn: false,
+        iframe: true,
+        handler: function (tp, result) {
+            if (tp == "ok") {
+                $("#input_lpid").val(result.LPID);
+                create();
+            }
+            else
+            {
+                $("#input_lpid").val("0");
+            }
+        }
+    });
+}
+
+function showLinePlan(lpid){
+    if(lpid=="" || lpid==0)
+    {
+        alert("没有相应的线路计划");
+        return;
+    }
+
+    $.ajax({
+            url: "@Url.Action("GetLinePlanInfo")",
+            data: {lpid:lpid},
+            dataType: "json",
+            //contentType: "application/json; charset=utf-8",
+            type: 'POST',
+            success: function (result) {
+                if (result == null || result == undefined) {
+                    ymPrompt.errorInfo({
+                        message: '异步调用出错[返回result=null].'
+                    });
+                    return;
+                }
+                else
+                {
+                    alert("出发地:【"+result.DepartureName+"】 目的地:【"+result.ArrivalName+"】 承运商:【"+result.CarrierName+"】 时效:【"+result.ArrivalTiming+"H】");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                ymPrompt.errorInfo({
+                    message: '调用后台服务失败' + textStatus + errorThrown
+                });
+            }
+        });
+
+}
+    </script>
+}
+<div class="search_condition" id="divSearchCondition">
+    @using (Ajax.BeginForm("PostBatchNo", new AjaxOptions { LoadingElementId = "Loading", OnSuccess = "scanSuccess", OnFailure = "scanFailure" }))
+    {
+        <table class="tb_insert">
+            <tr>
+                <th style="width: 100px">
+                    出发地
+                </th>
+                <td style="width: 300px">
+                    <input id="departureName" name="departureName" type="text" class="textbox selectDeparture"
+                        onclick="resetDepartrueAndArrival()?TMS.Page.SelectStation(this,'#S_DepartureID'):void(0);"
+                        readonly="readonly" />
+                    <input id="S_DepartureID" name="S_DepartureID" type="hidden" />
+                </td>
+                <th style="width: 100px">
+                    目的地
+                </th>
+                <td style="width: 300px">
+                    <input id="arrivalName" type="text" name="arrivalName" class="drop textbox" onclick="resetDepartrueAndArrival()?TMS.Page.SelectStation(this,'#S_ArrivalID','#S_DepartureID'):void(0)"
+                        readonly="readonly" />
+                    <input id="S_ArrivalID" name="S_ArrivalID" type="hidden" />
+                </td>
+                <th>
+                    扫描批次号/箱号
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.BatchNo, new { @class = "ScanInput" })
+                    @Html.ValidationMessageFor(m => m.BatchNo)
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 100px">
+                    已扫描
+                </th>
+                <td style="width: 100px">
+                    <span id="sp_count" style="font-size: 30px; font-weight: bold;">0</span>
+                </td>
+                <td colspan="3">
+                </td>
+                <td class="right">
+                    <input type="button" value="生成待调度提货单" onclick="createDelivery()" />
+                    <input type="hidden" value="0" id="input_lpid" />
+                    <input type="button" value="重置" onclick="javascript:window.location.reload();" />
+                    <input type="button" value="返回" onclick='location="@Url.Action("List")"' />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<div class="DataGirdPanel">
+    <div class="tablelist">
+        <table cellpadding="0" cellspacing="0" border="0" class="DataTable center MultiSelect" id="scanList">
+            <thead>
+                <tr>
+                    <th style="width: 17%">
+                        批次号/箱号
+                    </th>
+                     <th style="width: 17%">
+                        商家名称
+                    </th>
+                    <th style="width: 17%">
+                        出发地
+                    </th>
+                    <th style="width: 17%">
+                        目的地
+                    </th>
+                    <th style="width: 17%">
+                        计划运输方式
+                    </th>
+                    <th style="width: 17%">
+                        出库时间
+                    </th>
+                    <th>
+                        默认线路计划
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e6298092-7c9e-421b-a2f1-fb0508ac441c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.16.112.115:9702/WaybillTurnService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WaybillTurnService1.wsdl" MetadataType="Wsdl" ID="db519a32-3f3f-4652-a78f-73c509c16b29" SourceId="1" SourceUrl="http://10.16.112.115:9702/WaybillTurnService.svc?wsdl" />
+    <MetadataFile FileName="WaybillTurnService3.xsd" MetadataType="Schema" ID="b343a7fa-cb82-4546-9776-cadd088faad9" SourceId="1" SourceUrl="http://10.16.112.115:9702/WaybillTurnService.svc?xsd=xsd1" />
+    <MetadataFile FileName="WaybillTurnService31.xsd" MetadataType="Schema" ID="a6df6d02-e490-45ad-80a8-03d10ce23f0f" SourceId="1" SourceUrl="http://10.16.112.115:9702/WaybillTurnService.svc?xsd=xsd0" />
+    <MetadataFile FileName="WaybillTurnService32.xsd" MetadataType="Schema" ID="22353fd9-14a2-46ac-ad94-c82cf18df697" SourceId="1" SourceUrl="http://10.16.112.115:9702/WaybillTurnService.svc?xsd=xsd3" />
+    <MetadataFile FileName="WaybillTurnService33.xsd" MetadataType="Schema" ID="bd50b93f-de84-4bf7-8fdd-9a7cfdbe03f5" SourceId="1" SourceUrl="http://10.16.112.115:9702/WaybillTurnService.svc?xsd=xsd2" />
+    <MetadataFile FileName="WaybillTurnService1.disco" MetadataType="Disco" ID="facf7f1b-57ef-45f0-80b2-10fa4898a622" SourceId="1" SourceUrl="http://10.16.112.115:9702/WaybillTurnService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

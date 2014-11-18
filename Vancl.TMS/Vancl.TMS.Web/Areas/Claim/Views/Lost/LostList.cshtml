@@ -1,0 +1,118 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Claim.Lost.ViewLostModel>
+@{
+    ViewBag.Title = "货品丢失列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //丢失信息录入
+        function SaveLostInfo(op) {
+            var strOp = op == "addlost" ? "丢失信息录入" : "丢失信息修改";
+            var arr = TMS.Page.CheckDataTableChecked();
+            if (arr) {
+                var deliveryNO = arr.eq(0).val();
+                $.ajax({
+                    url: '@Url.Action("CheckLostStatus")' + "?DeliveryNO=" + deliveryNO + "&Operate=" + op,
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            window.parent.SetPage("id_LostBoxList", strOp, '@Url.Action("LostBoxList")' + "?DeliveryNO=" + deliveryNO + "&Operate=" + op, true);
+                        }
+                        else {
+                            ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                        }
+                    },
+                    error: function () {
+                        ymPrompt.errorInfo({ title: '提示', message: strOp + "失败!" });
+                    }
+                });
+            }
+
+        }
+        function handle(tp) {
+            if (tp == "Success") {
+                //                ymPrompt.succeedInfo({ title: '成功', message: '复议申请成功!',handler:function(tp){ }});
+                alert('复议申请成功!');
+            }
+        }
+
+        //添加搜索数据
+        function beforeSend(xhr, settings) {
+            var data = $("form").data(TMS.Page.Data_ajax_SearchData);
+            if (data) {
+                settings.data += "&" + data;
+            }
+        }
+        $(function () {
+        }); 
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        <label for="S_CreateDateBegin">
+                            发货时间
+                        </label>
+                    </th>
+                    <td>
+                        @Html.TextBox("S_CreateDateBegin", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="S_CreateDateEnd">
+                            到</label>
+                    </th>
+                    <td>
+                        @Html.TextBox("S_CreateDateEnd", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="txtCarrierName">
+                            提货单号
+                        </label>
+                    </th>
+                    <td>
+                        <input id="S_DeliveryNO" name="S_DeliveryNO" type="text" class="textbox" />
+                    </td>
+                    <th>
+                        <label for="txtCarrierName">
+                            物流单号
+                        </label>
+                    </th>
+                    <td>
+                        <input id="S_CarrierWaybillNO" name="S_CarrierWaybillNO" type="text" class="textbox" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="InputStatus">
+                            录入状态</label>
+                    </th>
+                    <td>
+                        <select id="InputStatus" name="InputStatus">
+                            <option value="-1">全部</option>
+                            <option value="0" selected="selected">已录入异常</option>
+                            <option value="1">未录入异常</option>
+                        </select>
+                    </td>
+                    <td colspan="4">
+                    </td>
+                    <td colspan="2">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialLostList", Model); }
+    </div>
+}

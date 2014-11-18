@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RFD.PMS.Model.BasicSetting" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RFD.PMS.Model.BasicSetting" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfDistributionCoopRelationModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DistributionCoopRelationModel" nillable="true" type="tns:DistributionCoopRelationModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDistributionCoopRelationModel" nillable="true" type="tns:ArrayOfDistributionCoopRelationModel" />
+  <xs:complexType name="DistributionCoopRelationModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CoopDistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CoopDistributionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CoopExpressCompanyId" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateBy" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistributionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCompanyId" type="xs:int" />
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RelationId" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdateBy" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdateTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DistributionCoopRelationModel" nillable="true" type="tns:DistributionCoopRelationModel" />
+  <xs:complexType name="ArrayOfStandardExpressCompany">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StandardExpressCompany" nillable="true" type="tns:StandardExpressCompany" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStandardExpressCompany" nillable="true" type="tns:ArrayOfStandardExpressCompany" />
+  <xs:complexType name="StandardExpressCompany">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCompanyId" type="xs:int" />
+      <xs:element minOccurs="0" name="IsJoin" type="xs:int" />
+      <xs:element minOccurs="0" name="StandardCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StandardExpressCompany" nillable="true" type="tns:StandardExpressCompany" />
+</xs:schema>

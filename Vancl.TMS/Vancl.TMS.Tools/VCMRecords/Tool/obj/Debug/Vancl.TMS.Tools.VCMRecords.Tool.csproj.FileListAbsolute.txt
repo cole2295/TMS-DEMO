@@ -1,0 +1,7 @@
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\Tool\bin\Debug\Tool.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\Tool\bin\Debug\Tool.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\Tool\bin\Debug\Entity.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\Tool\bin\Debug\Entity.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\Tool\obj\Debug\ResolveAssemblyReference.cache
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\Tool\obj\Debug\Tool.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\Tool\obj\Debug\Tool.pdb

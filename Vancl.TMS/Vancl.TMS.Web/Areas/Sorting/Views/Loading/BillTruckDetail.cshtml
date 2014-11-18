@@ -1,0 +1,131 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.Loading.ViewBillTruckModel>
+@{
+    ViewBag.Title = "订单装车";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        function BatchLoading() {
+            var scanType = $("#ddlScanType").val();
+            var parms={};
+            parms.ScanType = scanType;
+            var opName = "";
+            if(scanType!="2"){
+                opName="装车";
+                var truckValue = $("#S_TruckNo").val();
+                if(truckValue==""){
+                    alert("请选择车牌号。");
+                    return;
+                }
+                var truckNo = truckValue.split('|')[0];
+                var gpsNo = truckValue.split('|')[1];
+                var driver = $("#S_Driver").val();
+                if(driver==""){
+                   driver = 0;
+                }
+                parms.TruckNo = truckNo;
+                parms.Driver = driver;
+                parms.GPSNo = gpsNo;
+            }
+            else{
+                opName="下车";
+            }
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if(arr)
+            {
+                var formCodes = "";
+                arr.each(function(){
+                    formCodes += $(this).val()+",";
+                })
+                ymPrompt.confirmInfo({ 
+                    title: '询问',
+                    message: '你确定要'+opName+'吗？',
+                    handler: function (tp) {
+                        if (tp == 'ok') {
+                            parms.BatchNo = "@ViewBag.BatchNo";
+                            parms.FormCodes = formCodes.substr(0,formCodes.length-1);
+                            $.ajax({
+                                url:"@Url.Action("BeginLoadingByFormCodes")",
+                                data: parms ,
+                                dataType:"json",
+                                success:function(data){
+                                    if(data.IsSuccess)
+                                    {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnBillTruckDetailRefresh").click();
+                                    }
+                                    else
+                                    {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error:function()
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: opName+"操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+        }
+        function Refresh()
+        {
+            var url = "@(Url.Action("BillTruckDetails", new { id = ViewBag.BatchNo }))?ShowLoadingBill=" + ($("#ckbShowLoadingBill").attr("checked")?"false":"true");
+        
+             $("#SearchResultList").load(
+                url,
+                function (XHR, TS) {
+                    XHR = null;
+                    $("#Loading").hide();
+                }
+             );
+        }
+
+    </script>
+}
+@section list{
+    <table class="tb_insert Fixed">
+        <tr>
+            <th>
+                当前批次
+            </th>
+            <td>
+                <a href="javascript:void(0)">@ViewBag.BatchNo</a>
+            </td>
+            @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+            {
+                <td colspan="3">
+                    <input type="checkbox" id="ckbShowLoadingBill" name="ckbShowLoadingBill" checked="checked"
+                        onclick="Refresh();" />只显示未装车运单
+                </td>
+            }
+        </tr>
+        <tr>
+            <th>
+                车牌号
+            </th>
+            <td>@Html.DropDownList("S_TruckNo", (IEnumerable<SelectListItem>)ViewBag.TruckNos, "--请选择--", new { style = "width:150px" })
+            </td>
+            <th>
+                司机
+            </th>
+            <td>
+                @Html.DropDownList("S_Driver", (IEnumerable<SelectListItem>)ViewBag.Drivers, "--请选择--", new { style = "width:150px" })
+            </td>
+            <td style="width: 800px">
+                <select name="ddlScanType" id="ddlScanType">
+                    <option value="0">上车扫描</option>
+                    <option value="1">甩货扫描</option>
+                    <option value="2">下车扫描</option>
+                </select>
+                <input id="btnSave" type="button" name="btnSave" value="确定" class="button" onclick="BatchLoading();" />
+                <input type="button" value="返回" onclick='location="@Url.Action("List")"' />
+            </td>
+        </tr>
+    </table>
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialBillTruckDetail", Model); }
+    </div>
+}

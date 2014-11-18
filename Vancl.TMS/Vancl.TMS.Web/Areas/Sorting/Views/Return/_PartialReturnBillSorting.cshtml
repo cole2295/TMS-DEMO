@@ -1,0 +1,93 @@
+﻿@model List<Vancl.TMS.Model.Sorting.Return.ViewReturnBillSortingModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "ReturnBillSorting", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })</li>
+     </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect"
+        id="tblBillInfo">
+        <thead>
+            <tr>
+                    <th>
+                        序号
+                    </th>
+                    <th>
+                        运单号
+                    </th>
+                    <th>
+                        订单来源
+                    </th>
+                    <th>
+                        商家名称
+                    </th>
+                    <th>
+                        订单类型
+                    </th>
+                      <th>
+                        订单状态
+                    </th>
+                    <th>
+                        应收金额
+                    </th>
+                    <th>
+                        应退金额
+                    </th>
+                      <th>
+                        标签号
+                    </th>
+                      <th>
+                        箱号
+                    </th>
+                    <th>
+                        操作时间
+                    </th>
+            </tr>
+        </thead>
+         <tbody>
+        </tbody>
+       @* <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                <tr>
+                    <td width="20px">
+                        @item.BillReturnInfoId
+                    </td>
+                    <td class="center">
+                        @item.FormCode
+                    </td>
+                    <td class="center">
+                        @item.BillSource
+                    </td>
+                    <td>
+                        @item.MerchantName
+                    </td>
+                     <td>
+                        @item.BillType
+                    </td>
+                      <td class="center">
+                        @item.StatusName
+                    </td>
+                    <td>
+                        @item.NeedAmount
+                    </td>
+                     <td>
+                        @item.NeedBackAmount
+                    </td>
+                       <td class="center">
+                        @item.LabelNo
+                    </td>
+                    <td>
+                        @item.BoxNo
+                    </td>
+                     <td>
+                        @item.CreateTime
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>*@
+    </table>
+</div>

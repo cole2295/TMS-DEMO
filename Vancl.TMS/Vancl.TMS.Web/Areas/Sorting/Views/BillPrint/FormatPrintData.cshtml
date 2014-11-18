@@ -1,0 +1,117 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<System.Data.DataRow>
+@{
+    ViewBag.Title = "面单套打";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/references/jquery.form.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var page = "@Request["page"]";
+        var tpl = "@Request["tpl"]";
+        var pageSize = "@Request["pageSize"]";
+        var resource =  "@Request["resource"]";
+        $(function () { 
+            @if (ViewBag.ShowParseDataError != null && ViewBag.ShowParseDataError)
+            {
+                @:alert("解析数据出错！");
+            }
+
+
+            $("#sltTpls").change(function(){
+                var tpl = $(this).val();
+                var url = "?resource="+resource+"&tpl="+tpl+"&pageSize="+pageSize+"&page="+page;
+                location = url;            
+            })
+
+            $("#PageSize").change(function(){
+                var pageSize = $(this).val();
+                var url = "?resource="+resource+"&tpl="+tpl+"&pageSize="+pageSize//+"&page="+page;
+                location = url;            
+            })
+        });
+
+
+        //打印模板
+        function printFormatTemplate() {
+            var data = $("#hidFormatPrintDataName").val();
+            if(data==""){
+                alert("请上传打印数据！");
+                return;
+            }
+            var tpl = $("#sltTpls").val();
+            if (tpl == "") {
+                alert("请选择打印模板！");
+                $("#sltTpls").focus();
+                return;
+            }
+            var list = TMS.Page.GetDataTableChecked();
+            if (list.length == 0) {
+                alert("请选择你要打印的项目！");
+                return;
+            }
+            var rows="";
+            list.each(function(){
+                rows+=$(this).val()+",";
+            });
+            var url = "FormatPrint?tpl="+tpl+"&data="+data+"&rows="+rows;
+            openwindow(url,"FormatPrint",480,600);
+        //    alert(url);
+        }
+
+        function openwindow(url,name,iWidth,iHeight)
+        {
+            var url; //转向网页的地址;
+            var name; //网页名称，可为空;
+            var iWidth; //弹出窗口的宽度;
+            var iHeight; //弹出窗口的高度;
+            var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+            var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+            window.open(url,name,'height='+iHeight+',,innerHeight='+iHeight+',width='+iWidth+',innerWidth='+iWidth+',top='+iTop+',left='+iLeft+',toolbar=no,menubar=no,scrollbars=yes,resizable=yes,location=no,status=no');
+        }
+    </script>
+}
+<input type="hidden" id="hidFormatPrintDataName" value="@ViewBag.FormatPrintDataName" />
+@using (Html.BeginForm("FormatPrintData", "BillPrint", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table class="tb_insert Fixed">
+        <tr>
+            <th>
+                <label for="sltTpls">
+                    选择打印模板
+                </label>
+            </th>
+            <td>
+                <select id="sltTpls" name="TplId">
+                    <option value="">--请选择--</option>
+                    @if (ViewBag.PrintTemplates != null)
+                    {
+                        foreach (Vancl.TMS.Model.Sorting.BillPrint.BillPrintTemplateModel tpl in ViewBag.PrintTemplates)
+                        {
+                        <option value="@tpl.Id" @(Request["tpl"] == tpl.Id.ToString() ? "selected" : "")>@tpl.Name</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label for="upData">
+                    上传打印数据
+                </label>
+            </th>
+            <td>
+                <input id="upData" type="file" name="upData" />
+                <input type="submit" value="上传" />
+            </td>
+        </tr>
+    </table>
+}
+<div class="box">
+    <div class="box_title">
+        <h1 class="l">
+            数据列表</h1>
+    </div>
+</div>
+<div id="PrintDataTableList" class="DataGirdPanel">
+    @{Html.RenderPartial("_PartialPrintDataList"); }
+</div>

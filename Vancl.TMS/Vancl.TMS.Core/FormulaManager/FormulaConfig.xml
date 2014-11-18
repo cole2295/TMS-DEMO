@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Formulas>
+  <formula name="AddFormula" className="Vancl.TMS.Core.FormulaManager.AddFormula" loadFrom="Vancl.TMS.Core.dll" serviceName="Vancl.TMS.Core.FormulaManager.IFormula;System.Decimal,mscorlib;Vancl.TMS.Core.FormulaManager.AddContext,Vancl.TMS.Core"/>
+</Formulas>

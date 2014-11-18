@@ -1,0 +1,122 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.Outbound.PrintBatchDetailModel>
+@{
+    ViewBag.Title = "批次明细";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css" media="print">
+        .print
+        {
+            display: inline-block !important;
+        }
+        .noprint
+        {
+            display: none;
+        }
+        #PrintDeliverNo
+        {
+            width: 100%;
+        }
+        .itemSplit
+        {
+            border: 0 !important;
+        }
+        .pageBreak
+        {
+            page-break-after: always;
+        }
+    </style>
+    <style type="text/css">
+        .container
+        {
+            margin: 0 25px;
+        }
+        .GridView
+        {
+            border: 1px solid #888;
+            border-collapse: collapse;
+            width: 97%;
+            line-height: 25px;
+            margin: 10px auto;
+        }
+        .GridView th, .GridView td
+        {
+            border: 1px solid #888;
+            padding: 0 5px;
+            text-align:center;
+        }
+        .GridView th
+        {
+            background: #eee;
+        }
+    </style>
+}
+<div id="p1" class="printBody">
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 25%">
+            </td>
+            <td style="font-size: large; width: 50%">
+                <span>运单总数：</span>
+                <span id="lblTotalCount">@Model.Count</span> 
+                &nbsp;&nbsp;&nbsp; <span>应收金额总数：</span>
+                <span id="lblAmount">@Model.Sum(x=>x.ReceivableAmount)</span>
+            </td>
+            <td style="text-align: right; width: 25%">
+                <input type="button" id="btnPrint" value="打印" class="noprint" onclick="window.print();" />
+            </td>
+        </tr>
+    </table>
+    <table class="GridView" cellspacing="0" cellpadding="0" border="0" id="GridView1"
+        style="border-collapse: collapse;">
+        <tr>
+            <th scope="col">
+                序号
+            </th>
+            <th scope="col">
+                运单号
+            </th>
+            <th scope="col">
+                仓库
+            </th>
+            <th scope="col">
+                配送站点
+            </th>
+            <th scope="col">
+                订单类型
+            </th>
+            <th scope="col">
+                出库时间
+            </th>
+            <th scope="col">
+                应收金额
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @item.No
+            </td>
+            <td>
+                @item.FormCode
+            </td>
+            <td>
+                @item.WarehouseName
+            </td>
+            <td>                
+                @item.DeliveryStation
+            </td>
+            <td>
+                @item.OrderType
+            </td>
+            <td>
+                @item.OutboundTime.ToString("yyyy-MM-dd HH:mm:ss")
+            </td>
+            <td>
+                @item.ReceivableAmount
+            </td>
+        </tr>
+        }
+    </table>
+</div>

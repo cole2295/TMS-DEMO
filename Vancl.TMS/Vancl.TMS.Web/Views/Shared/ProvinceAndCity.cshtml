@@ -1,0 +1,62 @@
+﻿<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: '@Url.Action("GetAllPronvice", "Shared", new { area = "" })',
+            dataType: "json",
+            success: function (data) {
+                if (data == undefined || data == null || data.length == 0) {
+                    return;
+                }
+                for (var i = 0; i < data.length; i++) {
+                    var html = "<option value='" + data[i].ID + "'>" + data[i].Name + "</option>";
+                    $("#selProvinceAndCity_Province").append(html);
+                }
+                @{
+                    if(ViewBag.Province==null)
+                    {
+                        @:$("#selProvinceAndCity_Province").val(-1);
+                    }else{
+                        @:$("#selProvinceAndCity_Province").val(@ViewBag.Province);
+                        @:LoadCity(@ViewBag.City);
+                    }
+                }
+            }
+        });
+
+        $("#selProvinceAndCity_Province").live("change", function () {
+            LoadCity();
+        });
+    });
+
+    function LoadCity(city) {
+        $("#selProvinceAndCity_City").html("");
+        var params = {};
+        params.provinceID = $("#selProvinceAndCity_Province option:selected").val();
+        $.ajax({
+            url: '@Url.Action("GetCitiesByProviceID", "Shared", new { area = "" })',
+            dataType: "json",
+            data: params,
+            success: function (data) {
+                if (data == undefined || data == null || data.length == 0) {
+                    return;
+                }
+                for (var i = 0; i < data.length; i++) {
+                    var html = "<option value='" + data[i].ID + "'>" + data[i].Name + "</option>";
+                    $("#selProvinceAndCity_City").append(html);
+                }
+                if(city==""){
+                    $("#selProvinceAndCity_City").val(-1);
+                }
+                else{
+                    $("#selProvinceAndCity_City").val(city);
+                }
+            }
+        });
+    }
+    
+
+</script>
+<select id="selProvinceAndCity_Province" name="selProvinceAndCity_Province">
+</select>
+<select id="selProvinceAndCity_City" name = "selProvinceAndCity_City">
+</select>

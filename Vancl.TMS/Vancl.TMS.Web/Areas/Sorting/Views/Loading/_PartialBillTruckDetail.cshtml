@@ -1,0 +1,76 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.Loading.ViewBillTruckModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">
+        <a class="refresh" id="btnBillTruckDetailRefresh" onclick="javascript:Refresh();" href="#">刷新</a>
+        </li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="LinePlanTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    运单号
+                </th>
+                <th>
+                    仓库
+                </th>
+                <th>
+                    配送站
+                </th>
+                <th>
+                    车牌号
+                </th>
+                <th>
+                    订单类型
+                </th>
+                <th>
+                    订单来源
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model==null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var billTruckModel = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@billTruckModel.FormCode"/>
+                    </td>
+                    <td>
+                        @billTruckModel.FormCode
+                    </td>
+                    <td>
+                        @billTruckModel.WarehouseName
+                    </td>
+                    <td>
+                        @billTruckModel.DeliverStationName
+                    </td>
+                    <td>
+                        @billTruckModel.TruckNo
+                    </td>
+                    <td>
+                        @billTruckModel.BillTypeName
+                    </td>
+                    <td>
+                        @billTruckModel.SourceName
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>

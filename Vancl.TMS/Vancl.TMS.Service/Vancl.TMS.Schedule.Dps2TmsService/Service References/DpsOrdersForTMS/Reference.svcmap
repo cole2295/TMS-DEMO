@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f2517600-6d73-44a6-94f3-572f55eee1e4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.16.112.115:8612/OrdersFortms.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OrdersForTms.disco" MetadataType="Disco" ID="5c12ffdd-4d63-4d66-896f-0adc5ea069e9" SourceId="1" SourceUrl="http://10.16.112.115:8612/OrdersForTms.svc?disco" />
+    <MetadataFile FileName="OrdersForTms.xsd" MetadataType="Schema" ID="d8abdf92-7b68-408c-a36b-83f1ba341de3" SourceId="1" SourceUrl="http://10.16.112.115:8612/OrdersForTms.svc?xsd=xsd2" />
+    <MetadataFile FileName="OrdersForTms1.xsd" MetadataType="Schema" ID="c9340d16-0ac1-4d58-bfab-e418f16b61a6" SourceId="1" SourceUrl="http://10.16.112.115:8612/OrdersForTms.svc?xsd=xsd1" />
+    <MetadataFile FileName="OrdersForTms.wsdl" MetadataType="Wsdl" ID="65c7062c-79ce-49ef-af6a-1a74b99dbe51" SourceId="1" SourceUrl="http://10.16.112.115:8612/OrdersForTms.svc?wsdl" />
+    <MetadataFile FileName="OrdersForTms2.xsd" MetadataType="Schema" ID="b3afc872-6da7-4567-8d23-bded6965cdb2" SourceId="1" SourceUrl="http://10.16.112.115:8612/OrdersForTms.svc?xsd=xsd3" />
+    <MetadataFile FileName="OrdersForTms3.xsd" MetadataType="Schema" ID="8ce18fbf-f351-4317-9e2e-ed6575c2fc5d" SourceId="1" SourceUrl="http://10.16.112.115:8612/OrdersForTms.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

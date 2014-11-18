@@ -1,0 +1,143 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.BaseInfo.Carrier.CarrierModel>
+@using Vancl.TMS.Util.DateTimeUtil
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnCarrierListRefresh" })</li>
+        <li class="toolbtn"><a class="add" href="javascript:addCarrier();">添加</a></li>
+        <li class="toolbtn"><a class="modify" href="javascript:modifyCarrier();">修改</a></li>
+        @*<li class="toolbtn"><a class="reset" href="javascript:resetPassword();">重置密码</a></li>*@
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect"
+        id="DataTables1">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th style="max-width: 50px;">
+                    编号
+                </th>
+                <th>
+                    操作日志
+                </th>
+                <th>
+                    承运商全称
+                </th>
+                <th>
+                    承运商简称
+                </th>
+                <th>
+                    合同编号
+                </th>
+                <th style="min-width: 60px;">
+                    全国适用
+                </th>
+                <th style="min-width: 60px;">
+                    联系人
+                </th>
+                <th style="min-width: 60px;">
+                    联系电话
+                </th>
+                <th>
+                    邮箱
+                </th>
+                <th>
+                    联系地址
+                </th>
+                <th style="min-width: 60px;">
+                    有效期
+                </th>
+                <th style="min-width: 50px;">
+                    状态
+                </th>
+                <th style="min-width: 50px;">
+                    延误考核标准
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var carrier = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@carrier.CarrierID" />
+                    </td>
+                    <td class="center">
+                        @carrier.CarrierNo
+                    </td>
+                    <td class="center">
+                        <a href="javascript:ShowOperateLog('@carrier.CarrierID')">操作日志</a>
+                    </td>
+                    <td>
+                        @Html.ActionLink(@carrier.CarrierAllName, "Details", new { id = carrier.CarrierID }, new { title = carrier.CarrierAllName })
+                    </td>
+                    <td class="center">
+                        @carrier.CarrierName
+                    </td>
+                    <td class="center">
+                        @carrier.ContractNumber
+                    </td>
+                    <td class="center">
+                        @(carrier.IsAllCoverage ? "是" : "否")
+                    </td>
+                    <td class="center">
+                        @carrier.Contacter
+                    </td>
+                    <td>
+                        @carrier.Phone
+                    </td>
+                    <td>
+                        @carrier.Email
+                    </td>
+                    <td>
+                        @carrier.Address
+                    </td>
+                    <td class="center">
+                        @carrier.BeginDate.ToString("yyyy-MM-dd")~@carrier.ExpiredDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td class="center">
+                        @if (carrier.Status == Vancl.TMS.Model.Common.Enums.CarrierStatus.Invalid)
+                        {//停用
+                            //@(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription(carrier.Status))
+                            <span>无效</span>          
+                        }
+                        else
+                        {//启用
+                            var days = carrier.ExpiredDate.Date.DateDiff(DateTime.Now.Date).Days;
+                            if (days < 0)
+                            {
+                            <span class="red">超期</span>                                
+                            }
+                            else if (days <= 60)
+                            {
+                            <span style="color: #EF9100">预警</span>                                        
+                            }
+                            else
+                            {
+                            <span class="">正常</span>  
+                            }
+                        }
+                    </td>
+                    <td class="center">
+                        <a href="javascript:ShowDelayCriteriaList('@carrier.CarrierID')">查看</a>
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "配送编号查询";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";   
+}
+@section header{
+    <style type="text/css">
+        #tbInput th
+        {
+            height: 36px;
+            line-height: 36px;
+            font-size: 36px;
+            font-weight: bold;
+            width: auto;
+        }
+    </style>
+    <script type="text/javascript">
+        var waybillno = "";
+        $(function () {
+            $("#txtFormCode").focus();
+            $("#txtFormCode").keypress(WaybillScanning);
+        });
+
+        function isEnterKey(event) {
+            $("#lblMsg").empty();
+            var ev = event || window.event;
+            return ev.keyCode == 13;
+        }
+
+        function WaybillScanning() {
+            if (isEnterKey(event)) {
+                waybillno = $("#txtFormCode").val();
+                if (waybillno == "") {
+                    $("#lblMsg").text("运单号不能为空！");
+                    return;
+                }
+                AjaxWaybilScan();
+            }
+
+        }
+        function AjaxWaybilScan() {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "@Url.Action("QueryDeliveryNo")/"+waybillno,
+                dataType: "json",
+                success: function (result) {
+                    if(result.IsSuccess==false){
+                        $("#lblMsg").text(result.Message); return;
+                    }
+                    WaybilScanCallBackFun(result);
+                }
+            });
+        }
+        function WaybilScanCallBackFun(obj) {
+
+            if (obj.CompanyFlag == 3) {
+                $("#StationNum").empty().append(obj.StationNum);
+                $("#StationName").empty().append(obj.StationName);
+                $("#Station").show();
+                $("#ExpressCompany").hide();
+            }
+            else if (obj.CompanyFlag == 2) {
+                $("#CityCode").empty().append(obj.CityCode);
+                $("#CityName").empty().append(obj.CityName);
+                $("#ExpressCompanyNum").empty().append(obj.StationNum);
+                $("#ExpressCompanyName").empty().append(obj.StationName);
+                $("#ExpressCompany").show();
+                $("#Station").hide();
+            }
+            else{
+
+            }
+        }
+
+
+    </script>
+}
+<table id="tbInput" class="tb_insert Fixed1" style="width: auto; margin: 50px auto;">
+    <tr>
+        <th>
+            运单号
+        </th>
+        <th>
+            <input id="txtFormCode" name="FormCode" type="text" class="textbox input ScanInput" maxlength="20"
+                style="width: 400px;" />
+        </th>
+    </tr>
+</table>
+<div>
+    <div id="lblMsg" class="center red" style="font-size:40px;">
+    </div>
+    <div id="ExpressCompany" style="display: none">
+        <table width="100%">
+            <tr>
+                <td align="center" style="height: 90px; font-size: 48px;">
+                    城市编号：<span id="CityCode" style="font-size: 72px; font-weight: bold"></span>
+                </td>
+                <td align="center" style="font-size: 48px">
+                    城市名称：<span id="CityName"></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="height: 90px; font-size: 48px;">
+                    站点编号：<span id="ExpressCompanyNum" style="font-size: 72px; font-weight: bold"></span>
+                </td>
+                <td align="center" class="bigTd" style="font-size: 48px">
+                    站点名称：<span id="ExpressCompanyName"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="Station" style="display: none">
+        <table width="100%">
+            <tr>
+                <td align="center" style="height: 90px; font-size: 48px">
+                    配送商编号：<span id="StationNum" style="font-size: 72px; font-weight: bold"></span>
+                </td>
+                <td align="center" style="height: 70px; font-size: 48px">
+                    配送商名称：<span id="StationName" style="font-size: 48px"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

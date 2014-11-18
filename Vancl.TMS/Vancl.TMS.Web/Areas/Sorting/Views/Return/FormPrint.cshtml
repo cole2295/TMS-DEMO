@@ -1,0 +1,92 @@
+﻿@using Vancl.TMS.Model.BaseInfo;
+@model Object
+@{
+    ViewBag.Title = "退货交接表打印";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")  " type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/pages/Sorting/Return.js?" + DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/pages/Sorting/ReturnFormPrint.js?" + DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+}
+@section search
+{
+<div class="search_condition" id="divSearchCondition" style="width: 850px;">
+    @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+    {
+        <table class="tb_insert">
+            <tr id="trSortingCenterSelect">
+                <th>
+                    <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="0"
+                        id="rdoMerchant" />商家名称：
+                </th>
+                <td>
+                    <select id="Merchant" name="merchantSelect" class="merchantSelect" style="width: 160px">
+                        @{
+        var MerchantList = (IList<Vancl.TMS.Model.BaseInfo.MerchantModel>)ViewBag.MerchantList;
+        foreach (MerchantModel merchant in MerchantList)
+        {             
+                            <option  value ="@merchant.ID" >
+                                @merchant.Name
+                            </option>
+        }
+                        }
+                    </select>
+                </td>
+                <th>
+                    <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="2"
+                        id="rdoSortingCenter" style="margin-left: 10px;" />上级分拣中心：
+                </th>
+                <td>
+                    @Html.DropDownList("SortingCenterList")
+                </td>
+                <th>
+                    <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="3"
+                        id="rdoDistribution" style="margin-left: 10px;" />接货配送商：
+                </th>
+                <td colspan="2">
+                    @Html.DropDownList("DistributorList")
+                </td>
+            </tr>
+            <tr>
+            <th>
+             退货称重时间：
+            </th>
+                <td colspan="4">
+                    @Html.TextBox("ReturnBeginTime", DateTime.Now, new
+                       {
+                           @class = "Wdate1",
+                           onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm'})",
+                           @readonly = "readonly"
+                       })--
+                    @Html.TextBox("ReturnBoundEndTime", DateTime.Now, new
+                       {
+                           @class = "Wdate1",
+                           onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm'})",
+                           @readonly = "readonly"
+                       })
+                    <select id="selFormType" name="FormType">
+                        <option value="-1" selected="selected">全部</option>
+                        <option value="0">箱号</option>
+                        <option value="1">运单号</option>
+                    </select>
+                    <input type="text" id="txtNo" name="Number" class="Number" />
+                </td>
+                <td />
+                <td colspan="3">
+                    <input type="submit" value="查询" id="btnSearch" name="BtnSearch" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<input type="hidden" id="hdReturnInitData" value="@ViewBag.HiddenValue" />
+<input type="hidden" id="hdBillReturnNos" value="@ViewBag.HiddenValue" />
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialFormPrintList", Model); }
+    </div>
+}

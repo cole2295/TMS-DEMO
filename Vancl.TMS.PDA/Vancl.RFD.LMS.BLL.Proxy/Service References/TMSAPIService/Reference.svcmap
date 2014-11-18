@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="aea83b75-be66-4565-bbdc-b9735cd014d7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.253.6.46:8884/TMSAPIService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TMSAPIService.xsd" MetadataType="Schema" ID="2b26d146-500b-426f-a83a-f332b6ca68d6" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd3" />
+    <MetadataFile FileName="TMSAPIService1.xsd" MetadataType="Schema" ID="92cc54f1-78e4-4d87-8239-2ba3e75ee22f" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TMSAPIService2.xsd" MetadataType="Schema" ID="03db7848-8ad2-47ff-960a-5e65095b7f63" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TMSAPIService3.xsd" MetadataType="Schema" ID="0c8bd23b-9fc9-42a8-be8d-a42a793a10a6" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TMSAPIService4.xsd" MetadataType="Schema" ID="e02d6b79-d75e-403c-8b21-2bb2f0b9bed9" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd5" />
+    <MetadataFile FileName="TMSAPIService5.xsd" MetadataType="Schema" ID="fc461eb4-bfd5-477a-a871-688a4b32dab2" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd4" />
+    <MetadataFile FileName="TMSAPIService.wsdl" MetadataType="Wsdl" ID="020cc52c-279e-4ae1-98d8-871cc463aadd" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?wsdl" />
+    <MetadataFile FileName="TMSAPIService.disco" MetadataType="Disco" ID="7d7a45d4-1c1e-4303-8c75-37b020b9ff2a" SourceId="1" SourceUrl="http://10.253.6.46:8884/TMSAPIService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

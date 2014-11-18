@@ -1,0 +1,155 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.Return.MerchantReturnBillViewModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">
+@*        <a class="refresh" id="btnRefresh" href="javascript:Refresh();">刷新</a>
+*@        </li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="LinePlanTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    序号
+                </th>
+                <th>
+                    订单号
+                </th>
+                <th>
+                    商家名称
+                </th>
+                <th>
+                    发货日期
+                </th>
+                <th>
+                    订单类型
+                </th>
+                <th>
+                    订单状态
+                </th>
+                <th>
+                    返货状态
+                </th>
+                <th>
+                    应收金额
+                </th>
+                <th>
+                    应退金额
+                </th>
+                <th>
+                    配送员
+                </th>
+                <th>
+                    退货原因
+                </th>
+                <th>
+                    重量
+                </th>
+                          <th>
+                    标签号
+                </th>
+                <th>
+                    箱号
+                </th>
+                <th>
+                    配送商
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model==null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var MrbModel = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@MrbModel.CustomerOrder"/>
+                    </td>
+                    <td>
+                        @MrbModel.No
+                    </td>
+                    <td>
+                        @MrbModel.CustomerOrder
+                    </td>
+                    <td>
+                        @MrbModel.MerchantName
+                    </td>
+                    <td>
+                        @MrbModel.CreateTime
+                    </td>
+                    <td>
+                        @MrbModel.BillFormType
+                    </td>
+                    <td>
+                        @MrbModel.BillStatus
+                    </td>
+                     <td>
+                        @MrbModel.ReturnStatus
+                    </td>
+                    <td>
+                        @MrbModel.NeedAmount
+                    </td>
+                    <td>
+                        @MrbModel.NeedBackAmount
+                    </td>    
+                    <td>
+                        @MrbModel.EmployeeName
+                    </td>
+                    <td>
+                        @MrbModel.ReturnReason
+                    </td>
+                    <td>
+                        @MrbModel.Weight
+                    </td>
+                    <td>
+                        @MrbModel.LabelNo
+                    </td>
+                    <td>
+                        @MrbModel.BoxNo
+                    </td>
+                       <td>
+                        @MrbModel.DistributionName
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+      </table>
+      <table  style="width: auto; white-space: nowrap" cellspacing="20">
+      @{
+          var statistic = (List<Vancl.TMS.Model.Sorting.Return.MerchantReturnBillStatisticModel>)ViewBag.statistic;
+          if(statistic!=null)
+          {
+              foreach(var item in statistic)
+              {   <tr>
+                   <td>
+                        @item.SourceName 换货成功：@item.ChangeCount 单 重量: @item.ChangeWeight kg
+                    </td>
+                    <td>
+                        @item.SourceName 上门退货成功：@item.BackCount 单 重量: @item.BackWeight kg
+                    </td>
+                    <td>
+                        @item.SourceName 正常拒收：@item.RefuseCount 单 重量: @item.RefuseWeight kg
+                    </td>
+                    <td>
+                        @item.SourceName 换货拒收：@item.ChangeRefuseCount 单 重量: @item.ChangeRefuseWeight kg
+                    </td>
+                    </tr>
+              }
+          }
+        }
+      </table>  
+</div>
+

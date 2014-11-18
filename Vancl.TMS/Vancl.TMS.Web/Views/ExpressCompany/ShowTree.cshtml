@@ -1,0 +1,121 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShowTree</title>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")"></script>
+    <style type="text/css">
+		@@import "@Url.Content("~/Scripts/plugins/tree/tree.css")";
+    </style>
+    <style type="text/css">
+        body, #container
+        {
+            margin: 0;
+            padding: 0;
+        }
+        #tree, #search
+        {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        #loading
+        {
+            width: 30px;
+            display: none;
+            top: 160px;
+            left: 150px;
+            position: relative;
+            z-index: 10001;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        @*        <div id="search" style="overflow: auto;">
+            <input type="text" class="textbox search" watermark="请输入站点名称搜索" 
+            width="320" id="StationName" name="StationName" onkeypress="if (event.keyCode == 13) Search();"/>
+        </div>*@
+        <div id="tree">
+        </div>
+        <div id="loading">
+            <img src="@Url.Content("~/content/images/icons/loading.gif")"/>
+        </div>
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/tree/jquery.tree.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/common/tms.util.js?" + DateTime.Now.ToString("yyyyMMdd"))"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/extends/url.extend.js?" + DateTime.Now.ToString("yyyyMMdd"))"></script>
+    <script type="text/javascript">
+
+if (typeof jQuery.tms == "undefined") jQuery.tms = {};
+if (typeof jQuery.tms.util == "undefined")
+    jQuery.tms.util = {
+        tree: (function () {
+            var userAgent = window.navigator.userAgent.toLowerCase();
+            $.browser.msie8 = $.browser.msie && /msie 8\.0/i.test(userAgent);
+            $.browser.msie7 = $.browser.msie && /msie 7\.0/i.test(userAgent);
+            $.browser.msie6 = !$.browser.msie8 && !$.browser.msie7 && $.browser.msie && /msie 6\.0/i.test(userAgent);
+            function loadData(p) {
+                if (!p.render || !p.url) return;
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    url: p.url,
+                    beforeSend: function () {
+                        var container = $("#container");
+                        $("#loading").show();
+                        $(".search").next().focus();
+                    },
+                    success: function (data) {
+                        var o = {
+                            showcheck: p.showcheck,
+                            theme: p.theme,
+                            url: p.url,
+                            onnodeclick: function (item) {
+                                ymPrompt.doHandler("SelectTreeNode", true, item);
+                            }
+                        };
+                        o.data = data;
+                        $("#" + p.render).treeview(o);
+                        //设置高度
+                        var height = document.getElementsByTagName("html")[0].offsetHeight;
+                        height = height - $("#search").height();
+                        $("#tree").height(height);
+                    },
+                    complete: function () {
+                        $("#loading").hide();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown){
+                        alert("加载节点错误！"+textStatus);
+                    }
+                });
+            }
+            function loadTree(p) {
+                if ($.browser.msie6) {
+                    loadData(p);
+                }
+                else {
+                    var load = loadData(p);
+                    $(document).ready(load);
+                }
+            }
+            return { load: loadTree }
+        })()
+    };
+    var jtree = jQuery.tms.util.tree;
+
+        $(function () {
+            jtree.load({
+                render: "tree",
+                url: "@Url.Action("GetChildData")?DepartureId=@ViewBag.DepartureId",
+                showcheck: false,
+                theme: "bbit-tree-lines"
+            });
+        });
+        
+    </script>
+</body>
+</html>

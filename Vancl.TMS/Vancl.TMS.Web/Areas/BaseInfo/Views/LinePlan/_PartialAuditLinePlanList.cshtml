@@ -1,0 +1,222 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.BaseInfo.Line.ViewLinePlanModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "AuditList", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnAuditListRefresh" })
+        </li>
+        <li class="toolbtn">
+            <a class="on" href="javascript:Audit(1);">审核</a>
+        </li>
+        <li class="toolbtn">
+            <a class="off" href="javascript:Audit(2);">驳回</a>
+        </li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center" id="LinePlanTable">
+    <thead>
+        <tr>
+            <th class="CbxColumn">
+                <input type="checkbox" class="CheckAll" />
+            </th>
+            <th></th>
+            <th>
+                线路编号
+            </th>
+            <th>
+                出发地
+            </th>
+            <th>
+                目的地
+            </th>
+             <th>
+                目的地所在城市
+            </th>
+            <th>
+                承运商
+            </th>
+            <th>
+                运输方式
+            </th>
+            <th>
+                到库标准时间
+            </th>
+            <th>
+                离库标准时间
+            </th>
+            <th>
+                到货时效
+            </th>
+            <th>
+                运费类型
+            </th>
+            <th>
+                保险费率
+            </th>
+            <th>
+                最低收费
+            </th>
+            <th>
+                超远提货费
+            </th>
+            <th>
+                超远送货费
+            </th>
+            <th>
+                超远转运费率
+            </th>
+            <th>
+                线路类型
+            </th>
+            <th>
+                货物类型
+            </th>
+            <th>
+                优先级别
+            </th>
+            <th>
+                生效时间
+            </th>
+            <th>
+                线路状态
+            </th>
+            <th>
+                启用状态
+            </th>
+           @* <th>
+                操作
+            </th>*@
+        </tr>
+    </thead>
+    <tbody>
+       @{
+            if (Model.Count == 0)
+            {
+                Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+            }
+            else
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    var linePlan = Model[i];
+                    var linePlanLineID = Model[i].LineID;
+                    var prevLinePlanLineID = i == 0 ? "" : Model[i - 1].LineID;
+                    var nextLinePlanLineID = i == Model.Count - 1 ? "" : Model[i + 1].LineID;
+
+                    var cbxClass = "Group_Empty";
+
+                    if (linePlanLineID == nextLinePlanLineID)
+                    {
+                        cbxClass = "Group_Top";
+                    }
+
+                    if (linePlanLineID == prevLinePlanLineID)
+                    {
+                        if (linePlanLineID == nextLinePlanLineID)
+                        {
+                            cbxClass = "Group_Item";
+                        }
+                        else
+                        {
+                            cbxClass = "Group_Bot";
+                        }
+                    } 
+            <tr class="@(i%2==0?"odd":"even")">
+                <td class="CbxColumn">
+                    <input type="checkbox" />
+                    <input type="hidden" value="@linePlan.LPID" />
+                    <input type="hidden" value="@linePlan.EffectiveTime" />
+                </td>
+                 <td>
+                        <a class="@cbxClass"></a>
+                    </td>
+                <td>
+                    @linePlan.LineID
+                </td>
+                <td>
+                    @linePlan.DepartureName
+                </td>
+                <td>
+                    @linePlan.ArrivalName
+                </td>
+                <td>
+                    @linePlan.ArrivalCityName
+                </td>
+                <td>
+                    @linePlan.CarrierName
+                </td>
+                <td>
+                    @(EnumHelper.GetDescription<Enums.TransportType>(linePlan.TransportType.ToString()))
+                </td>
+                <td>
+                    @linePlan.ArrivalAssessmentTime.ToString("HH:mm")
+                </td>
+                <td>
+                    @linePlan.LeaveAssessmentTime.ToString("HH:mm")
+                </td>
+                <td>
+                    @linePlan.ArrivalTiming
+                </td>
+                <td>
+                    <a href="javascript:ShowExpressionDetail(@linePlan.LPID,@((int)linePlan.ExpressionType))">
+                    @(EnumHelper.GetDescription<Enums.ExpressionType>(@linePlan.ExpressionType.ToString()))</a>
+                </td>
+                <td>
+                    @linePlan.InsuranceRate
+                </td>
+                <td>
+                    @linePlan.LowestPrice
+                </td>
+                <td>
+                    @linePlan.LongPickPrice
+                </td>
+                 <td>
+                    @linePlan.LongDeliveryPrice
+                </td>
+                <td>
+                    @linePlan.LongTransferRate
+                </td>
+                <td>
+                    @(EnumHelper.GetDescription<Enums.LineType>(linePlan.LineType.ToString()))
+                </td>
+                <td>
+                    @(EnumHelper.GetDescription<Enums.GoodsType>((int)linePlan.LineGoodsType))
+                </td>
+                <td>
+                    @(EnumHelper.GetDescription<Enums.LinePriority>(linePlan.Priority.ToString()))
+                </td>
+                <td>
+                    @linePlan.EffectiveTime.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @(EnumHelper.GetDescription<Enums.LineStatus>(linePlan.Status.ToString()))
+                </td>
+                @{
+                    if (linePlan.IsEnabled)
+                    {
+                        <td> 已启用</td>
+                    }
+                    else{
+                        <td> 已停用</td>
+                    }
+                }
+                @*<td align="center">
+                    @{
+                        if(!linePlan.ApproveStatus)
+                        {
+                            @Html.ActionLink("修改线路", "Update", new { id = linePlan.LPID }, new { });
+                        }
+                    }&nbsp;&nbsp;&nbsp;&nbsp;
+                    @Html.ActionLink("添加线路计划", "CreateLinePlan", new { id = linePlan.LPID }, new { })       
+                </td>*@
+            </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

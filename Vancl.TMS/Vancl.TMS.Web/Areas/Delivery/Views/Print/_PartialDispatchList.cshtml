@@ -1,0 +1,188 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Transport.Dispatch.ViewDeliveryPrintModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">
+            @Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })
+        </li>
+        @*<li class="toolbtn">@Html.ActionLink("删除其它出库单", "Outbound", null, new { @class = "del" })</li>*@
+        @*<li class="toolbtn"><a href="@Url.Action("Outbound")" class="expand">计划外调度出库</a></li>*@
+        <li class="toolbtn"><a href="javascript:Replenish();" class="add">补录调度信息</a></li>
+        <li class="toolbtn"><a href="javascript:PrintDeliveryNo();" class="print">打印提货单</a></li>
+        <li class="toolbtn"><a href="javascript:ModifyWaybillNo()" class="modify">修改物流单号</a> </li>
+    </ul>
+    <div id="dispatchStatInfo" class="blue">
+        @{
+        //    Html.RenderPartial("Statistic", (object)ViewBag.ViewDispatchStatisticModel);
+        }
+    </div>
+</div>
+<div class="tablelist center">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="DispatchTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    调度时间
+                </th>
+                <th>
+                    提货单号
+                </th>
+                <th>
+                    物流单号
+                </th>
+                <th>
+                    出发地
+                </th>
+                <th>
+                    目的地
+                </th>
+                <th>
+                    批次数/箱数
+                </th>
+                <th>
+                    订单数量
+                </th>
+                <th>
+                    承运商
+                </th>
+                <th>
+                    运输方式
+                </th>
+                <th>
+                    时效H
+                </th>
+                <th>
+                    货物类型
+                </th>
+                <th>
+                    总价
+                </th>
+                                <th>
+                    保价金额
+                </th>
+                <th>
+                    修正预计到货时间
+                </th>
+                <th>
+                    预计到货时间
+                </th>
+                <th>
+                    状态
+                </th>
+                <th>
+                    车牌号
+                </th>
+                <th>
+                    发货人
+                </th>
+                <th>
+                    收货人
+                </th>
+                <th>
+                    收货人电话
+                </th>
+                <th>
+                    收货地址
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model == null)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                    if (Model.Count == 0)
+                    {
+                        Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" lpid="@item.LPID" DeliveryNo="@item.DeliveryNo" 
+                            CarrierWaybillNO="@item.WaybillNo" DeliveryStatus="@((int)item.DeliveryStatus)" DepartureID="@item.DepartureID"
+                            ArrivalID="@item.ArrivalID" LineGoodsType="@((int)item.LineGoodsType)"/>
+                    </td>
+                    <td>
+                        @(item.DispatchTime.HasValue ? item.DispatchTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")
+                    </td>
+                    <td>
+                        @item.DeliveryNo
+                    </td>
+                    <td>
+                        @item.WaybillNo
+                    </td>
+                    <td>
+                        @item.DepartureName
+                    </td>
+                    <td>
+                        @item.ArrivalName
+                    </td>
+                    <td>
+                        @item.BoxCount
+                    </td>
+                    <td>
+                        @item.OrderCount
+                    </td>
+                    <td>
+                        @item.CarrierName
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription(item.TransportType))
+                    </td>
+                    <td>
+                        @(item.ArrivalTiming.HasValue ? item.ArrivalTiming.Value.ToString() : "")
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription<Enums.GoodsType>((int)item.LineGoodsType))
+                    </td>
+                    <td>
+                        @item.TotalAmount.ToString("f2")
+                    </td>
+                                        <td>
+                        @item.ProtectedPrice.ToString("f2")
+                    </td>
+                    <td>
+                        @(item.ConfirmExpArrivalDate.HasValue ? item.ConfirmExpArrivalDate.Value.ToString("yyyy-MM-dd") : "")
+                    </td>
+                    <td>
+                        @(item.ExpectArrivalDate.HasValue ? item.ExpectArrivalDate.Value.ToString("yyyy-MM-dd") : "")
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription(item.DeliveryStatus))
+                    </td>
+                    <td>
+                        @item.PlateNo
+                    </td>
+                    <td>
+                        @item.Consignor
+                    </td>
+                    <td>
+                        @item.Consignee
+                    </td>
+                    <td>
+                        @item.ConsigneePhone
+                    </td>
+                    <td>
+                        @item.ReceiveAddress
+                    </td>
+                </tr>
+                        }
+                    }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

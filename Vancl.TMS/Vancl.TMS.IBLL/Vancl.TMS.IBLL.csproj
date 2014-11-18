@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D69B4050-2F39-4B7F-A9A0-8F8BA8A66103}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.IBLL</RootNamespace>
+    <AssemblyName>Vancl.TMS.IBLL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdministrationRegion\IAdministrationBLL.cs" />
+    <Compile Include="BaseInfo\IBillBLL.cs" />
+    <Compile Include="BaseInfo\ICarrierBLL.cs" />
+    <Compile Include="BaseInfo\IDistributionBLL.cs" />
+    <Compile Include="BaseInfo\IEmployeeBLL.cs" />
+    <Compile Include="BaseInfo\IExpressCompanyBLL.cs" />
+    <Compile Include="BaseInfo\ILineFixedPriceBLL.cs" />
+    <Compile Include="BaseInfo\ILineFormulaPriceBLL.cs" />
+    <Compile Include="BaseInfo\ILineLadderPriceBLL.cs" />
+    <Compile Include="BaseInfo\ILinePlanBLL.cs" />
+    <Compile Include="BaseInfo\IMerchantBLL.cs" />
+    <Compile Include="BaseInfo\ITruckBLL.cs" />
+    <Compile Include="Claim\IDelayHandleBLL.cs" />
+    <Compile Include="Claim\IExpectDelayBLL.cs" />
+    <Compile Include="Claim\ILostBLL.cs" />
+    <Compile Include="Chat\IChatBLL.cs" />
+    <Compile Include="Common\IPermissionBLL.cs" />
+    <Compile Include="Common\IUserContextBLL.cs" />
+    <Compile Include="Common\ITransPointBLL.cs" />
+    <Compile Include="Common\IVerificationCode.cs" />
+    <Compile Include="CustomizeFlow\ICheckerBase.cs" />
+    <Compile Include="DeliveryImport\IDeliveryImportBLL.cs" />
+    <Compile Include="Delivery\DataInteraction\Entrance\IDeliveryDataEntranceBLL.cs" />
+    <Compile Include="Delivery\InTransit\ICarrierWaybillBLL.cs" />
+    <Compile Include="Delivery\InTransit\IInTransitBLL.cs" />
+    <Compile Include="Delivery\KPIAppraisal\IDeliveryAssessmentBLL.cs" />
+    <Compile Include="Delivery\Spot\ISiteAssBLL.cs" />
+    <Compile Include="History\IFileProcessingBLL.cs" />
+    <Compile Include="JobMonitor\IInBoundMonitorBLL.cs" />
+    <Compile Include="JobMonitor\IOutBoundMonitorBLL.cs" />
+    <Compile Include="LadingBill\ILB_PLANBLL.cs" />
+    <Compile Include="LadingBill\ILB_TASKBLL.cs" />
+    <Compile Include="LadingBill\IMERCHANTWAREHOUSEBLL.cs" />
+    <Compile Include="Log\IBatchBLL.cs" />
+    <Compile Include="Log\IDeliveryFlowLogBLL.cs" />
+    <Compile Include="Log\IDpsNotice.cs" />
+    <Compile Include="Log\IDpsNoticeObserver.cs" />
+    <Compile Include="Log\ILogBLL.cs" />
+    <Compile Include="Log\IOperateLogBLL.cs" />
+    <Compile Include="Log\IServiceLogBLL.cs" />
+    <Compile Include="OutServiceProxy\IProxy4Cloud.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ComplexReport\IComplexReportBLL.cs" />
+    <Compile Include="Report\ICarrierAccountReportBLL.cs" />
+    <Compile Include="Report\IReportFilterBLL.cs" />
+    <Compile Include="SMS\ISMSSender.cs" />
+    <Compile Include="Sorting\BillPrint\IBillPrintBLL.cs" />
+    <Compile Include="Sorting\BillPrint\IBillTemplatePrintBLL.cs" />
+    <Compile Include="Sorting\CityScan\ICityScanBLL.cs" />
+    <Compile Include="Sorting\Common\ISortCenterBLL.cs" />
+    <Compile Include="Sorting\Inbound\IInboundBLL.cs" />
+    <Compile Include="Sorting\Inbound\IInboundQueueBLL.cs" />
+    <Compile Include="Sorting\Inbound\IInboundSMSQueueBLL.cs" />
+    <Compile Include="Sorting\Inbound\IInboundBLLV2.cs" />
+    <Compile Include="Sorting\Inbound\ISortingPackingBLL.cs" />
+    <Compile Include="Sorting\Loading\IBillTruckBLL.cs" />
+    <Compile Include="Sorting\Outbound\IOutboundBLL.cs" />
+    <Compile Include="Sorting\Outbound\IOutboundBLLV2.cs" />
+    <Compile Include="Sorting\Return\IBillReturnBLL.cs" />
+    <Compile Include="Sorting\Return\IBillReturnBoxInfoBLL.cs" />
+    <Compile Include="Sorting\Return\IBillReturnDetailInfoBLL.cs" />
+    <Compile Include="Sorting\Return\IMerchantReturnBLL.cs" />
+    <Compile Include="Sorting\Return\IReturnBLL.cs" />
+    <Compile Include="Sorting\Search\IReturnSearchBLL.cs" />
+    <Compile Include="Sorting\Search\IWeighReviewSearchService.cs" />
+    <Compile Include="Synchronous\IDps2Tms.cs" />
+    <Compile Include="Synchronous\IInboundBLL.cs" />
+    <Compile Include="Synchronous\ILms2TmsSyncBLL.cs" />
+    <Compile Include="Synchronous\IOutboundBLL.cs" />
+    <Compile Include="Synchronous\ITms2LmsSyncBLL.cs" />
+    <Compile Include="Synchronous\ITms2ThridPartyBLL.cs" />
+    <Compile Include="Transport\Dispatch\IDispatchBLL.cs" />
+    <Compile Include="Transport\Dispatch\IDispTransitionBLL.cs" />
+    <Compile Include="Transport\Dispatch\IPreDispatchBLL.cs" />
+    <Compile Include="Transport\Plan\ITransportPlanBLL.cs" />
+    <Compile Include="WCFService\ITMSAPIService.cs" />
+    <Compile Include="WCFService\ITmsReceiveDpsNotice.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.TMS.Model\Vancl.TMS.Model.csproj">
+      <Project>{2EC92CCF-4212-4CA0-98C8-590382689660}</Project>
+      <Name>Vancl.TMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="JobRepairCheck\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

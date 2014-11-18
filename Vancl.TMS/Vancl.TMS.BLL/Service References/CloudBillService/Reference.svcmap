@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f81b07a4-707b-4655-bd2a-5590997fdab6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://exchange.wuliusys.com/CloudBillService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CloudBillService4.xsd" MetadataType="Schema" ID="d118526e-54e0-492b-b5be-64529363725f" SourceId="1" SourceUrl="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CloudBillService1.disco" MetadataType="Disco" ID="e3708432-24f9-4c31-b6cd-e38af8547450" SourceId="1" SourceUrl="http://exchange.wuliusys.com/CloudBillService.svc?disco" />
+    <MetadataFile FileName="CloudBillService5.xsd" MetadataType="Schema" ID="3f837429-d2fc-4913-9b23-4b97749fdf15" SourceId="1" SourceUrl="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CloudBillService6.xsd" MetadataType="Schema" ID="2bc30fe6-131c-4821-8685-f5f0575d64cc" SourceId="1" SourceUrl="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd3" />
+    <MetadataFile FileName="BillService1.wsdl" MetadataType="Wsdl" ID="13976805-db13-46d6-9877-6d6f88099bd9" SourceId="1" SourceUrl="http://exchange.wuliusys.com/CloudBillService.svc?wsdl" />
+    <MetadataFile FileName="CloudBillService7.xsd" MetadataType="Schema" ID="a7e8a44e-9158-44c2-ba6b-237d0a56edab" SourceId="1" SourceUrl="http://exchange.wuliusys.com/CloudBillService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,178 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+SysMailerHelper
+</name>
+</assembly>
+<members>
+<member name="M:SysMailerHelper.SysMailerFactory.CreateMailerSender">
+	<summary>
+ Use App Config SmtpServer,SmtpUID,SmtpPWD,SmtpUseDefaultCredentials,SmtpMailPort,SmtpEnableSsl to generate
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.MailerSender.Mailendocer">
+	<summary>
+ default use utf8 to send mail
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.MailerSender.MailPort">
+	<summary>
+ Default Mail port(25)
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.MailerSender.BUseDefaultCredentials">
+	<summary>
+ Use Default Credential Method
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.MailerSender.SmtpUserName">
+	<summary>
+ The user name of Logined Smtp Server
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.MailerSender.SmtpUserPWD">
+	<summary>
+ The user password of Logined Smtp Server
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.MailerSender.BEnableSsl">
+	<summary>
+ whether use SSL or not
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.MailerSender.SmtpServerAddress">
+	<summary>
+ Smtp Server Address (default:localhost)
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:SysMailerHelper.MailerSender.#ctor">
+	<summary>
+ Use Default 
+ </summary>
+	<remarks></remarks>
+</member><member name="M:SysMailerHelper.MailerSender.#ctor(System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ use username,pwd to login smtp server
+ </summary>
+	<param name="strSmtpServerAddress"></param>
+	<param name="strSmtpUserName"></param>
+	<param name="strSmtpPWD"></param>
+	<param name="bUseDefaultCredentials"></param>
+	<remarks></remarks>
+</member><member name="M:SysMailerHelper.MailerSender.#ctor(System.String,System.String,System.String,System.Boolean,System.Int32,System.Boolean)">
+	<summary>
+ Configuration all Email perference
+ </summary>
+	<param name="strSmtpServerAddress"></param>
+	<param name="strSmtpUserName"></param>
+	<param name="strSmtpPWD"></param>
+	<param name="bUseDefaultCredentials"></param>
+	<param name="nmailPort"></param>
+	<param name="bUseSSL"></param>
+	<remarks></remarks>
+</member><member name="M:SysMailerHelper.MailerSender.SendMail(SysMailerHelper.SysMailMessage)">
+	<summary>
+ SendMail
+ </summary>
+	<param name="message"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:SysMailerHelper.MailerSender.SendMailAsync(SysMailerHelper.SysMailMessage)">
+	<summary>
+ SendMail Async
+ </summary>
+	<param name="message"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:SysMailerHelper.MailerSender.DoAsyncMailEvent(System.Object,System.ComponentModel.AsyncCompletedEventArgs)">
+	<summary>
+ Inner Shared Method to Handler MailSender
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.Attachments">
+	<summary>
+ Attachments File Path
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.FromAddress">
+	<summary>
+ From Address
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.FromDisplayName">
+	<summary>
+ Mail Sender Display Name
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.Priority">
+	<summary>
+ Get Mail Priority
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.ReplytoAddress">
+	<summary>
+ Replay To Address
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.IsBodyHtml">
+	<summary>
+ IsBodyHtml
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.CC">
+	<summary>
+  address use [ , ] to split
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:SysMailerHelper.SysMailMessage.BCC">
+	<summary>
+  address use [ , ] to split
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:SysMailerHelper.SysMailMessage.#ctor(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Default
+ </summary>
+	<param name="fromAddress"></param>
+	<param name="toAddress"></param>
+	<param name="subject"></param>
+	<param name="body"></param>
+	<param name="IsBodyHtml"></param>
+	<remarks></remarks>
+</member>
+</members>
+</doc>

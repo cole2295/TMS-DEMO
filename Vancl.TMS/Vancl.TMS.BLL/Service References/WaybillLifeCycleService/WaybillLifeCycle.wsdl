@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WaybillLifeCycle" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IWaybillLifeCycle_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.WaybillLifeCycle" />
+      <xsd:import schemaLocation="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWaybillLifeCycle_HelloLifeCycle_InputMessage">
+    <wsdl:part name="parameters" element="tns:HelloLifeCycle" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_HelloLifeCycle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HelloLifeCycleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_AddLifeCycle_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddLifeCycle" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_AddLifeCycle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddLifeCycleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_AddLifeCycles_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddLifeCycles" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_AddLifeCycles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddLifeCyclesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_Inbound_InputMessage">
+    <wsdl:part name="parameters" element="tns:Inbound" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_Inbound_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InboundResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_BackStation_InputMessage">
+    <wsdl:part name="parameters" element="tns:BackStation" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_BackStation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BackStationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_OutStation_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutStation" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_OutStation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutStationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_PickUpIntoStation_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickUpIntoStation" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_PickUpIntoStation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickUpIntoStationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_PickUpOutStation_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickUpOutStation" />
+  </wsdl:message>
+  <wsdl:message name="IWaybillLifeCycle_PickUpOutStation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickUpOutStationResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWaybillLifeCycle">
+    <wsdl:operation name="HelloLifeCycle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/HelloLifeCycle" message="tns:IWaybillLifeCycle_HelloLifeCycle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/HelloLifeCycleResponse" message="tns:IWaybillLifeCycle_HelloLifeCycle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddLifeCycle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/AddLifeCycle" message="tns:IWaybillLifeCycle_AddLifeCycle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/AddLifeCycleResponse" message="tns:IWaybillLifeCycle_AddLifeCycle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddLifeCycles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/AddLifeCycles" message="tns:IWaybillLifeCycle_AddLifeCycles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/AddLifeCyclesResponse" message="tns:IWaybillLifeCycle_AddLifeCycles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Inbound">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/Inbound" message="tns:IWaybillLifeCycle_Inbound_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/InboundResponse" message="tns:IWaybillLifeCycle_Inbound_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BackStation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/BackStation" message="tns:IWaybillLifeCycle_BackStation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/BackStationResponse" message="tns:IWaybillLifeCycle_BackStation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutStation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/OutStation" message="tns:IWaybillLifeCycle_OutStation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/OutStationResponse" message="tns:IWaybillLifeCycle_OutStation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickUpIntoStation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/PickUpIntoStation" message="tns:IWaybillLifeCycle_PickUpIntoStation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/PickUpIntoStationResponse" message="tns:IWaybillLifeCycle_PickUpIntoStation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickUpOutStation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWaybillLifeCycle/PickUpOutStation" message="tns:IWaybillLifeCycle_PickUpOutStation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWaybillLifeCycle/PickUpOutStationResponse" message="tns:IWaybillLifeCycle_PickUpOutStation_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IWaybillLifeCycle" type="tns:IWaybillLifeCycle">
+    <wsp:PolicyReference URI="#WSHttpBinding_IWaybillLifeCycle_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloLifeCycle">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/HelloLifeCycle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddLifeCycle">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/AddLifeCycle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddLifeCycles">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/AddLifeCycles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Inbound">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/Inbound" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BackStation">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/BackStation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutStation">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/OutStation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickUpIntoStation">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/PickUpIntoStation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickUpOutStation">
+      <soap12:operation soapAction="http://tempuri.org/IWaybillLifeCycle/PickUpOutStation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WaybillLifeCycle">
+    <wsdl:port name="WSHttpBinding_IWaybillLifeCycle" binding="tns:WSHttpBinding_IWaybillLifeCycle">
+      <soap12:address location="http://10.16.112.115:8612/WaybillLifeCycleService.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://10.16.112.115:8612/WaybillLifeCycleService.svc</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

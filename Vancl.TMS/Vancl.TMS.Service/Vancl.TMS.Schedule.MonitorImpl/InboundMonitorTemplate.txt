@@ -1,0 +1,75 @@
+﻿<html>
+<head>
+<style type="text/css">
+th { 
+    font: bold 11px 'Trebuchet MS', Verdana, Arial, Helvetica, sans-serif; 
+    color: #4f6b72; 
+    border-right: 1px solid #C1DAD7; 
+    border-bottom: 1px solid #C1DAD7; 
+    border-top: 1px solid #C1DAD7; 
+    letter-spacing: 2px; 
+    text-transform: uppercase; 
+    text-align: left; 
+    padding: 6px 6px 6px 12px; 
+    background: #CAE8EA url(images/bg_header.jpg) no-repeat; 
+}
+
+td { 
+    border-right: 1px solid #C1DAD7; 
+    border-bottom: 1px solid #C1DAD7; 
+    background: #fff; 
+    font-size:11px; 
+    padding: 6px 6px 6px 12px; 
+    color: #4f6b72; 
+} 
+
+td.alt { 
+    background: #F5FAFA; 
+    color: #797268; 
+} 
+
+td.altRed { 
+    background: #F5FAFA; 
+    color: #FF0000; 
+} 
+
+td.altRedBold { 
+    background: #F5FAFA; 
+    color: #FF0000; 
+    font-weight: bold;
+} 
+</style>
+</head>
+<body>
+<h3>TMS入库同步服务监控</h3>
+<br/>
+<br/>
+<h3>TMS 入库中间箱表数量监控</h3>
+<table style='padding:0; margin:0;'  cellspacing='0'>
+<thead>
+<tr>
+<th>监控时间</th><th>未同步</th><th>同步中</th><th>已同步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[BoxMonitorTime]</td><td class="altRedBold" >[BoxNoSync]</td><td class="altRed">[BoxSyncing]</td><td class="alt">[BoxSynced]</td>
+</tr>
+</tbody>
+</table>
+<h3>TMS 入库中间订单表数量监控</h3>
+<table style='padding:0; margin:0;'  cellspacing='0'>
+<thead>
+<tr>
+<th>监控时间</th><th>未同步</th><th>同步中</th><th>已同步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[OrderMonitorTime]</td><td class="altRedBold" >[OrderNoSync]</td><td class="altRed">[OrderSyncing]</td><td class="alt">[OrderSynced]</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

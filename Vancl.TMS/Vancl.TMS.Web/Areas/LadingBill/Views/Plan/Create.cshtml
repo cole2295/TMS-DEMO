@@ -1,0 +1,342 @@
+﻿@using Vancl.TMS.Model.Common
+@model  Vancl.TMS.Model.LadingBill.LB_PLAN
+@{
+    var IsCreate = ViewContext.RouteData.Values["action"].ToString() == "Create";
+    ViewBag.Title = (IsCreate ? "新增" : "查看") + "提货计划";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/page_frame.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/simple_gray/ymPrompt.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/UC_Widget.js"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.page.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/LadingBill/formverify.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/plugins/calendar/skin/WdatePicker.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        //初始化
+        $(function () {
+            onlyDouble($("#PREDICTWEIGHT"));
+            onlyInt($("#ORDERQUANTITY"));
+            onlyDouble($("#MILEAGE"));
+            onlyDouble($("#AMOUNT"));
+            $("#lblForOrderCount").hide();
+            $('#DateType').change(function () {
+                changeWeeks($('#DateType').val());
+            });
+            $("#rdoCountFee").click(function () {
+                ChangeFeeType();
+            });
+            $("#rdoOnceFee").click(function () {
+                ChangeFeeType();
+            });
+        });
+
+        //保存
+        function saveSetting() {
+            if (!checkForPlan()) {
+                return;
+            }
+            var merchantId = $("#waybillSource_List_hide").val();
+            var toDidstributionCode = $("#distributionDiv_List_hide").val();
+            var weeks = getWeeks();
+            //定义XML头
+            var postDataXml = '<?xml version="1.0" encoding="utf-8"?><PLANS>';
+            postDataXml += '<PLAN>';
+            postDataXml += '<MERCHANTID>' + merchantId + '</MERCHANTID>';
+            postDataXml += '<WAREHOUSEID>' + $("#WAREHOUSEID").val() + '</WAREHOUSEID>';
+            postDataXml += '<TODISTRIBUTIONCODE>' + toDidstributionCode + '</TODISTRIBUTIONCODE>';
+            postDataXml += '<DEPARTMENT>' + $("#DEPARTMENT").val() + '</DEPARTMENT>';
+            postDataXml += '<ORDERQUANTITY>' + convertToInt($("#ORDERQUANTITY")) + '</ORDERQUANTITY>';
+            postDataXml += '<PREDICTWEIGHT>' + convertToInt($("#PREDICTWEIGHT")) + '</PREDICTWEIGHT>';
+            postDataXml += '<MILEAGE>' + convertToInt($("#MILEAGE")) + '</MILEAGE>';
+            postDataXml += '<PRICETYPE>' + $(":input:radio[name='PRICETYPE'][checked]").val() + '</PRICETYPE>';
+            if ($("#AMOUNT").val() != "") {
+                postDataXml += '<AMOUNT>' + convertToInt($("#AMOUNT")) + '</AMOUNT>';
+            } else {
+                postDataXml += '<AMOUNT>' + convertToInt($("#AMOUNT_1")) + '</AMOUNT>';
+            }
+
+            postDataXml += '<TIMETYPE>' + $("#DateType").val() + '</TIMETYPE>';
+            postDataXml += '<WEEK>' + weeks + '</WEEK>';
+            postDataXml += '<SPECIFICTIME>' + $("#SPECIFICTIME").val() + '</SPECIFICTIME>';
+            postDataXml += '<RECEIVEMAIL>' + $("#RECEIVEMAIL").val() + '</RECEIVEMAIL>';
+            postDataXml += '</PLAN>';
+            postDataXml += '</PLANS>';
+          
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: '/LadingBill/Plan/SavePlan/',
+                data: postDataXml,
+                dataType: "json",
+                success: function (result) {
+                    alert(result);
+                }
+            });
+        }
+        function ChangeFeeType() {
+            if ($("#rdoCountFee").is(":checked")) {
+                $("#lblForOrderCount").show();
+                $("#lblForOnce").hide();
+            }
+            if ($("#rdoOnceFee").is(":checked")) {
+                $("#lblForOrderCount").hide();
+                $("#lblForOnce").show();
+            }
+        }
+    </script>
+    <style type="text/css">
+        #taskCreateViewtbid
+        {
+            border-collapse: collapse;
+            border: 0 none;
+            width: 100%;
+        }
+        #taskCreateViewtbid tbody th, .tb_insert tbody td
+        {
+            height: 30px;
+            line-height: 30px;
+            border-bottom: dotted 1px #c8c8c8;
+            font-size: 12px;
+        }
+        #taskCreateViewtbid tbody th
+        {
+            text-align: left;
+            color: #787878;
+            background: #f5f5f5;
+            padding: 0 10px;
+            width: 80px;
+        }
+        #taskCreateViewtb td
+        {
+            text-align: left;
+            border-bottom: dotted 1px #c8c8c8;
+            border-right: 0 none;
+        }
+        #taskCreateViewtbid tfoot td
+        {
+            text-align: center;
+            border: 0 none;
+        }
+    </style>
+}
+@using (Html.BeginForm())
+{
+    <table id="taskCreateViewtbid">
+        <tbody id="taskCreateViewtb">
+            <tr>
+                <th style="width: 110px;">
+                    <span style="color: Red">*</span> 商家
+                </th>
+                <td>@Html.HiddenFor(model => model.MERCHANTID)
+                    <div id="waybillSource_div" style="width: 250px" chknumber="1" distributioncode="rfd"
+                        >
+                    </div>
+                </td>
+                <th style="width: 110px;">
+                    <span style="color: Red">*</span> 仓库
+                </th>
+                <td>
+                    <select id="WAREHOUSEID" name="WAREHOUSEID">
+                        <option value="0">--请选择--</option>
+                    </select>
+                    <img id="waiting_img" style="display: none" src="../../../../Content/images/027.gif"
+                        alt="等待" />
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    <span style="color: Red">*</span> 提货公司
+                </th>
+                <td>
+                    <div id="BillQuery_div" chknumber="1">
+                    </div>
+                </td>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.DEPARTMENT)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.DEPARTMENT)
+                    @Html.ValidationMessageFor(model => model.DEPARTMENT)
+                    @Html.HiddenFor(model => model.DEPARTMENT)
+                    @Html.ValidationMessageFor(model => model.DEPARTMENT)
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    <span style="color: Red">*</span>
+                    @Html.LabelFor(model => model.RECEIVEMAIL)
+                </th>
+                <td colspan="3">
+                    @Html.TextBoxFor(model => model.RECEIVEMAIL, new { style = "width:60%" })
+                    @Html.ValidationMessageFor(model => model.RECEIVEMAIL)
+                    @Html.HiddenFor(model => model.RECEIVEMAIL)
+                    @Html.ValidationMessageFor(model => model.RECEIVEMAIL)
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.ORDERQUANTITY)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.ORDERQUANTITY)单
+                    @Html.ValidationMessageFor(model => model.ORDERQUANTITY)
+                    @Html.HiddenFor(model => model.ORDERQUANTITY)
+                    @Html.ValidationMessageFor(model => model.ORDERQUANTITY)
+                </td>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.PREDICTWEIGHT)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.PREDICTWEIGHT)kg
+                    @Html.ValidationMessageFor(model => model.PREDICTWEIGHT)
+                    @Html.HiddenFor(model => model.PREDICTWEIGHT)
+                    @Html.ValidationMessageFor(model => model.PREDICTWEIGHT)
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.MILEAGE)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.MILEAGE, new { style = "width:150px" })km
+                    @Html.ValidationMessageFor(model => model.MILEAGE)
+                    @Html.HiddenFor(model => model.MILEAGE)
+                    @Html.ValidationMessageFor(model => model.MILEAGE)
+                </td>
+                <th>
+                  <span style="color: Red">*</span>  提货价格
+                </th>
+                <td>
+                    @Html.RadioButtonFor(model => model.PRICETYPE, 0, new { @id = "PICKPRICETYPE0", divid = "1" })次数计费
+                    @Html.RadioButtonFor(model => model.PRICETYPE, 1, new { @id = "PICKPRICETYPE1", divid = "2" })单量计费
+                    <br />
+                    <div id="PICKPRICETYPE_1" style="display: none">
+                        @Html.EditorFor(model => model.AMOUNT)元/次</div>
+                    <div id="PICKPRICETYPE_2" style="display: none">
+                        <input class="text-box single-line" id="AMOUNT_1" name="AMOUNT_1" type="text" value="">元/单</div>
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    <span style="color: Red">*</span> 提货时间
+                </th>
+                <td colspan="3">
+                    日期 @Html.DropDownList("DateType")
+                    @Html.HiddenFor(model => model.TIMETYPE)
+                    @Html.HiddenFor(model => model.WEEK)
+                    <input type="checkbox" checked="checked" value="1" id="chkMonday" />周一
+                    <input type="checkbox" checked="checked" value="2" id="chkTuesday" />周二
+                    <input type="checkbox" checked="checked" value="3" id="chkWednesday" />周三
+                    <input type="checkbox" checked="checked" value="4" id="chkThursday" />周四
+                    <input type="checkbox" checked="checked" value="5" id="chkFriday" />周五
+                    <input type="checkbox" checked="checked" value="6" id="chkSaturday" />周六
+                    <input type="checkbox" checked="checked" value="7" id="chkSunday" />周日
+                    <br />
+                    时间 @Html.TextBoxFor(model => model.SPECIFICTIME, "{0:yyyy-MM-dd }", new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'H:mm:ss',minDate:'00:00:00',maxDate:'24:00:00'})" })
+                    <span style="color: Red">*</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="button" class="button" value="保存" onclick="saveSetting();" />
+        <input type="button" class="button" value="返回列表" onclick=' location = "@Url.Action("List")" ' />
+    </div>
+}
+<script type="text/javascript">
+    var merchantid_select = "";
+    var isBindwayBill = "1";
+    $(document).ready(function () {
+        // 在这里写你的代码...
+
+        $.ajaxSetup({
+            cache: false,
+            beforeSend: function (xhr) {
+                $("#Loading").show();
+            },
+            complete: function (XHR, TS) {
+                XHR = null;
+                $("#Loading").hide();
+                warehousebin();
+            }
+        });
+        $("input[name='PRICETYPE']").each(function () {
+            $(this).click(function () {
+                $("#AMOUNT").val("");
+                $("#AMOUNT_1").val("");
+                if ($(this).attr("divid") == "1") {
+                    $("#PICKPRICETYPE_1").show();
+                    $("#PICKPRICETYPE_2").hide();
+                } else {
+                    $("#PICKPRICETYPE_1").hide();
+                    $("#PICKPRICETYPE_2").show();
+                }
+            });
+        });
+
+
+
+        $("#waybillSourceDiv").mouseover(function () {
+            if (isBindwayBill == "2") {
+                return;
+            }
+
+            warehousebin();
+
+            isBindwayBill = "2";
+
+        });
+    });
+
+
+    function warehousebin() {
+
+        $("input[name='ChkwaybillSource']").each(function () {
+
+            $(this).click(function () {
+                if (merchantid_select == $("#waybillSource_List_hide").val()) {
+                    return;
+                }
+                merchantid_select = $("#waybillSource_List_hide").val();
+                if (merchantid_select == "") {
+                    $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                    return;
+                }
+                $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                $.ajax({
+                    type: "get",
+                    cache: false,
+                    url: "/LadingBill/WareHouse/GetWarehousebyMerchantid/?merchantid=" + merchantid_select,
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#waiting_img").show();
+                    },
+                    success: function (data, textStatus) {
+                        $.each(data, function (i, item) {
+
+                            jQuery("#WAREHOUSEID").append("<option value='" + item.WAREHOUSECODE + "'>" + item.WAREHOUSENAME + "</option>");
+                        });
+
+                        $("#waiting_img").hide();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+
+                        //HideLoading();
+                    },
+                    error: function () {
+                        //请求出错处理
+                    }
+                });
+            });
+        });
+    }
+</script>

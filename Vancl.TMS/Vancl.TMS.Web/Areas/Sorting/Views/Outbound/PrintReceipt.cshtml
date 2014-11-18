@@ -1,0 +1,299 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.Outbound.OutboundOrderCountModel>
+@{
+    ViewBag.Title = "分拣中心发货交接表 (共"+@Model.Count+"张)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css" media="print">
+        .print
+        {
+            display: inline-block !important;
+        }
+        .noprint
+        {
+            display: none;
+        }
+        #PrintDeliverNo
+        {
+            width: 100%;
+        }
+        .itemSplit
+        {
+            border: 0 !important;
+        }
+        .pageBreak
+        {
+            page-break-after: always;
+        }
+    </style>
+    <style type="text/css">
+        html, body
+        {
+            font-size: 14px;
+            margin: 0 5px;
+            padding: 0;
+        }
+        .container
+        {
+            margin: 0 25px;
+        }
+        #PrintSubmit
+        {
+            position: fixed;
+            z-index: 2;
+            right: 0;
+            bottom: 0;
+            padding: 5px;
+            background: #ddd;
+        }
+        .BarCode
+        {
+            font-size: 26px;
+        }
+        
+        h1.title
+        {
+            text-align: center;
+            font-size: 30px;
+            margin: 10px 0;
+        }
+        .tbOutTime
+        {
+            width: 100%;
+            font-size: 16px;
+        }
+        .tbOrderCount
+        {
+            width: 100%;
+            border: 1px solid #000;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .tbOrderCount td, .tbOrderCount th
+        {
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 25px;
+        }
+        .tbSign
+        {
+            width: 100%;
+            font-size: 16px;
+            line-height:28px;
+        }
+        .tbSign th
+        {
+            text-align: right;
+        }
+        .itemSplit{ background:gray; height:3px; margin:20px 0 ;}
+    </style>
+    <script src="@Url.Content("~/Scripts/references/jquery-barcode-2.0.2.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".BarCode,.BcTarget").each(function () {
+                var DeliveryNo = $(this).attr("DeliveryNo");
+                $(this).barcode(DeliveryNo, "code128", { barWidth: 1, barHeight: 40 });
+            });
+            this.focus();
+        });
+    </script>
+}
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    var entity = Model[i];
+    <div>
+        <h1 class="title">
+            分拣中心发货交接表</h1>
+        <table class="tbOutTime">
+            <tr>
+                <th style="text-align: left;">
+                    打印日期：@DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss")
+                </th>
+                <td>
+                    <div class="BarCode" deliveryno="@entity.BatchNo">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tbOrderCount">
+            <tr>
+                <th>
+                    @entity.CompanyName
+                </th>
+                <th>
+                    正常订单量
+                </th>
+                <th>
+                    转站订单量
+                </th>
+                <th>
+                    二级分拣订单
+                </th>
+                <th>
+                    其它订单量
+                </th>
+                <th>
+                    订单合计
+                </th>
+                <th>
+                    备注
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    vjia
+                </th>
+                <td>
+                    @entity.VijiaNormalCount
+                </td>
+                <td>
+                    @entity.VjiaTurnCount
+                </td>
+                <td>
+                    @entity.VjiaSecondSortingCount
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    @entity.VjiaAllCount
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    vancl
+                </th>
+                <td>
+                    @entity.VanclNormalCount
+                </td>
+                <td>
+                    @entity.VanclTurnCount
+                </td>
+                <td>
+                    @entity.VanclSecondSortingCount
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    @entity.VanclAllCount
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    其它商家
+                </th>
+                <td>
+                    @entity.OtherNormalCount
+                </td>
+                <td>
+                    @entity.OtherTurnCount
+                </td>
+                <td>
+                    @entity.OtherSecondSortingCount
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    @entity.OtherAllCount
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    合计
+                </th>
+                <td>
+                    @entity.NormalCount
+                </td>
+                <td>
+                    @entity.TurnCount
+                </td>
+                <td>
+                    @entity.SecondSortingCount
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    @entity.AllCount
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    实收
+                </th>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+        </table>
+        <table class="tbSign">
+            <tr>
+                <th width="120">
+                    保价金额：
+                </th>
+                <td colspan="5">
+                    @entity.InsuredAmount 元
+                </td>
+            </tr>
+            <tr>
+            <th width="120">
+                交接员签名：
+            </th>
+            <td>
+            </td>
+            <th width="120">
+                司机签名：
+            </th>
+            <td>
+            </td>
+            <th width="120">
+                分站签名：
+            </th>
+            <td>
+            </td>
+            </tr>
+        </table>
+    </div>
+    if (i != Model.Count - 1)
+    {
+    <div class="itemSplit pageBreak">
+    </div>
+    }
+}
+<div class="center noprint" id="PrintSubmit">
+    <input type="submit" class="button noprint center" value="打印发货交接表" onclick="window.print();" />
+    <div class="noprint" style="font-size: 12px; color: #DD940A; width: 204px; clear: both;
+        text-align: left; padding-top: 3px">
+        注：如果需要打印网页时不显示页眉页脚,请设置IE的"文件"菜单->页面设置",把"页眉"和"页脚"栏中的内容设置为空!
+    </div>
+</div>

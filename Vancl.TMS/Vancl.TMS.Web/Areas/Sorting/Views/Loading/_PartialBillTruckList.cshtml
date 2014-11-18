@@ -1,0 +1,83 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Sorting.Loading.BillTruckBatchModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnBillTruckListRefresh" })
+        </li>
+        <li style="padding-top: 3px; color: red">总单量：@(Model == null ? 0 : Model.Sum(b => b.TotalBillCount))，未装车总量为：@(Model == null ? 0 : Model.Sum(b => b.TotalBillCount - b.LoadingCount))</li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="LinePlanTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    批次号
+                </th>
+                <th>
+                    发货分拣中心
+                </th>
+                <th>
+                    配送站
+                </th>
+                <th>
+                    总单量
+                </th>
+                <th>
+                    已装车单量
+                </th>
+                <th>
+                    未装车单量
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model == null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var billTruckModel = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@billTruckModel.BatchNo"/>
+                    </td>
+                    <td>
+                        @Html.ActionLink(@billTruckModel.BatchNo, "BillTruckDetails", new { id = billTruckModel.BatchNo }, new { title = billTruckModel.BatchNo })
+                    </td>
+                    <td>
+                        @billTruckModel.DepartureName
+                    </td>
+                    <td>
+                        @billTruckModel.ArrivalName
+                    </td>
+                    <td>
+                        @billTruckModel.TotalBillCount
+                    </td>
+                    <td>
+                        @billTruckModel.LoadingCount
+                    </td>
+                    <td>
+                        @(billTruckModel.TotalBillCount - billTruckModel.LoadingCount)
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    ViewBag.UpdateTargetId = "LinePlanTableList";
+    ViewBag.OnBegin = "beforeSend";
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

@@ -1,0 +1,324 @@
+﻿@using Vancl.TMS.Model.Common
+@model Vancl.TMS.Model.LadingBill.LB_TASK
+@{
+    Layout = null;
+    if (ViewBag.operate == "create")
+    {
+        ViewBag.Title = "添加提货任务";
+    }
+    else if (ViewBag.operate == "Edit")
+    {
+        ViewBag.Title = "编辑任务";
+    }
+
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <script src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/page_frame.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/simple_gray/ymPrompt.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.js"></script>
+    <script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/UC_Widget.js"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.page.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/LadingBill/formverify.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/plugins/calendar/skin/WdatePicker.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    @using (Html.BeginForm("create", "task", FormMethod.Post,
+                          new { name = "taskform", id = "taskform" }))
+    {
+        <div class="container">
+            <!-- 搜索项 -->
+            <div class="box">
+                <div>
+                    <table id="taskCreateViewtbid" width="100%">
+                        <tbody id="taskCreateViewtb">
+                            <tr>
+                                <th style="width: 110px;">
+                                    <span style="color: Red">*</span> 商家
+                                </th>
+                                <td>
+                                    @if (Model.MERCHANTID > 0)
+                                    {
+                                        <div id="waybillSource_div" merchantid="@Model.MERCHANTID" chknumber="1" distributioncode="rfd" >
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="waybillSource_div" chknumber="1" distributioncode="rfd" >
+                                        </div>
+                                    }
+                                </td>
+                                <th style="width: 110px;">
+                                    <span style="color: Red">*</span> 仓库
+                                </th>
+                                <td>
+                                    <select id="WAREHOUSEID" name="WAREHOUSEID">
+                                        <option value="0">--请选择--</option>
+                                    </select>
+                                    <img id="waiting_img" style="display: none" src="../../../../Content/images/027.gif"
+                                        alt="等待" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span style="color: Red">*</span> 提货公司
+                                </th>
+                                <td>
+                                    <div id="BillQuery_div" distributionid="@Model.TODISTRIBUTIONCODE" chknumber="1">
+                                    </div>
+                                </td>
+                                <th>
+                                    提货部门
+                                </th>
+                                <td>
+                                    @Html.EditorFor(model => model.DEPARTMENT)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span style="color: Red">*</span> 任务接收邮箱
+                                </th>
+                                <td colspan="3">
+                                    @Html.TextBoxFor(model => model.RECEIVEEMAIL, new { @style = "width:600px;" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    预计提货单量
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(model => model.PREDICTORDERQUANTITY)单
+                                </td>
+                                <th>
+                                    预计提货重量
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(model => model.PREDICTWEIGHT)kg
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    预计公里数
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(model => model.MILEAGE)km
+                                </td>
+                                <th>
+                                    <span style="color: Red">*</span> 提货价格
+                                </th>
+                                <td>
+                                    @Html.RadioButtonFor(model => model.PICKPRICETYPE, 0, new { @id = "PICKPRICETYPE0", divid = "1" })次数计费
+                                    @Html.RadioButtonFor(model => model.PICKPRICETYPE, 1, new { @id = "PICKPRICETYPE1", divid = "2" })单量计费
+                                    <div id="PICKPRICETYPE_1" style="display: none">
+                                        @Html.EditorFor(model => model.ONCEAMOUNT)元/次</div>
+                                    <div id="PICKPRICETYPE_2" style="display: none">
+                                        @Html.EditorFor(model => model.ORDERAMOUNT)元/单</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span style="color: Red">*</span> 计划提货时间
+                                </th>
+                                <td colspan="3">
+                                    @if (Model.PREDICTTIME.Year > 1)
+                                    {
+                                        @Html.TextBoxFor(model => model.PREDICTTIME, new { @readonly = "readonly" })
+                                    }
+                                    else
+                                    {
+                                        <input data-val="true" data-val-required="PREDICTTIME 字段是必需的。" id="PREDICTTIME" name="PREDICTTIME"
+                                            readonly="readonly" type="text" class=" WdateFmtErr" />
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="center">
+                    <input type="button" class="button" value="保存" onclick="OnSubmit();" id="btnSubmit" />
+                    <input type="button" class="button" value="返回列表" onclick='location="@Url.Action("List")"' />
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+<style type="text/css">
+    #taskCreateViewtbid
+    {
+        border-collapse: collapse;
+        border: 0 none;
+        width: 100%;
+    }
+    #taskCreateViewtbid tbody th, .tb_insert tbody td
+    {
+        height: 30px;
+        line-height: 30px;
+        border-bottom: dotted 1px #c8c8c8;
+        font-size: 12px;
+    }
+    #taskCreateViewtbid tbody th
+    {
+        text-align: left;
+        color: #787878;
+        background: #f5f5f5;
+        padding: 0 10px;
+        width: 80px;
+    }
+    #taskCreateViewtb td
+    {
+        text-align: left;
+        border-bottom: dotted 1px #c8c8c8;
+        border-right: 0 none;
+    }
+    #taskCreateViewtbid tfoot td
+    {
+        text-align: center;
+        border: 0 none;
+    }
+</style>
+<script type="text/javascript">
+    var merchantid_select = "";
+    var isBindwayBill = "1";
+    $(document).ready(function () {
+        // 在这里写你的代码...
+        var msg = '@TempData["msg"]';
+
+        if (msg.toString() != "") {
+            alert(msg);
+        }
+
+        var prictype = '@Model.PICKPRICETYPE';
+        if (prictype == 0) {
+            $("#PICKPRICETYPE_1").show();
+        } else {
+            $("#PICKPRICETYPE_2").show();
+        }
+
+        if (parseFloat($("#ONCEAMOUNT").val()) == 0) {
+            $("#ONCEAMOUNT").val("");
+        }
+
+        if (parseFloat($("#PREDICTORDERQUANTITY").val()) == 0) {
+            $("#PREDICTORDERQUANTITY").val("");
+        }
+        if (parseFloat($("#PREDICTWEIGHT").val()) == 0) {
+            $("#PREDICTWEIGHT").val("");
+        }
+
+
+        $("input[name='button']").click(function () {
+            warehousebin();
+        });
+        $("#waybillSourceDiv").mouseover(function () {
+            if (isBindwayBill == "2") {
+                return;
+            }
+
+            warehousebin();
+            isBindwayBill = "2";
+        });
+
+        $.ajaxSetup({
+            cache: false,
+            beforeSend: function (xhr) {
+                $("#Loading").show();
+
+            },
+            complete: function (XHR, TS) {
+                XHR = null;
+                $("#Loading").hide();
+                warehousebin();
+            }
+        });
+    });
+
+  
+
+    function warehousebin() {
+
+        $("input[name='ChkwaybillSource']").each(function () {
+
+            $(this).click(function () {
+                if (merchantid_select == $("#waybillSource_List_hide").val()) {
+                    return;
+                }
+                merchantid_select = $("#waybillSource_List_hide").val();
+                if (merchantid_select == "") {
+                    $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                    return;
+                }
+                $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                $.ajax({
+                    type: "get",
+                    cache: false,
+                    url: "/LadingBill/WareHouse/GetWarehousebyMerchantid/?merchantid=" + merchantid_select,
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#waiting_img").show();
+                    },
+                    success: function (data, textStatus) {
+                        $.each(data, function (i, item) {
+
+                            jQuery("#WAREHOUSEID").append("<option value='" + item.WAREHOUSECODE + "'>" + item.WAREHOUSENAME + "</option>");
+                        });
+
+                        $("#waiting_img").hide();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+
+                        //HideLoading();
+                    },
+                    error: function () {
+                        //请求出错处理
+                    }
+                });
+            });
+        });
+
+    }
+
+    var merchantid = $("#waybillSource_div").attr("merchantid");
+    var editwarehouse = '@Model.WAREHOUSEID';
+
+    if (merchantid != "" && editwarehouse != "") {
+        $.ajax({
+            type: "get",
+            url: "/LadingBill/WareHouse/GetWarehousebyMerchantid/?merchantid=" + merchantid,
+            beforeSend: function (XMLHttpRequest) {
+                $("#waiting_img").show();
+            },
+            success: function (data, textStatus) {
+                $.each(data, function (i, item) {
+                    if (item.WAREHOUSECODE == editwarehouse) {
+                        jQuery("#WAREHOUSEID").append("<option value='" + item.WAREHOUSECODE + "' selected='selected'>" + item.WAREHOUSENAME + "</option>");
+                    } else {
+                        jQuery("#WAREHOUSEID").append("<option value='" + item.WAREHOUSECODE + "'>" + item.WAREHOUSENAME + "</option>");
+                    }
+                });
+
+                $("#waiting_img").hide();
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    }
+
+    //帮助下载
+    function downloadfile() {
+        return false;
+    }
+</script>

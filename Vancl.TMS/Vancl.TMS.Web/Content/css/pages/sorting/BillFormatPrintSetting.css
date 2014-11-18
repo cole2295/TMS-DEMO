@@ -1,0 +1,130 @@
+﻿.container
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    min-width: 800px;
+    font-size:9pt;
+}
+.ui-helper-clearfix::before, .ui-helper-clearfix::after { content:normal;}
+.ui-tabs
+{
+    position: relative;
+    padding: 0.3em .2em;
+    zoom: 1;
+}
+/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.ui-tabs .ui-tabs-nav
+{
+    margin: 0;
+    padding:  0;
+    padding-left: 10px;
+    height: 26px;
+    border-bottom: 1px solid #666;
+}
+.ui-tabs .ui-tabs-nav li
+{
+    list-style: none;
+    float: left;
+    position: relative;
+    margin-left: 3px;
+    white-space: nowrap;
+    border: 1px solid #666;
+}
+.ui-tabs .ui-tabs-nav li a
+{
+    float: left;
+    padding: 0px 5px;
+    text-decoration: none;
+    height:24px;
+    line-height:24px;
+    background: #efefef;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active
+{
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+    background-color: #fff;
+    border-bottom: 0;
+    color: #000;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-tabs-loading a
+{
+    cursor: text;
+    background: #fff;
+}
+.ui-tabs .ui-tabs-nav li a, .ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active a
+{
+    cursor: pointer;
+}
+/* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.ui-tabs .ui-tabs-panel
+{
+    display: block;
+    border-width: 0;
+    padding: 0;
+    background: none;
+}
+.tbEditItem
+{
+    width: 100%;
+    line-height: 24px;
+}
+.tbEditItem th, .tbEditItem td
+{
+    background: #efefef;
+    font-weight: normal;
+}
+.tbEditItem th
+{
+    width: 60px;
+    white-space:nowrap;
+}
+
+#BillArea
+{
+    position:relative;
+    height: 10cm;
+    width: 10cm;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 9px 9px 9px #ddd;
+    text-align:left;
+}
+#BillArea.hover
+{
+    border: 1px solid red;
+}
+#BillArea .BillElem
+{
+    width:100px; height:20px;
+    position:absolute; left:100px; top:100px;
+    border:1px solid black;
+    cursor:default; outline:none;
+}
+#BillArea .BillElem table
+{
+    height:100%; width:100%;
+}
+#BillArea .BillElem.highlight
+{
+    color:Red;
+    border:1px solid red;
+    background:#eeefff;
+}
+#BillArea .BillElem.CurrentElem
+{
+    background:#eeefff;
+}
+
+#PropertyList li
+{
+    line-height: 25px;
+    margin: 3px 7px;
+    border: 1px solid #ddd;
+    width:80px;
+    text-align:center;
+    float: left;
+    white-space: nowrap;
+}

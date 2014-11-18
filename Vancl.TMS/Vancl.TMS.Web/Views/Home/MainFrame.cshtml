@@ -1,0 +1,193 @@
+﻿@model  List<Vancl.TMS.Model.Common.MenuModel>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>运输管理系统</title>
+    <link href="@Url.Content("~/Content/css/ui/reset.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ui/common.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ui/page_fn.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ui/layout.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ui/page_main.css?1" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/dmm-green/ymPrompt.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        var PageSearchConditions=[];
+        function logout() {
+            var url = "@Url.Action("Logout")";
+            ymPrompt.confirmInfo('你确认要退出系统？',  null, null, "询问",
+            function(tp, data) {
+                if (tp == "ok") {
+                    window.location = url;
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- 弹出层 -->
+    <!-- 提示信息 -->
+    <div id="infoMe" class="InfoTitle">
+        <a href="javascript:code.closeInfo('infoMe')" class="iClose com_disblock"></a><span
+            class="com_disblock com_fl fn_Info"></span><span class="title">系统提示：</span>
+        <div class="com_fca">
+        </div>
+        <p class="content">
+            也许您要的功能在这里。
+        </p>
+        <a href="javascript:code.closeInfo('infoMe')" class="iKnow">好了，我知道了。</a>
+    </div>
+    <!-- 弹出层  带 iframe -->
+    <a href="javascript:defaults.meLayoutDoMe();" class="com_disblock contentX"></a>
+    <div class="contentBody">
+        <iframe id="ifrmContent" name="ifrmContent" width="100%" height="100%" frameborder="0">
+        </iframe>
+    </div>
+    <div class="contentLayout">
+    </div>
+    <div class="contentBG">
+    </div>
+    <!-- Ajax loading -->
+    <div id="MAIN_AJAX" class="com_absolute fn_ajax_loading com_disnone">
+        <table class="com_w100pen com_h100pen">
+            <tr>
+                <td class="com_alignCenten">
+                    <img src="imgs/loading/loading_QQ.gif" />
+                    系统加载中，请稍等.....
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- 折叠 -->
+    <div class="com_cursorP com_absolute lay_fold_left fn_FoldtopLeft" onclick="defaults.foldLeft(this);">
+    </div>
+    <!-- top -->
+    <div class="com_w100pen com_absolute lay_top">
+    </div>
+        <div class="lay_logo main_logo  com_absolute">
+        </div>
+        <ul class="lay_topmenu main_ul_function com_absolute com_fl">
+            @if (ViewBag.IsSsoLogin)
+            {
+            <li id="SsoNavi">
+            <a id="tms" href="#"><span> TMS</span></a>
+                  <ul id="navi">
+                   @ViewBag.Navi
+                 </ul>
+            </li>
+            }
+
+            <li><a href="javascript:void(0)"><span class="com_fbloder">·欢迎您：</span>[@Vancl.TMS.Core.Security.UserContext.CurrentUser.FullName]</a></li>
+            @*            <li><a href="javascript:void(0)"><span class="com_fbloder">·</span>重置密码</a></li>
+            <li><a href="javascript:void(0)"><span class="com_fbloder">·</span>系统帮助</a></li>*@
+            <li><a href="javascript:logout();"><span class="com_fbloder">·</span>退出系统</a></li>
+        </ul>
+    <!-- 1级导航 -->
+    <div id="meNav" class="main_1nav lay_main_1nav com_absolute">
+        <div class="meRight com_fr">
+        </div>
+        <div class="meLeft com_fl">
+        </div>
+        @*        <ul class="main_1navs com_fl">
+            <li><a href="javascript:void(0)" class="select" data-id="1">基础信息管理</a></li>
+            <li><a href="javascript:void(0)" data-id="2">运输计划</a></li>
+            <li><a href="javascript:void(0)" data-id="3">城际发货管理</a></li>
+            <li><a href="javascript:void(0)" data-id="4">承运商KPI考核</a></li>
+            <li><a href="javascript:void(0)" data-id="5">异常处理平台</a></li>
+        </ul>*@
+        <ul class="main_1navs com_fl1">
+            @if (Model != null)
+            {
+                foreach (var menu in Model.Where(x => x.MenuLevel == 0).OrderBy(x => x.MainMenuSeqNo))
+                {
+                <li><a href="javascript:void(0)" data-id="@menu.ID">@menu.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+    <!-- 2级导航   -->
+    <div id="meNavSecond" class="lay_main_2nav com_absolute main_2navs com_ovXHYA">
+        <div class="meTop">
+        </div>
+        <div id="meNavSecond_Title" class="main_2navs_titles">
+        </div>
+        @*
+        <ul id="ul_2" class="main_2navs_ul com_disnone">
+            <li><a href="#:@Url.Action("list", "Plan", new { area = "Transport" })"><span
+                class="com_fbloder com_f16">·</span>运输计划</a></li>
+        </ul>*@
+        @if (Model != null)
+        {
+            foreach (var menuGroup in Model.Where(x => x.MenuLevel == 1).GroupBy(x => x.ParentID))
+            {
+            <ul id="ul_@(menuGroup.Key)" class="main_2navs_ul com_disnone">
+                @foreach (var menu in menuGroup)
+                {
+                        
+                    <li><a href="#:@Response.ApplyAppPathModifier(menu.Url)"><span class="com_fbloder com_f16">
+                        ·</span>@menu.Name</a></li>
+                }
+            </ul>
+            }
+        }
+    </div>
+    <!-- 标签页 -->
+    <div id="meTabBG" class="main_tabplace lay_tabplace com_absolute">
+        <ul>@*
+            <!--      <li><a href="javascript:void(0)" class="select">
+            <p>选中的选项卡</p><span></span></a></li>
+            <li><a href="javascript:void(0)"><p>选项卡名字1</p><span></span></a></li>
+            <li><a href="javascript:void(0)"><p>选项卡名字2</p><span></span></a></li>
+            <li><a href="javascript:void(0)"><p>选项卡名字3</p><span></span></a></li> -->
+        *@</ul>
+    </div>
+    <!-- body -->
+    <div id="mebody" class="main_body lay_body com_absolute com_ovH">
+        @*  
+      <!--        <iframe id="frm_1" name="frm_1" height="99%" width="100%" frameborder="0" src="webApplication/首页.htm">
+        </iframe>-->
+       *@
+    </div>
+    <!-- 云 -->
+    <div class="cloudLeft lay_cloudLeft com_absolute">
+    </div>
+    <div class="cloudRight lay_cloudRight com_absolute">
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/pages/tab_script.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/pages/ui_script.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        defaults.fnPage();
+        code.tbColor(); //无ID
+        main.bindNav();
+        //main.showAJAX();
+
+
+        //       可设置的
+        //                code.setInfo({ "m_id": "infoMe", "m_top": "1%", "m_right": "33%"
+        //                , "m_content": "为了安全起见，持续15分钟未操作，将断开退出。",
+        //                    "m_width": "30%", "m_height": "70"
+        //                 });
+
+        //   code.closeFatherInfo('测试提示层');
+
+        CreateTab('欢迎使用', '@Url.Action("Welcome", "Home")', true);
+        $("#meNav a:first").click();
+    }
+
+    window.onresize = function () {
+        defaults.fnPage();
+    }
+
+    function CreateTab(titles, mehref, isShow) {
+        var tabs = new RFD_tabs(titles, mehref, isShow);
+        tabs.CreateForAuto();
+    }
+
+    function CloseTab(TabRandomNum) {
+        var tabs = new RFD_tabs();
+        tabs.CloseTab(TabRandomNum);
+    }
+</script>

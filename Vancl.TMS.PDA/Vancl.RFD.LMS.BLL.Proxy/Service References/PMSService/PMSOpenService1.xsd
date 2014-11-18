@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RFD.PMS.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RFD.PMS.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Employee">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CellPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Deposit" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmployeeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
+      <xs:element minOccurs="0" name="EmployeeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmployeeOldCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IDCard" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PDACode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="POSCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PassWord" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Relation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RelationMan" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RelationPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sex" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StationID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="eEmail" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Employee" nillable="true" type="tns:Employee" />
+  <xs:complexType name="ExpressCompany">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CityID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyAllName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyFlag" type="xs:int" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContacterPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Deposit" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistrictId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCompanyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCompanyID" type="xs:int" />
+      <xs:element minOccurs="0" name="ExpressCompanyOldID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ExpressCompanyVjiaOldID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IsCod" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPDA" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPOS" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsReplacement" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsReturn" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LevelCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MainContacter" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxOrderLimit" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ParentID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ProvinceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SimpleSpell" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExpressCompany" nillable="true" type="tns:ExpressCompany" />
+  <xs:complexType name="ArrayOfMenu">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Menu" nillable="true" type="tns:Menu" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMenu" nillable="true" type="tns:ArrayOfMenu" />
+  <xs:complexType name="Menu">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ImgURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MainSortBy" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuComment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MenuGroup" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuID" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuLevel" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Sorting" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Menu" nillable="true" type="tns:Menu" />
+  <xs:complexType name="ArrayOfRole">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Role" nillable="true" type="tns:Role" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRole" nillable="true" type="tns:ArrayOfRole" />
+  <xs:complexType name="Role">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RoleComment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RoleID" type="xs:int" />
+      <xs:element minOccurs="0" name="RoleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RoleType" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Sorting" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Role" nillable="true" type="tns:Role" />
+</xs:schema>

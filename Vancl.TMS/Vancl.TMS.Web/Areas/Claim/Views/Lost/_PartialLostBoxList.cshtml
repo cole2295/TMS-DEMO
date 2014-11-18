@@ -1,0 +1,78 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model IList<Vancl.TMS.Model.Claim.Lost.ViewLostBoxModel>
+<div class="toolbar">
+   <ul>
+        @{
+            if (ViewBag.Operate != "ShowDetail")
+            {
+                <li class="toolbtn"><a class="ok" href="javascript:AddLost();">保存丢失记录</a></li>
+                <li class="toolbtn"><a class="ok" href="javascript:AddAllLost();">全部丢失</a></li>
+            }
+        }
+    </ul>
+</div>
+<div class="tablelist">
+<table cellpadding="0" cellspacing="0" border="0" class="DataTable" id="LinePlanTable">
+    <thead>
+        <tr>
+            <th class="CbxColumn">
+                <input type="checkbox" class="CheckAll" />
+            </th>
+            <th>
+                箱号
+            </th>
+            <th>
+                订单数量
+            </th>
+            <th>
+                总价
+            </th>
+             @*<th>
+                订单丢失状态
+            </th>*@
+            <th>
+                查看丢失明细
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+       @{
+           if (Model.Count == 0)
+           {
+               Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+           }
+           else
+           {
+               for (int i = 0; i < Model.Count; i++)
+               {
+                   var boxModel = Model[i];
+            <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                <td class="CbxColumn">
+                    <input type="checkbox" onclick="Gray(this)" value="@((int)boxModel.BoxLostStatus)" BoxNO="@boxModel.BoxNO"/>
+@*                    <input type="hidden" value="@((int)boxModel.BoxLostStatus)" />*@
+                </td>
+                <td>
+                    @boxModel.CustomerBatchNo
+                </td>
+                <td>
+                    @boxModel.OrderCount
+                </td>
+                <td>
+                    @boxModel.TotalAmount.ToString("f2")
+                </td>
+                @*<td>
+                   @(EnumHelper.GetDescription<Enums.BoxLostStatus>(@boxModel.BoxLostStatus.ToString()))
+                </td>*@
+                <td>
+                    <a href="#" onclick="ShowOrderDetail('@boxModel.BoxNO')" >详情</a>         
+                </td>
+            </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+</div>
+

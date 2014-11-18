@@ -1,0 +1,67 @@
+﻿@model List<Vancl.TMS.Model.Log.BatchModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnBatchRefresh" })</li>
+        <li class="toolbtn"><a class="on" href="javascript:RepairBatchDetail();">补充批次信息</a></li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect" id="DataTables1">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>是否一致</th>
+                <th>编号</th>
+                <th>运单号</th>
+                <th>出库批次号</th>
+                <th>生成箱号</th>
+                <th>出发站编号</th>
+                <th>出发站名称</th>
+                <th>到达站编号</th>
+                <th>到达站名称</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            if (Model.Count == 0)
+            {
+                Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+            }
+            else
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    var batch = Model[i];
+                        <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                            <td class="CbxColumn">
+                                @if (!@batch.IsConsistency)
+                                {
+                                    <input type="checkbox" value="@batch.FormCode" />
+                                }
+                            </td>
+                            <td>@if (batch.IsConsistency)
+                                {
+                                    <span>是</span>
+                                }
+                                else
+                                {
+                                    <span>否</span>
+                                }
+                            </td>
+                            <td>@batch.SerialNumber</td>
+                            <td>@batch.FormCode</td>
+                            <td>@batch.CustomerBatchNo</td>
+                            <td>@batch.BoxNo</td>
+                            <td>@batch.DepartureId</td>
+                            <td>@batch.DepartureName</td>
+                            <td>@batch.ArrivalId</td>
+                            <td>@batch.ArrivalName</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>

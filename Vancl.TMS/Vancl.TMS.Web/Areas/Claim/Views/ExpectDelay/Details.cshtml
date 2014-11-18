@@ -1,0 +1,165 @@
+﻿@using Vancl.TMS.Web.WebControls.Mvc;
+@model Vancl.TMS.Model.Claim.ViewExpectDelayModel
+@{
+    ViewBag.Title = "查看调度详细信息";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+}
+<table class=" tb_insert">
+    <thead>
+        <tr>
+            <th colspan="2">
+                @Html.HiddenFor(model => model.DispatchID)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th style="width: 110px;">
+                提货单号
+            </th>
+            <td>
+                @Model.DeliveryNo
+            </td>
+            <th style="width: 110px;">
+                物流单号
+            </th>
+            <td>
+                @Model.WaybillNo
+            </td>
+        </tr>
+        <tr>
+            <th>
+                创建时间
+            </th>
+            <td>
+                @Model.CreateTime.ToShortDateString()
+            </td>
+            <th>
+                出发地
+            </th>
+            <td style="">
+                @Model.DepartureName
+            </td>
+        </tr>
+        <tr>
+            <th>
+                目的地
+            </th>
+            <td>
+                @Model.ArrivalName
+            </td>
+            <th>
+                目的城市
+            </th>
+            <td>
+                @Model.ArrivalCity
+            </td>
+        </tr>
+        <tr>
+            <th>
+                中转站
+            </th>
+            <td>
+            </td>
+            <th>
+                订单数量
+            </th>
+            <td>
+                @Model.TotalCount
+            </td>
+        </tr>
+        <tr>
+            <th>
+                承运商
+            </th>
+            <td>
+                @Model.CarrierName
+            </td>
+            <th>
+                运输方式
+            </th>
+            <td>
+                @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.TransportType>(Model.TransportType.ToString()))
+            </td>
+        </tr>
+        <tr>
+            <th>
+                到货时效
+            </th>
+            <td>
+                @Model.ArrivalTiming
+            </td>
+            <th>
+                违禁类型
+            </th>
+            <td>
+                @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.GoodsType>(Model.GoodsType.ToString()))
+            </td>
+        </tr>
+        <tr>
+            <th>
+                总价
+            </th>
+            <td>
+                @Model.TotalAmount
+            </td>
+            <th>
+                预计到货时间
+            </th>
+            <td>
+                @Model.ExpectArrivalDate
+            </td>
+        </tr>
+        <tr>
+            <th>
+                提货单状态
+            </th>
+            <td>
+                @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.DeliveryStatus>(Model.DeliveryStatus.ToString()))
+            </td>
+            <th>
+                预计延误时间
+            </th>
+            <td>
+                @Model.DelayTime
+            </td>
+        </tr>
+        <tr>
+            <th>
+                预计延误说明
+            </th>
+            <td>
+                @Model.DelayDesc
+            </td>
+            <th>
+                延误类型
+            </th>
+            <td>
+                @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.ExpectDelayType>(Model.ExpectDelayType.ToString()))
+            </td>
+        </tr>
+        <tr>
+            <th>
+                修正预计到货时间
+            </th>
+            <td>
+                @Model.ConfirmExpArrivalDate
+            </td>
+            <th>
+                审批状态
+            </th>
+            <td>
+                @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.ApproveStatus>(Model.ApproveStatus.ToString()))
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="split">
+</div>
+<div class="center">
+    @*<input type="button" class="button" value="返回列表" onclick='location="@Url.Action("ApplyList")"' />*@
+</div>
+<div>
+</div>

@@ -1,0 +1,12 @@
+﻿.lay_top{height:61px;top:0px;left:0px;z-index:910; display:none}
+.lay_logo{width:240px;height:60px;margin:5px 0 0 5px; z-index:900; left:0; top:0;}
+.lay_topmenu{z-index:910; right:0; top:0;}
+.lay_cloudLeft{width:230px;height:263px;left:0px;top:0px;z-index:500;}
+.lay_cloudRight{width:189px;height:311px;right:0px;top:0px;z-index:500;}
+
+.lay_main_1nav{width:60%;height:39px;top:34px;left:248px;z-index:900;}
+.lay_main_2nav{width:227px;height:420px;left:20px;top:73px;z-index:900;}
+
+.lay_fold_left{top:45%;left:235px;z-index:901;}
+.lay_tabplace{width:60%;height:30px;top:73px;left:246px;z-index:900;}
+.lay_body{top:103px;left:246px;z-index:900;}

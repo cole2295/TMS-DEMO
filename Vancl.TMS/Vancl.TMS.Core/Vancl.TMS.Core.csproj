@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8C7CAD7F-BF41-4A20-AC70-07FB0E2E8F53}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.Core</RootNamespace>
+    <AssemblyName>Vancl.TMS.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lab\Common.Logging\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lab\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lab\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lab\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\lab\Quartz.NET-1.0-RC3\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="SysMailerHelper">
+      <HintPath>..\lab\SysMailerHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACIDManager\ACIDDataContext.cs" />
+    <Compile Include="ACIDManager\ACIDScopeFactory.cs" />
+    <Compile Include="ACIDManager\OracleDbACIDScope.cs" />
+    <Compile Include="ACIDManager\IACID.cs" />
+    <Compile Include="ACIDManager\SqlServerDbACIDScope.cs" />
+    <Compile Include="Base\ControllerBase.cs" />
+    <Compile Include="Base\PageBase.cs" />
+    <Compile Include="Base\TMSysLogger.cs" />
+    <Compile Include="Base\VanclDbConnection.cs" />
+    <Compile Include="FormulaManager\FormulasFactory.cs" />
+    <Compile Include="FormulaManager\IFormula.cs" />
+    <Compile Include="HttpModule.cs" />
+    <Compile Include="Logging\CustomizeLogStrategy.cs" />
+    <Compile Include="Logging\DeleteLogStrategy.cs" />
+    <Compile Include="Logging\DeliveryLogStrategy.cs" />
+    <Compile Include="Logging\InsertLogStrategy.cs" />
+    <Compile Include="Logging\LogOperate.cs" />
+    <Compile Include="Logging\LogStrategy.cs" />
+    <Compile Include="Logging\UpdateLogStrategy.cs" />
+    <Compile Include="Logging\SetEnableLogStrategy.cs" />
+    <Compile Include="ObjectFactory\ObjectCategory.cs" />
+    <Compile Include="ObjectFactory\ObjectFactory.cs" />
+    <Compile Include="Pool\ChatRoomPool.cs" />
+    <Compile Include="Pool\ConnectionPool.cs" />
+    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Pool\Pool.cs" />
+    <Compile Include="Pool\SocketPool.cs" />
+    <Compile Include="Pool\WaitingThread.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schedule\BaseQuartzManager.cs" />
+    <Compile Include="Schedule\CommonConst.cs" />
+    <Compile Include="Schedule\MailHelper.cs" />
+    <Compile Include="Schedule\QuartzExecute.cs" />
+    <Compile Include="Security\Configuration.cs" />
+    <Compile Include="Security\UserContext.cs" />
+    <Compile Include="ServiceCache\BillSyncCache.cs" />
+    <Compile Include="ServiceCache\BillSyncCacheModel.cs" />
+    <Compile Include="ServiceFactory\ServiceFactory.cs" />
+    <Compile Include="ObjectFactory\ObjectInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FormulaManager\FormulaConfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ServiceFactory\ServiceConfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.TMS.Model\Vancl.TMS.Model.csproj">
+      <Project>{2EC92CCF-4212-4CA0-98C8-590382689660}</Project>
+      <Name>Vancl.TMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

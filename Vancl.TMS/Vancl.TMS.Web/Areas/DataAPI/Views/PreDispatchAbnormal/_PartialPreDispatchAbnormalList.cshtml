@@ -1,0 +1,67 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Transport.DeliveryAbnormal.PreDispatchAbnormalModel>
+
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnPreDispatchRefresh" })</li>
+        <li class="toolbtn"><a class="on" href="javascript:RepairPreDispatch();">重新预调度</a></li>
+    </ul>
+</div>
+
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect"
+        id="DataTables1">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th style="width: 140px;">
+                    序号
+                </th>
+                <th style="width: 120px;">
+                    箱号
+                </th>
+                <th style="width: 140px;">
+                    TMS批次号
+                </th>
+                <th style="width: 120px;">
+                    出发地
+                </th>
+                <th style="width: 120px;">
+                    目的地
+                </th>
+                <th style="width: 120px;">
+                    货品属性
+                </th>
+                <th style="width: 120px;">
+                    创建时间
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                        <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                            <td class="CbxColumn"><input id="" type="checkbox" value="@item.BID" BoxNo="@item.BoxNo" BID="@item.BID" ArrivalID="@item.ArrivalID" DepartureID="@item.DepartureID" /></td>
+                            <td>@item.SerialNumber</td>
+                            <td>@item.CustomerBatchNo</td>
+                            <td>@item.BoxNo</td>
+                            <td>@item.DepartureName</td>
+                            <td>@item.ArrivalName</td>
+                            <td>@(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.GoodsType>(@item.ContentType))</td>
+                            <td>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>

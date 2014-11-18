@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="D:\vancl\work\发布\PDA" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/NPOI.HSSF.dll" publishTime="09/02/2011 11:33:42" />
+    <file relUrl="bin/RFD.LMS.Service.dll" publishTime="08/15/2012 18:24:18" />
+    <file relUrl="Global.asax" publishTime="06/26/2012 10:09:25" />
+    <file relUrl="bin/Spring.Core.dll" publishTime="06/26/2012 16:02:04" />
+    <file relUrl="bin/log4net.dll" publishTime="06/26/2012 16:02:04" />
+    <file relUrl="bin/LMS.AdoNet.dll" publishTime="08/15/2012 18:24:17" />
+    <file relUrl="Inbound/TransferInbound.aspx" publishTime="06/26/2012 10:09:24" />
+    <file relUrl="bin/NPOI.HPSF.dll" publishTime="09/02/2011 11:33:42" />
+    <file relUrl="bin/WcfAnnotation.pdb" publishTime="12/12/2011 10:59:53" />
+    <file relUrl="User/UserLogin.aspx" publishTime="07/06/2012 11:24:34" />
+    <file relUrl="bin/Common.Logging.dll" publishTime="06/26/2012 16:02:04" />
+    <file relUrl="bin/Vancl.LMS.Framework.Caching.dll" publishTime="08/22/2011 17:09:40" />
+    <file relUrl="bin/RFD.LMS.PDA.Core.dll" publishTime="08/15/2012 18:24:18" />
+    <file relUrl="bin/NPOI.Util.dll" publishTime="09/02/2011 11:33:42" />
+    <file relUrl="images/btn_Bg.gif" publishTime="06/08/2012 14:34:34" />
+    <file relUrl="bin/Newtonsoft.Json.xml" publishTime="08/22/2011 17:08:19" />
+    <file relUrl="bin/RFD.LMS.PDA.Web.dll" publishTime="08/15/2012 18:24:28" />
+    <file relUrl="Settings/ChooseFunction.aspx" publishTime="07/06/2012 11:26:26" />
+    <file relUrl="style/Style.css" publishTime="07/06/2012 11:29:51" />
+    <file relUrl="bin/ICSharpCode.SharpZipLib.dll" publishTime="08/22/2011 17:02:27" />
+    <file relUrl="bin/NPOI.dll" publishTime="09/02/2011 11:33:42" />
+    <file relUrl="bin/Spring.Services.dll" publishTime="06/26/2012 16:02:04" />
+    <file relUrl="bin/Microsoft.Office.Interop.Excel.xml" publishTime="01/18/2011 21:08:58" />
+    <file relUrl="Inbound/SimpleInbound.aspx" publishTime="07/06/2012 11:31:21" />
+    <file relUrl="bin/LMS.AdoNet.pdb" publishTime="08/15/2012 18:24:17" />
+    <file relUrl="bin/RFD.LMS.Model.dll" publishTime="08/15/2012 18:24:16" />
+    <file relUrl="bin/RFD.LMS.Model.pdb" publishTime="08/15/2012 18:24:16" />
+    <file relUrl="Settings/SelectArrivalType.aspx" publishTime="07/06/2012 11:25:14" />
+    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="08/22/2011 17:08:19" />
+    <file relUrl="bin/Microsoft.Office.Interop.Excel.dll" publishTime="01/18/2011 18:27:02" />
+    <file relUrl="bin/WcfAnnotation.dll" publishTime="12/12/2011 10:59:53" />
+    <file relUrl="bin/itextsharp.dll" publishTime="03/06/2012 15:45:44" />
+    <file relUrl="bin/SevenZipSharp.dll" publishTime="09/22/2011 10:43:00" />
+    <file relUrl="bin/Spring.Data.dll" publishTime="06/26/2012 16:02:04" />
+    <file relUrl="bin/Microsoft.Vbe.Interop.dll" publishTime="01/18/2011 18:27:02" />
+    <file relUrl="Settings/ChooseArrival.aspx" publishTime="07/06/2012 11:26:26" />
+    <file relUrl="bin/RFD.LMS.Service.pdb" publishTime="08/15/2012 18:24:18" />
+    <file relUrl="bin/RFD.LMS.PDA.Web.pdb" publishTime="08/15/2012 18:24:28" />
+    <file relUrl="Settings/ChooseCity.aspx" publishTime="07/06/2012 11:26:26" />
+    <file relUrl="User/UserLogout.aspx" publishTime="06/26/2012 10:09:22" />
+    <file relUrl="bin/office.xml" publishTime="01/18/2011 21:08:58" />
+    <file relUrl="connections.config" publishTime="08/15/2012 17:13:32" />
+    <file relUrl="bin/NPOI.DDF.dll" publishTime="09/02/2011 11:33:42" />
+    <file relUrl="bin/Microsoft.ApplicationBlocks.Data.dll" publishTime="08/22/2011 17:09:40" />
+    <file relUrl="bin/RFD.LMS.BLL.Proxy.pdb" publishTime="08/15/2012 18:24:27" />
+    <file relUrl="bin/office.dll" publishTime="01/18/2011 18:27:02" />
+    <file relUrl="bin/LMS.Util.pdb" publishTime="08/15/2012 18:24:15" />
+    <file relUrl="bin/RFD.LMS.BLL.Proxy.dll" publishTime="08/15/2012 18:24:28" />
+    <file relUrl="bin/NPOI.POIFS.dll" publishTime="09/02/2011 11:33:42" />
+    <file relUrl="bin/RFD.LMS.PDA.Core.pdb" publishTime="08/15/2012 18:24:18" />
+    <file relUrl="bin/Spring.Aop.dll" publishTime="06/26/2012 16:02:04" />
+    <file relUrl="bin/LMS.Util.dll" publishTime="08/15/2012 18:24:15" />
+    <file relUrl="Web.config" publishTime="08/15/2012 18:10:22" />
+  </publishProfile>
+</publishData>

@@ -1,0 +1,112 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Delivery.KPIAppraisal.ViewDeliveryAssessmentModel>
+@{
+    ViewBag.Title = "承运商KPI考核列表";
+    ViewBag.HideSearch = false;
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        function ShowDelayCriteriaList(carrierID) {
+            ymPrompt.win('@Url.Action("SetDelayCriteria")' + "?Param=" + carrierID + "&Operate=view",
+                              800, 310, '查看延误考核标准', null, null, null, { id: 1 });
+            return;
+            $.ajax({
+                url: '@Url.Action("GetDelayCriteriaList")' + "?CarrierID=" + carrierID,
+                data: null,
+                dataType: "json",
+                success: function (data) {
+                    if (data.IsSuccess) {
+                        var delayCriteriaList = data.DelayCriteriaList;
+                    }
+                }
+            });
+        }
+
+        //考核
+        function appraisal() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if(arr == false) return;
+            var DeliveryNo = arr.attr("DeliveryNo");
+            TMS.Page.Serialize("divSearchCondition");
+            var urlParam=TMS.Page.ParseParamToUrl("divSearchCondition");
+            window.location = "@Url.Action("Appraisal")?id="+DeliveryNo+"&preParams="+urlParam;
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <div>
+                <table class="tb_insert Fixed">
+                    <tr>
+                        <th>
+                            <label for="txtCreateDate">
+                                发货时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("BeginTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtCreateDateTo">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("EndTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtDeparture">
+                                出发地</label>
+                        </th>
+                        <td>
+                            <input id="txtDeparture" name="Departure" type="text" class="textbox selectDeparture" readonly="readonly"
+                                onclick="TMS.Page.SelectStation(this,'#DepartureID');" />
+                            <input id="DepartureID" name="DepartureID" type="hidden" />
+                        </td>
+                        <th>
+                            <label for="DeliveryStatus">
+                                提货单状态</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("DeliveryStatus", null, "--请选择--", new { style = "width:100px" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="DelaySpanBegin">
+                                延误时长</label>
+                        </th>
+                        <td>
+                            <input id="DelaySpanBegin" name="DelaySpanBegin" type="text" class="textbox" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+                        </td>
+                        <th>
+                            <label for="DelaySpanEnd">
+                                到</label>
+                        </th>
+                        <td>
+                            <input id="DelaySpanEnd" name="DelaySpanEnd" type="text" class="textbox"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                        </td>
+                        <th>
+                            <label for="CarrierID">
+                                承运商</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("CarrierID", null, "--请选择--", new { style = "width:100px" })
+                        </td>
+                        <td colspan="2">
+                            <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                            <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialCarrierkpiList", Model); }
+    </div>
+}

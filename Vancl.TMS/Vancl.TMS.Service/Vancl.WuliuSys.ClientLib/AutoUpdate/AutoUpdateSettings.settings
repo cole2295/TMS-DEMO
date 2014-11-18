@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Vancl.WuliuSys.ClientLib.AutoUpdate" GeneratedClassName="AutoUpdateSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Url" Description="更新Url" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://tms.wuliusys.com/update/update.xml</Value>
+    </Setting>
+    <Setting Name="Interval" Description="检查更新周期" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30000</Value>
+    </Setting>
+    <Setting Name="DownLoadDir" Description="下载目录" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DownLoad</Value>
+    </Setting>
+    <Setting Name="BackupDir" Description="备份目录" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Backup</Value>
+    </Setting>
+    <Setting Name="CurrentVersion" Description="当前版本" Type="System.String" Scope="User">
+      <Value Profile="(Default)">20120927</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

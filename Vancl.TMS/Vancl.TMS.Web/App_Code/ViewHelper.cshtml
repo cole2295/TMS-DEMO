@@ -1,0 +1,9 @@
+﻿@using System.Web.Mvc
+@helper Link(UrlHelper Url, string url)
+    {    
+    <link href="@Url.Content(url + DateTime.Now.ToString("?yyyyMMdd"))" rel="stylesheet" type="text/css" />
+}
+@helper Script(UrlHelper Url, string url)
+    {    
+    <script src="@Url.Content(url + DateTime.Now.ToString("?yyyyMMdd"))" type="text/javascript"></script>
+}

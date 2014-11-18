@@ -1,0 +1,133 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Transport.Plan.ViewTransportPlanModel>
+@using Vancl.TMS.Model.Common
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })</li>
+        <li class="toolbtn"><a class="add" href="javascript:createTransportPlan();">新规</li>
+        <li class="toolbtn"><a class="modify" href="javascript:updateTransportPlan();">修改</a></li>
+        <li class="toolbtn"><a class="del" href="javascript:deleteTransportPlan();">删除</a></li>
+        <li class="toolbtn"><a class="on" href="javascript:setIsEnabled(1);">启用</a></li>
+        <li class="toolbtn"><a class="off" href="javascript:setIsEnabled(0);">停用</a></li></ul>
+</div>
+<div class="tablelist" style="height:304px; overflow-y:auto">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable MultiSelect" id="tbPlanList">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    操作日志
+                </th>
+                <th>
+                    出发地
+                </th>
+                <th>
+                    目的地
+                </th>
+                <th>
+                    目的地所在城市
+                </th>
+                <th>
+                    线路货物类型
+                </th>
+                <th>
+                    是否中转
+                </th>
+                <th>
+                    中转站
+                </th>
+                <th>
+                    生效时间
+                </th>
+                <th>
+                    运输计划状态
+                </th>
+                <th>
+                    有效期
+                </th>
+                <th>
+                    启用状态
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model==null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@item.TPID" CanUpdate="@(item.Status == Enums.TransportStatus.Effective && item.IsEnabled ? 0 : 1)"/>
+                    </td>
+                    <td class="unclick center" style="width: 12px;" width="12">
+                        <a href="#" class="icon_plus" onclick="showCarrier(this,'@item.TPID');"></a>
+                    </td>
+                    <td>
+                        <a href="javascript:ShowOperateLog(@item.TPID)">操作日志</a>
+                    </td>
+                    <td class="center">
+                        @item.Departure
+                    </td>
+                    <td class="center">
+                        @item.Arrival
+                    </td>
+                    <td class="center">
+                        @item.ArrivalCity
+                    </td>
+                    <td class="center">
+                        @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Enums.GoodsType>((int)item.LineGoodsType))
+                    </td>
+                    <td class="center">
+                        @(item.IsTransit ? "是" : "否")
+                    </td>
+                    <td class="center">
+                        @item.TransferStation
+                    </td>
+                    <td class="center">
+                        @item.EffectiveTime.ToString("yyyy/MM/dd HH:mm:ss")
+                    </td>
+                    <td class="center">
+                        @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Enums.TransportStatus>(item.Status))
+                    </td>
+                    <td class="center">
+                        @item.Deadline.ToShortDateString()
+                    </td>
+                    <td class="center">
+                        @if (item.IsEnabled)
+                        {
+                            <text>启用</text>
+                        }
+                        else
+                        {
+                            <span class="red">停用</span>                        
+                        }
+                    </td>
+                </tr>
+                <tr class="trExtend">
+                    <td class="CbxColumn">
+                    </td>
+                    <td style="border-right: 0;">
+                    </td>
+                    <td colspan="12" style=" border:0px solid red; padding-left:25px; text-align:left;" class="tdLineList">
+                        <img src="@Url.Content("~/Content/imgs/loading/loading_QQ.gif")" />
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

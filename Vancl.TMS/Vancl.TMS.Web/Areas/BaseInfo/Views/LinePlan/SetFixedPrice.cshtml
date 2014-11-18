@@ -1,0 +1,97 @@
+﻿@model Vancl.TMS.Web.Areas.BaseInfo.Models.LineFixedPriceViewModel
+@{
+    ViewBag.Title = "设置固定价格";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            //            var priceList = Request.QueryString("fixedPriceList");
+            var priceList = window.top.UserData;
+
+            if (priceList != null && priceList != "") {
+                priceList = unescape(priceList);
+                var objPriceList = JSON.parse(priceList);
+                if (objPriceList.length > 0) {
+                    $("#Price").val(objPriceList[0].Price);
+                    $("#Note").val(objPriceList[0].Note);
+                }
+            }
+
+            if (Request.QueryString("Operate") == "look") {
+                $("#btnSave").hide();
+            }
+        })
+        function SetFixedPrice() {
+            if (!ValidateData()) return;
+            var FixedPrice = {};
+            FixedPrice.Price = $("#Price").val();
+            FixedPrice.Note = $("#Note").val();
+            var priceList = [];
+            priceList.push(FixedPrice);
+            ymPrompt.doHandler("AddFixedPrice", true, priceList)
+        }
+        function cancel() {
+            ymPrompt.doHandler("cancel", true)
+        }
+        function ValidateData() {
+            var price = $("#Price").val();
+            var reg = /^((\d+)|(\d+.\d{1,2}))$/;
+            if (price.trim() == "") {
+                alert( '价格不能为空！');
+                return false;
+            }
+            if (!reg.test(price)) {
+                alert('价格请输入数字，并且最多保留两位小数！');
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <table class="tb_insert">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    @Html.HiddenFor(model => model.LPID)
+                    @Html.ValidationSummary(true)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.Price)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.Price , new { maxlength = "18"}) 元/公斤
+                    @Html.ValidationMessageFor(model => model.Price)
+                </td>
+            </tr>
+            <tr>
+             <th style="width: 110px;">
+                    @Html.LabelFor(model => model.Note)
+                </th>
+                <td>
+                    @Html.TextBoxFor(model => model.Note, new { maxlength = "100" })
+                    @Html.ValidationMessageFor(model => model.Note)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="button" class="button" value="添加" onclick='SetFixedPrice();' id="btnSave"/>
+        <input type="button" class="button" value="取消" onclick='cancel();' />
+    </div>
+}
+

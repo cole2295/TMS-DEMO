@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RFD.LMS.Model.Cloud" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="WaybillModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CurrentDistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliverStationID" type="xs:int" />
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MerchantID" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" type="xs:int" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillModel" nillable="true" type="tns:WaybillModel" />
+  <xs:complexType name="WaybillInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerOrder" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliverManID" type="xs:long" />
+      <xs:element minOccurs="0" name="DeliverManName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliverStationID" type="xs:long" />
+      <xs:element minOccurs="0" name="DeliverStationName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FactAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MerchantID" type="xs:int" />
+      <xs:element minOccurs="0" name="MerchantName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NeedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReceiveArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveEmail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveMobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceivePost" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveTel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendTimeType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Source" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="xs:int" />
+      <xs:element minOccurs="0" name="StatusName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tips" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+      <xs:element minOccurs="0" name="WaybillTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="returncash" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillInfo" nillable="true" type="tns:WaybillInfo" />
+  <xs:complexType name="WaybillTakeSendInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ReceiveAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveComment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveFax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveMobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceivePost" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveProvince" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceiveTel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendEmail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendFax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendMobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendPost" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendProvince" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendTel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendTimeType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillTakeSendInfo" nillable="true" type="tns:WaybillTakeSendInfo" />
+  <xs:complexType name="ArrayOfWaybillTakeSendInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WaybillTakeSendInfo" nillable="true" type="tns:WaybillTakeSendInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWaybillTakeSendInfo" nillable="true" type="tns:ArrayOfWaybillTakeSendInfo" />
+  <xs:complexType name="WaybillSignInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AccountType" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="AdditionalPrice" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BackStationInofID" type="xs:long" />
+      <xs:element minOccurs="0" name="DeductNotes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeputizeAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DinsureFee" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FactAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FactBackAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NeedAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NeedBackAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PackFee" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PackageCount" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PaidAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PeriodAccountCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProtectedPrice" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReturnCash" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SignCustomer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SignType" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="TransferFee" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TransferPayType" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillSignInfo" nillable="true" type="tns:WaybillSignInfo" />
+  <xs:complexType name="ArrayOfWaybillSignInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WaybillSignInfo" nillable="true" type="tns:WaybillSignInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWaybillSignInfo" nillable="true" type="tns:ArrayOfWaybillSignInfo" />
+  <xs:complexType name="TurnStationModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApplyStation" type="xs:int" />
+      <xs:element minOccurs="0" name="Isfast" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RecvStation" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TurnStationModel" nillable="true" type="tns:TurnStationModel" />
+  <xs:complexType name="WaybillReturnSearchModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BatchNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeginTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BoxNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateStationId" type="xs:int" />
+      <xs:element minOccurs="0" name="CurrentDeptName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentDistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerOrder" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateType" type="xs:int" />
+      <xs:element minOccurs="0" name="DeliverCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistributionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistrictId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DriverID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FormCodeLists" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FormType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsPageing" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LabelNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Merchant" type="xs:int" />
+      <xs:element minOccurs="0" name="MerchantId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderDirection" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PageIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="PageSize" type="xs:int" />
+      <xs:element minOccurs="0" name="PrintType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Province" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortingCenter" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StationId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TruckNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillReturnSearchModel" nillable="true" type="tns:WaybillReturnSearchModel" />
+  <xs:complexType name="ArrayOfWaybillReturnInfoViewModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WaybillReturnInfoViewModel" nillable="true" type="tns:WaybillReturnInfoViewModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWaybillReturnInfoViewModel" nillable="true" type="tns:ArrayOfWaybillReturnInfoViewModel" />
+  <xs:complexType name="WaybillReturnInfoViewModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BillFormType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BillStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BoxNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerOrder" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliverCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistributionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmployeeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FormType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LabelNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MerchantName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NeedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NeedBackAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="No" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillReturnInfoViewModel" nillable="true" type="tns:WaybillReturnInfoViewModel" />
+  <xs:complexType name="WaybillReturnEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BoxLabelNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BoxNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BoxStatus" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateBy" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LabelNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateBy" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+      <xs:element minOccurs="0" name="WaybillReturnInfoID" type="xs:long" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillReturnEntity" nillable="true" type="tns:WaybillReturnEntity" />
+  <xs:complexType name="WaybillReturnInfoEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BoxLabelNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BoxNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Code" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsBox" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LabelNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MerchantName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NeedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NeedBackAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OpMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OpTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StatusName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+      <xs:element minOccurs="0" name="WaybillReturnInfoId" type="xs:long" />
+      <xs:element minOccurs="0" name="WaybillSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WaybillType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="isBox" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillReturnInfoEntity" nillable="true" type="tns:WaybillReturnInfoEntity" />
+  <xs:complexType name="ArrayOfBackDetailPrintModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BackDetailPrintModel" nillable="true" type="tns:BackDetailPrintModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBackDetailPrintModel" nillable="true" type="tns:ArrayOfBackDetailPrintModel" />
+  <xs:complexType name="BackDetailPrintModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BoxNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDep" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="NeedAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OrderNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnTo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WaybillNo" type="xs:long" />
+      <xs:element minOccurs="0" name="WaybillTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BackDetailPrintModel" nillable="true" type="tns:BackDetailPrintModel" />
+  <xs:complexType name="TransitBoxEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateBy" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExpressCompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IsDelete" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUsing" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TransitBoxCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateBy" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdateTime" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TransitBoxEntity" nillable="true" type="tns:TransitBoxEntity" />
+  <xs:complexType name="ArrayOfMerchantReturnWaybillStatistic">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MerchantReturnWaybillStatistic" nillable="true" type="tns:MerchantReturnWaybillStatistic" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMerchantReturnWaybillStatistic" nillable="true" type="tns:ArrayOfMerchantReturnWaybillStatistic" />
+  <xs:complexType name="MerchantReturnWaybillStatistic">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BackCount" type="xs:int" />
+      <xs:element minOccurs="0" name="BackWeight" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ChangeCount" type="xs:int" />
+      <xs:element minOccurs="0" name="ChangeRefuseCount" type="xs:int" />
+      <xs:element minOccurs="0" name="ChangeRefuseWeight" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ChangeWeight" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RefuseCount" type="xs:int" />
+      <xs:element minOccurs="0" name="RefuseWeight" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SourceName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MerchantReturnWaybillStatistic" nillable="true" type="tns:MerchantReturnWaybillStatistic" />
+  <xs:complexType name="WaybillBatch">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Arrival" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ArrivalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BatchNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Departure" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DepartureName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Detail" nillable="true" type="tns:ArrayOfWaybillBatchDetails" />
+      <xs:element minOccurs="0" name="Source" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalCount" type="xs:int" />
+      <xs:element minOccurs="0" name="Weight" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillBatch" nillable="true" type="tns:WaybillBatch" />
+  <xs:complexType name="ArrayOfWaybillBatchDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WaybillBatchDetails" nillable="true" type="tns:WaybillBatchDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWaybillBatchDetails" nillable="true" type="tns:ArrayOfWaybillBatchDetails" />
+  <xs:complexType name="WaybillBatchDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BillType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerOrder" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FormCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GoodsType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WaybillBatchDetails" nillable="true" type="tns:WaybillBatchDetails" />
+</xs:schema>

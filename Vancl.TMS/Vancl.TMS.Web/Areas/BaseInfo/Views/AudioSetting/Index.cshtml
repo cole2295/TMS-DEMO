@@ -1,0 +1,218 @@
+﻿@model Vancl.TMS.Web.Areas.BaseInfo.Models.AudioSettingModel
+@{
+    ViewBag.Title = "声音自定义设置";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+<style type="text/css">
+    .DataTable td, th
+        {
+            border: 1px solid #333;
+        }
+        .DataTable table tr
+        {
+            height: 30px;
+        }
+        .DataTable th
+        {
+            background-color: #ddd;
+        }
+        .DataTable td
+        {
+            padding: 0 0 0 10px;
+        }
+        
+        .yellow {
+            color: yellow;
+        }
+        
+    </style>
+<script type="text/javascript">
+    function saveListen() {
+
+        var obj = TMS.Page.CheckDataTableChecked(false);
+        if (!obj) {
+            alert("obj is null");
+            return;
+        }
+        $.cookie("succ", null);
+        $.cookie("fail", null);
+        $.cookie("succ", $(obj[0]).attr("value"), { expires: 7,path:'/' });
+        $.cookie("fail", $(obj[1]).attr("value"), { expires: 7, path: '/' });
+        alert("保存成功！");
+        window.close();
+
+    }
+
+    function resetListen() {
+        $.cookie("succ", null,{path:'/'});
+        $.cookie("fail", null, { path: '/'});
+        alert("还原成功！");
+        window.close();
+    }
+    function testListen(filename, type) {
+        var musicUrl = "";
+        if (type == 1) {
+            musicUrl = "/Content/media/Done/" + filename;
+        }
+        else {
+            musicUrl = "/Content/media/error/"+filename;
+        }
+        playMusic(musicUrl);
+
+    }
+
+    function playMusic(url) {
+       
+        $("#sound")[0].URL= url;
+        $("#sound")[0].controls.stop();
+        $("#sound")[0].controls.play();
+    }
+    
+    function SignCheck(cbox,type) {
+        var cbxs = $(cbox).parent().parent().parent().find("input[type='checkbox']");
+        $(cbxs).each(function () {
+            $(this).removeAttr("checked");
+        });
+        $(cbox).attr("checked", true);
+        if (type == 1) {
+            $.cookie("succ", null);
+            $.cookie("succ", $(cbox).val(), { expires: 7 });
+        }
+        else {
+            $.cookie("fail", null);
+            $.cookie("succ", $(cbox).val(), { expires: 7 });
+        }
+       
+    }
+
+    $.fn.table = function (params) {
+        var options = {
+            hoverColor: 'yellow'
+        };
+        $.extend(options, params);
+        var arr = [];
+        $(this).find('tr').each(function () {
+            var td = $(this).find('td');
+            $(this).hover(function () {
+                arr = [];
+                td.each(function (i) {
+                    arr[i] = $(this).css('backgroundColor');
+                    $(this).css('backgroundColor', options.hoverColor);
+                });
+            }, function () {
+                td.each(function (i) {
+                    $(this).css('backgroundColor', arr[i]);
+                });
+            });
+        });
+    };
+
+    function init() {
+
+        var succ = $.cookie("succ");
+        var fail = $.cookie("fail");
+        if (succ == null) {
+            $.cookie("succ", null);
+            $.cookie("succ", "done.wav", { expires: 7 });
+        }
+        else {
+            var flag1 = 0;
+            $("#Dt1 tr").each(function () {
+                var filename = $.trim($(this).children().eq(1).html());
+                if (filename == succ) {
+                    $(this).find("input[type='checkbox']").attr("checked", true);
+                    flag1 = 1;
+                }
+            });
+            if (flag1 == 0) {
+                $("#Dt1").find("tr:first-child").find("input[type=checkbox]").attr("checked", true);
+            }
+        }
+        if (fail == null) {
+            $.cookie("fail", null);
+            $.cookie("fail", "error.wav", { expires: 7 });
+        }
+        else {
+            var flag2 = 0;
+            $("#Dt2 tr").each(function () {
+                var filename = $.trim($(this).children().eq(1).html());
+                if (filename == fail) {
+                    $(this).find("input[type='checkbox']").attr("checked", true);
+                    flag2 = 1;
+                }
+            });
+            if (flag2 == 0) {
+                $("#Dt2").find("tr:first-child").find("input[type=checkbox]").attr("checked", true);
+            }
+        }
+    }
+    $(function () {
+        init();
+        $(".DataTable").table();
+       
+    });
+
+</script>
+}
+
+<table width="60%" align="center">
+    <tr>
+        <td align="center">
+            正确提示声音列表
+        </td>
+        <td align="center">
+            错误提示声音列表
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">
+            <table cellpadding="0" cellspacing="0" class="DataTable" id="Dt1" width="100%">
+                @for (int i = 0; i < Model.sucAudioFiles.Count; i++)
+                {
+                    var sucAudioFile = Model.sucAudioFiles[i];  
+                    <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                        <td class="CbxColumn">
+                            <input type="checkbox" value="@sucAudioFile" onclick="SignCheck(this,1)"/>
+                        </td>
+                        <td class="center">
+                            @sucAudioFile
+                        </td>
+                        <td class="center">
+                           <a href="javascript:testListen('@sucAudioFile',1)">试听</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </td>
+        <td valign="top">
+            <table cellpadding="0" cellspacing="0" class="DataTable" id="Dt2" width="100%">
+                @for (int i = 0; i < Model.failAudioFiles.Count; i++)
+                {
+                    var failAudioFile = Model.failAudioFiles[i];  
+                    <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                        <td class="CbxColumn">
+                            <input type="checkbox" value="@failAudioFile" onclick="SignCheck(this,0)"/>
+                        </td>
+                        <td class="center">
+                            @failAudioFile
+                        </td>
+                        <td class="center">
+                             <a href="javascript:testListen('@failAudioFile',0)">试听</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+       
+    <tr>
+         <td>
+             <input type="button" value="保存" onclick="saveListen()" />
+             <input type="button" value="还原默认声音" onclick="resetListen()" />
+         </td>
+    </tr>
+</table>
+
+@{Html.RenderPartial("_wavMedia");}
+

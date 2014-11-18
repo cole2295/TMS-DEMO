@@ -1,0 +1,689 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CD008682-46E5-4D34-9725-4DDEC49C27D4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.BLL</RootNamespace>
+    <AssemblyName>Vancl.TMS.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\server\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\server\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cloud.Log.Models">
+      <HintPath>..\lab\Cloud.log\Cloud.Log.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\lab\Common.Logging\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\lab\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdministrationRegion\AdministrationBLL.cs" />
+    <Compile Include="BaseBLL.cs" />
+    <Compile Include="BaseInfo\BillBLL.cs" />
+    <Compile Include="BaseInfo\CarrierBLL.cs" />
+    <Compile Include="BaseInfo\DistributionBLL.cs" />
+    <Compile Include="BaseInfo\EmployeeBLL.cs" />
+    <Compile Include="BaseInfo\ExpressCompanyBLL.cs" />
+    <Compile Include="BaseInfo\LineFixedPriceBLL.cs" />
+    <Compile Include="BaseInfo\LineFormulaPriceBLL.cs" />
+    <Compile Include="BaseInfo\LineLadderPriceBLL.cs" />
+    <Compile Include="BaseInfo\LinePlanBLL.cs" />
+    <Compile Include="BaseInfo\MerchantBLL.cs" />
+    <Compile Include="BaseInfo\TruckBLL.cs" />
+    <Compile Include="Claim\DelayHandleBLL.cs" />
+    <Compile Include="Claim\ExpectDelayBLL.cs" />
+    <Compile Include="Claim\LostBLL.cs" />
+    <Compile Include="Chat\ChatBLL.cs" />
+    <Compile Include="Common\CookieVerificationBLL.cs" />
+    <Compile Include="Common\FileVerificationBLL.cs" />
+    <Compile Include="Common\PermissionBLL.cs" />
+    <Compile Include="Common\TransPointBLL.cs" />
+    <Compile Include="Common\UserContextBLL.cs" />
+    <Compile Include="CustomizeFlow\Checker\LimitSubjectByAssign.cs" />
+    <Compile Include="CustomizeFlow\Checker\LimitSubjectByAssignInbound.cs" />
+    <Compile Include="CustomizeFlow\Checker\LimitSubjectByAssignOrByBox.cs" />
+    <Compile Include="CustomizeFlow\Checker\LimitSubjectByAssignStationInbound.cs" />
+    <Compile Include="CustomizeFlow\Checker\LimitSubjectBySortingDefined.cs" />
+    <Compile Include="CustomizeFlow\Checker\LimitSubjectBySortingDefinedOrByBox.cs" />
+    <Compile Include="CustomizeFlow\Checker\LimitSubjectChecker.cs" />
+    <Compile Include="CustomizeFlow\FlowFunFacade.cs" />
+    <Compile Include="DeliveryImport\DeliveryImportBLL.cs" />
+    <Compile Include="Delivery\DataInteraction\Entrance\DeliveryDataEntranceBLL.cs" />
+    <Compile Include="Delivery\InTransit\CarrierWaybillBLL.cs" />
+    <Compile Include="Delivery\InTransit\InTransitBLL.cs" />
+    <Compile Include="Delivery\KPIAppraisal\DeliveryAssessmentBLL.cs" />
+    <Compile Include="Delivery\Spot\SiteAssBLL.cs" />
+    <Compile Include="Formula\Common\CarrierNoGenerateFormula.cs" />
+    <Compile Include="Formula\Common\DeliveryNoGenerateFormula.cs" />
+    <Compile Include="Formula\Common\KeyCodeGenerateFormula.cs" />
+    <Compile Include="Formula\Common\KPICalculateFormula.cs" />
+    <Compile Include="Formula\Common\LineCodeGenerateFormula.cs" />
+    <Compile Include="Formula\Common\LinePathSearchFormula.cs" />
+    <Compile Include="Formula\Outbound\OutboundBatchNoGenerateFormula.cs" />
+    <Compile Include="Formula\Inbound\LineAreaSMSFormula.cs" />
+    <Compile Include="Formula\Inbound\MerchantSMSFormula.cs" />
+    <Compile Include="Formula\Outbound\OutboundSMSFormula.cs" />
+    <Compile Include="Formula\Packing\PackingNoGenerateFormula.cs" />
+    <Compile Include="Formula\PreDispatch\PreDispatchGetLineFormula.cs" />
+    <Compile Include="Formula\PreDispatch\PreDispatchGetTransportFormula.cs" />
+    <Compile Include="History\FileProcessingBLL.cs" />
+    <Compile Include="LadingBill\LB_PLANBLL.cs" />
+    <Compile Include="LadingBill\LB_TASKBLL.cs" />
+    <Compile Include="LadingBill\MERCHANTWAREHOUSEBLL.cs" />
+    <Compile Include="Log\BatchBLL.cs" />
+    <Compile Include="Log\BillChangeLog\BatchOutboundBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\BillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\BillGetOffBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\BillLoadingBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\BillReturnBoxBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\BillValidateBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\CODReverseInbountBillChnageLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\DistributionLoadingBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\InboundBaseBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\InboundBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\Inbound_NoLimitedStationBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\MerchantReturnBillInboundBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\OutboundBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\ReturnBillInboundBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\ReturnBoxPrintBackFormBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\ReturnBoxPrintBackPackingBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\ReturnInboundBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\ReturnOutboundBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\WeighPrintBillChangeLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\ReWeighBillChangeLogBLL.cs" />
+    <Compile Include="Log\DeliveryFlowLogBLL.cs" />
+    <Compile Include="Log\DpsNotice\AssignDistributionObserver.cs" />
+    <Compile Include="Log\DpsNotice\AssignStationObserver.cs" />
+    <Compile Include="Log\DpsNotice\DpsNotice.cs" />
+    <Compile Include="Log\DpsNotice\OrderReturnObserver.cs" />
+    <Compile Include="Log\ServiceLogBLL.cs" />
+    <Compile Include="Log\BillChangeLog\PackingBillChangeLogBLL.cs" />
+    <Compile Include="OutServiceProxy\Proxy4CloudBLL.cs" />
+    <Compile Include="Report\CarrierAccountReportBLL.cs" />
+    <Compile Include="Service References\AgingMonitoringService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CloudBillService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CustomizeFlow\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\OrdersForWdsAssignService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\PmsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SMSService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TransPointService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WaybillLifeCycleService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WaybillTurnService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SMS\SMSSenderBLL.cs" />
+    <Compile Include="Sorting\BillPrint\BillPrintBLL.cs" />
+    <Compile Include="Sorting\BillPrint\BillTemplatePrintBLL.cs" />
+    <Compile Include="Sorting\CityScan\CityScanBLL.cs" />
+    <Compile Include="Sorting\Common\SortCenterBLL.cs" />
+    <Compile Include="Sorting\Inbound\InboundBLL.cs" />
+    <Compile Include="Sorting\Inbound\InboundBLLV2.cs" />
+    <Compile Include="Sorting\Inbound\InboundBLL_NoLimitedStation.cs" />
+    <Compile Include="Sorting\Inbound\InboundBLL_SMS.cs" />
+    <Compile Include="Sorting\Inbound\InboundBLL_TurnStation.cs" />
+    <Compile Include="Sorting\Inbound\InboundQueueBLL.cs" />
+    <Compile Include="Sorting\Inbound\InboundSMSQueueBLL.cs" />
+    <Compile Include="Sorting\Inbound\SortingPackingBLL.cs" />
+    <Compile Include="Sorting\Loading\BillTruckBLL.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBLL.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBLLV2.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBLLV2_Print.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBLLV2_SMS.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBLL_Print.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBLL_SMS.cs" />
+    <Compile Include="Sorting\Return\BillReturnBLL.cs" />
+    <Compile Include="Sorting\Return\BillReturnBoxInfoBLL.cs" />
+    <Compile Include="Sorting\Return\BillReturnDetailInfoBLL.cs" />
+    <Compile Include="Sorting\Return\MerchantReturnBLL.cs" />
+    <Compile Include="Sorting\Return\ReturnBLL.cs" />
+    <Compile Include="Sorting\Search\ReturnSearchBLL.cs" />
+    <Compile Include="Sorting\Search\WeighReviewSearchService.cs" />
+    <Compile Include="Synchronous\Dps2TmsSync\Dps2Tms.cs" />
+    <Compile Include="Synchronous\InSync\AssignStationStrategy.cs" />
+    <Compile Include="Synchronous\InSync\BillGetOffStrategy.cs" />
+    <Compile Include="Synchronous\InSync\BillLoadingStrategy.cs" />
+    <Compile Include="Synchronous\InSync\BillPrintStrategy.cs" />
+    <Compile Include="Synchronous\InSync\BillSyncServiceStrategy.cs" />
+    <Compile Include="Synchronous\InSync\InboundStrategy.cs" />
+    <Compile Include="Synchronous\InSync\Lms2TmsStrategy.cs" />
+    <Compile Include="Synchronous\InSync\Lms2TmsSyncBLL.cs" />
+    <Compile Include="JobMonitor\InBoundMonitorBLL.cs" />
+    <Compile Include="JobMonitor\OutBoundMonitorBLL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ComplexReport\ComplexReportBLL.cs" />
+    <Compile Include="Report\ReportFilterBLL.cs" />
+    <Compile Include="Synchronous\InboundBLL.cs" />
+    <Compile Include="Synchronous\InSync\MerchantBillRefundStrategy.cs" />
+    <Compile Include="Synchronous\InSync\OutboundStrategy.cs" />
+    <Compile Include="Synchronous\InSync\ReturnInboundStrategy.cs" />
+    <Compile Include="Synchronous\InSync\ReturnPrintStrategy.cs" />
+    <Compile Include="Synchronous\InSync\SetInvalidStrategy.cs" />
+    <Compile Include="Synchronous\InSync\SkipBillPrintStrategy.cs" />
+    <Compile Include="Synchronous\InSync\TurnStationApplyStrategy.cs" />
+    <Compile Include="Synchronous\InSync\TurnStationBaseStrategy.cs" />
+    <Compile Include="Synchronous\InSync\TurnStationPrintStrategy.cs" />
+    <Compile Include="Synchronous\OutboundBLL.cs" />
+    <Compile Include="Synchronous\OutSync\BillGetOffStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\BillReturnBoxPrintStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\BillReturnBoxStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\BillValidateStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\MerchantBillRefundStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\MerchantReturnBillInboundStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\PackingStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\ReturnBillInboundStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\ReturnBoxPrintBackPackingStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\BillReturnDetailStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\DistributionLoadingStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\InboundBaseStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\Inbound_NoLimitedStationStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\LoadingStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\OutboundStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\ReturnBoxPrintBackFormStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\ReturnInboundStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\ReturnOutboundStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\ReWeighStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\WeighPrintStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\WeighPrintSync.cs" />
+    <Compile Include="Synchronous\OutSync\BillLoadingStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\InboundStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\Tms2LmsStrategy.cs" />
+    <Compile Include="Synchronous\OutSync\Tms2LmsSyncBLL.cs" />
+    <Compile Include="Synchronous\ThridPartySync\Tms2ThridPartyBLL.cs" />
+    <Compile Include="Transport\Dispatch\DispatchBLL.cs" />
+    <Compile Include="Transport\Dispatch\DispTransitionBLL.cs" />
+    <Compile Include="Transport\Dispatch\PreDispatchBLL.cs" />
+    <Compile Include="Transport\Dispatch\PreDispatchBLL_V1.cs" />
+    <Compile Include="Transport\Plan\TransportPlanBLL.cs" />
+    <Compile Include="WCFService\TMSAPIService.cs" />
+    <Compile Include="WCFService\TmsReceiveDpsNotice.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.TMS.Core\Vancl.TMS.Core.csproj">
+      <Project>{8C7CAD7F-BF41-4A20-AC70-07FB0E2E8F53}</Project>
+      <Name>Vancl.TMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.IBLL\Vancl.TMS.IBLL.csproj">
+      <Project>{D69B4050-2F39-4B7F-A9A0-8F8BA8A66103}</Project>
+      <Name>Vancl.TMS.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.IDAL\Vancl.TMS.IDAL.csproj">
+      <Project>{93C59B44-182B-4AED-9F29-B3E144B56944}</Project>
+      <Name>Vancl.TMS.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Model\Vancl.TMS.Model.csproj">
+      <Project>{2EC92CCF-4212-4CA0-98C8-590382689660}</Project>
+      <Name>Vancl.TMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgingMonitoringService\DistributionMonitorService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgingMonitoringService\DistributionMonitorService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgingMonitoringService\DistributionMonitorService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgingMonitoringService\DistributionOperateLog.wsdl" />
+    <None Include="Service References\CloudBillService\BillService.wsdl" />
+    <None Include="Service References\CloudBillService\BillService1.wsdl" />
+    <None Include="Service References\CloudBillService\CloudBillService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\CloudBillService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\CloudBillService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\CloudBillService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\CloudBillService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\CloudBillService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\CloudBillService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\CloudBillService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.BackDetailPrintModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.MerchantReturnWaybillStatistic1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.TransitBoxEntity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.TurnStationModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillBatch.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillReturnEntity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillReturnInfoEntity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillReturnInfoViewModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillSignInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CloudBillService\Vancl.TMS.BLL.CloudBillService.WaybillTakeSendInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomizeFlow\CustomizeFlow.wsdl" />
+    <None Include="Service References\CustomizeFlow\CustomizeFlow.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomizeFlow\CustomizeFlow1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomizeFlow\CustomizeFlow2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomizeFlow\Vancl.TMS.BLL.CustomizeFlow.DistributionFunChecker.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomizeFlow\Vancl.TMS.BLL.CustomizeFlow.FlowNodeCheckerModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OrdersForWdsAssignService\OrdersForWdsAssign.wsdl" />
+    <None Include="Service References\OrdersForWdsAssignService\OrdersForWdsAssign.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OrdersForWdsAssignService\OrdersForWdsAssign1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OrdersForWdsAssignService\OrdersForWdsAssign2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OrdersForWdsAssignService\OrdersForWdsAssign3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OrdersForWdsAssignService\OrdersForWdsAssign4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OrdersForWdsAssignService\Vancl.TMS.BLL.OrdersForWdsAssignService.AssignInfoForWds.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\PermissionOpenService.wsdl" />
+    <None Include="Service References\PmsService\PMSOpenService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PmsService\PMSOpenService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PmsService\PMSOpenService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PmsService\PMSOpenService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PmsService\PMSOpenService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PmsService\PMSOpenService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.AgentRelationModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.City.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.Distribution.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.DistributionCoopRelationModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.Employee.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.ExpressCompany.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.FetchArea.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.FetchAreaInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.FetchCity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.FetchProvince.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.Menu.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.MerchantBaseInfoModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.Notice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.OperationGuide.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.OutMerchantSortingCenter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.Province.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.Role.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.RoleCity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.StandardExpressCompany.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PmsService\Vancl.TMS.BLL.PmsService.Station.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SMSService\commonmsg.wsdl" />
+    <None Include="Service References\TransPointService\TmsDataService.wsdl" />
+    <None Include="Service References\TransPointService\TMSDataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TransPointService\TMSDataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TransPointService\TMSDataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillLifeCycleService\WaybillLifeCycle.wsdl" />
+    <None Include="Service References\WaybillLifeCycleService\WaybillLifeCycleService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillLifeCycleService\WaybillLifeCycleService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillLifeCycleService\WaybillLifeCycleService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillLifeCycleService\WaybillLifeCycleService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillTurnService\Vancl.TMS.BLL.WaybillTurnService.WaybillTurnModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WaybillTurnService\WaybillTurnService1.wsdl" />
+    <None Include="Service References\WaybillTurnService\WaybillTurnService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillTurnService\WaybillTurnService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillTurnService\WaybillTurnService32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WaybillTurnService\WaybillTurnService33.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AgingMonitoringService\" />
+    <WCFMetadataStorage Include="Service References\CloudBillService\" />
+    <WCFMetadataStorage Include="Service References\CustomizeFlow\" />
+    <WCFMetadataStorage Include="Service References\OrdersForWdsAssignService\" />
+    <WCFMetadataStorage Include="Service References\PmsService\" />
+    <WCFMetadataStorage Include="Service References\SMSService\" />
+    <WCFMetadataStorage Include="Service References\TransPointService\" />
+    <WCFMetadataStorage Include="Service References\WaybillLifeCycleService\" />
+    <WCFMetadataStorage Include="Service References\WaybillTurnService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSService\commonmsg.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CloudBillService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CloudBillService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CloudBillService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CloudBillService\CloudBillService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgingMonitoringService\DistributionMonitorService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgingMonitoringService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgingMonitoringService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgingMonitoringService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TransPointService\TMSDataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TransPointService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TransPointService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TransPointService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CloudBillService\CloudBillService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomizeFlow\CustomizeFlow.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomizeFlow\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomizeFlow\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomizeFlow\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OrdersForWdsAssignService\OrdersForWdsAssign.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OrdersForWdsAssignService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OrdersForWdsAssignService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OrdersForWdsAssignService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillTurnService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillTurnService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillTurnService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillLifeCycleService\WaybillLifeCycleService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillLifeCycleService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillLifeCycleService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillLifeCycleService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PmsService\PMSOpenService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PmsService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PmsService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PmsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WaybillTurnService\WaybillTurnService1.disco" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

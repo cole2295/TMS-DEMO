@@ -1,0 +1,98 @@
+﻿@model Vancl.TMS.Model.Report.CarrierAccountReport.ViewCarrierAccountReportPageModel
+@{
+    ViewBag.Title = "承运商结算报表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //导出数据
+        function exportData(){
+            var querystring = $("#Page_SearchList form[data-ajax=true]").data(TMS.Page.Data_ajax_SearchData);
+            if(querystring == undefined
+                || querystring == null){
+                   ymPrompt.alert({title:'提示',message:'请先执行查询!'});
+                    return;
+            }
+            location.href = "@Url.Action("Export")?"+querystring;
+        }
+
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <div>
+                <table class="tb_insert Fixed">
+                    <tr>
+                        <th>
+                            <label for="txtDepartureStartTime">
+                                发货时间</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DepartureStartTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="txtDepartureEndTime">
+                                到</label>
+                        </th>
+                        <td>
+                            @Html.TextBox("DepartureEndTime", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                        </td>
+                        <th>
+                            <label for="TransportType">
+                                运输方式</label>
+                        </th>
+                        <td>@Html.DropDownList("TransportType", null, "--请选择--", new { style = "width:120px" })
+                        </td>
+                        <th>
+                            <label for="CarrierID">
+                                承运商</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("CarrierID", null, "--请选择--", new { style = "width:120px" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            出发地
+                        </th>
+                        <td>
+                            <input id="DepartureName" name="DepartureName" type="text" onclick="TMS.Page.SelectStation(this,'#DepartureID');"
+                                class="textbox selectDeparture" />
+                            <input id="DepartureID" name="DepartureID" type="hidden" />
+                        </td>
+                        <th>
+                            <label for="txtArrival">
+                                目的地</label>
+                        </th>
+                        <td>
+                            <input id="txtArrival" name="Arrival" type="text" class="textbox" readonly="readonly"
+                                onclick="TMS.Page.SelectStation(this,'#ArrivalID','#DepartureID');" />
+                            <input id="ArrivalID" name="ArrivalID" type="hidden" />
+                        </td>
+                        <th>
+                            <label for="DeliveryStatus">
+                                提货单状态</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("DeliveryStatus", null, "--请选择--", new { style = "width:120px" })
+                        </td>
+                        <td colspan="2">
+                            <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                            <input id="btnExport" type="button" name="btnExport" value="导出" class="button" onclick="exportData()" />
+                            <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialCarrierAccountReportList", Model); }
+    </div>
+}

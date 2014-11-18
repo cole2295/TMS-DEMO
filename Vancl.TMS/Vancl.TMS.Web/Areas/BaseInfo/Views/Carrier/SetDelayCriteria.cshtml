@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "承运商延误考核标准";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt_Ex.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.tmpl.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/common/tms.util.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script id="rowTemplate" type="text/x-jquery-tmpl">
+            <tr>
+                <th style="width: 100px;">
+                    延误最短时间
+                </th>
+                <td>
+                    <input style="width:80px" class="StartRegion" value="${StartRegion}" maxlength="3"  />
+                </td>
+                <th style="width: 100px;">
+                    延误最长时间
+                </th>
+                <td>
+                    <input style="width:80px" class="EndRegion" value="${EndRegion}" maxlength="3" />
+                </td>
+                <th style="width: 100px;">
+                    折扣
+                </th>
+                <td>
+                    <input style="width:80px" class="Discount" value="${Discount}" maxlength="4"  />
+                </td>
+                <td>
+                    <input type="button" onclick="DelRow(this);" value="删除" class="btnDeleteLine"/>
+                </td>
+            </tr>
+    </script>
+    <script type="text/javascript">
+        function cancel() {
+            ymPrompt.doHandler("create", true, { action: 'create', result: 'cancel' })
+        }
+        function AddRow() {
+            $("#rowTemplate").tmpl({}).appendTo("#tbList>tbody");
+        }
+        function DelRow(elem) {
+            $(elem).parents("tr:eq(0)").remove();
+        }
+
+        function checkData($tr, arrDelayCriteria) {
+            var StartRegion = $.trim($(".StartRegion", $tr).val());
+            var EndRegion = $.trim($(".EndRegion", $tr).val());
+            var Discount = $.trim($(".Discount", $tr).val());
+            var reg = /^\d+$/;
+            if (!reg.test(StartRegion)) {
+                alert("延误最短时间请输入数字！")
+                $(".StartRegion", $tr).select().focus();
+                return false;
+            }
+            var reg = /^\d*$/;
+            if (!reg.test(EndRegion)) {
+                alert("延误最长时间 请输入数字！")
+                $(".EndRegion", $tr).select().focus();
+                return false;
+            }
+            else if (EndRegion == "" && $tr.next().length) {
+                alert("除最后一行，延误时间不能为空");
+                $(".EndRegion", $tr).select().focus();
+                return false;
+            }
+            var reg = /^0+(\.\d+)?$/;
+            if (!reg.test(Discount)) {
+                alert("折扣 请输入大于0小于1的值！")
+                $(".Discount", $tr).select().focus();
+                return false;
+            }
+
+            var DelayCriteria = {};
+            DelayCriteria.StartRegion = parseInt(StartRegion);
+            DelayCriteria.EndRegion = parseInt(EndRegion);
+            if (DelayCriteria.StartRegion >= DelayCriteria.EndRegion) {
+                alert("最短时间需小于最长时间")
+                $(".StartRegion", $tr).select().focus();
+                return false;
+            }
+            DelayCriteria.Discount = parseFloat(Discount);
+            arrDelayCriteria.push(DelayCriteria);
+            return true;
+        }
+
+
+        function SetDelayCriteria() {
+            var DelayCriteriaList = {};
+            var arrDelayCriteria = new Array();
+
+            var delayData = [];
+            for (var i = 0; i < $("#tbList>tbody>tr").length; i++) {
+                var $tr = $("#tbList>tbody>tr:eq(" + i + ")");
+                if (!checkData($tr, arrDelayCriteria)) {
+                    return;
+                }
+                var StartRegion = parseInt($.trim($(".StartRegion", $tr).val()));
+                var EndRegion = parseInt($.trim($(".EndRegion", $tr).val()));
+                delayData.push({ StartRegion: StartRegion, EndRegion: EndRegion });
+            }
+
+            //行间值交叉判断
+            for (var i = 0; i < delayData.length - 1; i++) {
+                if (delayData[i].EndRegion > delayData[i + 1].StartRegion) {
+                    alert("设置延迟时间存在交叉，请检查");
+                    $(".EndRegion", $("#tbList>tbody>tr:eq(" + i + ")")).select().focus();
+                    return false;
+                }
+            }
+
+            ymPrompt.doHandler("Add", true, arrDelayCriteria)
+        }
+
+        function bindData(data) {
+            if (data != null && data != "") {
+                var list = data;
+                $("#rowTemplate").tmpl(list).appendTo("#tbList>tbody");
+            }
+            if ($("#tbList>tbody>tr").length == 0) {
+                AddRow();
+            }
+        }
+
+        $(function () {
+            var operate = Request.QueryString("Operate");
+            var param = Request.QueryString("Param");
+            if (operate == "view") {
+                $("#btnAddLine,#btnSave,.btnDeleteLine").hide();
+                $("#tbList").attr("disabled", "disabled")
+                $.ajax({
+                    url: '@Url.Action("GetDelayCriteriaList")' + "?CarrierID=" + param,
+                    data: null,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            bindData(data.DelayCriteriaList)
+                        }
+                    }
+                });
+            }
+            else if (operate == "edit") {
+                var data = eval("top." + param);
+                if (data == undefined) {
+                    data = "";
+                } else {
+                    eval("top." + param + "=null");
+                }
+                bindData(data)
+            }
+            else {
+                if ($("#tbList>tbody>tr").length == 0) {
+                    AddRow();
+                }
+            }
+        });
+
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <div style="height: 190px; overflow: auto;">
+        <table class="com_w100pen tb_insert" id="tbList">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="7">
+                        <div style="text-align: right; padding: 6px 10px; color: #999">
+                            不填写最后一行延误最长时间表示无限大!</div>
+                        <input type="button" class="button" onclick="AddRow();" value="添加标准" id="btnAddLine" />
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="button" class="button" value="确定" onclick='SetDelayCriteria()' id="btnSave" />
+        <input type="button" class="button" value="取消" onclick='cancel();' />
+    </div>
+}

@@ -1,0 +1,76 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Sorting.Loading.BillTruckBatchModel>
+@{
+    ViewBag.Title = "装车查询 ";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        装车日期
+                    </th>
+                    <td>
+                        @Html.TextBox("BeginTime", DateTime.Now.ToString("yyyy-MM-dd 00:00:00"), new
+                       {
+                           @class = "Wdate1",
+                           onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm:ss'})",
+                           @readonly = "readonly",
+                           style = "width:124px;"
+                       })
+                        -
+                        @Html.TextBox("EndTime", DateTime.Now.ToString("yyyy-MM-dd 23:59:59"), new
+                       {
+                           @class = "Wdate1",
+                           onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm:ss'})",
+                           @readonly = "readonly",
+                           style = "width:124px;"
+                       })
+                    </td>
+                    <th>
+                        批次号
+                    </th>
+                    <td>
+                        <input name="BatchNo" type="text" />
+                    </td>
+                    <th>
+                        运单号
+                    </th>
+                    <td>
+                        <input name="FormCode" type="text" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        分拣站点
+                    </th>
+                    <td>
+                        @{Html.RenderPartial("CityAndStation");}
+                    </td>
+                    <th>
+                        配送商
+                    </th>
+                    <td>
+                        @Html.DropDownList("Distribution")
+                    </td>
+                    <th>
+                    </th>
+                    <td>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialSearchList", Model); }
+    </div>
+}

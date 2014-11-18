@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.Partial("_Partial_PageControlRender")
+    @RenderSection("head", false)
+</head>
+<body>
+    <div id="items">
+        @RenderSection("items")
+    </div>
+    <div id="operate">
+        <input type="button" id="btnOK" value="确定" class="button" />
+        <input type="button" id="btnCancel" value="取消" class="button" />
+    </div>
+    @Html.Partial("_Partial_PageControlScripts")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/pages/manage.js")"></script>
+    @RenderSection("scripts", false)
+</body>
+</html>

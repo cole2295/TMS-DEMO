@@ -1,0 +1,233 @@
+﻿@using Vancl.TMS.Model.Common
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.LadingBill.TaskViewModel>
+@{
+    ViewBag.Title = "提货信息列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+<link href="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/jquery-ui.js"></script>
+<script type="text/javascript" src="@Consts.UserControlsBYJS_URL/Scripts/UC_Widget/UC_Widget.js"></script>
+@section head{
+    <script type="text/javascript">
+        function createLine() {
+            TMS.Page.Serialize("divSearchCondition", "btnSearch");
+            location = "Create";
+        }
+           //导出数据
+        function exportData(){
+            var querystring = $("#Page_SearchList form[data-ajax=true]").data(TMS.Page.Data_ajax_SearchData);
+            var TotalItemCount = $("#TotalItemCount").val();
+            if(querystring == undefined
+                || querystring == null){
+                   ymPrompt.alert({title:'提示',message:'请先执行查询!'});
+                    return;
+            }
+       
+            location.href = "@Url.Action("Export")?"+querystring+"&TotalItemCount="+TotalItemCount;
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th style="width: 130px">
+                        <select id="predictTime_sl" name="predictTime_sl" style="width: 130px">
+                            <option value="0" selected="selected">计划提货时间</option>
+                            <option value="1">提货完成时间</option>
+                        </select>
+                    </th>
+                    <td>
+                        <input id="startDate" name="startDate" class="Wdate" readonly="readonly" type="text"
+                            onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" value="@DateTime.Now.ToString("yyyy-MM-dd 00:00:00")" />
+                    </td>
+                    <th>
+                        <label for="S_DepartureID">
+                            ————
+                        </label>
+                    </th>
+                    <td>
+                        <input id="endDate" name="endDate" class="Wdate" readonly="readonly" type="text"
+                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startDate\')}'})" value="@DateTime.Now.ToString("yyyy-MM-dd 23:59:59")" />
+                    </td>
+                    <th>
+                        状态
+                    </th>
+                    <td>
+                        <select id="taskStatus" name="taskStatus" style="width: 80px">
+                            <option value="0" selected="selected">全部</option>
+                            <option value="1">新任务</option>
+                            <option value="2">已完成</option>
+                            <option value="3">已考核</option>
+                            <option value="4">已取消</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        任务下达公司
+                    </th>
+                    <td>
+                        <div id="BillQuery_div" chknumber="1" >
+                        </div>
+                    </td>
+                    <th>
+                        提货部门
+                    </th>
+                    <td>
+                        <input type="text" id="DEPARTMENT" name="DEPARTMENT" />
+                    </td>
+                    <th>
+                        任务编号
+                    </th>
+                    <td>
+                        <input type="text" id="TASKCODE" name="TASKCODE" />
+                    </td>
+                </tr>
+                <tr>
+                 
+                    <td colspan="6" style="text-align: right">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="导出" class="button" onclick="exportData()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialFeedBackList", Model); }
+    </div>
+}
+<script type="text/javascript">
+     var merchantid_select="";
+     var isBindwayBill = "1";
+      $(document).ready(function() {
+
+          $.ajaxSetup({
+              cache: false,
+              beforeSend: function(xhr) {
+                  $("#Loading").show();
+              },
+              complete: function(XHR, TS) {
+                  XHR = null;
+                  $("#Loading").hide();
+                  warehousebin();
+              }
+          });
+
+          $("#waybillSource_div").mouseover(function() {
+                if (isBindwayBill == "2") {
+                    return;
+                }
+              warehousebin();
+              isBindwayBill = "2";
+          });
+        });
+
+
+      function warehousebin() {
+
+          $("input[name='ChkwaybillSource']").each(function() {
+
+              $(this).click(function() {
+                  if (merchantid_select == $("#waybillSource_List_hide").val()) {
+                      return;
+                  }
+                  merchantid_select = $("#waybillSource_List_hide").val();
+                  if (merchantid_select == "") {
+                      $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                      return;
+                  }
+                  $("#WAREHOUSEID").html("<option value=\"0\">--请选择--</option>");
+                  $.ajax({
+                      type: "get",
+                      cache: false,
+                      url: "/LadingBill/WareHouse/GetWarehousebyMerchantid/?merchantid=" + merchantid_select,
+                      beforeSend: function(XMLHttpRequest) {
+                          $("#waiting_img").show();
+                      },
+                      success: function(data, textStatus) {
+                          $.each(data, function(i, item) {
+
+                              jQuery("#WAREHOUSEID").append("<option value='" + item.WAREHOUSECODE + "'>" + item.WAREHOUSENAME + "</option>");
+                          });
+
+                          $("#waiting_img").hide();
+                      },
+                      complete: function(XMLHttpRequest, textStatus) {
+
+                          //HideLoading();
+                      },
+                      error: function() {
+                          //请求出错处理
+                      }
+                  });
+              });
+          });
+      }
+
+      //打印提货单
+    function PrintDeliveryNo(){
+        var obj = TMS.Page.CheckDataTableChecked(false);
+        if(obj)
+        {
+            var str="";
+            $(obj).each(function(){
+                str +=""+$(this).attr("taskid")+",";
+            });
+            var DeliveryNo=obj.attr("taskid");
+            openWindow('@Url.Action("/PrintTask")/?taskid='+str, 'PrintDeliveryNo',800,600);
+        }
+    }
+
+    //查看日志
+    function  ShowOperateLog (parameters1,parameters2) {
+        return ;
+    }
+
+    $("#txtWAREHOUSE").click(function () {
+        var mechantid = $("#waybillSource_List_hide").val();
+        if (mechantid == "") {
+            alert("请先选择商家");
+            return ;
+        }
+        if (mechantid == "undefined") {
+            return ;
+        }
+        TMS.Page.WareHouse($(this), '#WAREHOUSEID', mechantid);
+    });
+    
+
+    //录入信息
+    function TaskEdit() {
+        var arr = TMS.Page.CheckDataTableChecked();
+        if (arr) {
+            var taskid = arr.eq(0).attr("taskid");
+            var taskstatus=arr.eq(0).attr("taskstatus");
+        
+            if (taskstatus != "1" && taskstatus != "2") {
+                ymPrompt.errorInfo({ title: '提示', message: "只有【新任务】和【已完成】才能录入" });
+                return;
+            }
+            var url = "@Url.Action("taskedit", "Feedback", new { area = "LadingBill" })?taskid="+taskid;
+            ymPrompt.win({ message: url, width: 860, height: 340, title: '录入提货信息',maxBtn: false, minBtn: false, iframe: true,
+                handler: function (tp, result) {
+                    if (tp == "ok") {
+                        if(result.IsSuccess){
+                            setTimeout(function(){
+                                ymPrompt.succeedInfo({ title: '录入成功', message: result.Message });
+                                $(".refresh").click();   
+                            },10);
+                        }
+                    }                        
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,92 @@
+﻿@model Vancl.TMS.Web.Areas.Delivery.Models.DispTransitionViewModel
+@{
+    ViewBag.Title = "补录调度信息";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function cancel() {
+            ymPrompt.doHandler("create", true, { action: 'create', result: 'cancel' })
+        }
+
+        function AjaxSuccess(data, textStatus, jqXHR) {
+         //   if (data.IsSuccess) {
+                ymPrompt.doHandler("ok", true, data);
+          //  }
+            
+        }
+    </script>
+}
+@using (Ajax.BeginForm(new AjaxOptions { OnSuccess = "AjaxSuccess", OnFailure = "AjaxError", LoadingElementId = "Loading" }))
+{
+    <table class=" tb_insert">
+        <thead>
+            <tr>
+                <th colspan="2">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(m => m.DeliveryNo)
+                </th>
+                <td colspan="3">
+                    @Html.DisplayFor(m => m.DeliveryNo)
+                    @Html.HiddenFor(m => m.DeliveryNo)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m => m.PlateNo)
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.PlateNo)
+                    @Html.ValidationMessageFor(m => m.PlateNo,"*")
+                </td>
+                <th style="width: 110px;">
+                    @Html.LabelFor(m => m.Consignor)
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.Consignor)
+                    @Html.ValidationMessageFor(m => m.Consignor, "*")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m => m.Consignee)
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.Consignee)
+                    @Html.ValidationMessageFor(m => m.Consignee, "*")
+                </td>
+                <th>
+                    @Html.LabelFor(m => m.ConsigneePhone)
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.ConsigneePhone)
+                    @Html.ValidationMessageFor(m => m.ConsigneePhone, "*")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m => m.ReceiveAddress)
+                </th>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.ReceiveAddress, new { style = "width:95%;" })
+                    @Html.ValidationMessageFor(m => m.ReceiveAddress, "*")
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="submit" class="button" value="保存" />
+        <input type="button" class="button" value="取消" onclick='cancel()' />
+    </div>
+    <div>
+    </div>
+}

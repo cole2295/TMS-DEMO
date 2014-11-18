@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{93C59B44-182B-4AED-9F29-B3E144B56944}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.IDAL</RootNamespace>
+    <AssemblyName>Vancl.TMS.IDAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\server\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\server\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdministrationRegion\IAdministrationDAL.cs" />
+    <Compile Include="BaseInfo\Carrier\ICarrierDAL.cs" />
+    <Compile Include="BaseInfo\Carrier\ICoverageDAL.cs" />
+    <Compile Include="BaseInfo\Carrier\IDelayCriteriaDAL.cs" />
+    <Compile Include="BaseInfo\IBillDAL.cs" />
+    <Compile Include="BaseInfo\IBoxDAL.cs" />
+    <Compile Include="BaseInfo\IDistributionDAL.cs" />
+    <Compile Include="BaseInfo\IEmployeeDAL.cs" />
+    <Compile Include="BaseInfo\IExpressCompanyDAL.cs" />
+    <Compile Include="BaseInfo\IMerchantDAL.cs" />
+    <Compile Include="BaseInfo\IOrderDAL.cs" />
+    <Compile Include="BaseInfo\ITruckDAL.cs" />
+    <Compile Include="BaseInfo\Line\ILineFixedPriceDAL.cs" />
+    <Compile Include="BaseInfo\Line\ILineFormulaPriceDAL.cs" />
+    <Compile Include="BaseInfo\Line\ILineLadderPriceDAL.cs" />
+    <Compile Include="BaseInfo\Line\ILinePlanDAL.cs" />
+    <Compile Include="Claim\IDelayHandleDAL.cs" />
+    <Compile Include="Claim\IExpectDelayDAL.cs" />
+    <Compile Include="Claim\ILostDAL.cs" />
+    <Compile Include="Claim\ILostDetailDAL.cs" />
+    <Compile Include="DeliveryImport\IDeliveryImportDAL.cs" />
+    <Compile Include="Delivery\InTransit\ICarrierWaybillDAL.cs" />
+    <Compile Include="Delivery\InTransit\IDelayDAL.cs" />
+    <Compile Include="Delivery\InTransit\IInTransitDAL.cs" />
+    <Compile Include="Delivery\KPIAppraisal\IAssFixedPriceDAL.cs" />
+    <Compile Include="Delivery\KPIAppraisal\IAssFormulaPriceDAL.cs" />
+    <Compile Include="Delivery\KPIAppraisal\IAssLadderPriceDAL.cs" />
+    <Compile Include="Delivery\KPIAppraisal\IDeliveryAssessmentDAL.cs" />
+    <Compile Include="Delivery\Spot\ISiteAssDAL.cs" />
+    <Compile Include="Formula\Common\ISerialNumberGenerateFormulaDAL.cs" />
+    <Compile Include="IBaseDAL.cs" />
+    <Compile Include="LadingBill\ILB_PLANDAL.cs" />
+    <Compile Include="LadingBill\ILB_TASKDAL.cs" />
+    <Compile Include="LadingBill\IMERCHANTWAREHOUSEDAL.cs" />
+    <Compile Include="LMS\IBatchDAL.cs" />
+    <Compile Include="LMS\IGpsOrderStatusDAL.cs" />
+    <Compile Include="LMS\ILMS_SYN_FMS_CODDAL.cs" />
+    <Compile Include="LMS\ITransitBoxDAL.cs" />
+    <Compile Include="LMS\IWaybillReturnBoxInfoDAL.cs" />
+    <Compile Include="LMS\IWayBillReturnDAL.cs" />
+    <Compile Include="LMS\IWaybillReturnDetailInfoDAL.cs" />
+    <Compile Include="LMS\IWaybillTakeSendInfoDAL.cs" />
+    <Compile Include="LMS\IWaybillThirdPartyInfoDAL.cs" />
+    <Compile Include="LMS\IGPSOrderDAL.cs" />
+    <Compile Include="LMS\IInboundDAL.cs" />
+    <Compile Include="LMS\IOperateLogDAL.cs" />
+    <Compile Include="LMS\IOutboundDAL.cs" />
+    <Compile Include="LMS\IWaybillDAL.cs" />
+    <Compile Include="LMS\IWaybillStatusChangeLogDAL.cs" />
+    <Compile Include="LMS\IWaybillTruckDAL.cs" />
+    <Compile Include="LMS\IWaybill_SortCenterDAL.cs" />
+    <Compile Include="Log\IBatchDAL.cs" />
+    <Compile Include="Log\IBillChangeLogDAL.cs" />
+    <Compile Include="Log\IOutsourcingLogDAL.cs" />
+    <Compile Include="Log\IServiceLogDAL.cs" />
+    <Compile Include="Report\ComplexReport\IComplexReportDAL.cs" />
+    <Compile Include="Report\ICarrierAccountReportDAL.cs" />
+    <Compile Include="Report\IReportFilterDAL.cs" />
+    <Compile Include="Sorting\BillPrint\IBillPrintTemplateDAL.cs" />
+    <Compile Include="Sorting\BillPrint\IBillDALForBillPrint.cs" />
+    <Compile Include="Sorting\BillPrint\IBillInfoDAL.cs" />
+    <Compile Include="Sorting\BillPrint\IBillPrintFieldDAL.cs" />
+    <Compile Include="Sorting\BillPrint\IBillWeighDAL.cs" />
+    <Compile Include="Sorting\CityScan\ICityScanDAL.cs" />
+    <Compile Include="Sorting\Common\ISortCenterDAL.cs" />
+    <Compile Include="Sorting\Inbound\IInboundDAL.cs" />
+    <Compile Include="Sorting\Inbound\IInboundQueueDAL.cs" />
+    <Compile Include="Sorting\Inbound\IInboundSMSQueueDAL.cs" />
+    <Compile Include="Sorting\Inbound\ISC_SYN_TMS_InorderDAL.cs" />
+    <Compile Include="Sorting\Inbound\ISortingPackingDAL.cs" />
+    <Compile Include="Sorting\Loading\IBillTruckDAL.cs" />
+    <Compile Include="Sorting\Outbound\IOutboundBatchDAL.cs" />
+    <Compile Include="Sorting\Outbound\IOutboundBatchV2DAL.cs" />
+    <Compile Include="Sorting\Outbound\IOutboundDAL.cs" />
+    <Compile Include="Sorting\Outbound\IOutboundV2DAL.cs" />
+    <Compile Include="Sorting\Outbound\ISC_SYN_TMS_OutboxDAL.cs" />
+    <Compile Include="Sorting\Loading\IGPSBillDAL.cs" />
+    <Compile Include="Sorting\Return\IBillReturnBoxInfoDAL.cs" />
+    <Compile Include="Sorting\Return\IBillReturnDAL.cs" />
+    <Compile Include="Sorting\Return\IBillReturnDetailInfoDAL.cs" />
+    <Compile Include="Sorting\Search\IWeighReviewSearchDAL.cs" />
+    <Compile Include="Synchronous\ILms2TmsSyncLMSDAL.cs" />
+    <Compile Include="Synchronous\ILms2TmsSyncTMSDAL.cs" />
+    <Compile Include="Synchronous\ITms2LmsSyncLMSDAL.cs" />
+    <Compile Include="Synchronous\ITms2LmsSyncTMSDAL.cs" />
+    <Compile Include="Transport\Dispatch\IDispatchDetailDAL.cs" />
+    <Compile Include="Log\ILogDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Synchronous\IInboundLMSDAL.cs" />
+    <Compile Include="Synchronous\IInboundTMSDAL.cs" />
+    <Compile Include="Synchronous\IOutboundLMSDAL.cs" />
+    <Compile Include="Synchronous\IOutboundTMSDAL.cs" />
+    <Compile Include="Transport\Dispatch\IDispatchDAL.cs" />
+    <Compile Include="Transport\Dispatch\IDispOrderDetailDAL.cs" />
+    <Compile Include="Transport\Dispatch\IDispTransitionDAL.cs" />
+    <Compile Include="Transport\Dispatch\IPreDispatchDAL.cs" />
+    <Compile Include="Transport\Plan\ITransportPlanDAL.cs" />
+    <Compile Include="Transport\Plan\ITransportPlanDetailDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.TMS.Model\Vancl.TMS.Model.csproj">
+      <Project>{2EC92CCF-4212-4CA0-98C8-590382689660}</Project>
+      <Name>Vancl.TMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

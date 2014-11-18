@@ -1,0 +1,34 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = "很遗憾，页面出错咯！";
+    Layout = "~/Views/Shared/_Layout_Error.cshtml";
+}
+<h1 class="head">
+    @ViewBag.Title
+</h1>
+<div class="body">
+    <div class="icon_error">
+    </div>
+    <div class="info">
+        <div style="padding-top: 50px;">
+            "从前有个系统，系统有个页面，这个页面出错咯~~"
+        </div>
+    </div>
+</div>
+@if (Model != null)
+{
+    if (Vancl.TMS.Core.Security.Configuration.IsDebug)
+    {
+        @(new MvcHtmlString("<!--"))
+    
+        <pre>
+页面 @Model.ControllerName/@Model.ActionName
+@Model.Exception.GetType().Name
+@Model.Exception.Message
+
+@Model.Exception.StackTrace
+        </pre>
+
+        @(new MvcHtmlString("-->"))
+    }
+}

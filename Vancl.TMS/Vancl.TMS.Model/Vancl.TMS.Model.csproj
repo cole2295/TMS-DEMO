@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2EC92CCF-4212-4CA0-98C8-590382689660}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.Model</RootNamespace>
+    <AssemblyName>Vancl.TMS.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdministrationRegion\City.cs" />
+    <Compile Include="AdministrationRegion\District.cs" />
+    <Compile Include="AdministrationRegion\Province.cs" />
+    <Compile Include="BaseDbModel.cs" />
+    <Compile Include="BaseInfo\Carrier\CarrierModel.cs" />
+    <Compile Include="BaseInfo\Carrier\CarrierSearchModel.cs" />
+    <Compile Include="BaseInfo\Carrier\CoverageModel.cs" />
+    <Compile Include="BaseInfo\Carrier\DelayCriteriaModel.cs" />
+    <Compile Include="BaseInfo\DictionaryModel.cs" />
+    <Compile Include="BaseInfo\Distribution.cs" />
+    <Compile Include="BaseInfo\EmployeeModel.cs" />
+    <Compile Include="BaseInfo\ExpressCompanyModel.cs" />
+    <Compile Include="BaseInfo\Line\ILinePrice.cs" />
+    <Compile Include="BaseInfo\Line\LineFixedPriceModel.cs" />
+    <Compile Include="BaseInfo\Line\LineFormulaPriceDetailModel.cs" />
+    <Compile Include="BaseInfo\Line\LineFormulaPriceModel.cs" />
+    <Compile Include="BaseInfo\Line\LineLadderPriceModel.cs" />
+    <Compile Include="BaseInfo\Line\LineOperateLogSearchModel.cs" />
+    <Compile Include="BaseInfo\Line\LinePlanLineIDRepairModel.cs" />
+    <Compile Include="BaseInfo\Line\LinePlanModel.cs" />
+    <Compile Include="BaseInfo\Line\LinePlanSearchModel.cs" />
+    <Compile Include="BaseInfo\MerchantModel.cs" />
+    <Compile Include="BaseInfo\Order\BoxDetailModel.cs" />
+    <Compile Include="BaseInfo\Order\BoxModel.cs" />
+    <Compile Include="BaseInfo\Order\OrderDetailModel.cs" />
+    <Compile Include="BaseInfo\Order\OrderModel.cs" />
+    <Compile Include="BaseInfo\Sorting\BillInfoModel.cs" />
+    <Compile Include="BaseInfo\Sorting\BillModel.cs" />
+    <Compile Include="BaseInfo\Sorting\BillDeliveryModel.cs" />
+    <Compile Include="BaseInfo\Truck\TruckBaseInfoModel.cs" />
+    <Compile Include="BaseInfo\Truck\TruckSearchModel.cs" />
+    <Compile Include="BaseInfo\Truck\ViewTruckModel.cs" />
+    <Compile Include="BaseModel.cs" />
+    <Compile Include="BaseSearchModel.cs" />
+    <Compile Include="Chat\ChatToUserModel.cs" />
+    <Compile Include="Chat\ChatRoomPoolModel.cs" />
+    <Compile Include="Claim\DelayHandleModel.cs" />
+    <Compile Include="Claim\DelayHandleSearchModel.cs" />
+    <Compile Include="Claim\ExpectDelaySearchModel.cs" />
+    <Compile Include="Claim\Lost\LostSearchModel.cs" />
+    <Compile Include="Claim\Lost\LostOrderDetailModel.cs" />
+    <Compile Include="Claim\Lost\ViewLostOrderModel.cs" />
+    <Compile Include="Claim\ViewDelayHandleModel.cs" />
+    <Compile Include="Claim\ViewExpectDelayModel.cs" />
+    <Compile Include="Claim\Lost\ViewLostBoxModel.cs" />
+    <Compile Include="Claim\Lost\ViewLostDetailModel.cs" />
+    <Compile Include="Claim\Lost\ViewLostModel.cs" />
+    <Compile Include="Common\CarrierNoContextModel.cs" />
+    <Compile Include="Chat\ChatMessageModel.cs" />
+    <Compile Include="Chat\ChatRoomModel.cs" />
+    <Compile Include="Chat\ChatUserModel.cs" />
+    <Compile Include="Common\DynamicDictionaryModel.cs" />
+    <Compile Include="Common\IDAndNameModel.cs" />
+    <Compile Include="Common\KeyCodeContextModel.cs" />
+    <Compile Include="Common\LineCodeContextModel.cs" />
+    <Compile Include="Common\OutSourcingModel.cs" />
+    <Compile Include="Common\SysobjectEx.cs" />
+    <Compile Include="CustomerAttribute\ColumnNot4LogAttribute.cs" />
+    <Compile Include="CustomerAttribute\DateTimeFormatAttribute.cs" />
+    <Compile Include="CustomerAttribute\LogColumnNameAttribute.cs" />
+    <Compile Include="Common\MenuModel.cs" />
+    <Compile Include="Common\ModelEx.cs" />
+    <Compile Include="Common\ConnectionPoolModel.cs" />
+    <Compile Include="Common\Consts.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\PmsNotice.cs" />
+    <Compile Include="Common\PoolModel.cs" />
+    <Compile Include="Common\ResultModel.cs" />
+    <Compile Include="Common\SerialNumberModel.cs" />
+    <Compile Include="Common\SocketPoolModel.cs" />
+    <Compile Include="Common\UserModel.cs" />
+    <Compile Include="Common\VanclObjectInPool.cs" />
+    <Compile Include="CustomerAttribute\LogDateCompareAttribute.cs" />
+    <Compile Include="CustomerAttribute\LogTimeCompareAttribute.cs" />
+    <Compile Include="CustomerAttribute\ShowRowNumberAttribute.cs" />
+    <Compile Include="CustomizeFlow\Parameter\CheckerParameter.cs" />
+    <Compile Include="CustomizeFlow\Parameter\InboundCheckParameter.cs" />
+    <Compile Include="CustomizeFlow\Parameter\OutboundByBoxCheckerArg.cs" />
+    <Compile Include="CustomizeFlow\Parameter\OutboundSimpleCheckerArg.cs" />
+    <Compile Include="CustomizeFlow\Result\CheckerResult.cs" />
+    <Compile Include="CustomizeFlow\WaybillTurn.cs" />
+    <Compile Include="DbAttributes\ColumnAttribute.cs" />
+    <Compile Include="DbAttributes\TableAttribute.cs" />
+    <Compile Include="Delivery\DataInteraction\Entrance\BillDetailModel.cs" />
+    <Compile Include="Delivery\DataInteraction\Entrance\TMSEntranceModel.cs" />
+    <Compile Include="Delivery\InTransit\InTransitSearchModel.cs" />
+    <Compile Include="Delivery\InTransit\ViewInTransitModel.cs" />
+    <Compile Include="Delivery\InTransit\ViewSetArriveModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\AssFormulaPriceExModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\DeliveryAssessmentSearchModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\IAssPriceModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\KPICalcInputModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\KPICalcOutputModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\ViewAssPriceModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\ViewDeliveryAssessmentModel.cs" />
+    <Compile Include="Delivery\Spot\SiteAssSearchModel.cs" />
+    <Compile Include="Delivery\Spot\ViewSiteAssModel.cs" />
+    <Compile Include="Delivery\Spot\SiteAssessmentBatchModel.cs" />
+    <Compile Include="Dps\LifeCycleModel.cs" />
+    <Compile Include="Except\SyncFileException.cs" />
+    <Compile Include="ICanSetEnable.cs" />
+    <Compile Include="ICustomizeLogable.cs" />
+    <Compile Include="IDeliveryLogable.cs" />
+    <Compile Include="IEffectiveEnabled.cs" />
+    <Compile Include="IForceLog.cs" />
+    <Compile Include="IKeyCodeable.cs" />
+    <Compile Include="ImportRecord\DeliveryInRecordModel.cs" />
+    <Compile Include="ImportRecord\DeliveryInRecordSearchModel.cs" />
+    <Compile Include="ImportRecord\ImportTemplateModel.cs" />
+    <Compile Include="ImportRecord\ViewDispatchWithDetailsModel.cs" />
+    <Compile Include="IOperateLogable.cs" />
+    <Compile Include="JobMonitor\InboundMonitorTemplate.cs" />
+    <Compile Include="JobMonitor\OutboundMonitorTemplate.cs" />
+    <Compile Include="JobMonitor\SyncStatisticInfo.cs" />
+    <Compile Include="LadingBill\LB_PLAN.cs" />
+    <Compile Include="LadingBill\LB_PLANDTO.cs" />
+    <Compile Include="LadingBill\LB_TASK.cs" />
+    <Compile Include="LadingBill\MERCHANTWAREHOUSE.cs" />
+    <Compile Include="LadingBill\TaskExport.cs" />
+    <Compile Include="LadingBill\TaskExportEnter.cs" />
+    <Compile Include="LadingBill\TaskSearchModel.cs" />
+    <Compile Include="LadingBill\TaskViewModel.cs" />
+    <Compile Include="LMS\BatchEntityModel.cs" />
+    <Compile Include="LMS\GPSOrderEntityModel.cs" />
+    <Compile Include="LMS\GPSOrderStatusEntityModel.cs" />
+    <Compile Include="LMS\InboundEntityModel.cs" />
+    <Compile Include="LMS\LMS_SYN_FMS_CODEntityModel.cs" />
+    <Compile Include="LMS\OperateLogEntityModel.cs" />
+    <Compile Include="LMS\OutboundEntityModel.cs" />
+    <Compile Include="LMS\RFDDeclare.cs" />
+    <Compile Include="LMS\TakeSend_DeliverStationEntityModel.cs" />
+    <Compile Include="LMS\WaybillEntityModel.cs" />
+    <Compile Include="LMS\WaybillReturnBoxInfoEntityModel.cs" />
+    <Compile Include="LMS\WaybillReturnDetailInfoEntityModel.cs" />
+    <Compile Include="LMS\WaybillReturnEntityModel.cs" />
+    <Compile Include="LMS\WaybillStatusChangeLogEntityModel.cs" />
+    <Compile Include="LMS\WaybillThirdPartyInfoEntityModel.cs" />
+    <Compile Include="LMS\WaybillTruckEntityModel.cs" />
+    <Compile Include="LMS\Waybill_SortCenterEntityModel.cs" />
+    <Compile Include="Log\BaseLogSearchModel.cs" />
+    <Compile Include="Log\BaseOperateLogSearchModel.cs" />
+    <Compile Include="Log\BatchModel.cs" />
+    <Compile Include="Log\BatchSearchModel.cs" />
+    <Compile Include="Log\BillChangeLogDynamicModel.cs" />
+    <Compile Include="Log\DeliveryFlowLogSearchModel.cs" />
+    <Compile Include="Log\OutsourcingLogModel.cs" />
+    <Compile Include="Log\ServiceLogModel.cs" />
+    <Compile Include="Log\ServiceLogSearchModel.cs" />
+    <Compile Include="OutServiceProxy\AgingMonitoringLogProxyModel.cs" />
+    <Compile Include="Report\CarrierAccountReport\CarrierAccountReportSearchModel.cs" />
+    <Compile Include="Report\CarrierAccountReport\ViewCarrierAccountReport.cs" />
+    <Compile Include="Report\CarrierAccountReport\ViewCarrierAccountReportExportModel.cs" />
+    <Compile Include="Report\CarrierAccountReport\ViewCarrierAccountReportPageModel.cs" />
+    <Compile Include="Report\CarrierAccountReport\ViewCarrierAccountReportStatisticsModel.cs" />
+    <Compile Include="Report\ComplexReport\ComplexReportSearchModel.cs" />
+    <Compile Include="Report\ComplexReport\ViewComplexReport.cs" />
+    <Compile Include="Report\ComplexReport\ViewComplexReportExportModel.cs" />
+    <Compile Include="Report\ComplexReport\ViewComplexReportPageModel.cs" />
+    <Compile Include="Report\ReportFilterModel.cs" />
+    <Compile Include="Report\ReportFilterSearchModel.cs" />
+    <Compile Include="Report\ViewReportFilterModel.cs" />
+    <Compile Include="SMS\SMSMessage.cs" />
+    <Compile Include="Sorting\BillPrint\BillPrintFieldModel.cs" />
+    <Compile Include="Sorting\BillPrint\BillPrintTemplateModel.cs" />
+    <Compile Include="Sorting\BillPrint\BillScanWeightArgModel.cs" />
+    <Compile Include="Sorting\BillPrint\BillPageViewModel.cs" />
+    <Compile Include="Sorting\BillPrint\BillPackageModel.cs" />
+    <Compile Include="Sorting\BillPrint\BillPrintViewModel.cs" />
+    <Compile Include="Sorting\BillPrint\BillValidateResultModel.cs" />
+    <Compile Include="Sorting\BillPrint\PrintBillModel.cs" />
+    <Compile Include="Sorting\BillPrint\PrintBillNewModel.cs" />
+    <Compile Include="Sorting\BillPrint\PrintTemplateArgModel.cs" />
+    <Compile Include="Sorting\BillPrint\WeighingReviewModel.cs" />
+    <Compile Include="Sorting\CityScan\CityScanExprotModel.cs" />
+    <Compile Include="Sorting\CityScan\CityScanModel.cs" />
+    <Compile Include="Sorting\CityScan\CityScanPrintModel.cs" />
+    <Compile Include="Sorting\CityScan\CityScanSearchModel.cs" />
+    <Compile Include="Sorting\Common\ISortCenterArgModel.cs" />
+    <Compile Include="Sorting\Common\SortCenterBatchArgModel.cs" />
+    <Compile Include="Sorting\Common\SortCenterSimpleArgModel.cs" />
+    <Compile Include="Sorting\Common\SortCenterToStationModel.cs" />
+    <Compile Include="Sorting\Common\SortCenterUserModel.cs" />
+    <Compile Include="Sorting\Common\SortCenterBatchErrorModel.cs" />
+    <Compile Include="Sorting\Common\ViewSortCenterBatchModel.cs" />
+    <Compile Include="Sorting\Inbound\IInboundArgModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundBatchArgModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundBillModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundEntityModel.cs" />
+    <Compile Include="BaseInfo\Sorting\MerchantFormCodeRelationModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundResultModelV2.cs" />
+    <Compile Include="Sorting\Inbound\InboundSimpleArgModelV2.cs" />
+    <Compile Include="Sorting\Inbound\Packing\InboundPackingNoContextModel.cs" />
+    <Compile Include="Sorting\Inbound\Packing\SortingPackingBillModel.cs" />
+    <Compile Include="Sorting\Inbound\Packing\InboundPackingDetailModel.cs" />
+    <Compile Include="Sorting\Inbound\Packing\InboundPackingEntityModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundPreConditionModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundQueueArgModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundQueueEntityModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundQueueJobArgModel.cs" />
+    <Compile Include="Sorting\Inbound\InboundSimpleArgModel.cs" />
+    <Compile Include="Sorting\Inbound\Packing\SortingPackingBoxModel.cs" />
+    <Compile Include="Sorting\Inbound\Packing\SortingPackingCheckModel.cs" />
+    <Compile Include="Sorting\Inbound\Packing\SortingPackingPrintModel.cs" />
+    <Compile Include="Sorting\Inbound\Packing\ViewPackingBoxToModel.cs" />
+    <Compile Include="Sorting\Inbound\SC_SYN_TMS_InorderEntityModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\InboundSMSBillModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\InboundSMSContext.cs" />
+    <Compile Include="Sorting\Inbound\SMS\InboundSMSConfigbaseModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\InboundSMSGetContentResult.cs" />
+    <Compile Include="Sorting\Inbound\SMS\InboundSMSQueueArgModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\InboundSMSQueueEntityModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\InboundSMSQueueJobArgModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\LineArea\LineAreaSMSConfigDetailModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\LineArea\LineAreaSMSConfigModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\Merchant\MerchantSMSConfigDetailModel.cs" />
+    <Compile Include="Sorting\Inbound\SMS\Merchant\MerchantSMSConfigModel.cs" />
+    <Compile Include="Sorting\Inbound\TurnStation\ViewTurnInboundSimpleModel.cs" />
+    <Compile Include="Sorting\Inbound\ViewInboundBatchModel.cs" />
+    <Compile Include="Sorting\Inbound\ViewInboundSimpleModel.cs" />
+    <Compile Include="Sorting\Inbound\ViewInboundValidateModel.cs" />
+    <Compile Include="Sorting\Loading\BillTruckBatchModel.cs" />
+    <Compile Include="Sorting\Loading\BillTruckModel.cs" />
+    <Compile Include="Sorting\Loading\BillTruckSearchModel.cs" />
+    <Compile Include="Sorting\Loading\OutBoundLoadingModel.cs" />
+    <Compile Include="Sorting\Loading\ViewBillTruckModel.cs" />
+    <Compile Include="Sorting\Outbound\BatchBillInfoForOutBound.cs" />
+    <Compile Include="Sorting\Outbound\IOutboundArgModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundAfterConditionModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBatchArgModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBatchEntityModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBillModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundBoxModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundByBoxArgModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPrintExportDetailsModelV2.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPrintExportModelV2.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPrintModelV2.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPrintSearchModel.cs" />
+    <Compile Include="Sorting\Outbound\ViewGetCountAndBatchNo.cs" />
+    <Compile Include="Sorting\RangeDefined\RangeDefinedModel.cs" />
+    <Compile Include="Sorting\RangeDefined\RangeDefinedPrintExportModel.cs" />
+    <Compile Include="Sorting\RangeDefined\RangeDefinedSearchModel.cs" />
+    <Compile Include="Sorting\Outbound\ViewOutBoundBoxDetailModel.cs" />
+    <Compile Include="Sorting\Outbound\ViewOutBoundByBoxModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundEntityModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundOrderCountModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPackingArgModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPreConditionModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPrintExportModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundPrintModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundSearchArgModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundSearchModel.cs" />
+    <Compile Include="Sorting\Outbound\OutboundSimpleArgModel.cs" />
+    <Compile Include="Sorting\Outbound\PrintBatchDetailModel.cs" />
+    <Compile Include="Sorting\Outbound\SC_SYN_TMS_OutboxEntityModel.cs" />
+    <Compile Include="Sorting\Outbound\SMS\DepartureArrivalInfo.cs" />
+    <Compile Include="Sorting\Outbound\SMS\OutboundSMSBillModel.cs" />
+    <Compile Include="Sorting\Outbound\SMS\OutboundSMSConfigModel.cs" />
+    <Compile Include="Sorting\Outbound\SMS\OutboundSMSContext.cs" />
+    <Compile Include="Sorting\Outbound\SMS\OutboundSMSGetContentResult.cs" />
+    <Compile Include="Sorting\Outbound\ViewOutboundBatchModel.cs" />
+    <Compile Include="Sorting\Outbound\ViewOutboundPackingModel.cs" />
+    <Compile Include="Sorting\Outbound\ViewOutboundSearchListModel.cs" />
+    <Compile Include="Sorting\Outbound\ViewOutboundSimpleModel.cs" />
+    <Compile Include="Sorting\Outbound\ViewOutboundValidateModel.cs" />
+    <Compile Include="Sorting\RangeDefined\ViewRangeDefinedSearchListModel.cs" />
+    <Compile Include="Sorting\Return\BillReturnBoxInfoModel.cs" />
+    <Compile Include="Sorting\Return\BillReturnCountModel.cs" />
+    <Compile Include="Sorting\Return\BillReturnDetailInfoModel.cs" />
+    <Compile Include="Sorting\Return\BillReturnEntityModel.cs" />
+    <Compile Include="Sorting\Return\BillReturnModel.cs" />
+    <Compile Include="Sorting\Return\BillReturnWeightModel.cs" />
+    <Compile Include="Sorting\Return\MerchantReturnBillStatisticModel.cs" />
+    <Compile Include="Sorting\Return\MerchantReturnSearchModel.cs" />
+    <Compile Include="Sorting\Return\ReturnBillInfoModel.cs" />
+    <Compile Include="Sorting\Return\ReturnBillSeachModel.cs" />
+    <Compile Include="Sorting\Return\MerchantReturnBillViewModel.cs" />
+    <Compile Include="Sorting\Return\ReturnBillPreConditionModel.cs" />
+    <Compile Include="Sorting\Return\ReturnBillSortingDetailModel.cs" />
+    <Compile Include="Sorting\Return\ReturnScanFormCodeModel.cs" />
+    <Compile Include="Sorting\Return\ReturnSearchModel.cs" />
+    <Compile Include="Sorting\Return\ViewBillReturnInfoModel.cs" />
+    <Compile Include="Sorting\Return\ViewReturnBillSortingModel.cs" />
+    <Compile Include="Sorting\Return\ViewReturnValidateModel.cs" />
+    <Compile Include="Sorting\Loading\GPSBillModel.cs" />
+    <Compile Include="Sorting\WeighReview\WeighReviewModels.cs" />
+    <Compile Include="Synchronous\IBillLms2TmsForComparing.cs" />
+    <Compile Include="Synchronous\InSync\TurnStationComparingModel.cs" />
+    <Compile Include="Synchronous\OutSync\Tms2LmsJobArgs.cs" />
+    <Compile Include="Synchronous\OutSync\Tms2ThridPartyJobArgs.cs" />
+    <Compile Include="Synchronous\SortCenter2TMS\InboundModel.cs" />
+    <Compile Include="Synchronous\InSync\AssignStationComparingModel.cs" />
+    <Compile Include="Synchronous\InSync\BillLoadingComparingModel.cs" />
+    <Compile Include="Synchronous\InSync\Lms2TmsJobArgs.cs" />
+    <Compile Include="Synchronous\InSync\LmsWaybillStatusChangeLogModel.cs" />
+    <Compile Include="Synchronous\InSync\OutboundComparingModel.cs" />
+    <Compile Include="Synchronous\SortCenter2TMS\OutboundReadParam.cs" />
+    <Compile Include="Synchronous\SortCenter2TMS\OutboundWriteParam.cs" />
+    <Compile Include="Log\BillChangeLogModel.cs" />
+    <Compile Include="Transport\PreDispatchAbnormal\PreDispatchAbnormalModel.cs" />
+    <Compile Include="Transport\PreDispatchAbnormal\PreDispatchAbnormalSearchModel.cs" />
+    <Compile Include="Transport\Dispatch\DeliveryPrintSearchModel.cs" />
+    <Compile Include="Transport\Dispatch\DispatchDetailModel.cs" />
+    <Compile Include="Transport\Dispatch\DispatchModel.cs" />
+    <Compile Include="Transport\Dispatch\DispatchSearchModel.cs" />
+    <Compile Include="Transport\Dispatch\DispTransitionModel.cs" />
+    <Compile Include="Transport\Dispatch\DispOrderDetailModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchGetLineContext.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchGetLineResultModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchGetTransportContext.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchGetTransportResultModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchJobArgModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchLogEntityModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchLogSearchModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchModel.cs" />
+    <Compile Include="ILogable.cs" />
+    <Compile Include="ISequenceable.cs" />
+    <Compile Include="Log\BaseLogModel.cs" />
+    <Compile Include="Log\OperateLogModel.cs" />
+    <Compile Include="Log\WriteLogModel.cs" />
+    <Compile Include="Claim\Lost\LostDetailModel.cs" />
+    <Compile Include="Claim\Lost\LostModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Delivery\InTransit\CarrierWaybillModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delivery\InTransit\DelayModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Claim\ExpectDelayModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\AssFixedPriceModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\AssFormulaPriceModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\AssLadderPriceModel.cs" />
+    <Compile Include="Delivery\KPIAppraisal\DeliveryAssessmentModel.cs" />
+    <Compile Include="Delivery\Spot\SiteAssessmentModel.cs" />
+    <Compile Include="Synchronous\SortCenter2TMS\SyncInBoxModel.cs" />
+    <Compile Include="Synchronous\SortCenter2TMS\SyncInOrderModel.cs" />
+    <Compile Include="Synchronous\SortCenter2TMS\OutBoxModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchPublicQueryModel.cs" />
+    <Compile Include="Transport\PreDispatch\PreDispatchSearchModel.cs" />
+    <Compile Include="Transport\Dispatch\ViewDispatchBoxModel.cs" />
+    <Compile Include="Transport\Dispatch\ViewDispatchModel.cs" />
+    <Compile Include="Transport\Dispatch\ViewDeliveryPrintModel.cs" />
+    <Compile Include="Transport\Dispatch\ViewDispatchStatisticModel.cs" />
+    <Compile Include="Transport\Dispatch\ViewDispOrderDetailModel.cs" />
+    <Compile Include="Transport\Dispatch\PrintDeliveryNoModel.cs" />
+    <Compile Include="Transport\PreDispatch\ViewPreDispatchLogModel.cs" />
+    <Compile Include="Transport\PreDispatch\ViewPreDispatchLogStatictisModel.cs" />
+    <Compile Include="Transport\PreDispatch\ViewPreDispatchModel.cs" />
+    <Compile Include="Transport\Plan\PointPathModel.cs" />
+    <Compile Include="Transport\Plan\PointPathSearchModel.cs" />
+    <Compile Include="Transport\Plan\TransportPlanDetailModel.cs" />
+    <Compile Include="Transport\Plan\TransportPlanDetailLineIDRepairModel.cs" />
+    <Compile Include="Transport\Plan\TransportPlanModel.cs" />
+    <Compile Include="Transport\Plan\TransportPlanSearchModel.cs" />
+    <Compile Include="BaseInfo\Line\ViewLinePlanModel.cs" />
+    <Compile Include="Transport\Plan\ViewTansportEditorModel.cs" />
+    <Compile Include="Transport\Plan\ViewTransportPlanModel.cs" />
+    <Compile Include="WCFService\NeedDoTMSModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Log\DeliveryFlowLogModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Security\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Synchronous\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Vancl.TMS.Model.Sorting.BillPrint.BillPrintViewModel.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReportFiles\Bill.rdlc" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,68 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.ImportRecord.DeliveryInRecordModel>
+@{
+    ViewBag.Title = "导入记录";
+    ViewBag.HideSearch = false;
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        function ImportDelivery() {
+            ymPrompt.win({ title: '提货单录入',
+                message: '@Url.Action("ImportDelivery")', iframe: true,
+                width: 600, height: 120,
+                handler: function (tp, data) {
+                    if (data != undefined)
+                        alert(data);
+                    $("#btnSearch").click();
+                }
+            })
+        }
+
+        function downloadfile(path) {
+            $("#ifrDownload").attr("src", path);
+        }
+
+        function CreateDeliveryByScan() {
+            window.location='@Url.Action("CreateDeliveryByScan")'
+        }
+
+        function CreateDeliveryByQuery() {
+            window.location = '@Url.Action("CreateDeliveryByQuery")'
+        }
+    </script>
+}
+@section search
+{
+    <iframe id="ifrDownload" style="display: none"></iframe>
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        来源
+                    </th>
+                    <td>
+                        @Html.DropDownList("DeliverySource", "--请选择--")
+                    </td>
+                    <th>
+                        创建时间大于
+                    </th>
+                    <td>
+                        @Html.TextBox("CreateTime", string.Format("{0:yyyy-MM-dd HH:mm}", DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd'})" })
+                    </td>
+                    <td style="padding-right: 20px">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialDeliveryImportList", Model); }
+    </div>
+}

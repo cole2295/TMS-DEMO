@@ -1,0 +1,159 @@
+﻿@model IList<Vancl.TMS.Model.Transport.Dispatch.ViewDispatchBoxModel>
+@{
+    ViewBag.Title = "请选择要添加的箱子";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <style type="text/css">
+        #BoxListTable tbody tr
+        {
+            cursor: default;
+        }
+    </style>
+    <script type="text/javascript">
+        //        $(function () {
+        //            $.ajax({
+        //                url: '@Url.Action("AddBoxList")',
+        //                type: "POST",
+        //                cache: false,
+        //                data: top.AddBoxDataTransit,
+        //                dataType: "text",
+        //                success: function (result) {
+        //                    $("#divBoxList").html(result);
+        //                }
+        //            });
+        //        });
+
+
+        //页面初始化构造
+        $(function () {
+            $(".CbxColumn .CheckAll").live("change", function () {
+                var checked = $(this).attr("checked")
+                //        var $cbx = $(this).parents("table:eq(0)").find("tbody tr:visible .CbxColumn :checkbox");
+                var $cbx = $(this).parents("table:eq(0)").find("tbody :checkbox");
+                if (checked) {
+                    $cbx.attr("checked", "checked")//.change();
+                } else {
+                    $cbx.removeAttr("checked")//.change();
+                }
+            });
+                $(".DataTable tbody tr td.CbxColumn input:checkbox").live("change", function () {
+            //        var $tr = $(this).parents("tr:eq(0)");
+            //        if ($(this).attr("checked")) {
+            //            $tr.addClass("select");
+            //        }
+            //        else {
+            //            $tr.removeClass("select");
+            //        }
+                });
+        });
+
+
+        //取消操作
+        function cancel() {
+            ymPrompt.doHandler("cancel", true, { action: 'create', result: 'cancel' })
+        }
+
+        //添加箱子
+        function add() {
+            var o = $("table tbody :checked");
+            if (o.length == 0) {
+                alert("请选择要添加的箱子");
+                return;
+            }
+            var html = "";
+            o.each(function () {
+                $(this).parents("tr:eq(0)").find("td:last").remove();
+                var str = $(this).parents("tr:eq(0)").html();
+                html += "<tr>" + str + "</tr>";
+            });
+            ymPrompt.doHandler("ok", true, { action: 'addbox', data: html })
+        }
+
+        function searchData() {
+            top.AddBoxDataTransit.departureName = $("#txtDeparture").val();
+            top.AddBoxDataTransit.arrivalName = $("#txtArrival").val();
+            $.ajax(
+            {
+                url: '@Url.Action("AddBoxList")',
+                type: "POST",
+                cache: false,
+                data: top.AddBoxDataTransit,
+                dataType: "text",
+                success: function (result) {
+                    $("#divBoxList").html(result);
+                }
+            });
+        }
+
+        //        function searchData()
+        //        {
+        //            if($("#BoxListTable tbody tr").length==0 
+        //                || $("#BoxListTable tbody .trEmpty").length==1
+        //                || $("#BoxListTable tbody .trNoData").length==1)
+        //            {
+        //                return;
+        //            }
+        //            var departureName=$("#txtDeparture").val().trim();
+        //            var arrivalName=$("#txtArrival").val().trim();
+        //            var $departure;
+        //            var $arrival;
+        //            var isHide=false;
+        //            $("#BoxListTable tbody tr").each(function(){
+        //                isHide=false;
+        //                $departure=$(this).find("td:eq(2)");
+        //                $arrival=$(this).find("td:eq(3)");
+        //                if(departureName!="" && !$departure.html().trim().startWith(departureName))
+        //                {
+        //                    isHide=true;
+        //                }
+        //                if(arrivalName!="" && !$arrival.html().trim().startWith(arrivalName))
+        //                {
+        //                    isHide=true;
+        //                }
+        //                if(isHide)
+        //                {
+        //                    $(this).hide();
+        //                }
+        //                else
+        //                {
+        //                    $(this).show();
+        //                }
+        //            });
+        //        }
+    </script>
+}
+<div class="search_condition">
+    <table class="tb_insert Fixed">
+        <tr>
+            <th>
+                <label for="txtDeparture">
+                    出发地</label>
+            </th>
+            <td>
+                <input type="text" class="textbox" id="txtDeparture" />
+            </td>
+            <th>
+                <label for="txtArrival">
+                    目的地</label>
+            </th>
+            <td>
+                <input type="text" class="textbox" id="txtArrival" />
+            </td>
+            <td>
+                <input id="btnSearch" type="button" value="查询" class="button" onclick="searchData()" />
+                <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="boxList" class="DataGirdPanel" style="overflow: auto;">
+    <div id="divBoxList" class="tablelist center" style="height: 340px;">
+    </div>
+</div>
+<div class="split">
+</div>
+<div class="center">
+    <input type="button" class="button" value="添加" onclick="add()" />
+    <input type="button" class="button" value="取消" onclick="cancel()" />
+</div>

@@ -1,0 +1,11 @@
+﻿include("../StylesNew/main.css");
+include("../StylesNew/pager.css");
+include("../Scripts/plugins/alert/jquery.alerts.css");
+include("../Scripts/lib/jquery-1.6.1.min.js");
+include("../My97DatePicker/WdatePicker.js");
+include("../Scripts/plugins/alert/jquery.alerts.js");
+include("../Scripts/plugins/progress/jquery.waterfall.js");
+include("../Scripts/extends/array.extends.js");
+include("../Scripts/extends/jquery.extends.js");
+include("../Scripts/common/lms.common.js");
+include("../Scripts/common/lms.util.js");

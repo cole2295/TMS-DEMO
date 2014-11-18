@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")"></script>
+    <script type="text/javascript">
+        var isConnected = false;
+        var chatRoomID = "";
+        $(function () {
+            setInterval(getMessage, 1000);
+        });
+
+        function getMessage() {
+            if ($("#txtMyID").val() == "") {
+                return;
+            }
+            var param = {};
+            param.UserID = $("#txtMyID").val();
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("GetMessages")',
+                data: param,
+                dataType: "json",
+                success: function (data) {
+                    if (data != null || data != undefined || data != "" || data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            $("#divMessages").append(data[i].FromUser.UserName + "说：<br/>" + data[i].Message + "<br/><br/>");
+                        }
+                    }
+                }
+            });
+        }
+
+        function launchChat() {
+            var param = {};
+            param.UserIDs = $("#txtMyID").val() + "," + $("#txtUserIDs").val();
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("LaunchChat")',
+                data: param,
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined && data != "") {
+                        chatRoomID = data;
+                        isConnected = true;
+                        alert("建立聊天成功！");
+                    }
+                    else {
+                        isConnected = false;
+                        alert("建立聊天失败！");
+                    }
+                }
+            });
+        }
+
+        function sendMessages() {
+            if (!isConnected) {
+                alert("请先建立连接！");
+                return;
+            }
+            var param = {};
+            param.UserID = $("#txtMyID").val();
+            param.UserIDs = $("#txtUserIDs").val();
+            param.Message = $("#txtMessage").val();
+            param.ChatRoomID = chatRoomID;
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("SendMessage")',
+                data: param,
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        $("#divMessages").append("我说：<br/>" + param.Message + "</br></br>");
+                        $("#txtMessage").val("");
+                    }
+                    else {
+                        alert("发送聊天失败！");
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="divMessages" style="width: 100%; height: 300px; border-style: solid; border-width: 2px;
+        border-color: Black; overflow: auto">
+    </div>
+    <div style="width: 100%; height: 50px; margin-top: 20px;">
+        输入自己的ID：
+        <input type="text" id="txtMyID" value="" />
+    </div>
+    <div style="width: 100%; height: 50px; margin-top: 10px;">
+        输入用户ID（多个用户以逗号隔开）：<br />
+        测试用户列表：1.张柯 2.魏明 3.任钰 4.张本东 5.吕萍 6.何名宇 7.位传海 8.马建<br />
+        <input type="text" id="txtUserIDs" value="" />
+        <input type="button" value="开始聊天" onclick="launchChat();" />
+    </div>
+    <div style="width: 50%; height: 300px; margin-top: 20px;">
+        <textarea id="txtMessage" style="width: 100%; height: 100%;" rows="2" cols="1"></textarea>
+        <input type="button" value="发送" onclick="sendMessages();" />
+        <input type="button" value="接收" onclick="getMessage();" />
+    </div>
+</body>
+</html>

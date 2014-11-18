@@ -1,0 +1,222 @@
+﻿@using Vancl.TMS.Model.Common
+@model Vancl.TMS.Model.LadingBill.LB_TASK
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script src="@Url.Content("~/Scripts/plugins/calendar/WdatePicker.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/plugins/calendar/skin/WdatePicker.css?" + DateTime.Now.ToString("yyyyMMdd"))" rel="stylesheet" type="text/css" />
+    <script src="../../../../Scripts/LadingBill/TaskEditCheck.js" type="text/javascript"></script>
+    <style type="text/css">
+        #WaybillNo
+        {
+            width: 200px;
+            height: 32px;
+            line-height: 32px;
+            font-size: 26px;
+            margin: 15px auto;
+        }
+    </style>
+    <script type="text/javascript">
+        function cancel() {
+            ymPrompt.doHandler("cancel", true)
+        }
+
+        function AjaxOnSuccess(data, status, xhr) {
+            if (data.IsSuccess) {
+                ymPrompt.doHandler("ok",true, data)
+            } else {
+                alert(data.Message);
+            }
+        }
+
+        $(function () {
+            $("#WaybillNo").select().focus();
+
+            @if (string.IsNullOrWhiteSpace(ViewBag.taskid))
+            {//出库时直接返回，不用提交到后端
+<text>
+            $("form").submit(function () {
+                //    if ($(this).valid()) {
+                ymPrompt.doHandler("ok", true, { action: 'Reinstall', result: 'ok', WaybillNo: $("#WaybillNo").val() })
+                return false;
+                //    }
+            });
+</text>
+            }
+        })
+    </script>
+}
+@using (Ajax.BeginForm(new AjaxOptions { LoadingElementId = "Loading", OnFailure = "AjaxError", OnSuccess = "AjaxOnSuccess" }))
+{
+    
+    <input type="hidden" id="id" name="id" value="@ViewBag.taskid" />
+    <div id="UpdateTarget">
+        <label style="line-height: 40px; font-size: 16px;">
+        </label>
+        <div>
+            <table id="taskCreateViewtbid" width="100%">
+                <tbody id="taskCreateViewtb">
+                    <tr>
+                        <td colspan="4">
+                            <h1>
+                                任务编号：@Model.TASKCODE</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 110px;">
+                            商家
+                        </th>
+                        <td>
+                            @Model.MERCHANTNAME
+                        </td>
+                        <th style="width: 110px;">
+                            仓库
+                        </th>
+                        <td>
+                            @Model.WAREHOUSENAME
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            提货公司
+                        </th>
+                        <td>
+                            @Model.DISTRIBUTIONNAME
+                        </td>
+                        <th>
+                            提货部门
+                        </th>
+                        <td>
+                            @Model.DEPARTMENT
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            单量<span style="color: Red">*</span>
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(model => model.PREDICTORDERQUANTITY)单
+                        </td>
+                        <th>
+                            重量<span style="color: Red">*</span>
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(model => model.PREDICTWEIGHT)kg
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            提货时间<span style="color: Red">*</span>
+                        </th>
+                        <td>
+                            <input name="TASKTIME" id="TASKTIME" type="text" value="@Model.PREDICTTIME.ToString().Replace('/', '-') "/>
+                        </td>
+                        <th>
+                            公里数<span style="color: Red">*</span>
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(model => model.MILEAGE)km
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            提货人<span style="color: Red">*</span>
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(m => m.PICKMAN)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="split">
+        </div>
+        <div class="center">
+            <input type="button" onclick="OnSubmit_1()" class="button" value="确定" />
+            <input type="button" class="button" value="取消" onclick="cancel()" />
+        </div>
+    </div>
+}
+<style type="text/css">
+    #taskCreateViewtbid
+    {
+        border-collapse: collapse;
+        border: 0 none;
+        width: 100%;
+    }
+    #taskCreateViewtbid tbody th, .tb_insert tbody td
+    {
+        height: 30px;
+        line-height: 30px;
+        border-bottom: dotted 1px #c8c8c8;
+        font-size: 12px;
+    }
+    #taskCreateViewtbid tbody th
+    {
+        text-align: left;
+        color: #787878;
+        background: #f5f5f5;
+        padding: 0 10px;
+        width: 80px;
+    }
+    #taskCreateViewtb td
+    {
+        text-align: left;
+        border-bottom: dotted 1px #c8c8c8;
+        border-right: 0 none;
+    }
+    #taskCreateViewtbid tfoot td
+    {
+        text-align: center;
+        border: 0 none;
+    }
+</style>
+<script type="text/javascript">
+    //表单提交
+    function OnSubmit_1() {
+        if (checkForSubmit_1()) {
+            $("#form0").submit();
+        }
+    }
+
+   
+
+    $(document).ready(function () {
+        $("#MILEAGE").blur(function () {
+            var mileage = $("#MILEAGE").val();
+            var re = /^\d+(?=\.{0,1}\d+$|$)/;
+            if (!re.test(mileage) && mileage != "") {
+                alert("公里数只能为数字");
+                return;
+            }
+        });
+        
+        $("#PREDICTWEIGHT").blur(function () {
+            var predweight = $("#PREDICTWEIGHT").val();
+            var re = /^\d+(?=\.{0,1}\d+$|$)/;
+            if (!re.test(predweight) && predweight != "") {
+                alert("重量只能为数字");
+                return;
+            }
+        });
+
+        $("#PREDICTORDERQUANTITY").blur(function () {
+            var predweight = $("#PREDICTORDERQUANTITY").val();
+            var re = /^\d+(?=\.{0,1}\d+$|$)/;
+            if (!re.test(predweight) && predweight != "") {
+                alert("单量只能为数字");
+                return;
+            }
+        });
+
+        // 在这里写你的代码...
+        $("#TASKTIME").focus(function () {
+            WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' });
+        });
+
+
+    });
+
+</script>

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "面单套打预览";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <link href="@Url.Content("~/Content/css/Pages/sorting/BillFormatPrintSetting.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    #PreviewArea{ margin:50px auto;}
+    #BillArea{ margin:auto;}
+    
+    html,body{ margin:0; padding:0;}
+    #PreviewArea{ margin:0 0;}
+    #BillArea{ border:0;box-shadow:none; margin:0; overflow:hidden;}
+    #BillArea .BillElem.CurrentElem{ background:none;}
+    </style>
+    
+    <style type="text/css" media="print">
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            var htm = $("#tdBillArea", window.opener.document.body).html();
+            $("#PreviewArea").html(htm);
+            window.print();
+        }
+    </script>
+    }
+    <div id="PreviewArea">
+        
+    </div>
+

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.WaybillLifeCycle" />
+  <xs:import schemaLocation="http://10.16.112.115:8612/WaybillLifeCycleService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" />
+  <xs:element name="HelloLifeCycle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="yourName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HelloLifeCycleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="HelloLifeCycleResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddLifeCycle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.WaybillLifeCycle" minOccurs="0" name="dto" nillable="true" type="q1:WaybillLifeCycleDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddLifeCycleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddLifeCycleResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddLifeCycles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.WaybillLifeCycle" minOccurs="0" name="dtos" nillable="true" type="q2:ArrayOfWaybillLifeCycleDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddLifeCyclesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddLifeCyclesResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Inbound">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" minOccurs="0" name="model" nillable="true" type="q3:InBound" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InboundResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InboundResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BackStation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" minOccurs="0" name="model" nillable="true" type="q4:BackStation" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BackStationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BackStationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OutStation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" minOccurs="0" name="model" nillable="true" type="q5:WaybillDeal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OutStationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OutStationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickUpIntoStation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" minOccurs="0" name="model" nillable="true" type="q6:PickUp" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" minOccurs="0" name="expressOrderModel" nillable="true" type="q7:ExpressModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickUpIntoStationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PickUpIntoStationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickUpOutStation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" minOccurs="0" name="model" nillable="true" type="q8:PickUp" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.WaybillLifeCycle" minOccurs="0" name="expressOrderModel" nillable="true" type="q9:ExpressModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickUpOutStationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PickUpOutStationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

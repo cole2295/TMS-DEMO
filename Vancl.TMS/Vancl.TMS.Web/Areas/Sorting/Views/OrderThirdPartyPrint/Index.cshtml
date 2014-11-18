@@ -1,0 +1,227 @@
+﻿@using Vancl.TMS.Model.BaseInfo;
+@{
+    ViewBag.Title = "面单打印";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+   
+}
+@section header{
+ <style type="text/css">
+        .errorRed
+        {
+            color: Red;
+        }
+        .errorGreen
+        {
+              color: Green;
+        }
+        .highlight
+        {
+            background-color: Yellow;
+        }
+        .weightInput
+        {
+            display: none;
+        }
+        .ScanContainer, .CountContainer, .MessageContainer, .CurrentInfoContainer, .HistoryInfoContainerDiv
+        {
+            font-size: 14px;
+            line-height: 20px;
+            text-align: center;
+            border-bottom: solid 1px #ccc;
+            padding: 10px 0px 10px 0px;
+            min-height: 30px;
+        }
+        .MessageContainer
+        {
+            font-size: 24px;
+        }
+        .CurrentInfoContainer ul
+        {
+            width: 750px;
+            list-style: none;
+        }
+        .CurrentInfoContainer li
+        {
+            width: 250px;
+            float: left;
+            height: 20px;
+            text-align: left;
+        }
+        .clear
+        {
+            clear: both;
+        }
+        .HistoryInfoContainerTable
+        {
+            margin: auto;
+        }
+        .CheckBoxList
+        {       
+            margin-top:7px;
+        }
+        .CheckBoxList  label
+        {
+            margin-right:5px;
+            font-size: 20pt;
+        }
+        .CheckBoxList span
+        {
+            display:block;     
+            margin-top:5px;
+        }
+        .CheckBoxList   .MerchantWeight
+        {
+            display:inline;
+         }
+         #WeightReviewMessageID
+         {
+             font-size:20px;
+         }
+    </style>
+
+     <script id="packageListTmpl" type="text/html">
+			<tr class="HistoryPackageTr">
+				<td>
+					${Key}
+				</td>
+				<td>
+					${Value}
+				</td>
+				<td>
+					<a href="#" title="${Key}" class="HistoryPackageLink" action="Print">重新称重<a/>
+				</td>
+			</tr>
+    </script>
+
+    <script type="text/javascript">
+        function clearNoNum(obj) {
+            //先把非数字的都替换掉，除了数字和.
+            obj.value = obj.value.replace(/[^\d.]/g, "");
+            //必须保证第一个为数字而不是.
+            obj.value = obj.value.replace(/^\./g, "");
+            //保证只有出现一个.而没有多个.
+            obj.value = obj.value.replace(/\.{2,}/g, ".");
+            //保证.只出现一次，而不能出现两次以上
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+            //  ^[0-9]+(.[0-9]{2})?$
+        }
+    </script>
+}
+<div class=".center">
+    称重重量
+    <input id="input_Weight" type="text" maxlength="10" style="width: 50px; text-align: right;
+                padding-right: 3px;" onkeyup="clearNoNum(this)" />
+    <select id="selFormType" class="ScanType">
+        <option value="0" selected="selected">运单号</option>
+        <option value="1">订单号</option>
+        <option value="2">配送单号</option>
+    </select>
+    商家
+    <select id="selMerchant"  class="merchantSelect">
+        @{
+            var MerchantList = (IList<Vancl.TMS.Model.BaseInfo.MerchantModel>)ViewData["MerchantList"];
+            foreach (MerchantModel merchant in MerchantList)
+            {
+             
+            <option  value ="@merchant.ID"
+                                     isskipprint="@merchant.IsSkipPrintBill" 
+                                     isneedweight ="@merchant.IsNeedWeight"  
+                                     ischeckweight="@merchant.IsCheckWeight" 
+                                     checkweight="@merchant.CheckWeight">
+                @merchant.Name
+            </option>
+            }
+        }
+    </select>
+</div>
+<h1>
+</h1>
+<span>客户重量： <span class="MerchantWeight"></span><span id="WeightReviewMessageID"
+    class="WeightReviewMessage"></span></span>
+<div style="margin-top: 20px; text-align: left; padding-left: 40px;">
+    <span id="printSendToSite" style="display: none; line-height: 35px;"><%--发送到站点 --%>
+        <label style="font-size: 24pt; margin-left: 40px;">
+            城市编号:</label>
+        <label style="font-size: 24pt; font-weight: bold;" class="printZoneCode">
+        </label>
+        <label style="font-size: 24pt; margin-left: 40px;">
+            站点编号:</label>
+        <label style="font-size: 24pt; font-weight: bold;" class="printSiteNo">
+        </label>
+        <label style="font-size: 24pt; margin-left: 40px;">
+            站点名称：</label>
+        <label style="font-size: 24pt; font-weight: bold;" class="StationIDSpan">
+        </label>
+    </span><span id="printSendToCompany" style="display: none"><%--发送到 配送商 --%>
+        <label style="font-size: 28pt; margin-left: 40px;">
+            配送商编号:</label>
+        <label style="font-size: 36pt; font-weight: bold;" class="printSiteNo">
+        </label>
+        <label style="font-size: 28pt; margin-left: 40px;">
+            配送商名称:</label>
+        <label style="font-size: 36pt; font-weight: bold;" class="printCompanyName">
+        </label>
+    </span>
+</div>
+<div class="CountContainer">
+    <label for="DDL_CurrentPackageNum">
+        本单第</label>
+        <select id="CurrentPackageNum" class="currentPackageNumSelect">
+        </select>
+    <span>件,</span>
+    <label for="DDL_AllPackageCount">
+        共</label>
+    <span class="AllPackageCountSpan"></span><span>件</span>
+</div>
+<div class="MessageContainer">
+    <label class="MessageLabel">
+    </label>
+</div>
+<div class="CurrentInfoContainer">
+    <ul class="currentInfoUL">
+        <li>
+            <label for="CustomerOrderSpan">
+                订单号：</label><span class="CustomerOrderSpan"></span></li>
+        <li>
+            <label for="WaybillNoSpan">
+                运单号：</label><span class="WaybillNoSpan"></span></li>
+        <%--
+        <li>
+            <label for="StationIDSpan">
+                配送站点：</label><span class="StationIDSpan"></span></li>--%>
+        <li>
+            <label for="WaybillSourceSpan">
+                订单来源：</label><span class="WaybillSourceSpan"></span></li>
+        <li>
+            <label for="WaybillTypeSpan">
+                订单类型：</label><span class="WaybillTypeSpan"></span></li>
+        <li>
+            <label for="WeightSpan">
+                称重重量：</label><span class="WeightSpan"></span></li>
+    </ul>
+    <div class="clear">
+    </div>
+</div>
+<div class="HistoryInfoContainerDiv">
+    <table class="HistoryInfoContainerTable">
+        <thead>
+            <tr>
+                <td>
+                    箱号
+                </td>
+                <td>
+                    重量
+                </td>
+                <td>
+                    操作
+                </td>
+            </tr>
+        </thead>
+        <tbody class="HistoryInfoContainer">
+        </tbody>
+    </table>
+</div>
+<div style="float: right;">
+    补打：<input type="checkbox" id="isPrintOnly" />
+</div>
+<input type="hidden" id="hidUserID" />

@@ -1,0 +1,78 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model IList<Vancl.TMS.Model.Transport.Dispatch.ViewDispatchBoxModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">
+            @Ajax.ActionLink("刷新", "Outbound", null, new AjaxOptions
+               {
+                   UpdateTargetId = "DataListTable",
+                   //     OnBegin = "beforeSend",
+                   HttpMethod = "Post",
+                   LoadingElementId = "Loading"
+               }, new { @class = "refresh", id = "btnListRefresh" })
+        </li>
+        <li class="toolbtn"><a href="javascript:addBox()" class="add">添加箱子</a></li>
+        <li class="toolbtn"><a href="#" class="change">更改运输计划</a></li>
+    </ul>
+</div>
+<div class="tablelist center">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable" id="LinePlanTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    箱号
+                </th>
+                <th>
+                    发货仓库
+                </th>
+                <th>
+                    目的站
+                </th>
+                <th>
+                    订单数量
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model == null)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                    if (Model.Count == 0)
+                    {
+                        Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@item.BoxNo" />
+                    </td>
+                    <td>
+                        @item.BoxNo
+                    </td>
+                    <td>
+                        @item.DepartureName
+                    </td>
+                    <td>
+                        @item.ArrivalName
+                    </td>
+                    <td>
+                        @item.OrderCount
+                    </td>
+                </tr>
+                        }
+                    }
+            }
+        </tbody>
+    </table>
+</div>

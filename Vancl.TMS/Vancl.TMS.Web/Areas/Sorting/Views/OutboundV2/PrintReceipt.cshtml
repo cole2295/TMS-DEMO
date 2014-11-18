@@ -1,0 +1,183 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.Outbound.OutboundPrintModelV2>
+@{
+    ViewBag.Title = "分拣中心发货交接表 (共" + @Model.Count + "张)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css" media="print">
+        .print
+        {
+            display: inline-block !important;
+        }
+        .noprint
+        {
+            display: none;
+        }
+        #PrintDeliverNo
+        {
+            width: 100%;
+        }
+        .itemSplit
+        {
+            border: 0 !important;
+        }
+        .pageBreak
+        {
+            page-break-after: always;
+        }
+    </style>
+    <style type="text/css">
+        html, body
+        {
+            font-size: 14px;
+            margin: 0 5px;
+            padding: 0;
+        }
+        .container
+        {
+            margin: 0 25px;
+        }
+        #PrintSubmit
+        {
+            position: fixed;
+            z-index: 2;
+            right: 0;
+            bottom: 0;
+            padding: 5px;
+            background: #ddd;
+        }
+        .BarCode
+        {
+            font-size: 26px;
+        }
+        
+        h1.title
+        {
+            text-align: center;
+            font-size: 30px;
+            margin: 10px 0;
+        }
+        .tbOutTime
+        {
+            width: 100%;
+            font-size: 16px;
+        }
+        .tbOrderCount
+        {
+            width: 100%;
+            border: 1px solid #000;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .tbOrderCount td, .tbOrderCount th
+        {
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 25px;
+        }
+        .tbSign
+        {
+            width: 100%;
+            font-size: 16px;
+            line-height:28px;
+        }
+        .tbSign th
+        {
+            text-align: right;
+        }
+        .itemSplit{ background:gray; height:3px; margin:20px 0 ;}
+    </style>
+    <script src="@Url.Content("~/Scripts/references/jquery-barcode-2.0.2.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".BarCode,.BcTarget").each(function () {
+                var DeliveryNo = $(this).attr("DeliveryNo");
+                $(this).barcode(DeliveryNo, "code128", { barWidth: 2, barHeight: 60 });
+            });
+            this.focus();
+        });
+    </script>
+
+}
+@if (Model == null || Model.Count <= 0)
+{
+    <h1 class="title">生成批次号失败</h1>
+}
+@for (int i = 0; i < Model.Count; i++)
+{
+    var entity = Model[i];
+    <div>
+        <h1 class="title">
+            出库交接表</h1>
+        <table class="tbOutTime">
+            <tr>
+                <th style="text-align: left;">
+                    打印日期：@DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss")
+                </th>
+                <td>
+                    <div class="BarCode" deliveryno="@entity.BatchNo">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tbOrderCount">
+            <tr>
+                <th>目的地</th>
+                <td>@entity.OutboundDesName</td>
+            </tr>
+            <tr>
+                <th>箱数</th>
+                <td>@entity.BoxsCount</td>
+            </tr>
+            <tr>
+                <th>单量</th>
+                <td>@entity.FormCodesCount</td>
+            </tr>
+            <tr>
+                <th>重量Kg</th>
+                <td>@entity.Weight.ToString("f3")</td>
+            </tr>
+            <tr>
+                <th>发货地址</th>
+                <td>@entity.DepartureName</td>
+            </tr>
+        </table>
+        <table class="tbSign">
+            <tr>
+            </tr>
+            <tr>
+                <th width="120">
+                    发货人：
+                </th>
+                <td>
+                    ____________
+                </td>
+                <th width="120">
+                    司机：
+                </th>
+                <td>
+                    ___________
+                </td>
+                <th width="120">
+                    收货人
+                </th>
+                <td>
+                    ___________
+                </td>
+            </tr>
+        </table>
+        <p style="text-align:center; margin:30px 0;font-size:16px;">@ViewBag.curDistributionName</p>
+    </div>
+    if (i != Model.Count - 1)
+    {
+    <div class="itemSplit pageBreak">
+    </div>
+    }
+}
+<div class="center noprint" id="PrintSubmit">
+    <input type="submit" class="button noprint center" value="打印出库交接表" onclick="window.print();" />
+    <div class="noprint" style="font-size: 12px; color: #DD940A; width: 204px; clear: both;
+        text-align: left; padding-top: 3px">
+        注：如果需要打印网页时不显示页眉页脚,请设置IE的"文件"菜单->页面设置",把"页眉"和"页脚"栏中的内容设置为空!
+    </div>
+</div>

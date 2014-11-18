@@ -1,0 +1,178 @@
+﻿@using Vancl.TMS.Model.BaseInfo;
+@{
+    ViewBag.Title = "批量面单打印";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";   
+}
+@section header{
+    <style type="text/css">
+        #tbInner
+        {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            line-height: 28px;
+        }
+        #tbInner td
+        {
+            border1: 1px solid #999;
+        }
+        .tbPrintList
+        {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .tbPrintList th
+        {
+            background: #eee;
+            border: 1px solid #ddd;
+        }
+        .tbPrintList td
+        {
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        #PrintList
+        {
+            height: 330px;
+            overflow: auto;
+        }
+    </style>
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")" type="text/javascript"></script>
+}
+@{Html.RenderPartial("_wavMedia");}
+<table id="tbInput" class="tb_insert Fixed">
+    <tr>
+        <th>
+            单号类型
+        </th>
+        <td>
+            <select id="sltFormType" class="ScanType" name="ScanType">
+                <option value="">--请选择--</option>
+                <option value="0" selected>运单号</option>
+                <option value="1">订单号</option>
+                <option value="2">配送单号</option>
+            </select>
+        </td>
+        <th>
+            货品重量
+        </th>
+        <td>
+            <input id="txtBillWeight" type="text" name="BillWeight" maxlength="10" style="width: 50px;"
+                value="" />
+            <input id="btnLockWeight" type="button" value="锁定重量" />
+        </td>
+        <th>
+            商家
+        </th>
+        <td>
+            <select id="sltMerchant" style="width:220px">
+                <option value="">--请选择--</option>
+                @{
+                    var MerchantList = (IList<Vancl.TMS.Model.BaseInfo.MerchantModel>)ViewBag.MerchantList;
+                    foreach (MerchantModel merchant in MerchantList)
+                    {             
+                    <option  value ="@merchant.ID" 
+                    @*@(merchant.ID==26?"Selected":"")
+                    IsSkipPrintBill="@merchant.IsSkipPrintBill" 
+                    IsNeedWeight ="@merchant.IsNeedWeight"  
+                    IsCheckWeight="@merchant.IsCheckWeight" 
+                    CheckWeight="@merchant.CheckWeight"*@
+                    >
+                        @merchant.Name
+                    </option>
+                    }
+                }
+            </select>
+        </td>
+    </tr>
+</table>
+<table id="tbInner" style="">
+    <tr>
+        <td style="width: 1px; padding-top: 3px;">
+            <input id="btnStartPrint" type="button" disabled="disabled" value="开始打印" />
+            <input id="btnStopPrint" type="button" value="停止打印" class="hide" />
+            <br />
+            请录入单号，一行一个单号
+        </td>
+        <td style="line-height: 25px; font-size: 22px;">
+            当前状态：<span id="lbStatus" style="color: Blue; font-weight: bold;">已停止</span> &nbsp;&nbsp;&nbsp;总共:<span
+                id="lbTotalCount" style="color: Blue; font-weight: bold;">0</span>单 &nbsp;&nbsp;&nbsp;已打印:<span
+                    id="lbPrintCount" style="color: Green; font-weight: bold;">0</span>单 &nbsp;&nbsp;&nbsp;打印失败:<span
+                        id="lbPrintFailureCount" style="color: Red; font-weight: bold;">0</span>单
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-right: 8px;">
+            <textarea id="txtCodeInput" rows="100" style="width: 200px; height: 360px;"></textarea>
+            <select id="sltColdeList" class="hide" multiple="multiple" style="width: 200px; height: 360px;">
+            </select>
+        </td>
+        <td valign="top">
+            <table class="tbPrintList">
+                <tr>
+                    <th width="120">
+                        输入单号
+                    </th>
+                    <th width="120">
+                        运单号
+                    </th>
+                    <th width="120">
+                        打印状态
+                    </th>
+                    <th>
+                        信息
+                    </th>
+                </tr>
+            </table>
+            <div id="PrintList">
+                <table class="tbPrintList">
+                    @*
+                    <tr>
+                        <td width="120">
+                            输入单号
+                        </td>
+                        <td width="120">
+                            运单号
+                        </td>
+                        <td width="120">
+                            打印状态
+                        </td>
+                        <td>
+                            信息
+                        </td>
+                    </tr>
+                *@
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr class="hide">
+        <td>
+            <input id="chkPause" type="checkbox" /><label for="chkPause">打印失败自动暂停</label>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+<h2 id="CilentServiceInfo">
+    未能连接到本地打印称重服务，不能进行打印和实时称重！ 请联系技术支持检查服务是否正常启动或重新安装服务。 <a href="/Update/ClientService.zip"
+        class="red">点击下载安装文件</a>
+</h2>
+<script id="PrintItemTemplate" type="text/x-jquery-tmpl">
+        <tr>
+            <td width="120">
+                ${FormCode}
+            </td>
+            <td class="pWaybillNo" width="120">
+                ${WaybillNo}
+            </td>
+            <td class="pStatus" width="120">
+                正在打印
+            </td>
+            <td class="pMessage">
+                ${Message}
+            </td>
+        </tr>
+</script>
+<script src="@Url.Content("~/Scripts/pages/sorting/BatchBillPrint.js?" + DateTime.Now.ToString("yyyyMMddHHmmss"))" type="text/javascript"></script>

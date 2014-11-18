@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>运输管理系统</title>
+    <link rel="shortcut icon" href="@Url.Content("~/content/images/favicon.ico")" type="image/x-icon" />
+    <link href="@Url.Content("~/content/StylesNew/frame.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/plugins/ymPrompt/skin/simple_gray/ymPrompt.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        body, html, #wrap
+        {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow-y: hidden;
+        }
+        .aOutsourcing
+        {
+            color: Green !important;
+            font-weight: bolder;
+        }
+    </style>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/lib/jquery-1.7.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/plugins/ymPrompt/ymPrompt.min.js")"></script>
+    <script type="text/javascript" defer="defer">
+        var isMouseEnter = false;
+        $(function () {
+            $("#divOutsourcingSelect").hover(
+                function () {
+                    isMouseEnter = true;
+                }
+                , function () {
+                    if (isMouseEnter) {
+                        $("#divOutsourcingSelect").hide(100);
+                        isMouseEnter = false;
+                    }
+                });
+        });
+
+        var PageSearchConditions = [];
+        function logout() {
+            var url = '@Url.Action("Logout")';
+            ymPrompt.confirmInfo('你确认要退出系统？', null, null, "询问",
+            function (tp, data) {
+                if (tp == "ok") {
+                    window.location = url;
+                }
+            });
+        }
+
+        function selectOutsourcing() {
+            if ($("#divOutsourcingSelect").width() < $("#divHeaderOutsourcing a:eq(0)").width()) {
+                $("#divOutsourcingSelect").css("width", $("#divHeaderOutsourcing a:eq(0)").width());
+            }
+            else {
+                $("#divOutsourcingSelect").css("width", "auto");
+            }
+            $("#divOutsourcingSelect").css("left", $("#divHeaderOutsourcing a:eq(0)").offset().left);
+            $("#divOutsourcingSelect").css("top", $("#divHeaderOutsourcing a:eq(0)").offset().top + $("#divHeaderOutsourcing a:eq(0)").height());
+            $("#divOutsourcingSelect").show(100);
+        }
+
+        //选择外包模式
+        function outsourcingChange(userId, isQuit) {
+            if ($("#divHeaderOutsourcing #aOutsourcing" + userId).length > 0) {
+                return;
+            }
+            var url = '@Url.Action("OutsourcingChange")';
+            if (isQuit) {
+                url = '@Url.Action("QuitOutsourcing")';
+            }
+            $.ajax({
+                url: url,
+                data: isQuit ? null : "principalUserID=" + userId,
+                dataType: "json",
+                success: function () {
+                    $("#divHeaderOutsourcing a:eq(0)").insertBefore($("#aOutsourcing" + userId));
+                    $("#aOutsourcing" + userId).insertBefore("#divHeaderOutsourcing a:eq(0)");
+                    document.frames["mainFrame"].location.reload();
+                },
+                error: function () {
+                    ymPrompt.errorInfo({ title: '提示', message: "切换外包失败!" });
+                },
+                complete: function () {
+                    $("#divOutsourcingSelect").hide(100);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" id="wrap">
+        <tr>
+            <td height="60px" valign="top">
+                <table cellpadding="0" cellspacing="0" border="0" class="header">
+                    <tr>
+                        <td width="400">
+                            <span class="headerTitle">
+                                @(ViewBag.DistributionName) 运输管理系统</span>
+                        </td>
+                        <td style="padding-top: 5px;">
+                            <div id="SystemSwitchButton" class="row " style="@(ViewBag.IsSsoLogin ? "" : "display:none")">
+                                &nbsp;<span id="CityName">TMS</span>
+                                <img src="@Url.Content("~/content/ScriptsNew/Images/dropdown.gif")" width="9" height="6" align="absmiddle" />&nbsp;
+                                <ul id="SystemList">
+                                    @ViewBag.Navi
+                                </ul>
+                            </div>
+                        </td>
+                        <td align="right" valign="bottom">
+                            <div class="headerUser" id="divHeaderOutsourcing">
+                                你好， <a href="javascript:outsourcingChange(@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).ID),true);" class="aOutsourcing" id="aOutsourcing@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).ID)">@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).UserName)
+                                    (@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).DeptName))</a> <a href="javascript:selectOutsourcing();"
+                                        title="拣运外包选择">&nbsp;↓&nbsp;</a>&nbsp; | &nbsp; <a href="javascript:logout();">退出登录</a></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr valign="top">
+            <td style="height: 90%;" id="MainFrame">
+                <iframe src="@Url.Action("Main", "Frame")" frameborder="0" noresize="noresize" name="mainFrame"
+                    width="100%" height="100%"></iframe>
+            </td>
+        </tr>
+    </table>
+    <div id="divOutsourcingSelect" style="display: none; z-index: 99999; position: absolute;
+        background-color: White">
+        <table border="0">
+            <tbody>
+                @if (ViewData["OutSourcingList"] != null)
+                {
+                    foreach (var osm in ViewData["OutSourcingList"] as List<Vancl.TMS.Model.Common.OutSourcingModel>)
+                    {
+                    <tr>
+                        <td>
+                            <a href="javascript:outsourcingChange(@osm.PrincipalUserID,false)" class="aOutsourcing" id="aOutsourcing@(osm.PrincipalUserID)">
+                                @osm.DisplayName
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="@Url.Content("~/content/ScriptsNew/frame.js")" type="text/javascript"></script>
+</html>

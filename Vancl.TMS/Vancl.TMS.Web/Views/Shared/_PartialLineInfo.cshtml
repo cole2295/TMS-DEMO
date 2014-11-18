@@ -1,0 +1,39 @@
+﻿@model Vancl.TMS.Model.BaseInfo.Line.ViewLinePlanModel
+@if (Model != null)
+{
+    <input type="hidden" id="linePlanID" value="@Model.LPID" />
+    <table class=" tb_insert">
+        <tr>
+            <th>
+                承运商
+            </th>
+            <td>
+                @Model.CarrierName
+            </td>
+            <th>
+                运输方式
+            </th>
+            <td>
+                @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription(Model.TransportType))
+            </td>
+            <th>
+                出发地
+            </th>
+            <td>
+                @Model.DepartureName
+            </td>
+            <th>
+                目的地
+            </th>
+            <td>
+                @Model.ArrivalName
+            </td>
+            <th>
+                时效
+            </th>
+            <td>
+                @Model.ArrivalTiming
+            </td>
+        </tr>
+    </table>
+}

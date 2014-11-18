@@ -1,0 +1,73 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Sorting.CityScan.CityScanModel>
+
+@{
+    ViewBag.Title = "_PartialCityScanStatisticsList";
+}
+
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn"><a href="javascript:ExprotScan();" class="expand">导出数据</a></li>
+        <li class="toolbtn"><a href="javascript:PrintScan();" class="print">打印交接单</a></li>
+    </ul>
+</div>
+
+<div class="tablelist center">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="DispatchTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    分拣中心
+                </th>
+                <th>
+                    批次号
+                </th>
+                <th>
+                    单量
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model == null )
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    if (Model.Count == 0)
+                    {
+                        Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model[i];
+                        <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                            <td class="CbxColumn">
+                                <input type="checkbox" value="@item.BatchNO" />
+                            </td>
+                            <td>
+                                @item.ScanSortCenterName
+                            </td>
+                            <td>
+                                <a href="#" onclick="ViewDetail('@item.BatchNO')">@item.BatchNO</a>
+                            </td>
+                            <td>
+                                @item.CountNum
+                            </td>
+                        </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

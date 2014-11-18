@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Inbound" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Inbound" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.16.4.70:8001/TMSAPIService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Common" />
+  <xs:import schemaLocation="http://10.16.4.70:8001/TMSAPIService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Common" />
+  <xs:complexType name="InboundSimpleArgModel">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Common" base="q1:SortCenterSimpleArgModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsLimitedQuantity" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LimitedInboundCount" type="xs:int" />
+          <xs:element minOccurs="0" name="OpUser" nillable="true" type="q1:SortCenterUserModel" />
+          <xs:element minOccurs="0" name="PreCondition" nillable="true" type="tns:InboundPreConditionModel" />
+          <xs:element minOccurs="0" name="ToStation" nillable="true" type="q1:SortCenterToStationModel" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InboundSimpleArgModel" nillable="true" type="tns:InboundSimpleArgModel" />
+  <xs:complexType name="InboundPreConditionModel">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Common" minOccurs="0" name="PreStatus" type="q2:Enums.BillStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InboundPreConditionModel" nillable="true" type="tns:InboundPreConditionModel" />
+  <xs:complexType name="ViewInboundSimpleModel">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Common" base="q3:ResultModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CustomerOrder" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FormCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InboundCount" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ViewInboundSimpleModel" nillable="true" type="tns:ViewInboundSimpleModel" />
+</xs:schema>

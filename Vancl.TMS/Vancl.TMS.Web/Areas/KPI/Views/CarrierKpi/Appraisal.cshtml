@@ -1,0 +1,279 @@
+﻿@using Vancl.TMS.Web.WebControls.Mvc;
+@model Vancl.TMS.Model.Delivery.KPIAppraisal.KPICalcInputModel
+@{
+    ViewBag.Title = "KPI考核信息";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <style type="text/css">
+        table.tb_insert .splitRow td, table.tb_insert .splitRow th
+        {
+            border-bottom: 1px solid #bbb;
+        }
+        #tbKpi
+        {
+            width: 700px;
+            margin: 10px auto;
+            border: 1px solid #bbb;
+        }
+    </style>
+    <script src="@Url.Content("~/Scripts/lib/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/references/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var DeliveryNo = "@Model.DeliveryNo";
+        var AssPriceList = @(new MvcHtmlString(Json.Encode(Model.AssPriceList)));
+        $(function(){
+           $("#btnCalculate").click();
+          //  $("#AssPriceList").val(JSON.stringify(AssPriceList));
+                $("#Discount").attr({
+                    "data-val-regex":"请输入正确的值！",
+                    "data-val-regex-pattern":"^\d+(\.\d+)?$" 
+                });
+        });
+
+        function AjaxSuccess(data, textStatus, jqXHR) {
+            var str = JSON.stringify(data);
+            if(data.IsSuccess!=undefined){
+                 setTimeout(function () {
+                    if(data.IsSuccess)
+                    {
+                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                        $("#btnGoList").click(); 
+                    }
+                    else
+                    {
+                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                    }
+                 },10);
+            }else{
+                $("#tdInsuranceAmount").text(data.InsuranceAmount.formatNumber(2));
+                $("#tdBaseAmount").text(data.BaseAmount.formatNumber(2)); 
+                $("#tdLongTransferAmount").text(data.LongTransferAmount.formatNumber(2));
+                $("#tdNeedAmount").text(data.NeedAmount.formatNumber(2));
+                $("#tdComplementAmount").text(data.ComplementAmount.formatNumber(2));
+                $("#tdApprovedAmount").text(data.ApprovedAmount.formatNumber(2));
+                $("#LongPickPrice").val(data.LongPickPrice.formatNumber(2));
+                $("#tdConfirmedAmount").html(data.ConfirmedAmount.formatNumber(2));
+            }
+        }   
+
+        
+        //弹出设置运费窗体
+        function SetExpression(elem) {
+            var ExpressionType = $(elem).attr("ExpressionType");
+            var LineExpression = $("#AssPriceList").val();
+            window.top.UserData = "";
+         //   if(priceType==ExpressionType){
+                window.top.UserData = $("#AssPriceList").val();
+         //   }
+            if (ExpressionType == 0) {
+                ymPrompt.win('@Url.Action("SetFixedPrice", "LinePlan", new { area = "BaseInfo" })' , 450, 280, '设置固定价格',
+                    SetExpressionResult, null, null, { id: 1 });
+            }
+            else if (ExpressionType == 1) {
+                ymPrompt.win('@Url.Action("SetLadderPrice", "LinePlan", new { area = "BaseInfo" })', 800, 380, '设置阶梯价格',
+                    SetExpressionResult, null, null, { id: 1 });
+            }
+            else if (ExpressionType == 2) {
+                ymPrompt.win('@Url.Action("SetFormulaPrice", "LinePlan", new { area = "BaseInfo" })', 780, 480, '设置公式价格',
+                    SetExpressionResult, null, null, { id: 1 });
+            }
+        }
+
+        
+        //暂存已设置运费
+        function SetExpressionResult(tp, data) {
+            var price = JSON.parse($("#AssPriceList").val());
+            if (tp == "AddFixedPrice") {
+                price[0].Price = data[0].Price;
+                var str = JSON.stringify(price);
+                str = str.replaceAll("/","\\/");                
+                $("#AssPriceList").val(str);
+            }else if(tp == "AddLadderPrice"){
+                for(var i=0;i<data.length;i++){
+                    data[i].DeliveryNo = DeliveryNo;
+                }
+                var str = JSON.stringify(data);            
+                $("#AssPriceList").val(str);
+            }else if(tp == "AddFormulaPrice"){
+                data[0].DeliveryNo = DeliveryNo;
+                for(var i=0;i<data[0].Detail.length;i++){
+                    data[0].Detail[i].DeliveryNo = DeliveryNo;
+                }
+                var str = JSON.stringify(data);
+
+                $("#AssPriceList").val(str);
+            }
+        }
+
+        function returnToList()
+        {
+            if($("#hidPreParams").val()!="")
+            {
+                location="@Url.Action("list")?isReturn=1&"+ unescape($("#hidPreParams").val());
+            }
+            else
+            {
+                location="@Url.Action("list")";
+            }
+        }
+
+    </script>
+}
+@using (Ajax.BeginForm(new AjaxOptions { OnSuccess = "AjaxSuccess", OnFailure = "AjaxError", LoadingElementId = "Loading" }))
+{    
+    <table class=" tb_insert Fixed" id="tbKpi" style="margin-left: 5px;">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    @Html.Hidden("AssPriceList", Json.Encode(Model.AssPriceList))
+                    @Html.HiddenFor(model => model.DeliveryNo)
+                    @Html.HiddenFor(model => model.ExpressionType)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    运费设置
+                </th>
+                <td>
+                    <a  href="###" onclick="SetExpression(this)" ExpressionType="@((int)Model.ExpressionType)">@(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription(Model.ExpressionType))</a>
+                </td>
+                <th style="width: 110px;">
+                    基础运费
+                </th>
+                <td id="tdBaseAmount">
+                    @ViewBag.ViewAssPriceModel.BaseAmount
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    保险费率
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.InsuranceRate)
+                </td>
+                <th style="width: 110px;">
+                    保险费
+                </th>
+                <td id="tdInsuranceAmount">
+                    @ViewBag.ViewAssPriceModel.InsuranceAmount
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    转运费率
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.LongTransferRate)
+                </td>
+                <th style="width: 110px;">
+                    转运费
+                </th>
+                <td id="tdLongTransferAmount">
+                    @ViewBag.ViewAssPriceModel.LongTransferAmount
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    保价金额
+                </th>
+                <td>
+                    @Model.ProtectedPrice
+                </td>
+                <th style="width: 110px;">
+                    送货费
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.LongDeliveryAmount)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                </td>
+                <th style="width: 110px;">
+                    提货费用
+                </th>
+                <td id="tdLongPickPrice">
+                    @Html.TextBoxFor(m => m.LongPickPrice)
+                </td>
+            </tr>
+            <tr class="splitRow">
+                <td colspan="2">
+                </td>
+                <th style="width: 110px;">
+                    运费补足
+                </th>
+                <td id="tdComplementAmount">
+                    @ViewBag.ViewAssPriceModel.ComplementAmount
+                </td>
+            </tr>
+            <tr class="splitRow">
+                <td colspan="2">
+                </td>
+                <th style="width: 110px;">
+                    应付运费
+                </th>
+                <td id="tdNeedAmount">
+                    @ViewBag.ViewAssPriceModel.NeedAmount
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 110px;">
+                    KPI考核 @Html.DropDownList("KPIDelayType", null, "--请选择--")
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.Discount)
+                </td>
+                <th style="width: 110px;">
+                    核定运费
+                </th>
+                <td id="tdApprovedAmount">
+                    @ViewBag.ViewAssPriceModel.ApprovedAmount
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                </td>
+                <th style="width: 110px;">
+                    丢失赔付
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.LostDeduction)
+                </td>
+            </tr>
+            <tr class="splitRow">
+                <td colspan="2">
+                </td>
+                <th style="width: 110px;">
+                    其他
+                </th>
+                <td>
+                    @Html.TextBoxFor(m => m.OtherAmount)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                </td>
+                <th style="width: 110px;">
+                    实际支付运输费
+                </th>
+                <td id="tdConfirmedAmount" style="font-size: 16px; font-weight: bold; color: Red;">
+                    @ViewBag.ViewAssPriceModel.ConfirmedAmount
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div style="text-indent: 550px;">
+        <input type="submit" id="btnCalculate" class="button" name="submit" value="计算" />
+        <input type="submit" class="button" name="submit" value="保存" />
+        <input type="button" id="btnGoList" class="button" value="返回列表" onclick="returnToList();" />
+    </div>
+    <div>
+    <input type="hidden" value="@ViewBag.PreParams" id="hidPreParams" name="hidPreParams" />
+    </div>
+}

@@ -1,0 +1,17 @@
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Vancl.WuliuSys.ClientService.exe.config
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Vancl.WuliuSys.ClientService.exe.manifest
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Vancl.WuliuSys.ClientService.application
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Vancl.WuliuSys.ClientService.exe
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Vancl.WuliuSys.ClientService.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Vancl.WuliuSys.ClientLib.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Ionic.Zip.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Vancl.WuliuSys.ClientLib.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\bin\Release\Ionic.Zip.xml
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.csprojResolveAssemblyReference.cache
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.ProjectInstaller.resources
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.WuliuSysService.resources
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.csproj.GenerateResource.Cache
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.exe.manifest
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.application
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.exe
+D:\lms\Vancl.TMS\Vancl.TMS.Service\Vancl.WuliuSys.ClientService\obj\x86\Release\Vancl.WuliuSys.ClientService.pdb

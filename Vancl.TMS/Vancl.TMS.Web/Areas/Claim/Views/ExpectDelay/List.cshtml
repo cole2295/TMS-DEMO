@@ -1,0 +1,190 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Claim.ViewExpectDelayModel>
+@{
+    ViewBag.HideSearch = false;
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+
+    if (ViewBag.IsApprove == null) { ViewBag.IsApprove = false; }
+
+    var kvList = Vancl.TMS.Util.EnumUtil.EnumHelper.GetEnumValueAndDescriptions<Vancl.TMS.Model.Common.Enums.ApproveStatus>().ToList();
+    kvList.Insert(0, new KeyValuePair<int, string>(-1, ""));
+    var ApproveStatusSelectList = kvList.Select(x => new SelectListItem
+       {
+           Selected = false,
+           Text = x.Value,
+           Value = x.Key.ToString(),
+       });
+}
+@section head{
+    <script type="text/javascript">
+        //申请
+        function applyFor() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if(arr){
+                var id = arr.eq(0).val();
+                ymPrompt.win({ message: "@Url.Action("ApplyFor")/"+id, width: 360, height: 250, title: '录入延迟交货申请',
+                    handler: function (tp, data) {
+                        if (tp == "ok") {
+                            setTimeout(function () {
+                                if(data.IsSuccess)
+                                {
+                                    ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                    //刷新列表
+                                    $("#btnListRefresh").click(); 
+                                }
+                                else
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                }
+                            }, 10);                      
+                        }
+                    }, maxBtn: false, minBtn: false, iframe: true
+                });
+            }
+        }
+
+        //审核
+        function approve(){
+            var arr = TMS.Page.CheckDataTableChecked();
+            if(arr){
+                var id = arr.eq(0).val();
+                ymPrompt.win({ message: "@Url.Action("Approve")/"+id, width: 360, height: 280, title: '处理延迟交货申请',
+                    handler: function (tp, data) {
+                        if (tp == "ok") {
+                            setTimeout(function () {
+                                if(data.IsSuccess)
+                                {
+                                    ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                    //刷新列表
+                                    $("#btnListRefresh").click(); 
+                                }
+                                else
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                }
+                            }, 10);
+                        }
+                    }, maxBtn: false, minBtn: false, iframe: true
+                });
+            }
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        <label for="txtCreateDate">
+                            发货时间</label>
+                    </th>
+                    <td>
+                        @Html.TextBox("CreateDateFrom", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="txtCreateDateTo">
+                            到</label>
+                    </th>
+                    <td>
+                        @Html.TextBox("CreateDateTo", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="txtDeliveryNo">
+                            提货单号</label>
+                    </th>
+                    <td>
+                        <input id="txtDeliveryNo" name="DeliveryNo" type="text" class="textbox" />
+                    </td>
+                    <th>
+                        <label for="txtCarrierWaybillNo">
+                            物流单号</label>
+                    </th>
+                    <td>
+                        <input id="txtCarrierWaybillNo" name="CarrierWaybillNo" type="text" class="textbox" />
+                    </td>
+                    @if (ViewBag.IsApprove)
+                    {
+                        <th>
+                            <label for="ApproveStatus">
+                                审核状态</label>
+                        </th>
+                        <td>
+                            @Html.DropDownList("ApproveStatus", ApproveStatusSelectList)
+                        </td>
+                    }
+                    else
+                    {
+                        <th>
+                            <label for="InputStatus">
+                                录入状态</label>
+                        </th>
+                        <td>
+                            <select id="InputStatus" name="InputStatus">
+                                <option value="-1">全部</option>
+                                <option value="0" selected="selected">已录入异常</option>
+                                <option value="1">未录入异常</option>
+                            </select>
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    <th>
+                        <label for="txtArrivalDateFrom">
+                            预计到货时间</label>
+                    </th>
+                    <td>
+                        @Html.TextBox("ArrivalDateFrom", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="txtArrivalDateTo">
+                            到</label>
+                    </th>
+                    <td>
+                        @Html.TextBox("ArrivalDateTo", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        <label for="txtDeparture">
+                            出发地</label>
+                    </th>
+                    <td>
+                        <input id="txtDeparture" name="Departure" type="text" class="textbox selectDeparture" readonly="readonly"
+                            onclick="TMS.Page.SelectStation(this,'#DepartureID');" />
+                        <input id="DepartureID" name="DepartureID" type="hidden" />
+                    </td>
+                    <th>
+                        <label for="txtArrival">
+                            目的地</label>
+                    </th>
+                    <td>
+                        <input id="txtArrival" name="Arrival" type="text" class="textbox" readonly="readonly"
+                            onclick="TMS.Page.SelectStation(this,'#ArrivalID','#DepartureID');" />
+                        <input id="ArrivalID" name="ArrivalID" type="hidden" />
+                    </td>
+                    <td colspan="2">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+
+            
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{
+            if (!ViewBag.IsApprove)
+            {//申请列表
+                Html.RenderPartial("_PartialApplyList", Model);
+            }
+            else
+            {//审核列表
+                Html.RenderPartial("_PartialApproveList", Model);
+            }
+        }
+    </div>
+}

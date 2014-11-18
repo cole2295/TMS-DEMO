@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OrdersForWdsAssign" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IOrdersForWdsAssign_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.AssignModel" />
+      <xsd:import schemaLocation="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Cloud.DPS.Model.DTOModel.ForWDS" />
+      <xsd:import schemaLocation="http://10.253.6.46:8612/OrdersForWdsAssign.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOrdersForWdsAssign_GetWaitAssignDistributionOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaitAssignDistributionOrders" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetWaitAssignDistributionOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaitAssignDistributionOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetWaitAssignStationOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaitAssignStationOrders" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetWaitAssignStationOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaitAssignStationOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignDistribution_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDistribution" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignDistribution_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDistributionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignStation_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignStation" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignStation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignStationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_IsAssignDistribution_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsAssignDistribution" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_IsAssignDistribution_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsAssignDistributionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_IsAssignStation_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsAssignStation" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_IsAssignStation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsAssignStationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignDistributionOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignDistributionOrders" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignDistributionOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignDistributionOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignStationOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignStationOrders" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignStationOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignStationOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_OutBound_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBound" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_OutBound_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignDistributionChange_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDistributionChange" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignDistributionChange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDistributionChangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_IsOutBound_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsOutBound" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_IsOutBound_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsOutBoundResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignFail_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignFail" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_AssignFail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignFailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignDistribution_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignDistribution" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignDistribution_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignDistributionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignStation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignStation" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersForWdsAssign_GetAssignStation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignStationResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IOrdersForWdsAssign">
+    <wsdl:operation name="GetWaitAssignDistributionOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetWaitAssignDistributionOrders" message="tns:IOrdersForWdsAssign_GetWaitAssignDistributionOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetWaitAssignDistributionOrdersResponse" message="tns:IOrdersForWdsAssign_GetWaitAssignDistributionOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWaitAssignStationOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetWaitAssignStationOrders" message="tns:IOrdersForWdsAssign_GetWaitAssignStationOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetWaitAssignStationOrdersResponse" message="tns:IOrdersForWdsAssign_GetWaitAssignStationOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignDistribution">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignDistribution" message="tns:IOrdersForWdsAssign_AssignDistribution_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignDistributionResponse" message="tns:IOrdersForWdsAssign_AssignDistribution_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignStation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignStation" message="tns:IOrdersForWdsAssign_AssignStation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignStationResponse" message="tns:IOrdersForWdsAssign_AssignStation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsAssignDistribution">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/IsAssignDistribution" message="tns:IOrdersForWdsAssign_IsAssignDistribution_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/IsAssignDistributionResponse" message="tns:IOrdersForWdsAssign_IsAssignDistribution_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsAssignStation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/IsAssignStation" message="tns:IOrdersForWdsAssign_IsAssignStation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/IsAssignStationResponse" message="tns:IOrdersForWdsAssign_IsAssignStation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignDistributionOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignDistributionOrders" message="tns:IOrdersForWdsAssign_GetAssignDistributionOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignDistributionOrdersResponse" message="tns:IOrdersForWdsAssign_GetAssignDistributionOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignStationOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignStationOrders" message="tns:IOrdersForWdsAssign_GetAssignStationOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignStationOrdersResponse" message="tns:IOrdersForWdsAssign_GetAssignStationOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBound">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/OutBound" message="tns:IOrdersForWdsAssign_OutBound_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/OutBoundResponse" message="tns:IOrdersForWdsAssign_OutBound_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignDistributionChange">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignDistributionChange" message="tns:IOrdersForWdsAssign_AssignDistributionChange_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignDistributionChangeResponse" message="tns:IOrdersForWdsAssign_AssignDistributionChange_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsOutBound">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/IsOutBound" message="tns:IOrdersForWdsAssign_IsOutBound_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/IsOutBoundResponse" message="tns:IOrdersForWdsAssign_IsOutBound_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignFail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignFail" message="tns:IOrdersForWdsAssign_AssignFail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/AssignFailResponse" message="tns:IOrdersForWdsAssign_AssignFail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignDistribution">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignDistribution" message="tns:IOrdersForWdsAssign_GetAssignDistribution_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignDistributionResponse" message="tns:IOrdersForWdsAssign_GetAssignDistribution_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignStation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignStation" message="tns:IOrdersForWdsAssign_GetAssignStation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersForWdsAssign/GetAssignStationResponse" message="tns:IOrdersForWdsAssign_GetAssignStation_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IOrdersForWdsAssign" type="tns:IOrdersForWdsAssign">
+    <wsp:PolicyReference URI="#WSHttpBinding_IOrdersForWdsAssign_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWaitAssignDistributionOrders">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/GetWaitAssignDistributionOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWaitAssignStationOrders">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/GetWaitAssignStationOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignDistribution">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/AssignDistribution" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignStation">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/AssignStation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsAssignDistribution">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/IsAssignDistribution" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsAssignStation">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/IsAssignStation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignDistributionOrders">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/GetAssignDistributionOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignStationOrders">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/GetAssignStationOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBound">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/OutBound" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignDistributionChange">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/AssignDistributionChange" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsOutBound">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/IsOutBound" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignFail">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/AssignFail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignDistribution">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/GetAssignDistribution" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignStation">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersForWdsAssign/GetAssignStation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrdersForWdsAssign">
+    <wsdl:port name="WSHttpBinding_IOrdersForWdsAssign" binding="tns:WSHttpBinding_IOrdersForWdsAssign">
+      <soap12:address location="http://10.253.6.46:8612/OrdersForWdsAssign.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://10.253.6.46:8612/OrdersForWdsAssign.svc</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

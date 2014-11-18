@@ -1,0 +1,5 @@
+D:\lms\Vancl.TMS\WebTestApp\bin\WebTestApp.dll
+D:\lms\Vancl.TMS\WebTestApp\bin\WebTestApp.pdb
+D:\lms\Vancl.TMS\WebTestApp\obj\Debug\WebTestApp.dll
+D:\lms\Vancl.TMS\WebTestApp\obj\Debug\WebTestApp.pdb
+D:\lms\Vancl.TMS\WebTestApp\obj\Debug\WebTestApp.csprojResolveAssemblyReference.cache

@@ -1,0 +1,1 @@
+D:\lms\Vancl.TMS\Vancl.TMS.Service\OutboundSyncWriteTest\bin\Release\OutboundSyncWriteTest.exe.config

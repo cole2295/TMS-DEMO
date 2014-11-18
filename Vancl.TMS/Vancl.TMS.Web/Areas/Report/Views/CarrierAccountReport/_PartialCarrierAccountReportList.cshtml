@@ -1,0 +1,181 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@using Vancl.TMS.Model.Report
+@using Vancl.TMS.Model.Report.CarrierAccountReport
+@model Vancl.TMS.Model.Report.CarrierAccountReport.ViewCarrierAccountReportPageModel
+<div class="toolbar" style="@( Model != null && Model.StatisticsData != null ? "height:90px" : "")" }>
+    <!-- <ul> <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnCarrierAccountReportRefresh" })</li></ul> !-->
+    @if (Model != null && Model.StatisticsData != null)
+    {
+        <div id="StatisticInfo" class="blue">
+            @{
+        Html.RenderPartial("Statistic", Model.StatisticsData);
+            }
+        </div>
+    }
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable  center" id="CarrierAccountReportTable">
+        <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    发货时间
+                </th>
+                <th>
+                    运输方式
+                </th>
+                <th>
+                    承运商
+                </th>
+                <th>
+                    提货单号
+                </th>
+                <th>
+                    物流单号
+                </th>
+                <th>
+                    出发地
+                </th>
+                <th>
+                    目的地
+                </th>
+                <th>
+                    订单数量
+                </th>
+                <th>
+                    总重量
+                </th>
+                <th>
+                    基础运费
+                </th>
+                <th>
+                    保价金额
+                </th>
+                <th>
+                    保险费
+                </th>
+                <th>
+                    运费补足
+                </th>
+                <th>
+                    送货费
+                </th>
+                <th>
+                    转运费
+                </th>
+                <th>
+                    提货费用
+                </th>
+                <th>
+                    应付运费
+                </th>
+                <th>
+                    KPI考核
+                </th>
+                <th>
+                    丢失赔付
+                </th>
+                <th>
+                    其他
+                </th>
+                <th>
+                    实际支付运输费
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.ReportData != null)
+            {
+                for (int i = 0; i < Model.ReportData.Count; i++)
+                {
+                    var item = Model.ReportData[i];
+                <tr  class="@(i % 2 == 0 ? "even" : "odd")">
+                    <td>
+                        @item.SortRowID
+                    </td>
+                    <td>
+                        @item.DepartureTime
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription(item.TransportType))
+                    </td>
+                    <td>
+                        @item.CarrierName
+                    </td>
+                    <td>
+                        @item.DeliveryNo
+                    </td>
+                    <td>
+                        @item.CustWaybillNo
+                    </td>
+                    <td>
+                        @item.DepartureName
+                    </td>
+                    <td>
+                        @item.ArrivalName
+                    </td>
+                    <td>
+                        @item.OrderCount
+                    </td>
+                    <td>
+                        @item.TotalWeight.ToString("f2")
+                    </td>
+                    <td>
+                        @item.BaseAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @item.ProtectedPrice.ToString("f2")
+                    </td>
+                    <td>
+                        @item.InsuranceAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @item.ComplementAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @item.LongDeliveryAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @item.LongTransferAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @item.LongPickPrice.ToString("f2")
+                    </td>
+                    <td>
+                        @item.NeedAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @(item.KPIAmount.HasValue ? item.KPIAmount.Value.ToString("f2") : "")
+                    </td>
+                    <td>
+                        @item.LostDeduction.ToString("f2")
+                    </td>
+                    <td>
+                        @item.OtherAmount.ToString("f2")
+                    </td>
+                    <td>
+                        @item.ConfirmedAmount.ToString("f2")
+                    </td>
+                </tr>
+                }
+            }
+            else
+            {
+                Html.RenderPartial("_PartialDataTableEmptyRow", new List<string>());
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    if (Model != null && Model.ReportData != null)
+    {
+        Html.RenderPartial("_PartialDataTableFootPager", Model.ReportData);
+    }
+    else
+    {
+        Html.RenderPartial("_PartialDataTableFootPager", new Vancl.TMS.Util.Pager.PagedList<String>(new List<String>(), 1, 10));
+    }
+}

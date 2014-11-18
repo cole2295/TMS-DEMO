@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Delivery.DataInteraction.Entrance" />
+  <xs:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Common" />
+  <xs:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Inbound" />
+  <xs:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Common" />
+  <xs:element name="DataEntrance">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Delivery.DataInteraction.Entrance" minOccurs="0" name="entranceModel" nillable="true" type="q1:TMSEntranceModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DataEntranceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Common" minOccurs="0" name="DataEntranceResult" nillable="true" type="q2:ResultModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SimpleInbound">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Inbound" minOccurs="0" name="argument" nillable="true" type="q3:InboundSimpleArgModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SimpleInboundResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Inbound" minOccurs="0" name="SimpleInboundResult" nillable="true" type="q4:ViewInboundSimpleModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInboundCount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="argument" nillable="true" type="xs:anyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInboundCountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetInboundCountResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UserID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Common" minOccurs="0" name="GetUserModelResult" nillable="true" type="q5:SortCenterUserModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetToStationModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ArrivalID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetToStationModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Common" minOccurs="0" name="GetToStationModelResult" nillable="true" type="q6:SortCenterToStationModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPreCondition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DistributionCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPreConditionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Inbound" minOccurs="0" name="GetPreConditionResult" nillable="true" type="q7:InboundPreConditionModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

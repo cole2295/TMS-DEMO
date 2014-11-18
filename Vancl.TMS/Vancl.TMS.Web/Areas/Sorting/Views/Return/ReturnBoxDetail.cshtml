@@ -1,0 +1,158 @@
+﻿@model List<Vancl.TMS.Model.Sorting.Return.ReturnBillSortingDetailModel>
+@{
+    ViewBag.Title = "箱号明细单";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnPrint").click(function () {
+                var BoxNo = $("#lbBoxNo").html();
+                var params = {};
+                params.boxNo = BoxNo;
+                $.ajax({
+                    url: "/Sorting/Return/BackFormPrint",
+                    data: params,
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (result) {
+                        if (result == null) {
+                            alert(result);
+                            return;
+                        }
+                        if (result.IsSuccess) {
+                            openWindow('FormPrintDetail?BoxNo=' + BoxNo, '箱号明细单', 800, 600);
+                        }
+                        else {
+                            alert(result.Message);
+                            return;
+                        }
+                    }
+                });
+            });
+        });
+      
+    </script>
+    <style type="text/css" media="print">
+        .print
+        {
+            display: inline-block !important;
+        }
+        .noprint
+        {
+            display: none;
+        }
+        #PrintDeliverNo
+        {
+            width: 100%;
+        }
+        .itemSplit
+        {
+            border: 0 !important;
+        }
+        .pageBreak
+        {
+            page-break-after: always;
+        }
+    </style>
+    <style type="text/css">
+        .container
+        {
+            margin: 0 25px;
+        }
+        .GridView
+        {
+            border: 1px solid #888;
+            border-collapse: collapse;
+            width: 97%;
+            line-height: 25px;
+            margin: 10px auto;
+        }
+        .GridView th, .GridView td
+        {
+            border: 1px solid #888;
+            padding: 0 5px;
+            text-align: center;
+        }
+        .GridView th
+        {
+            background: #eee;
+        }
+    </style>
+}
+<div id="p1" class="printBody">
+    <div style="text-align: center; font-size: x-large; font-style: inherit;">
+        <span id="lbtitle">箱号明细单</span>
+    </div>
+    <div style="text-align: center; margin-top: 10px; margin-left: 10px;">
+        <table style="white-space: nowrap; width: 100%;">
+            <tr>
+                <td style="width: 30%; text-align: left; padding-left: 15px;">
+                    <span>箱号：</span> <span id="lbBoxNo">@ViewBag.Box.BoxNo</span>
+                </td>
+                <td style="width: 30%; text-align: left;">
+                    <span>运单总数：</span> <span id="lblTotalCount">@Model.Count</span>
+                </td>
+                <td style="text-align: right; padding-right: 15px;">
+                    <span>应退金额总数：</span> <span id="lblAmount">@Model.Sum(x => x.NeedAmount)</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <table class="GridView" cellspacing="0" cellpadding="0" border="0" id="GridView1"
+        style="border-collapse: collapse;">
+        <tr>
+            <th scope="col">
+                序号
+            </th>
+            <th scope="col">
+                运单号
+            </th>
+            <th scope="col">
+                订单号
+            </th>
+            <th scope="col">
+                操作部门
+            </th>
+            <th scope="col">
+                订单类型
+            </th>
+            <th scope="col">
+                操作时间
+            </th>
+            <th scope="col">
+                应退金额
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.rNow
+                </td>
+                <td>
+                    @item.FormCode
+                </td>
+                <td>
+                    @item.CustomerOrder
+                </td>
+                <td>
+                    @item.CreateDept
+                </td>
+                <td>
+                    @item.formType
+                </td>
+                <td>
+                    @item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
+                </td>
+                <td>
+                    @item.NeedAmount
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div>
+    <input type="button" id="btnPrintBoxDetail" class="noprint" value="打印箱号明细单" onclick="return window.print();" />
+    <input type="button" id="btnPrint" class="noprint" value="打印交接表" />
+</div>

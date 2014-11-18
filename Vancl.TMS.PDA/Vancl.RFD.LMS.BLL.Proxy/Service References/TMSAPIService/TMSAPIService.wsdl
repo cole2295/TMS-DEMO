@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TMSAPIService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Delivery.DataInteraction.Entrance" />
+      <xsd:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Common" />
+      <xsd:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Inbound" />
+      <xsd:import schemaLocation="http://10.253.6.46:8884/TMSAPIService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Vancl.TMS.Model.Sorting.Common" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITMSAPIService_DataEntrance_InputMessage">
+    <wsdl:part name="parameters" element="tns:DataEntrance" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_DataEntrance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DataEntranceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_SimpleInbound_InputMessage">
+    <wsdl:part name="parameters" element="tns:SimpleInbound" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_SimpleInbound_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SimpleInboundResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetInboundCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboundCount" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetInboundCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInboundCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetUserModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserModel" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetUserModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetToStationModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetToStationModel" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetToStationModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetToStationModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetPreCondition_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPreCondition" />
+  </wsdl:message>
+  <wsdl:message name="ITMSAPIService_GetPreCondition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPreConditionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ITMSAPIService">
+    <wsdl:operation name="DataEntrance">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITMSAPIService/DataEntrance" message="tns:ITMSAPIService_DataEntrance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITMSAPIService/DataEntranceResponse" message="tns:ITMSAPIService_DataEntrance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SimpleInbound">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITMSAPIService/SimpleInbound" message="tns:ITMSAPIService_SimpleInbound_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITMSAPIService/SimpleInboundResponse" message="tns:ITMSAPIService_SimpleInbound_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInboundCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITMSAPIService/GetInboundCount" message="tns:ITMSAPIService_GetInboundCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITMSAPIService/GetInboundCountResponse" message="tns:ITMSAPIService_GetInboundCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITMSAPIService/GetUserModel" message="tns:ITMSAPIService_GetUserModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITMSAPIService/GetUserModelResponse" message="tns:ITMSAPIService_GetUserModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetToStationModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITMSAPIService/GetToStationModel" message="tns:ITMSAPIService_GetToStationModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITMSAPIService/GetToStationModelResponse" message="tns:ITMSAPIService_GetToStationModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreCondition">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITMSAPIService/GetPreCondition" message="tns:ITMSAPIService_GetPreCondition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITMSAPIService/GetPreConditionResponse" message="tns:ITMSAPIService_GetPreCondition_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ITMSAPIService" type="tns:ITMSAPIService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DataEntrance">
+      <soap:operation soapAction="http://tempuri.org/ITMSAPIService/DataEntrance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SimpleInbound">
+      <soap:operation soapAction="http://tempuri.org/ITMSAPIService/SimpleInbound" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInboundCount">
+      <soap:operation soapAction="http://tempuri.org/ITMSAPIService/GetInboundCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserModel">
+      <soap:operation soapAction="http://tempuri.org/ITMSAPIService/GetUserModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetToStationModel">
+      <soap:operation soapAction="http://tempuri.org/ITMSAPIService/GetToStationModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreCondition">
+      <soap:operation soapAction="http://tempuri.org/ITMSAPIService/GetPreCondition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TMSAPIService">
+    <wsdl:port name="BasicHttpBinding_ITMSAPIService" binding="tns:BasicHttpBinding_ITMSAPIService">
+      <soap:address location="http://10.253.6.46:8884/TMSAPIService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

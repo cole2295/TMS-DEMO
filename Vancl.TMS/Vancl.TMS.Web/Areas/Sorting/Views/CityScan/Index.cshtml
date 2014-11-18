@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "同城单量扫描";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+
+<style type="text/css">
+.tbScanArea
+{
+    margin:10px;
+    width:900px;
+    border:0px solid red;
+    text-align:left;
+    font-size:20px;
+}
+.tbScanArea th{ text-align:left; width:100px;}
+.tbScanArea td{ text-align:left; width:200px;}
+.tbScanArea td input{ height:35px; width:250px; border:1px solid #ccc; font-size:26px; color:Red; font-weight:bold;}
+
+#TbInput
+{
+    margin: 30px auto;
+    line-height: 35px;
+    font-size: 28px;
+    text-align: center;
+}
+#TbInput td
+{
+    border: 1px solid #ddd;
+}
+</style>
+<script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")" type="text/javascript"></script>
+<script id="CityScanTemplate" type="text/x-jquery-tmpl">
+        <tr>
+            <td>
+                ${FormCode}
+            </td>
+        </tr>
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtWaybillNo").focus();
+
+        $("#txtWaybillNo").keyup(function (event) {
+            if (event.keyCode == '13') {
+                ScanCode();
+            }
+        });
+    });
+
+    var ScanSuccess=[];
+
+    function ScanCode() {
+        var formCode=$("#txtWaybillNo").val();
+        if (formCode == "") {
+            alert("运单号不能为空");
+            return;
+        }
+
+        for(var i in ScanSuccess){
+            var FormCode = ScanSuccess[i].FormCode;
+            if(FormCode==formCode){
+                //已扫描
+                ErrorNotice();
+                $("#txtWaybillNo").val("");
+                $("#txtWaybillNo").focus();
+                alert(formCode+"此单已扫描");
+                return;
+            }
+        }
+
+        var parms = {   formCode: formCode, 
+                        deptName: $("#DeptName").val(), 
+                        deptId: $("#DeptID").val(),
+                        userId: $("#UserID").val(),
+                        batchNo: $("#batchNo").html(),
+                        hidData : $("#hdInitData").val()
+                    };
+        $.ajax({
+            url:"@Url.Action("ScanCode")",
+            data:parms,
+            dataType:"json",
+            success:function(data){
+                if(data.IsSuccess){
+                    var count = parseInt($("#ScanCount").text());
+                    $("#ScanCount").text(count+1);
+                    var sacnInfo = {FormCode:formCode};
+                    ScanSuccess.push(sacnInfo);
+                    var tpl = $("#CityScanTemplate").tmpl({FormCode: formCode});
+                    $("#TbInput tfoot").prepend(tpl);
+                    SucceessNotice();
+                }else{
+                    ErrorNotice();
+                    alert(data.Message);
+                }
+                $("#txtWaybillNo").val("");
+                $("#txtWaybillNo").focus();
+            },
+            error:function(){
+                ErrorNotice();
+                ymPrompt.succeedInfo({title:'提示',message:"操作失败"});
+                alert("操作失败!");
+                $("#txtWaybillNo").val("");
+                $("#txtWaybillNo").focus();
+            }
+        });
+    }
+</script>
+<table cellpadding="0" cellspacing="0" border="0" class="tbScanArea">
+    <tr>
+        <th>运单号</th>
+        <td><input type="text" id="txtWaybillNo" name="WaybillNO" /></td>
+        <td colspan="3">&nbsp;</td>
+    </tr>
+    <tr><td colspan="5">&nbsp;</td></tr>
+    <tr>
+        <th>分拣中心</th>
+        <td>
+            <span id="DeptName">@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).DeptName)</span>
+            <input type="hidden" id="DeptID" value="@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).DeptID)" />
+            <input type="hidden" id="UserID" value="@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).ID)" />
+            <input type="hidden" id="UserCode" value="@((ViewData["CurrentUser"] as Vancl.TMS.Model.Common.UserModel).UserCode)" />
+        </td>
+        <th>批次号</th>
+        <td id="batchNo">@DateTime.Now.ToString("yyyyMMddHHmmssffff")</td>
+        <td>
+            @Html.ActionLink("结束当前批次", "Index", null, (AjaxOptions)ViewBag.AjaxOptions, new { @style = "background-color:#C0C0C4; border:1px solid #ccc; padding:3px;", id = "linkResetBatch" })
+        </td>
+    </tr>
+    <tr><td colspan="5" id="">共扫描<span style="color:Red;" id="ScanCount">0</span>单</td></tr>
+</table>
+<table id="TbInput">
+    <thead>
+        <tr>
+            <th class="cellOrderNo">
+                运单号
+            </th>
+        </tr>
+    </thead>
+    <tfoot>
+
+    </tfoot>
+</table>
+@{Html.RenderPartial("_wavMedia");}
+<input type="hidden" id="hdInitData" value="@ViewBag.HiddenValue" />

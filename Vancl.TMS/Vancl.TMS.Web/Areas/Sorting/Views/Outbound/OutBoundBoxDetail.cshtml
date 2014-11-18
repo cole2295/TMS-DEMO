@@ -1,0 +1,63 @@
+﻿@model Vancl.TMS.Model.Sorting.Outbound.ViewOutBoundBoxDetailModel
+@{
+    ViewBag.Title = "运单明细";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+}
+<div>
+    <table class="tb_insert">
+        <tr id="trSortingCenterSelect">
+            <th>
+                箱号
+            </th>
+            <td>
+                @Model.BoxNo
+            </td>
+            <th>
+                订单数量
+            </th>
+            <td>
+                @Model.BillCount
+            </td>
+            <th>
+                总重量
+            </th>
+            <td>
+                @Model.Weight.ToString("f2")
+            </td>
+            <td>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="DataGirdPanel">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable tablelist" style="min-width:0" id="tblBillInfo">
+        <thead>
+            <tr>
+                <th style="width:30px">
+                    序号
+                </th>
+                <th>
+                    运单号
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.FormCodes != null)
+            {
+                for (int i = 0; i < Model.FormCodes.Count; i++)
+                {
+                <tr>
+                    <td>
+                        @(i + 1)
+                    </td>
+                    <td class="center">
+                        @Model.FormCodes[i]
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

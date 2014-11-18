@@ -1,0 +1,113 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Claim.ViewDelayHandleModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "DelayList", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnRefresh" })</li>
+        <li class="toolbtn" style="width:120px"><a class="on" href="javascript:DelayHandleApply();">到货延误复议申请</a></li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center" id="LinePlanTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+                <th>
+                    提货单号
+                </th>
+                <th>
+                    物流单号
+                </th>
+                <th>
+                    出发地
+                </th>
+                <th>
+                    目的地
+                </th>
+                <th>
+                    订单数量
+                </th>
+                <th>
+                    承运商
+                </th>
+                <th>
+                    运输方式
+                </th>
+                <th>
+                    时效H
+                </th>
+                <th>
+                    总价
+                </th>
+                <th>
+                    状态
+                </th>
+                <th>
+                    延误时长
+                </th>
+               @* <th>
+                    操作
+                </th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model==null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var delayModel = Model[i];
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" value="@delayModel.DelayID" />
+                        @*<input type="hidden" value="@delayModel.DelayID" />*@
+                    </td>
+                    <td>
+                        @Html.ActionLink(@delayModel.DeliveryNO, "../ExpectDelay/Details", new { id = delayModel.DispatchID }, new { Target = "_blank" })
+                    </td>
+                    <td>
+                        @delayModel.CarrierWaybillNO
+                    </td>
+                    <td>
+                        @delayModel.DepartureName
+                    </td>
+                    <td>
+                        @delayModel.ArrivalName
+                    </td>
+                    <td>
+                        @delayModel.BoxCount
+                    </td>
+                    <td>
+                        @delayModel.CarrierName
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription<Enums.TransportType>(@delayModel.TransPortType.ToString()))
+                    </td>
+                    <td>
+                        @delayModel.ArrivalTiming
+                    </td>
+                    <td>
+                        @delayModel.TotalAmount
+                    </td>
+                    <td>
+                        @(EnumHelper.GetDescription<Enums.DeliveryStatus>(@delayModel.DeliveryStatus.ToString()))
+                    </td>
+                    <td>
+                        @delayModel.DelayTimeSpan
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

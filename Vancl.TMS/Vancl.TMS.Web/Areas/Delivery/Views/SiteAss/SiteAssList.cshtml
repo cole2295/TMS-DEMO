@@ -1,0 +1,169 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Delivery.Spot.ViewSiteAssModel>
+@{
+    ViewBag.Title = "已调度订单列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //录入现场数据
+        function AddSiteAssInfo() {
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if(arr){
+                var deliveryNO ="";
+                var isContinue=true;
+                var arrivalTime=arr.attr("ArrivalTime");
+                var leaveTime=arr.attr("LeaveTime");
+                var arrArrivalTime=arrivalTime.split(' ')[1].split(':');
+                var arrLeaveTime=leaveTime.split(' ')[1].split(':');
+                var aTime=arrArrivalTime[0]+":"+arrArrivalTime[1];
+                var lTime=arrLeaveTime[0]+":"+arrLeaveTime[1];
+                arr.each(function(){
+                    arrArrivalTime=$(this).attr("ArrivalTime").split(' ')[1].split(':');
+                    arrLeaveTime=$(this).attr("LeaveTime").split(' ')[1].split(':');
+                    if(arrArrivalTime[0]+":"+arrArrivalTime[1]!=aTime || arrLeaveTime[0]+":"+arrLeaveTime[1]!=lTime)
+                    {
+                        ymPrompt.alert({title:'提示',message:'只能批量操作离到库考核点相同的提货单！'});
+                        isContinue=false;
+                        return false;
+                    }
+                    aTime=arrArrivalTime[0]+":"+arrArrivalTime[1];
+                    lTime=arrLeaveTime[0]+":"+arrLeaveTime[1];
+                    deliveryNO += $(this).attr("DeliveryNo")+",";
+                });
+                if(!isContinue)
+                {
+                    return;
+                }
+                deliveryNO=deliveryNO.substr(0,deliveryNO.length-1);
+
+                var url = '@Url.Action("Create")' + "?DeliveryNO=" + deliveryNO;
+                url += '&ArrivalTime=' + aTime + '&LeaveTime=' + lTime;
+                ymPrompt.win(url, 650, 280, '录入现场数据',
+                        handle, null, null, { id: 1 });
+            }
+        }
+        function handle(tp,data) {
+            if (tp == "Success") {
+                setTimeout(function () {
+                    if(data.IsSuccess)
+                    {
+                        ymPrompt.succeedInfo({ title: '成功', message: data.Message });
+                        //刷新列表
+                        $("#btnSiteAssListListRefresh").click();
+                    }
+                    else
+                    {
+                         ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                    }
+                }, 100);
+            }
+            else if(tp=="Error")
+            {
+                setTimeout(function () {
+                         ymPrompt.errorInfo({ title: '提示', message: "操作失败！" });
+                }, 100);
+            }
+        }
+
+        //修改物流单号
+        function ModifyWaybillNo() {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if (arr) {
+                var deliveryNo = arr.eq(0).attr("DeliveryNO");
+                var waybillNo = arr.eq(0).attr("CarrierWaybillNO");
+                var url = "@Url.Action("InputWaybillNo", "Dispatch", new { area = "Delivery" })?DeliveryNO="+deliveryNo+"&WaybillNo="+waybillNo;
+                ymPrompt.win({ message: url, width: 360, height: 240, title: '请输入运单号码',maxBtn: false, minBtn: false, iframe: true,
+                    handler: function (tp, result) {
+                        if (tp == "ok") {
+                            if(result.IsSuccess){
+                                setTimeout(function(){
+                                    ymPrompt.succeedInfo({ title: '修改成功', message: result.Message });
+                                    $(".refresh").click();   
+                                },10);
+                            }
+                        }                        
+                    }
+                });
+            }
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        出发地
+                    </th>
+                    <td>
+                        <input id="S_DepartureName" name="S_DepartureName" type="text" onclick="TMS.Page.SelectStation(this,'#S_DepartureID');"
+                            class="textbox selectDeparture" />
+                        <input id="S_DepartureID" name="S_DepartureID" type="hidden" />
+                    </td>
+                    <th>
+                        调度时间
+                    </th>
+                    <td>
+                        @Html.TextBox("S_CreateDateBegin", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 00:00:00")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    <th>
+                        到
+                    </th>
+                    <td>
+                        @Html.TextBox("S_CreateDateEnd", string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now.ToString("yyyy-MM-dd 23:59:59")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" })
+                    </td>
+                    @* <th>
+                        承运商
+                    </th>
+                    <td>
+                        @Html.DropDownList("S_CarrierID", (IEnumerable<SelectListItem>)ViewBag.Carriers, "--请选择--", new { style = "width:150px" })
+                    </td>*@
+                    <td rowspan="2">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                        <div class="split" style="height: 3px;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        目的地
+                    </th>
+                    <td>
+                        <input id="S_ArrivalName" name="S_ArrivalName" type="text" onclick="TMS.Page.SelectStation(this,'#S_ArrivalID','#S_DepartureID');"
+                            class="textbox" />
+                        <input id="S_ArrivalID" name="S_ArrivalID" type="hidden" />
+                    </td>
+                    <th>
+                        @*目的地省份*@承运商
+                    </th>
+                    <td>
+                        @*<input id="S_ArrivalProvince" name="S_ArrivalProvince" type="text" class="textbox" />*@
+                        @Html.DropDownList("S_CarrierID", (IEnumerable<SelectListItem>)ViewBag.Carriers, "--请选择--", new { style = "width:150px" })
+                    </td>
+                    <th>
+                        @*状态*@
+                    </th>
+                    <td>
+                        @*<input id="S_DeliveryStatus" name="S_DeliveryStatus" type="text" class="textbox" />*@
+                    </td>
+                    @*<th>
+                        订单类型
+                    </th>
+                    <td>
+                        <input id="S_LineType" name="S_LineType" type="text" class="textbox" />
+                    </td>*@
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialSiteAssList", Model); }
+    </div>
+}

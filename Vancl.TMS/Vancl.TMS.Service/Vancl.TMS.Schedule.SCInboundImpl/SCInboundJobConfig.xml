@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<quartz xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				version="1.0"
+				overwrite-existing-jobs="true">
+  <!--job 1: Inbound Service -->
+  <job>
+    <job-detail>
+      <name>job1</name>
+      <group>g1</group>
+      <job-type>Vancl.TMS.Schedule.SCInboundImpl.SCInboundJob, Vancl.TMS.Schedule.SCInboundImpl</job-type>
+      <job-data-map>
+        <entry>
+          <key>Remainder</key>
+          <value>0</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>t1</name>
+        <group>tg1</group>
+        <job-name>job1</job-name>
+        <job-group>g1</job-group>
+        <start-time>2011-08-23T14:08:50</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>3000</repeat-interval>
+      </simple>
+    </trigger>
+  </job>
+  <!--job 2: Inbound Service -->
+
+  <job>
+    <job-detail>
+      <name>job2</name>
+      <group>g2</group>
+      <job-type>Vancl.TMS.Schedule.SCInboundImpl.SCInboundJob, Vancl.TMS.Schedule.SCInboundImpl</job-type>
+      <job-data-map>
+        <entry>
+          <key>Remainder</key>
+          <value>1</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>t2</name>
+        <group>tg2</group>
+        <job-name>job2</job-name>
+        <job-group>g2</job-group>
+        <start-time>2011-08-23T14:08:50</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>3000</repeat-interval>
+      </simple>
+    </trigger>
+  </job> 
+  <!--job 3: Inbound Service -->
+  <job>
+    <job-detail>
+      <name>job3</name>
+      <group>g3</group>
+      <job-type>Vancl.TMS.Schedule.SCInboundImpl.SCInboundJob, Vancl.TMS.Schedule.SCInboundImpl</job-type>
+      <job-data-map>
+        <entry>
+          <key>Remainder</key>
+          <value>2</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>t3</name>
+        <group>tg3</group>
+        <job-name>job3</job-name>
+        <job-group>g3</job-group>
+        <start-time>2011-08-23T14:08:50</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>3000</repeat-interval>
+      </simple>
+    </trigger>
+  </job>
+  <!--job sms1: inbound SMS Send -->
+  <job>
+    <job-detail>
+      <name>smsjob1</name>
+      <group>smsg1</group>
+      <job-type>Vancl.TMS.Schedule.SCInboundImpl.SCInboundSMSJob, Vancl.TMS.Schedule.SCInboundImpl</job-type>
+      <job-data-map>
+        <entry>
+          <key>Remainder</key>
+          <value>3</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <simple>
+        <name>smst1</name>
+        <group>smstg1</group>
+        <job-name>smsjob1</job-name>
+        <job-group>smsg1</job-group>
+        <start-time>2011-08-23T14:08:50</start-time>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>6000</repeat-interval>
+      </simple>
+    </trigger>
+  </job>
+</quartz>

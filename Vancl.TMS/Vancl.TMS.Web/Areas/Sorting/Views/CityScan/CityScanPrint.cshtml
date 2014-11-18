@@ -1,0 +1,159 @@
+﻿@model IList<Vancl.TMS.Model.Sorting.CityScan.CityScanPrintModel>
+@{
+    ViewBag.Title = "同城单量统计交接表打印";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+<style type="text/css" media="print">
+        .print
+        {
+            display: inline-block !important;
+        }
+        .noprint
+        {
+            display: none;
+        }
+        #PrintDeliverNo
+        {
+            width: 100%;
+        }
+        .itemSplit
+        {
+            border: 0 !important;
+        }
+        .pageBreak
+        {
+            page-break-after: always;
+        }
+    </style>
+<style type="text/css">
+html, body
+{
+    font-size: 14px;
+    margin: 0 5px;
+    padding: 0;
+}
+.container
+{
+    margin: 0 25px;
+}
+#PrintSubmit
+{
+    position: fixed;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    padding: 5px;
+    background: #ddd;
+}
+
+#HandoverTable
+{
+    border:0px solid #000;
+    text-align:center;
+    line-height:30px;
+    font-size:20px;
+    width:100%;
+}
+#HandoverTable #box
+{
+    height:350px;
+    border:0px solid #ccc;
+    width:100%;
+    padding-top:100px;
+}
+#HandoverTable #box .title
+{
+    text-align: center;
+    font-size: 30px;
+    margin: 10px 0;
+}
+#HandoverTable #box .pageHead
+{
+    border:0px solid #ccc;
+    text-align:left;
+    width:100%;
+}
+
+#HandoverTable #box .tableList
+{
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+    table-layout: fixed;
+    line-height:30px;
+}
+
+#HandoverTable .tableList th
+{
+    font-weight:bold;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 30px;
+}
+#HandoverTable .tableList td
+{
+    font-weight:inherit;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 30px;
+}
+#HandoverTable #box .pageFooter
+{
+    text-align:left;
+}
+</style>
+<script src="@Url.Content("~/Scripts/references/jquery-barcode-2.0.2.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".BarBatchNo,.BcTarget").each(function () {
+            var BoxNo = $(this).attr("batchNo");
+            $(this).barcode(BoxNo, "code128", { barWidth: 1, barHeight: 40,fontSize:13 });
+        });
+        this.focus();
+    });
+</script>
+}
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    var item=Model[i];
+    <div id="HandoverTable">
+        <div id="box">
+            <h1 class="title">同城单量统计交接单</h1>
+            <table class="pageHead" border="0">
+                <tr>
+                    <td align="left" valign="bottom">打印日期：@DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")</td>
+                    <td align="center" valign="middle">
+                        <div class="BarBatchNo" batchNo="@item.BatchNo">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tableList">
+                <tr>
+                    <th>@item.ScanSortCenterName</th>
+                    <th>订单合计</th>
+                    <th>备注</th>
+                </tr>
+                <tr>
+                    <th>其他商家</th>
+                    <td>@item.Details.Count</td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="pageFooter">
+                <span>交接员签名：</span>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="center noprint" id="PrintSubmit">
+    <input type="submit" class="button noprint center" value="打印交接表" onclick="window.print();" />
+    <div class="noprint" style="font-size: 12px; color: #DD940A; width: 204px; clear: both;
+        text-align: left; padding-top: 3px">
+        注：如果需要打印网页时不显示页眉页脚,请设置IE的"文件"菜单->页面设置",把"页眉"和"页脚"栏中的内容设置为空!
+    </div>
+</div>

@@ -1,0 +1,283 @@
+﻿@model IList<Vancl.TMS.Model.Transport.Dispatch.ViewDispatchBoxModel>
+@{
+    ViewBag.SearchTitle = "运输计划信息";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        $(function(){
+            var op=$("#hidOP").val();
+            if(op=="Update")
+            {
+                $("#btnConfirm").val("修改调度");
+            }
+            $("#BoxListTable :checkbox").live("click",SumSelectedCount);
+            SumSelectedCount();
+        })
+
+        function SumSelectedCount()
+        {
+            var boxCount=0;
+            var orderCount=0;
+            $("#BoxListTable :checkbox[name='BoxNo']:checked").each(function(){
+                boxCount++;
+                orderCount=orderCount+parseInt($(this).attr("ordercount"));
+            });
+            $("#lblSelectedBoxCount").html(boxCount);
+            $("#lblSelectedOrderCount").html(orderCount);
+        }
+        
+        //添加箱子
+        function addBox() {
+            var DepartureID = $("#hidDepartureID").val();
+            var box = "";
+            $("#BoxListTable :checkbox[name='BoxNo']").each(function(){
+                box += $(this).val()+",";
+            });
+            top.AddBoxDataTransit = {departureID:DepartureID,dispatchedBoxes:box};
+            ymPrompt.win({ message: "@Url.Action("AddBox")", width: 680, height: 520, title: '添加箱子',
+                handler: function (tp, result) {
+                    if (tp == "ok") {
+                        $("#tbBoxList .trEmpty").remove();
+                        var data = $(result.data).find(":checkbox").attr("checked","checked").end();
+                        $("#tbBoxList tbody").append(data);
+                        SumSelectedCount();
+                    }
+                }, maxBtn: false, minBtn: false, iframe: true
+            });
+        }
+
+        function changeLinePlan(){
+            var DepartureID = $("#hidDepartureID").val();
+            var ArrivalID = $("#hidArrivalID").val();
+            var LineID = $("#hidLineID").val();
+
+            var url = "@Url.Action("CreateLinePlanList", "Plan", new { area = "Transport" })?DepartureID="+DepartureID+"&ArrivalID="+ArrivalID+"&LineID="+LineID;
+            ymPrompt.win({ message: url, width: 800, height: 420, title: "选择线路计划", maxBtn: false, minBtn: false, iframe: true,
+                handler:function(tp,result){
+                    if(tp=="ok"){
+                        $.ajax({
+                            url:"@Url.Action("OutboundLinePlan")/"+result.LPID,
+                            success:function(response, textStatus, jqXHR){
+                                $("#LinePlanInfo").html(response);
+                                $("#hidLPID").val(result.LPID);
+                            }
+                        });
+                    }
+                }} );
+        }
+
+        //确认调度Ex
+        function confirmDispatchEx(){
+            if($("#hidLPID").val()=="" || $("#hidLPID").val()==0){        
+                ymPrompt.errorInfo({ title: '提示', message: '请选择运输计划!' })
+                return;
+            }
+            var waybillno = $("#hidWaybillNo").val();      
+            var deliveryNo = $("#hidDeliveryNo").val();
+            var lpid =parseInt($("#hidLPID").val());
+            var op= $("#hidOP").val();
+            var did=$("#hidDID").val();
+            $.ajax({
+                url:"@Url.Action("ConfirmDispatchEx")",
+                type:"POST",
+                cache:false,
+                data:{deliveryNo:deliveryNo,waybillno:waybillno,lpid:lpid,did:did},
+                dataType:"json",
+                error:function(result){
+                    ymPrompt.errorInfo({ title: '调度失败', message: result.Message });                                
+                },
+                success:function(result, textStatus, jqXHR){
+                    if(result.IsSuccess){                                    
+                        ymPrompt.confirmInfo({ title: '调度成功', message: result.Message+"<br/>你是否要打印该提货单？",
+                            handler:function(tp){
+                                if(tp=="ok"){
+                                    var DeliveryNo = $("#hidDeliveryNo").val().trim();
+                                    openWindow('@Url.Action("Print", "Print")/?DeliveryNo='+DeliveryNo, 'PrintDeliveryNo',800,600);
+                                }
+                                if($("#hidPreParams").val()!="")
+                                {
+                                    location = "@Url.Action("List")?isReturn=1&"+ unescape($("#hidPreParams").val());
+                                }
+                                else
+                                {
+                                    location = "@Url.Action("List")";
+                                }
+                            } 
+                        });
+                    }
+                    else{
+                        ymPrompt.errorInfo({ title: '调度失败', message: result.Message })
+                    }
+                }
+            });
+        }
+
+        //确认调度
+        function confirmDispatch(){
+            if($("#BoxListTable :checked[name='BoxNo']").length==0){                
+                ymPrompt.errorInfo({ title: '提示', message: '请选择要调度的箱子!' })
+                return;
+            }
+            if($("#hidLPID").val()=="" || $("#hidLPID").val()==0){        
+                ymPrompt.errorInfo({ title: '提示', message: '请选择运输计划!' })
+                return;
+            }
+            var box = "";
+            $("#BoxListTable :checked[name='BoxNo']").each(function(){
+                box += $(this).val()+",";
+            });
+            ymPrompt.win({ message: "@Url.Action("InputWaybillNo")", width: 360, height: 240, title: '请输入运单号码',
+                handler: function (tp, data) {
+                    if (tp == "ok") {
+                        var waybillno = data.WaybillNo;      
+                        var deliveryNo = $("#hidDeliveryNo").val();
+                        var lpid =parseInt($("#hidLPID").val());
+                        var op= $("#hidOP").val();
+                        $.ajax({
+                            url:"@Url.Action("ConfirmDispatch")",
+                            type:"POST",
+                            cache:false,
+                            data:{deliveryNo:deliveryNo,waybillno:waybillno,lpid:lpid,dispatchedBoxes:box,op:op},
+                            dataType:"json",
+                            error:function(result){
+                                ymPrompt.errorInfo({ title: '调度失败', message: result.Message });                                
+                            },
+                            success:function(result, textStatus, jqXHR){
+                                if(result.IsSuccess){                                    
+                                    ymPrompt.confirmInfo({ title: '调度成功', message: result.Message+"<br/>你是否要打印该提货单？",
+                                        handler:function(tp){
+                                            if(tp=="ok"){
+                                                var DeliveryNo = $("#hidDeliveryNo").val().trim();
+                                                openWindow('@Url.Action("Print", "Print")/?DeliveryNo='+DeliveryNo, 'PrintDeliveryNo',800,600);
+                                            }
+                                            if($("#hidPreParams").val()!="")
+                                            {
+                                                location = "@Url.Action("List")?isReturn=1&"+ unescape($("#hidPreParams").val());
+                                            }
+                                            else
+                                            {
+                                                location = "@Url.Action("List")";
+                                            }
+                                        } 
+                                    });
+                                }
+                                else{
+                                    ymPrompt.errorInfo({ title: '调度失败', message: result.Message })
+                                }
+                            }
+                        });
+                    }
+                }, maxBtn: false, minBtn: false, iframe: true
+            });
+        }
+
+        function returnToList()
+        {
+            if($("#hidPreParams").val()!="")
+            {
+                location="@Url.Action("List")?isReturn=1&"+ unescape($("#hidPreParams").val());
+            }
+            else
+            {
+                location="@Url.Action("List")";
+            }
+        }
+    </script>
+}
+<!-- 调度信息 -->
+<input type="hidden" value="@ViewBag.SerialNumber" id="hidDeliveryNo" name="DeliveryNo" />
+<input type="hidden" value="@ViewBag.LinePlan.LPID" id="hidLPID" name="LPID" />
+<input type="hidden" value="@ViewBag.LinePlan.LineID" id="hidLineID" name="LineID" />
+<input type="hidden" value="@ViewBag.LinePlan.DepartureID" id="hidDepartureID" name="DepartureID" />
+<input type="hidden" value="@ViewBag.LinePlan.ArrivalID" id="hidArrivalID" name="ArrivalID" />
+<input type="hidden" value="@ViewBag.OP" id="hidOP" name="hidOP" />
+<input type="hidden" value="@ViewBag.PreParams" id="hidPreParams" name="hidPreParams" />
+<input type="hidden" value="@ViewBag.WaybillNo" id="hidWaybillNo" name="hidWaybillNo" />
+<input type="hidden" value="@ViewBag.DID" id="hidDID" name="hidDID" />
+@section search{
+    @{
+        ViewBag.SearchTitle = "线路信息";
+    }
+    <div id="LinePlanInfo">
+        @{Html.RenderPartial("_PartialOutboundLinePlan", (Vancl.TMS.Model.BaseInfo.Line.ViewLinePlanModel)ViewBag.LinePlan);}
+    </div>
+}
+@section list
+{
+    <div id="BoxListTable" class="DataGirdPanel">
+        <div class="toolbar">
+            <ul>
+                @*<li class="toolbtn"><a href="javascript:location.reload()" class="refresh" id="btnRefresh">
+                    刷新</a></li>*@ @*<li class="toolbtn"><a href="javascript:addBox()" class="add">添加箱子</a></li>*@
+                <li class="toolbtn"><a href="javascript:changeLinePlan()" class="change">更改运输计划</a></li>
+                <li class="toolbtn"><a href="javascript:confirmDispatchEx()" class="ok">确认调度</a></li>
+                <li class="toolbtn"><a href="javascript:returnToList()" class="refresh">返回列表</a></li>
+            </ul>
+            @*<div class="red center">
+                调度箱数:<label id="lblSelectedBoxCount"></label>
+                <span style="width: 10px"></span>调度订单数:<label id="lblSelectedOrderCount"></label>
+            </div>*@
+        </div>
+    </div>
+    @*<div class="tablelist center">
+            <table id="tbBoxList" cellpadding="0" cellspacing="0" border="0" class="DataTable MultiSelect"
+                id="LinePlanTable">
+                <thead>
+                    <tr>
+                        <th class="CbxColumn">
+                            <input type="checkbox" class="CheckAll" checked="checked" />
+                        </th>
+                        <th>
+                            箱号
+                        </th>
+                        <th>
+                            出发地
+                        </th>
+                        <th>
+                            目的地
+                        </th>
+                        <th>
+                            订单数量
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (Model == null || Model.Count == 0)
+                        {
+                            Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                var item = Model[i];
+                        <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                            <td class="CbxColumn">
+                                <input type="checkbox" value="@item.BoxNo" name="BoxNo" checked="checked" ordercount="@item.OrderCount"/>
+                            </td>
+                            <td>
+                                @item.BoxNo
+                            </td>
+                            <td>
+                                @item.DepartureName
+                            </td>
+                            <td>
+                                @item.ArrivalName
+                            </td>
+                            <td>
+                                @item.OrderCount
+                            </td>
+                        </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>*@ @*<div class="split">
+    </div>*@ @*<div class="center">
+        <input type="button" class="button" value="确认调度" onclick="confirmDispatch();" id="btnConfirm" />
+        <input type="button" class="button" value="返回列表" onclick='returnToList();' />
+    </div>*@
+}

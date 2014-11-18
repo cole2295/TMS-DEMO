@@ -1,0 +1,337 @@
+﻿@using Vancl.TMS.Model.BaseInfo;
+@{
+    ViewBag.Title = "面单称重打印";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";   
+}
+@section header{
+    <style type="text/css">
+        .ContainerItem
+        {
+            text-align: center;
+            border-bottom: solid 1px #ccc;
+            padding: 10px 0px 10px 0px;
+            min-height: 30px;
+        }
+        .Info
+        {
+            color: blue;
+        }
+        .Error
+        {
+            color: Red;
+        }
+        .Success
+        {
+            color: Green;
+        }
+        .Warning
+        {
+            color: Chocolate;
+        }
+        #CilentServiceInfo
+        {
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid gray;
+            color: gray;
+        }
+    </style>
+    <script id="PackageListTemplate" type="text/x-jquery-tmpl">
+        <tr PackageIndex="${PackageIndex}" Weight="${Weight}">
+            <td name="PackageIndexTd">
+                ${PackageIndex}
+            </td>
+            <td>
+                ${Weight}
+            </td>
+            <td>            
+            ${StrScanTime}
+            </td>
+            <td>                
+					【<a href="#" onclick="reWeigh(this)">重新称重<a/>】
+					【<a href="#" onclick="rePrintByIdex(this)">补打<a/>】
+            </td>
+        </tr>
+    </script>
+    <script id="MultiMerchantListTemplate" type="text/x-jquery-tmpl">
+    <tr>
+        <td>
+            ${MerchantName}
+        </td>
+        <td>
+            ${FormCode}
+        </td>
+        <td>
+            ${StatusName}
+        </td>
+        <td>
+            <input type="button" onclick="submitForMerchant({MerchantID:${MerchantID},FormCode:'${FormCode}',IsSkipPrintBill:${IsSkipPrintBill},IsNeedWeight:${IsNeedWeight},IsCheckWeight:${IsCheckWeight},CheckWeight:${CheckWeight}})" value="提交此商家" />
+        </td>
+    </tr>
+    </script>
+
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/pages/sorting/BillPrint.js?0956" + DateTime.Now.ToString("yyyyMMddHHmmss"))" type="text/javascript"></script>
+}
+<input type="hidden" id="hidFormCode" />
+<table id="tbInput" class="tb_insert Fixed1" style="width: auto; margin: 10px auto;">
+    <tr>
+        <th>
+            <select id="selFormType" class="ScanType ScanInput" name="ScanType">
+                <option value="0" selected="selected">运单号</option>
+                <option value="1">订单号</option>
+                <option value="2">配送单号</option>
+            </select>
+        </th>
+        <td>
+            <input id="txtFormCode" name="FormCode" type="text" class="textbox input ScanInput"
+                maxlength="40" style="width: 280px;" />
+        </td>
+        <th style="width: 80px;" class="ScanInput">
+            称重
+        </th>
+        <td>
+            <input id="txtBillWeight" type="text" name="BillWeight" maxlength="10" style="width: 80px;
+                text-align: right; padding-right: 3px;" onkeyup="clearNoNum(this)" readonly1="readonly"
+                class="input ScanInput" />
+        </td>
+        <th style="width: 60px;" class="ScanInput">
+            商家
+        </th>
+        <th>
+            <select id="Merchant" class="merchantSelect ScanInput" style="width: 300px; font-size: 14px!important;">
+                @{
+                    var MerchantList = (IList<Vancl.TMS.Model.BaseInfo.MerchantModel>)ViewBag.MerchantList;
+                    if(MerchantList.Count!=1)
+                    {
+                        <option IsNeedWeight="True" value="0">--全部--</option>
+                    }
+                    foreach (MerchantModel merchant in MerchantList)
+                    {             
+                        <option value ="@merchant.ID" 
+                    @*@(merchant.ID==26?"Selected":"")*@
+                    IsSkipPrintBill="@merchant.IsSkipPrintBill" 
+                    IsNeedWeight ="@merchant.IsNeedWeight"  
+                    IsCheckWeight="@merchant.IsCheckWeight" 
+                    CheckWeight="@merchant.CheckWeight">
+                        @merchant.Name
+                    </option>
+                    }
+                }
+            </select>
+            @* @Html.DropDownList("Merchant", null, new { style = "width:160px" })*@
+        </th>
+        @*        <th style="width: 30px;">
+            <label for="cbxRePrint">
+                补打：</label>
+        </th>
+        <td>
+            <input type="checkbox" id="cbxRePrint" />
+        </td>*@
+    </tr>
+    <tr>
+        <th colspan="6" style="width: auto; font-size: 24px;">
+            <div id="CountContainer" class="ContainerItem">
+                客户重量：<span id="lbMerchantWeight" class="Info">0</span> , 本单第 <span id="lbCurrentPackageIndex"
+                    class="Info">0</span> 件,共 <span id="lbTotalPackageCount" class="Info">0</span>
+                件
+            </div>
+        </th>
+    </tr>
+</table>
+<div class="ContainerItem">
+    <div id="MessageLabel" style="font-size: 40px; font-weight: bold;" class="">
+        @*信息显示处*@
+    </div>
+    <div id="PrintLabel" style="font-size: 40px; font-weight: bold;" class="">
+        @*信息显示处*@
+    </div>
+    <div id="SelectMultiMerchant" class="hide">
+        <table style="margin: 0 auto; text-align: center; font-size: 30px; border: 1px; border-collapse: collapse; "
+            border="1">
+            <thead>
+                <tr style="background: #eee;">
+                    <td>
+                        商家名称
+                    </td>
+                    <td>
+                        运单号
+                    </td>
+                    <td>
+                        运单状态
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+            @*
+                <tr>
+                    <td>
+                        vjia武汉锦锐恒达服装有限公司
+                    </td>
+                    <td>
+                        9120512848721
+                    </td>
+                    <td>
+                        待入库
+                    </td>
+                    <td>
+                        <input type="button" value="提交此商家" />
+                    </td>
+                </tr>
+                *@
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="ContainerItem Info" style="font-size: 40px; font-weight: bold;">
+    <span id="SendToSite" style="display: none; line-height: 35px;">@*发送到站点*@ @*            <label style="font-size: 24pt; margin-left: 40px;">
+                城市编号:</label>
+            <label style="font-size: 24pt; font-weight: bold;" class="printZoneCode">
+            </label>*@
+        <label style="font-size: 24pt; margin-left: 40px;">
+            站点编号:</label>
+        <label style="font-size: 24pt; font-weight: bold;" class="lbSiteNo">
+        </label>
+        <label style="font-size: 24pt; margin-left: 40px;">
+            站点名称：</label>
+        <label style="font-size: 24pt; font-weight: bold;" id="lbStationName">
+        </label>
+    </span><span id="SendToCompany" style="display: none">@*发送到 配送商 *@
+        <label style="font-size: 28pt; margin-left: 40px;">
+            配送商编号:</label>
+        <label style="font-size: 36pt; font-weight: bold;" class="lbSiteNo">
+        </label>
+        <label style="font-size: 28pt; margin-left: 40px;">
+            配送商名称:</label>
+        <label style="font-size: 36pt; font-weight: bold;" id="lbCompanyName">
+        </label>
+    </span>
+</div>
+<input type="hidden" id="hidUserID" />
+<table style="width: 100%; table-layout: fixed;">
+    <tr>
+        <td valign="top">
+            <div class="box_title">
+                <h1 class="s">
+                    运单信息</h1>
+            </div>
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        运单号
+                    </th>
+                    <td>
+                        <span id="lbFormCode"></span>
+                        <a id="aRePint" class="hide"  href="javascript:rePrint();">[补打]</a>
+                    </td>
+                    <th>
+                        订单号
+                    </th>
+                    <td>
+                        <span id="lbCustomerOrder"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        订单来源
+                    </th>
+                    <td>
+                        <span id="lbBillSource"></span>
+                    </td>
+                    <th>
+                        订单类型
+                    </th>
+                    <td>
+                        <span id="lbBillType"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        总重量
+                    </th>
+                    <td>
+                        <span id="lbTotalWeight"></span>
+                    </td>
+                    <th>
+                        运单状态
+                    </th>
+                    <td>
+                        <span id="lbBillStatus"></span>
+                    </td>
+                </tr>
+            </table>
+            <div class="box_title">
+                <h1 class="s">
+                    商家信息</h1>
+            </div>
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        商家名称
+                    </th>
+                    <td>
+                        <span id="lbMerchantName"></span>
+                    </td>
+                    <th>
+                        打印面单
+                    </th>
+                    <td>
+                        <span id="lbMerchantPrint"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        必须称重
+                    </th>
+                    <td>
+                        <span id="lbMerchantNeedWeight"></span>
+                    </td>
+                    <th>
+                        称重复核
+                    </th>
+                    <td>
+                        <span id="lbMerchantCheckWeight"></span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td width="30">
+        </td>
+        <td valign="top">
+            <div class="box_title">
+                <h1 class="s">
+                    运单箱子</h1>
+            </div>
+            <div class="DataGirdPanel">
+                <table id="tbPackageList" cellpadding="0" cellspacing="0" border="0" class="DataTable center"
+                    style="min-width: 0;">
+                    <thead>
+                        <tr>
+                            <th>
+                                箱号
+                            </th>
+                            <th>
+                                重量
+                            </th>
+                            <th>
+                                称重时间
+                            </th>
+                            <th>
+                                操作
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <h2 id="CilentServiceInfo">
+                未能连接到本地打印称重服务，不能进行打印和实时称重！ 请联系技术支持检查服务是否正常启动或重新安装服务。 <a href="/Update/ClientService.zip"
+                    class="red">点击下载安装文件</a>
+            </h2>
+        </td>
+    </tr>
+</table>
+@{Html.RenderPartial("_wavMedia");}

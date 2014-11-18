@@ -1,0 +1,227 @@
+﻿@using Vancl.TMS.Model.BaseInfo;
+@model Object
+@{
+    ViewBag.Title = "商家入库确认";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")  " type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/pages/sorting/MerchantReturnBill.js")  " type="text/javascript"></script>
+    <script type="text/javascript">
+        function checkSelect(list) {
+            var CodeLists = "";
+            if (!list.length == 0) {
+                list.each(function () {
+                    if (CodeLists == "") {
+
+                        CodeLists = $(this).val();
+                    }
+                    else {
+                        CodeLists += ',' + $(this).val();
+                    }
+                });
+            }
+            return CodeLists;
+        }
+
+
+        $(function () {
+            $("#btnConfirm").click(function () {
+                var list = TMS.Page.GetDataTableChecked();
+                var CodeLists = checkSelect(list);
+                if (CodeLists == "") {
+                    alert("请至少选择一个项！");
+                    return;
+                }
+                var url = "/Sorting/Return/MerchantReturnBillConfirm";
+                var params = {};
+                params.Codes = CodeLists;
+                $.ajax({
+                    url: url,
+                    data: params,
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (result) {
+                        if (result == null) {
+                            alert(result);
+                            ActionResult = false;
+                        }
+                        if (result.IsSuccess) {
+                            alert(result.Message);
+                            ActionResult = true;
+                            $("#btnSearch").click();
+
+                        }
+                        else {
+                            alert(result.Message);
+                            ActionResult = false;
+                        }
+                    }
+                });
+            });
+
+            $("#btnPrint").click(function () {
+                var list = TMS.Page.GetDataTableChecked();
+                var CodeLists = checkSelect(list);
+                if (CodeLists == "") {
+                    alert("请至少选择一个项！");
+                    return;
+                }
+                var params = {};
+                //ActionClick(2, CodeLists);
+                openWindow('MerchantReturnBillPrintDetail?codeLists=' + CodeLists, '打印明细', 1000, 700);
+            });
+        });
+        $(function () {
+            $("#S_ReturnBillStatus").change(function () {
+                if ($("#S_ReturnBillStatus")[0].value == "6" || $("#S_ReturnBillStatus")[0].value == "7" || $("#S_ReturnBillStatus")[0].value == "13") {
+                    $("#btnConfirm").attr("disabled", "disabled");
+                }
+                else if ($("#S_ReturnBillStatus")[0].value == "-1" || $("#S_ReturnBillStatus")[0].value == "1") {
+                    if ($("#HasPrint").attr("checked")) {
+                        alert("已打印下只能查询拒收入库、退换货入库和签单返回入库状态的运单！");
+                        $("#S_ReturnBillStatus")[0].value = "";
+                    }
+                    else {
+                        $("#btnConfirm").removeAttr("disabled", "disabled");
+                    }
+                }
+                else {
+                    $("#btnConfirm").removeAttr("disabled", "disabled");
+                }
+            });
+            $("#HasPrint").change(function () {
+                if ($(this).attr("checked")) {
+                    $("#btnConfirm").attr("disabled", "disabled");
+                    $("#hdHasPrint").val("1");
+                    $("#S_ReturnBillStatus")[0].value = "";
+                }
+                else {
+                    $("#btnConfirm").removeAttr("disabled", "disabled");
+                    $("#hdHasPrint").val("0");
+                    $("#S_ReturnBillStatus")[0].value = "";
+                }
+            });
+        });
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition" style="width: 100%;">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr id="trSortingCenterSelect">
+                    <th>
+                        商家名称：
+                    </th>
+                    <td>
+                        <select id="Merchant" name="merchantSelect" class="merchantSelect" style="width: 160px">
+                            @{
+                                <option value="-1" selected="selected">--请选择-- </option>
+            var MerchantList = (IList<Vancl.TMS.Model.BaseInfo.MerchantModel>)ViewBag.MerchantList;
+            foreach (MerchantModel merchant in MerchantList)
+            {                   
+                                <option  value ="@merchant.ID" >
+                                    @merchant.Name
+                                </option>
+            }
+                            }
+                        </select>
+                    </td>
+                    <th>
+                        配送商：
+                    </th>
+                    <td>
+                        @Html.DropDownList("DistributorList")
+                    </td>
+                    <th>
+                        打印时间：
+                    </th>
+                    <td colspan="2">
+                        @Html.TextBox("ReturnBeginTime", DateTime.Now, new
+                   {
+                       @class = "Wdate1",
+                       onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm'})",
+                       @readonly = "readonly"
+                   })--
+                        @Html.TextBox("ReturnBoundEndTime", DateTime.Now, new
+                   {
+                       @class = "Wdate1",
+                       onfocus = "WdatePicker({skin: 'blue',dateFmt:'yyyy-MM-dd HH:mm'})",
+                       @readonly = "readonly"
+                   })
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        城市站点
+                    </th>
+                    <td>
+                        @{Html.RenderPartial("CityAndStation");}
+                    </td>
+                    <th>
+                        车牌号
+                    </th>
+                    <td>
+                        @Html.DropDownList("S_TruckNo", (IEnumerable<SelectListItem>)ViewBag.TruckNos, "--请选择--", new { style = "width:150px" })
+                    </td>
+                    <th>
+                        司机
+                    </th>
+                    <td colspan="2">
+                        @Html.DropDownList("S_Driver", (IEnumerable<SelectListItem>)ViewBag.Drivers, "--请选择--", new { style = "width:150px" })
+                    </td>
+                  
+                </tr>
+                <tr>
+                    <th>
+                        运单状态：
+                    </th>
+                    <td>
+                        @Html.DropDownList("S_ReturnBillStatus", (IEnumerable<SelectListItem>)ViewBag.ReturnBillStatus, "--请选择--", new { style = "width:150px" })
+                    </td>
+                    <th>
+                        箱号：
+                    </th>
+                    <td>
+                        <input type="text" id="txtBoxNo" name="BoxNo" class="BoxNo" />
+                    </td>
+                    <th>
+                        标签号：
+                    </th>
+                    <td colspan="2">
+                        <input type="text" id="txtLabel" name="Label" class="Label" />
+                    </td>
+                 
+                </tr>
+                <tr>
+                    <th>
+                        运单号：
+                    </th>
+                    <td>
+                        <input type="text" id="txtFormCode" name="FormCode" class="FormCode" />
+                    </td>
+                    <td >
+                        <label>
+                            <input type="checkbox" id="HasPrint" name="HasPrint" />已打印</label>
+                        <input type="hidden" id="hdHasPrint" value="0" class="hdHasPrint" name="hdHasPrint" />
+                    </td>
+                    <td >
+                        <input type="submit" value="查询" id="btnSearch" name="BtnSearch" />
+                        <input type="button" value="交接确认" id="btnConfirm" name="BtnConfirm" />
+                        <input type="button" value="打印" id="btnPrint" name="BtnPrint" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <input type="hidden" id="hdReturnInitData" value="@ViewBag.HiddenValue" />
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialMerchantReturnBillList", Model); }
+    </div>
+}

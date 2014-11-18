@@ -1,0 +1,210 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.LadingBill.TaskViewModel>
+@{
+    Layout = null;
+}
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnLinePlanListRefresh" })
+        </li>
+        <li class="toolbtn"><a class="add" href="javascript:TaskEdit();">录入信息</a> </li>
+        <li class="toolbtn"><a class="modify" href="javascript:PrintDeliveryNo();">打印提货单</a></li>
+    </ul>
+</div>
+<div class="tablelist">
+    <table cellpadding="0" cellspacing="0" border="0" class="DataTable SingleSelect center"
+        id="LinePlanTable">
+        <thead>
+            <tr>
+                <th class="CbxColumn">
+                    <input type="checkbox" class="CheckAll" />
+                </th>
+            
+                <th>
+                    操作日志
+                </th>
+                <th>
+                    任务编号
+                </th>
+                <th>
+                    商家
+                </th>
+                <th>
+                    仓库
+                </th>
+                <th>
+                    仓库地址
+                </th>
+                <th>
+                    任务下达公司
+                </th>
+                <th>
+                    提货公司
+                </th>
+                <th>
+                    提货部门
+                </th>
+                <th>
+                    提货人
+                </th>
+                <th>
+                     任务接收邮箱
+                </th>
+                <th>
+                    单量
+                </th>
+                <th>
+                    重量（kg）
+                </th>
+                <th>
+                    公里数
+                </th>
+                <th>
+                    计划提货时间
+                </th>
+                <th>
+                    提货完成时间
+                </th>
+                <th>
+                    状态
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model == null || Model.Count == 0)
+                {
+                    Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var task = Model[i];
+                        var taskid = Model[i].id;
+                        var prevTaskID = i == 0 ? "" : Model[i - 1].id;
+                        var nextTaskID = i == Model.Count - 1 ? "" : Model[i + 1].id;
+
+
+                        var cbxClass = "Group_Empty";
+
+                        if (taskid == nextTaskID)
+                        {
+                            cbxClass = "Group_Top";
+                        }
+
+                        if (taskid == prevTaskID)
+                        {
+                            if (taskid == nextTaskID)
+                            {
+                                cbxClass = "Group_Item";
+                            }
+                            else
+                            {
+                                cbxClass = "Group_Bot";
+                            }
+                        }
+                <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                    <td class="CbxColumn">
+                        <input type="checkbox" taskid="@task.id" taskCode="@task.taskcode" taskStatus="@task.taskstatus" todis="@task.todistributioncode"/>
+                    </td>
+                 
+                    <td>
+                        <a href="javascript:ShowOperateLog(@task.id,'@task.id')">操作日志</a>
+                    </td>
+                    <td>
+                        @task.taskcode
+                    </td>
+                    <td>
+                        @task.merchantname
+                    </td>
+                    <td>
+                        @task.warehousename
+                    </td>
+                    <td>
+                        @task.warehouseaddress
+                    </td>
+                    <td>@task.fromdistributionname
+                    </td>
+                    <td>
+                        @task.distributionname
+                    </td>
+                    <td>
+                        @task.department
+                    </td>
+                    <td>@task.PICKMAN
+                    </td>
+                    <td>
+                        @task.receiveemail
+                    </td>
+                    <td>
+                        @if (task.taskstatus == 1)
+                        {
+                           @task.PREDICTORDERQUANTITY
+                        }
+                        else
+                        {
+                            @task.orderquantity
+                        }
+                       
+                    </td>
+                    <td>
+                          @if (task.taskstatus == 1)
+                        {
+                           @task.PREDICTWEIGHT
+                        }
+                        else
+                        {
+                            @task.weight
+                        }
+                       
+                    </td>
+                    <td>
+                        @task.mileage
+                    </td>
+                    <td>
+                        @if (task.PREDICTTIME.Year > 1)
+                        {
+                            <span>@task.PREDICTTIME</span>
+                        }
+                    </td>
+                    <td>
+                        @if (task.FINISHTIME.Year != 1)
+                        {
+                            <span>@task.FINISHTIME</span>
+                        }
+                    </td>
+                    <td>
+                        @{
+                        switch (task.taskstatus)
+                        {
+                            case 1:
+                            <span>新任务</span>
+                                break;
+                            case 2:
+                            <span>已完成</span>
+                                break;
+                            case 3:
+                            <span>已考核</span>
+                                break;
+                            case 4:
+                            <span>已取消</span>
+                                break;
+                        }
+                        }
+                    </td>
+                </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+  
+    
+    ViewBag.UpdateTargetId = "TaskList";
+    ViewBag.OnBegin = "beforeSend";
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

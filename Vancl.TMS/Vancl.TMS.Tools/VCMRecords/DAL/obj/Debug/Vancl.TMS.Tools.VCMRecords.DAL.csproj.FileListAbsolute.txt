@@ -1,0 +1,10 @@
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\bin\Debug\DAL.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\bin\Debug\DAL.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\bin\Debug\Entity.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\bin\Debug\Tool.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\bin\Debug\Entity.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\bin\Debug\Tool.pdb
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\obj\Debug\ResolveAssemblyReference.cache
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\obj\Debug\DAL.dll
+D:\lms\Vancl.TMS\Vancl.TMS.Tools\VCMRecords\DAL\obj\Debug\DAL.pdb

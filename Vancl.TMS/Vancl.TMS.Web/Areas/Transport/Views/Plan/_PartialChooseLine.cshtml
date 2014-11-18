@@ -1,0 +1,24 @@
+﻿@model List<Vancl.TMS.Model.Transport.Plan.ViewTansportEditorModel> 
+<div class="box">
+    <div class="box_title">
+        <h1 class="l">
+            基础设置</h1>
+    </div>
+    <div class="search_condition">
+        @using (Html.BeginForm("ChooseLine","Plan"))
+        {
+            <label for="txtDeparture">
+                始发地</label>
+            <input id="txtDeparture" name="Departure" type="text" class="textbox" onclick="TMS.Page.SelectStation(this,'#hidDepartureID');" />
+            <input id="hidDepartureID" name="DepartureID" type="hidden" />
+            <label for="txtArrival">
+                目的地</label>
+            <input id="txtArrival" name="Arrival" type="text" class="drop textbox" onclick="TMS.Page.SelectStation(this,'#hidArrivalID','#hidDepartureID');" />
+            <input id="hidArrivalID" name="ArrivalID" type="hidden" />
+            <label for="cbIsTransit">
+                是否中转</label>
+            <input id="cbIsTransit" name="IsTransit" type="checkbox" value="true" />
+            <input id="btnSearch" type="submit" value="设置线路" class="button" />
+        }
+    </div>
+</div>

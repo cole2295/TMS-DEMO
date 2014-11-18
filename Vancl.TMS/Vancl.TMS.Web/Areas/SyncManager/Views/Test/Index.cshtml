@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "测试";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+
+<script type="text/javascript">
+        function Repair() {
+            var parms = {txt:$("#txtAreaSql").val()};
+            $.ajax({
+                url:"@Url.Action("Repair")",
+                data:parms,
+                dataType:"json",
+                success:function(data){
+                    if(data.IsSuccess){
+                        alert(data.Message);
+                    }else{
+                       alert(data.Message);
+                    }
+                },
+                error:function(){
+                    alert("操作失败!");
+                }
+            });
+        }
+    </script>
+
+<div>
+    <span id="span_count"></span>
+    <textarea id="txtAreaSql" name="AreaSql" rows="20" style="width:500px;">
+        
+    </textarea>
+    <input type="button" value="OK" class="button" id="btnSearch" name="BtnSearch" onclick="Repair();" />
+</div>

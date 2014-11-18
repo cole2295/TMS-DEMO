@@ -1,0 +1,46 @@
+﻿<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: '@Url.Action("GetCitiesHasAuthority", "Shared", new { area = "" })',
+            dataType: "json",
+            success: function (data) {
+                if (data == undefined || data == null || data.length == 0) {
+                    return;
+                }
+                for (var i = 0; i < data.length; i++) {
+                    var html = "<option value='" + data[i].ID + "'>" + data[i].Name + "</option>";
+                    $("#selCityAndStation_City").append(html);
+                }
+                $("#selCityAndStation_City").val(-1);
+            }
+        });
+
+        $("#selCityAndStation_City").live("change", function () {
+            $("#selCityAndStation_Station").html("");
+            var params = {};
+            params.cityID = $("#selCityAndStation_City option:selected").val();
+            $.ajax({
+                url: '@Url.Action("GetStationsHasAuthorityByCityID", "Shared", new { area = "" })',
+                dataType: "json",
+                data: params,
+                success: function (data) {
+                    if (data == undefined || data == null || data.length == 0) {
+                        return;
+                    }
+                    for (var i = 0; i < data.length; i++) {
+                        var html = "<option value='" + data[i].ID + "'>" + data[i].Name + "</option>";
+                        $("#selCityAndStation_Station").append(html);
+                    }
+                    $("#selCityAndStation_Station").val(-1);
+                }
+            });
+        });
+    });
+    
+
+</script>
+<select id="selCityAndStation_City">
+</select>
+
+<select id="selCityAndStation_Station" name="selCityAndStation_Station">
+</select>

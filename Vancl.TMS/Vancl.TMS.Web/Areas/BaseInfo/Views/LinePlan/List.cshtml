@@ -1,0 +1,261 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.BaseInfo.Line.ViewLinePlanModel>
+@{
+    ViewBag.Title = "线路计划列表";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        //添加线路
+        function createLine()
+        {
+            TMS.Page.Serialize("divSearchCondition", "btnSearch");
+            location="Create";
+        }
+
+        //添加线路计划
+        function AddLinePlan()
+        {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if(arr)
+            {
+                var lpid = arr.eq(0).val();
+                var status = arr.attr("Status");
+                if(status==1||status==3){
+                    TMS.Page.Serialize("divSearchCondition", "btnSearch");
+                    location ="CreateLinePlan/"+lpid; 
+                }
+                else{
+                    ymPrompt.alert({title:'提示',message:'只有已审核和已生效的线路才能添加线路计划!'});
+                    return;
+                }
+            }
+        }
+        //修改线路
+        function UpdateLinePlan()
+        {
+            var arr = TMS.Page.CheckDataTableChecked();
+            if(arr){
+                var lpid = arr.eq(0).val();
+                var status = arr.attr("Status");
+                if(status==0||status==2){
+                    TMS.Page.Serialize("divSearchCondition", "btnSearch");
+                    location ="Update/"+lpid; 
+                }
+                else{
+                    ymPrompt.alert({title:'提示',message:'只能操作未审核和已驳回的线路!'});
+                    return;
+                }
+            }
+        }
+        //启用、停用
+        function SetEnabled(isEnabled)
+        {
+            var op = isEnabled ? "启用":"停用";
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if(arr)
+            {
+                var lineids = "";
+                arr.each(function(){
+                    lineids += $(this).attr("LineID")+",";
+                })
+                var parms = {};
+                parms.lineids = lineids.substr(0,lineids.length-1);
+                parms.isEnabled = isEnabled;
+                ymPrompt.confirmInfo({ 
+                    title: '询问',
+                    message: '此操作将会影响所有线路编号相同的项！你确定要'+ op +'选择的 ' + arr.length + ' 项？',
+                    handler: function (tp) {
+                        if (tp == 'ok') {
+                            $.ajax({
+                                url:"@Url.Action("SetEnable")",
+                                data:parms,
+                                dataType:"json",
+                                success:function(data){
+                                    if(data.IsSuccess)
+                                    {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnLinePlanListRefresh").click();
+                                    }
+                                    else
+                                    {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error:function()
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: op+"操作失败!" });
+                                }});
+                         }
+                     }
+                });
+            }
+        }
+        //删除线路计划
+        function DeleteLinePlan() {
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if(arr)
+            {
+                var ids = "";
+                var result = true;
+                arr.each(function(){
+                    ids += $(this).val()+",";
+                    var status = $(this).attr("Status");
+                    if(status!=0 && status!=2){
+                        ymPrompt.alert({title:'提示',message:'只能操作未审核和已驳回的线路!'});
+                        result = false;
+                        return false;
+                    }
+                })
+                if(!result){
+                    return;
+                }
+                ymPrompt.confirmInfo({ 
+                    title: '询问',
+                    message: '你确定要删除选择的 ' + arr.length + ' 项？',
+                    handler: function (tp) {
+                        if (tp == 'ok') {
+                            $.ajax({
+                                url:"@Url.Action("Delete")",
+                                data:"ids="+ids.substr(0,ids.length-1),
+                                dataType:"json",
+                                success:function(data){
+                                    if(data.IsSuccess)
+                                    {
+                                        ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                        //刷新列表
+                                        $("#btnLinePlanListRefresh").click();
+                                    }
+                                    else
+                                    {
+                                        ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                    }
+                                },
+                                error:function()
+                                {
+                                    ymPrompt.errorInfo({ title: '提示', message: "删除操作失败!" });
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+        }
+
+        //显示操作日志
+        function ShowOperateLog(KeyValue,LineID) {
+            ymPrompt.win('@Url.Action("ShowOperateLog")' + "?LPID=" + KeyValue+"&LineID="+LineID+"",
+                              880, 310, '查看操作日志', null, null, null, { id: 1 });
+            return;
+        }
+
+        //查看运费
+        function ShowExpressionDetail(lpid,expressionType)
+        {
+            var LineExpression = "";
+            var parms = {};
+            parms.LPID = lpid;
+            parms.ExpressionType = expressionType;
+            $.ajax({
+                    url:'@Url.Action("GetExpressionDetail")',
+                    data:parms,
+                    dataType:"json",
+                    success:function(data){
+                        if(data.IsSuccess)
+                        {
+                            LineExpression = data.Expression;
+                            window.top.UserData = LineExpression
+                            var parm = "?Operate=look";
+                            if(expressionType==0){
+                                ymPrompt.win('@Url.Action("SetFixedPrice")' + parm , 450, 280, '查看固定价格',
+                                    handle, null, null, { id: 1 });
+                            }else if(expressionType==1){
+                                 ymPrompt.win('@Url.Action("SetLadderPrice")' + parm , 800, 380, '查看阶梯价格',
+                                    handle, null, null, { id: 1 });
+                            }else if(expressionType==2){
+                                ymPrompt.win('@Url.Action("SetFormulaPrice")' + parm , 780, 480, '查看公式价格',
+                                    handle, null, null, { id: 1 });
+                            }
+                        }
+                    }
+                });
+        }
+        function handle()
+        {
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        <label for="S_CarrierID">
+                            承运商
+                        </label>
+                    </th>
+                    <td>
+                        @Html.DropDownList("S_CarrierID", (IEnumerable<SelectListItem>)ViewBag.Carriers, "--请选择--", new { style = "width:150px" })
+                    </td>
+                    <th>
+                        <label for="S_DepartureID">
+                            出发地
+                        </label>
+                    </th>
+                    <td>
+                        <input id="departureName" name="departureName" type="text" class="textbox selectDeparture"
+                            onclick="TMS.Page.SelectStation(this,'#S_DepartureID');" readonly="readonly" />
+                        <input id="S_DepartureID" name="S_DepartureID" type="hidden" />
+                    </td>
+                    <th>
+                        <label for="S_ArrivalID">
+                            目的地
+                        </label>
+                    </th>
+                    <td>
+                        <input id="arrivalName" type="text" name="arrivalName" class="drop textbox" onclick="TMS.Page.SelectStation(this,'#S_ArrivalID','#S_DepartureID');"
+                            readonly="readonly" />
+                        <input id="S_ArrivalID" name="S_ArrivalID" type="hidden" />
+                    </td>
+                    <td rowspan="2">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="S_CarrierID">
+                            运输方式
+                        </label>
+                    </th>
+                    <td>
+                        @Html.DropDownList("TransportType", "--请选择--")
+                    </td>
+                    <th>
+                        <label for="S_DepartureID">
+                            线路类型
+                        </label>
+                    </th>
+                    <td>
+                        @Html.DropDownList("LineType", "--请选择--")
+                    </td>
+                    <th>
+                        线路状态
+                    </th>
+                    <td>
+                        @Html.DropDownList("LineStatus", "--请选择--")
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialLinePlanList", Model); }
+    </div>
+}

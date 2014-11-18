@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="@Url.Content("~/Content/error.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        body
+        {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            overflow: hidden;
+        }
+        .Version
+        {
+            height: 340px;
+            overflow: auto;
+        }
+        .Version ul
+        {
+            list-style: decimal;
+        }
+        .Version li
+        {
+            list-style-type: decimal;
+            padding1: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="com_w100pen com_Center_MaT0Auto">
+        <!-- top -->
+        <div class="com_w100pen meTop">
+            <h1 style="line-height: 70px; text-indent: 60px;">
+                欢迎使用运输管理系统</h1>
+        </div>
+        <div style="margin: 0 50px;">
+            <div class="metransport" style="float: left; margin-right: 30px;">
+            </div>
+            <div class="Version">
+                <h4>
+                    当前版本：20120712</h4>    
+                <ul>
+                    <li>TMS界面风格修改</li>
+                </ul>
+                <h4>
+                    版本：20120628</h4>    
+                <ul>
+                    <li>平台导航菜单</li>
+                    <li>TMSbug：运输调度-订单数统计有误</li>
+                    <li>TMSbug：发货现场管理-离库时间超过考核点2小时，未提示考核不通过</li>
+                    <li>TMS优化：不选择发货地时，目的地可选择</li>
+                    <li>TMS优化：运输调度出库，显示勾选的箱数和订单数</li>
+                    <li>TMS优化：发货现场管理可批量录入到离库时间</li>
+                    <li>TMS优化：到货确认，第一次选择时间后第二次时间请默认为当前时间而且前一个录入的时间</li>
+                    <li>TMS优化：确认到货需体现预计延误中审核通过的结果</li>
+                    <li>TMS优化：发货在途管理增加发货时间显示列</li>
+                    <li>TMS优化：预计延迟交货申请--增加预计到货时间、出发地、目的地筛选</li>
+                    <li>TMS优化：整票丢失且已经审核通过的，直接流入KPI考核，不需要到货确认</li>
+                    <li>TMS优化：异常处理平台增加筛选条件</li>
+                    <li>TMS优化：添加箱子页面增加筛选条件和货物类型</li>
+                    <li>TMS优化：KPI考核可查询已经审核的</li>
+                    <li>TMS优化：保持页面查询条件</li>
+                </ul>
+                <h4>
+                    版本：20120530</h4>    
+                <ul>
+                    <li>修改kpi考核页面提货单重复问题</li>
+                    <li>取消到货确认限制</li>
+                </ul>
+                @*
+    <!--是否到货确认加限制-->
+    <add key="ConfirmLimited" value="FALSE"/>                
+                    *@
+                <h4>
+                    版本：20120423</h4>    
+                <ul>
+                    <li>kpi考核页面格式调整</li>
+                    <li>BUG修正：丢失录入只勾选了一个箱子，在丢失审核查看详情页面显示了两个箱子都丢失</li>
+                </ul>
+                <h4>
+                    版本：20120420</h4>
+                <ul>
+                    <li>添加承运商kpi考核</li>
+                </ul>
+                <h4>
+                    版本：20120416</h4>
+                <ul>
+                    <li>添加异常处理平台</li>
+                </ul>
+                <h4>
+                    版本：20120412</h4>
+                <ul>
+                    <li>修改验证码图片字体，避免g和q分辨不清的问题</li>
+                    <li>验证码采用新的存储方法，以防暴力破解</li>
+                    <li>提货单补录交接信息及批量打印</li>
+                </ul>
+                @*
+                     cookieless="UseCookies"
+
+                     <roleManager enabled="true" defaultProvider="TMSRoleProvider">
+                     
+        <!--文件服务器FTP路径-->
+        <add key="FileServerDefaultFtpAddress" value="ftp://10.251.72.148/TMSFiles/"/>
+        <!--文件服务器FTP用户名-->
+        <add key="FileServerFtpUserName" value="rfd"/>
+        <!--文件服务器FTP用户密码-->
+        <add key="FileServerFtpUserPwd" value="rfd@FK*()"/>
+        <!--文件服务器FTP用户密码-->
+        <add key="FileServerVerificationCodesPath" value="VerificationCodes"/>
+                    *@
+                <h4>
+                    版本：20120411</h4>
+                <ul>
+                    <li>发货现场管理加了验证：如果考核不通过，考核不通过原因必须填写</li>
+                    <li>线路维护-公式价格、阶梯价格的续重中，增加判断：最小重量＜最大重量 </li>
+                    <li>各页面的"城际运输商"都显示成"承运商"</li>
+                    <li>添加箱子的弹出框大小做了调整</li>
+                    <li>解决发货在途管理-筛选条件查询报错</li>
+                    <li>发货在途管理页面显示预计到货时间</li>
+                </ul>
+                <h4>
+                    版本：20120409</h4>
+                <ul>
+                    <li>对已经发货的提货单修改时进行了状态判断</li>
+                    <li>线路公式价格设置加了续价最小重量不能小于基重验证</li>
+                    <li>线路公式价格设置加了续价第一项最小重量必须等于基重验证</li>
+                    <li>发货现场管理加了验证：如果考核不通过，考核不通过原因必须填写</li>
+                    <li>添加发货在途管理</li>
+                </ul>
+                <h4>
+                    版本：20120406</h4>
+                <ul>
+                    <li>[bug fixed]PEISONG-1547 TMS测试（4.1）：调度修改失败</li>
+                    <li>[bug fixed]PEISONG-1534 TMS测试（3.31）：运输计划</li>
+                    <li>公式价格需求修改</li>
+                    @*                    
+        <httpRuntime  maxQueryStringLength="10240" />
+                    *@
+                </ul>
+                <h4>
+                    版本：20120401</h4>
+                <ul>
+                    <li>[bug fixed][PEISONG-1443] TMS测试（3.31）：运输调度-已调度的单子仍显示</li>
+                    <li>[bug fixed][PEISONG-1443] TMS测试（3.31）：发货现场页面可以录入城际运单号</li>
+                    <li>运输计划启用停用调整</li>
+                    @*                    
+                       <!--Cookie过期默认时长(天)-->
+        <add key="CookieExpires" value="2" />
+
+        <!--要写入操作日志的Model名-->//最后添加CarrierWaybillModel
+        <add key="WriteIntoOperateLogModels" value="CarrierModel,LinePlanModel,LineFixedPriceModel,LineFormulaPriceModel,TransportPlanModel,AssFixedPriceModel,AssFormulaPriceModel,DeliveryAssessmentModel,DelayHandleModel,CarrierWaybillModel" />
+                    *@
+                </ul>
+                <h4>
+                    版本：20120331</h4>
+                <ul>
+                    <li>提示框着重显示，加大提示框字体</li>
+                    <li>更改显示列表高度自适应，使页面显示更充实</li>
+                    <li>针对列表添加分页大小</li>
+                    <li>添加发货现场管理</li>
+                </ul>
+                <h4>
+                    版本：20120326</h4>
+                <ul>
+                    <li>Like 查询参数化</li>
+                    <li>解决ie9 :hover伪类显示问题</li>
+                    <li>为解决负载均衡多服务器登陆验证问题添加统一machineKey</li>
+                </ul>
+                <h4>
+                    测试版20120322</h4>
+                <ul>
+                    <li>[bug][PEISONG-1443] 线路停用/启用 </li>
+                    <li>[bug][PEISONG-1447] 运输计划-货物类型问题 </li>
+                    <li>[bug][PEISONG-1444] 页面滚动条问题 </li>
+                    <li>[bug][PEISONG-1450] 运输计划修改 </li>
+                    <li>[bug][PEISONG-1445] 修复运输计划保存时的弹出“不能执行已释放的script代码 ”</li>
+                </ul>
+                <h4>
+                    测试版20120321</h4>
+                <ul>
+                    <li>[bug]解决3月20号的bug列表</li>
+                </ul>
+                <h4>
+                    测试版20120320</h4>
+                <ul>
+                    <li>[bug]承运商和线路在新增和修改时在必填字段加星标记</li>
+                    <li>[bug]发货现场管理的提货单状态显示错误已修正</li>
+                    <li>[bug]录入现场后无法保存问题已修正</li>
+                    <li>[bug]总单量、待调度、已调度、超期滞留统计数字不准确已修正 </li>
+                    <li>[bug]线路审核，关闭对话框时，时间选择控件仍显示 </li>
+                    <li>添加系统出错页面和404页面 </li>
+                    <li>打印提货单时可手工添加车牌号、发货人、收货人、收货地址、和收货人电话 </li>
+                    <li>承运商修改时后端对承运商全称、简称和邮件进行检测，防止非法提交数据</li>
+                </ul>
+                <h4>
+                    测试版20120319</h4>
+                <ul>
+                    <li>修正系统不能登陆的问题，完善登陆的 记住我 功能</li>
+                    <li>延误考核时长的 延误最长时间可为空，为空时，意为 大于等于最小延误时长</li>
+                    <li>修改提货单号生成规则：LN+年月日(六位)+流水号（四位 ）</li>
+                    <li>城际运单号可为空 </li>
+                    <li>提货单打印完善 </li>
+                </ul>
+                <h4>
+                    测试版20120316</h4>
+                <ul>
+                    <li>系统登陆完成与PMS对接（现只添加一个账户，用户名：tmsadmin，密码：1）</li>
+                    <li>发货地和目的地完成与PMS对接 </li>
+                </ul>
+                <h4>
+                    测试版20120315</h4>
+                <ul>
+                    <li>增加系统登陆页面,暂时还不能与pms对接，可输入任何用户名密码登陆</li>
+                    <li>页面-合同管理，延误考核的折扣输入限制，设置为0≤折扣≤1.并添加相应的提示,并验证延误考核时间的交叉测试； </li>
+                    <li>页面-合同管理，承运商名称和全称支持修改，如果和其他已有的承运商重复，则提示不能保存；</li>
+                    <li>将列表搜索项的展示和隐藏改为图标，更为直观； </li>
+                    <li>页面-合同管理，选择合同有效期为当天时改为了：预警；过期时间改为：合同有效期；</li>
+                    <li>页面-合同管理，承运商适用范围由区域改为全国时更新了承运商编号；选择部分区域时，编号为Y02-0006，修改为全国时，应更新为Y00-0006.</li>
+                    <li>页面-合同管理，承运商编号规则：适用范围为全国时，Y00，非全国时，Y01，不再区分单个区域和多个区域。</li>
+                    <li>新增线路:货物类型可选普通货物、化妆品、3C产品</li>
+                    <li>新增线路:增加验证离库考核时间不得早于提货到库时间</li>
+                    <li>新增线路:增加验证发货地与目的地不能相同</li>
+                    <li>新增线路:修改保险费率、转运费率格式不正确提示信息</li>
+                    <li>修改已审核线路不可删除，只能停用</li>
+                    <li>线路相关操作按钮移到页面上方</li>
+                    <li>线路维护列表中增加超远提货费、超远转运费率显示列</li>
+                    <li>线路维护列表中增加运输方式、线路类型筛选条件</li>
+                    <li>线路维护列表中增加线路启用、停用功能</li>
+                    <li>修改发货地、目的地搜索框不能使用的BUG</li>
+                    <li>线路审核相关功能按钮显示在页面上方</li>
+                    <li>线路审核页面：新增审核对话框，设置审核和驳回按钮，可由审核人设置生效时间</li>
+                    <li>修改审核页面到库标准时间和离库标准时间显示格式，只显示小时和分钟</li>
+                    <li>线路审核页面显示列和线路维护显示列保持一致</li>
+                </ul>
+            </div>
+            <hr />
+@*            <div>
+                系统维护：成都TMS团队
+                <br />
+                电子邮件：<a href="mailto:Jishu_PS.list@vancl.cn">Jishu_PS.list@vancl.cn</a>
+            </div>*@
+        </div>
+    </div>
+</body>
+</html>

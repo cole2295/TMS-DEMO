@@ -1,0 +1,1136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4A03194A-0227-4863-BF5F-A2DA92BB919A}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vancl.TMS.Web</RootNamespace>
+    <AssemblyName>Vancl.TMS.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PackageAsSingleFile>true</PackageAsSingleFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AnglicanGeek.MarkdownMailer">
+      <HintPath>..\packages\AnglicanGeek.MarkdownMailer.1.2\lib\net40\AnglicanGeek.MarkdownMailer.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lab\Common.Logging\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\lab\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.ProcessingObjectModel\10.0.0.0__b03f5f7f11d50a3a\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RFD.SSO.WebClient">
+      <HintPath>..\lab\RFD.SSO.WebClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.WebPages.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\System.Web.WebPages.Administration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebMatrix.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\BaseInfo\BaseInfoAreaRegistration.cs" />
+    <Compile Include="Areas\BaseInfo\Controllers\AudioSettingController.cs" />
+    <Compile Include="Areas\BaseInfo\Controllers\CarrierController.cs" />
+    <Compile Include="Areas\BaseInfo\Controllers\LinePlanController.cs" />
+    <Compile Include="Areas\BaseInfo\Controllers\TruckController.cs" />
+    <Compile Include="Areas\BaseInfo\Models\AudioSettingModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\CarrierViewModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\DelayCriteriaJsonModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\DelayCriteriaViewModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\LineFixedPriceViewModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\LineFormulaPriceViewModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\LineLadderPriceViewModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\LinePlanViewModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\CarrierUpdateViewModel.cs" />
+    <Compile Include="Areas\BaseInfo\Models\TruckViewModel.cs" />
+    <Compile Include="Areas\Claim\ClaimAreaRegistration.cs" />
+    <Compile Include="Areas\Claim\Controllers\DelayHandleController.cs" />
+    <Compile Include="Areas\Claim\Controllers\ExpectDelayController.cs" />
+    <Compile Include="Areas\Claim\Controllers\LostController.cs" />
+    <Compile Include="Areas\Claim\Models\ApplyForExpectDelayViewModel.cs" />
+    <Compile Include="Areas\Claim\Models\DelayHandleViewModel.cs" />
+    <Compile Include="Areas\DataAPI\Controllers\PreDispatchAbnormalController.cs" />
+    <Compile Include="Areas\DataAPI\Controllers\DeliveryImportController.cs" />
+    <Compile Include="Areas\DataAPI\DataAPIAreaRegistration.cs" />
+    <Compile Include="Areas\DataAPI\Models\ScanBatchNoModel.cs" />
+    <Compile Include="Areas\Delivery\Controllers\DispatchController.cs" />
+    <Compile Include="Areas\Delivery\Controllers\InTransitController.cs" />
+    <Compile Include="Areas\Delivery\Controllers\PrintController.cs" />
+    <Compile Include="Areas\Delivery\Controllers\SiteAssController.cs" />
+    <Compile Include="Areas\Delivery\DeliveryAreaRegistration.cs" />
+    <Compile Include="Areas\Delivery\Models\DispTransitionViewModel.cs" />
+    <Compile Include="Areas\Delivery\Models\InputWaybillNoModel.cs" />
+    <Compile Include="Areas\Delivery\Models\SiteAssViewModel.cs" />
+    <Compile Include="Areas\Delivery\Models\WaybillArriveViewModel.cs" />
+    <Compile Include="Areas\Delivery\Models\WaybillInfoViewModel.cs" />
+    <Compile Include="Areas\KPI\Controllers\CarrierKpiController.cs" />
+    <Compile Include="Areas\KPI\KPIAreaRegistration.cs" />
+    <Compile Include="Areas\LadingBill\Controllers\FeedbackController.cs" />
+    <Compile Include="Areas\LadingBill\Controllers\PlanController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\LadingBill\Controllers\TaskController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\LadingBill\Controllers\WareHouseController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\LadingBill\Helper\LB_Helper.cs" />
+    <Compile Include="Areas\LadingBill\LadingBillAreaRegistration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\LadingBill\Models\TaskSearchModel.cs" />
+    <Compile Include="Areas\Report\Controllers\CarrierAccountDynamicReportController.cs" />
+    <Compile Include="Areas\Report\Controllers\CarrierAccountReportController.cs" />
+    <Compile Include="Areas\Report\Controllers\ComplexReportController.cs" />
+    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
+    <Compile Include="Areas\Sorting\Controllers\BillPrintController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\BillPrintV2Controller.cs" />
+    <Compile Include="Areas\Sorting\Controllers\CityScanController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\InboundController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\InboundV2Controller.cs" />
+    <Compile Include="Areas\Sorting\Controllers\OutboundV2Controller.cs" />
+    <Compile Include="Areas\Sorting\Controllers\RangeDefinedController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\ReturnController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\SearchController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\SortingPackingController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\LoadingController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\OutboundController.cs" />
+    <Compile Include="Areas\Sorting\Controllers\BillValidateController.cs" />
+    <Compile Include="Areas\Sorting\Models\BatchBillPrintArgModel.cs" />
+    <Compile Include="Areas\Sorting\Models\BatchBillPrintResultModel.cs" />
+    <Compile Include="Areas\Sorting\Models\BillReturnResultModel.cs" />
+    <Compile Include="Areas\Sorting\Models\BillWeightScanArgModel.cs" />
+    <Compile Include="Areas\Sorting\Models\InboundResultModel.cs" />
+    <Compile Include="Areas\Sorting\Models\ReWeighResultModel.cs" />
+    <Compile Include="Areas\Sorting\Models\SortingPackingResultModel.cs" />
+    <Compile Include="Areas\Sorting\SortingAreaRegistration.cs" />
+    <Compile Include="Areas\SyncManager\Controllers\BatchController.cs" />
+    <Compile Include="Areas\SyncManager\Controllers\LogController.cs" />
+    <Compile Include="Areas\SyncManager\Controllers\TestController.cs" />
+    <Compile Include="Areas\SyncManager\SyncManagerAreaRegistration.cs" />
+    <Compile Include="Areas\Transport\Controllers\PlanController.cs" />
+    <Compile Include="Areas\Transport\Models\TransportPlanBaseSettingViewModel.cs" />
+    <Compile Include="Areas\Transport\Models\TransportPlanViewModel.cs" />
+    <Compile Include="Areas\Transport\TransportAreaRegistration.cs" />
+    <Compile Include="Common\AjaxExceptionAttribute.cs" />
+    <Compile Include="Common\DefaultModelBinderEx.cs" />
+    <Compile Include="Common\ControllerExtensions.cs" />
+    <Compile Include="Common\TMSAuthorizeAttribute.cs" />
+    <Compile Include="Common\TMSHandleErrorAttribute.cs" />
+    <Compile Include="Common\TMSMembershipProvider.cs" />
+    <Compile Include="Common\TMSProfileProvider.cs" />
+    <Compile Include="Common\TMSRoleProvider.cs" />
+    <Compile Include="Controllers\ChatTestController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ExpressCompanyController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\FrameController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\AdministrationTreeModel.cs" />
+    <Compile Include="Models\jQueryDataTableParamModel.cs" />
+    <Compile Include="Models\JsonTreeNode.cs" />
+    <Compile Include="Models\LogOnModel.cs" />
+    <Compile Include="Models\TreeNodeModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Sorting\Views\Return\WeightControl.cab" />
+    <Content Include="Content\css\pages\sorting\BillFormatPrintSetting.css" />
+    <Content Include="Content\css\ui\common.css" />
+    <Content Include="Content\css\ui\error.css" />
+    <Content Include="Content\css\ui\layout.css" />
+    <Content Include="Content\css\ui\page_fn.css" />
+    <Content Include="Content\images\027.gif" />
+    <Content Include="Content\images\background\Datatables_BotBar_bg.png" />
+    <Content Include="Content\images\background\Datatables_CbxColumn_bg.png" />
+    <Content Include="Content\images\background\Datatables_Header_bg.png" />
+    <Content Include="Content\images\background\Datatables_Toolbar_bg.png" />
+    <Content Include="Content\images\background\dropdown.gif" />
+    <Content Include="Content\images\background\error.jpg" />
+    <Content Include="Content\images\background\GroupLine.gif" />
+    <Content Include="Content\images\background\icon.png" />
+    <Content Include="Content\images\background\lineplan_line.gif" />
+    <Content Include="Content\images\background\login_bg.jpg" />
+    <Content Include="Content\images\background\login_btn.jpg" />
+    <Content Include="Content\images\background\login_input_bg.jpg" />
+    <Content Include="Content\images\background\toolbar_barcode.png" />
+    <Content Include="Content\images\background\toolbar_change.png" />
+    <Content Include="Content\images\background\toolbar_clock.png" />
+    <Content Include="Content\images\background\toolbar_expand.png" />
+    <Content Include="Content\images\background\toolbar_modify.png" />
+    <Content Include="Content\images\background\toolbar_off.png" />
+    <Content Include="Content\images\background\toolbar_ok.png" />
+    <Content Include="Content\images\background\toolbar_on.png" />
+    <Content Include="Content\images\background\toolbar_print.png" />
+    <Content Include="Content\images\background\toolbar_refresh.png" />
+    <Content Include="Content\images\background\toolbar_add.png" />
+    <Content Include="Content\images\background\toolbar_del.png" />
+    <Content Include="Content\images\background\toolbar_reset.png" />
+    <Content Include="Content\images\background\toolbar_search.png" />
+    <Content Include="Content\images\background\toolbar_undo.png" />
+    <Content Include="Content\images\background\updown.png" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\sprites\logo.png" />
+    <Content Include="Content\images\sprites\transport.png" />
+    <Content Include="Content\imgs\background\arrows.gif" />
+    <Content Include="Content\imgs\loading\loadingbar.gif" />
+    <Content Include="Content\imgs\sprites\logo.png" />
+    <Content Include="Content\jquery-ui-1.9.1.custom.min.css" />
+    <Content Include="Content\media\done.wav" />
+    <Content Include="Content\media\Done\Windows Battery Critical.wav" />
+    <Content Include="Content\media\Done\Windows Battery Low.wav" />
+    <Content Include="Content\media\Done\Windows Critical Stop.wav" />
+    <Content Include="Content\media\Done\Windows Error.wav" />
+    <Content Include="Content\media\Done\Windows Exclamation.wav" />
+    <Content Include="Content\media\Done\Windows Logon Sound.wav" />
+    <Content Include="Content\media\error.wav" />
+    <Content Include="Content\media\error\Windows Menu Command.wav" />
+    <Content Include="Content\media\error\Windows Navigation Start.wav" />
+    <Content Include="Content\media\error\Windows Print complete.wav" />
+    <Content Include="Content\media\error\Windows Ringin.wav" />
+    <Content Include="Content\media\error\Windows Ringout.wav" />
+    <Content Include="Content\media\error\Windows Shutdown.wav" />
+    <Content Include="Content\page_frame.css" />
+    <Content Include="Content\css\ui\page_main.css" />
+    <Content Include="Content\css\ui\page_other.css" />
+    <Content Include="Content\css\ui\reset.css" />
+    <Content Include="Content\css\Validation\cmxform.css" />
+    <Content Include="Content\images\background\btn_Bg.gif" />
+    <Content Include="Content\images\background\btn_bg_1.jpg" />
+    <Content Include="Content\images\background\btn_bg_1.png" />
+    <Content Include="Content\images\background\btn_bg_2.jpg" />
+    <Content Include="Content\images\background\btn_bg_3.jpg" />
+    <Content Include="Content\images\background\main_tb_thead_bg.png" />
+    <Content Include="Content\images\background\rfd_fn_bottom_bg.jpg" />
+    <Content Include="Content\images\background\rfd_main_bg.jpg" />
+    <Content Include="Content\images\background\rfd_mian_1nav_bg.jpg" />
+    <Content Include="Content\images\background\rfd_mian_1nav_onMouserOver.jpg" />
+    <Content Include="Content\images\background\rfd_mian_2nav_BG.png" />
+    <Content Include="Content\images\background\rfd_mian_tabBackround_bg.png" />
+    <Content Include="Content\images\background\rfd_mian_tab_bg.png" />
+    <Content Include="Content\images\background\tb_noData_thead_bg.PNG" />
+    <Content Include="Content\images\icons\checkbox_0.gif" />
+    <Content Include="Content\images\icons\checkbox_1.gif" />
+    <Content Include="Content\images\icons\checkbox_2.gif" />
+    <Content Include="Content\images\icons\datePicker.gif" />
+    <Content Include="Content\images\icons\list.png" />
+    <Content Include="Content\images\icons\mail.png" />
+    <Content Include="Content\images\icons\s.gif" />
+    <Content Include="Content\images\icons\tms.ico" />
+    <Content Include="Content\images\icons\loading.gif" />
+    <Content Include="Content\images\icons\search.png" />
+    <Content Include="Content\images\sprites\error.jpg" />
+    <Content Include="Content\images\sprites\Main_sprites.png" />
+    <Content Include="Content\common.css" />
+    <Content Include="Content\error.css" />
+    <Content Include="Content\imgs\background\main_tb_thead_bg.png" />
+    <Content Include="Content\imgs\background\rfd_fn_bottom_bg.jpg" />
+    <Content Include="Content\imgs\background\rfd_main_bg.jpg" />
+    <Content Include="Content\imgs\background\rfd_mian_1nav_bg.jpg" />
+    <Content Include="Content\imgs\background\rfd_mian_1nav_onMouserOver.jpg" />
+    <Content Include="Content\imgs\background\rfd_mian_2nav_BG.png" />
+    <Content Include="Content\imgs\background\rfd_mian_tabBackround_bg.png" />
+    <Content Include="Content\imgs\background\rfd_mian_tab_bg.png" />
+    <Content Include="Content\imgs\background\tb_noData_thead_bg.PNG" />
+    <Content Include="Content\imgs\loading\loading_QQ.gif" />
+    <Content Include="Content\imgs\sprites\error.jpg" />
+    <Content Include="Content\imgs\sprites\Main_sprites.png" />
+    <Content Include="Content\layout.css" />
+    <Content Include="Content\frame.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\reset.css" />
+    <Content Include="Content\ScriptsNew\frame.js" />
+    <Content Include="Content\ScriptsNew\Images\16\attach.gif" />
+    <Content Include="Content\ScriptsNew\Images\16\mark.gif" />
+    <Content Include="Content\ScriptsNew\Images\16\roll.gif" />
+    <Content Include="Content\ScriptsNew\Images\blank.gif" />
+    <Content Include="Content\ScriptsNew\Images\childmenu.gif" />
+    <Content Include="Content\ScriptsNew\Images\close.gif" />
+    <Content Include="Content\ScriptsNew\Images\collapse.gif" />
+    <Content Include="Content\ScriptsNew\Images\colorpalette_close.gif" />
+    <Content Include="Content\ScriptsNew\Images\colorpalette_nocolor.gif" />
+    <Content Include="Content\ScriptsNew\Images\colorpalette_over140.gif" />
+    <Content Include="Content\ScriptsNew\Images\colorpalette_over216.gif" />
+    <Content Include="Content\ScriptsNew\Images\colorpalette_switch.gif" />
+    <Content Include="Content\ScriptsNew\Images\colorpicker_down.gif" />
+    <Content Include="Content\ScriptsNew\Images\colorpicker_up.gif" />
+    <Content Include="Content\ScriptsNew\Images\dropdown.gif" />
+    <Content Include="Content\ScriptsNew\Images\dropleft.gif" />
+    <Content Include="Content\ScriptsNew\Images\dropup.gif" />
+    <Content Include="Content\ScriptsNew\Images\expand.gif" />
+    <Content Include="Content\ScriptsNew\Images\switch_1.gif" />
+    <Content Include="Content\ScriptsNew\Images\switch_2.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\burl_0a.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\burl_0b.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\burl_1a.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\burl_1b.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_0a.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_0b.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_0c.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_1a.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_1b.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_1c.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_2a.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_2b.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\checkbox_2c.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\gif\folder.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\gif\html.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\gif\mute.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\gif\rollback.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\gif\site.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\gif\user.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\png\folder.png" />
+    <Content Include="Content\ScriptsNew\Images\vista\png\html.png" />
+    <Content Include="Content\ScriptsNew\Images\vista\png\mute.png" />
+    <Content Include="Content\ScriptsNew\Images\vista\png\rollback.png" />
+    <Content Include="Content\ScriptsNew\Images\vista\png\site.png" />
+    <Content Include="Content\ScriptsNew\Images\vista\png\user.png" />
+    <Content Include="Content\ScriptsNew\Images\vista\radio_0a.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\radio_0b.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\radio_0c.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\radio_1a.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\radio_1b.gif" />
+    <Content Include="Content\ScriptsNew\Images\vista\radio_1c.gif" />
+    <Content Include="Content\ScriptsNew\Navigation.js" />
+    <Content Include="Content\ScriptsNew\Root.FocusView.js" />
+    <Content Include="Content\ScriptsNew\Root.Palette.js" />
+    <Content Include="Content\ScriptsNew\Root.Popup.js" />
+    <Content Include="Content\ScriptsNew\Root.TabView.js" />
+    <Content Include="Content\ScriptsNew\Root.TreeView.js" />
+    <Content Include="Content\ScriptsNew\Root.Xml.js" />
+    <Content Include="Content\StylesNew\frame.css" />
+    <Content Include="Content\StylesNew\main.css" />
+    <Content Include="Content\StylesNew\pager.css" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_50_3baae3_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2694e8_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_3d80b3_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\cupertino\jquery-ui-1.8.16.custom.css" />
+    <Content Include="Content\themes\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\themes\redmond\jquery-ui-1.8.16.custom.css" />
+    <Content Include="F5.html" />
+    <Content Include="Global.asax" />
+    <Content Include="robots.txt" />
+    <Content Include="Scripts\base.js" />
+    <Content Include="Scripts\common\TMS.Page.js" />
+    <Content Include="Scripts\common\TMS.Util.js" />
+    <Content Include="Scripts\extends\url.extend.js" />
+    <Content Include="Scripts\import\batch.js" />
+    <Content Include="Scripts\import\common.js" />
+    <Content Include="Scripts\import\container.js" />
+    <Content Include="Scripts\import\province-city-area.js" />
+    <Content Include="Scripts\import\report.js" />
+    <Content Include="Scripts\LadingBill\acol.control.select.js" />
+    <Content Include="Scripts\LadingBill\AuditCheck.js" />
+    <Content Include="Scripts\LadingBill\formverify.js" />
+    <Content Include="Scripts\LadingBill\jquery.PrintArea.js" />
+    <Content Include="Scripts\LadingBill\select.css" />
+    <Content Include="Scripts\LadingBill\TaskEditCheck.js" />
+    <Content Include="Scripts\lib\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\lib\jquery-1.7.1.js" />
+    <Content Include="Scripts\lib\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\lib\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\lib\jquery-ui-1.8.16.custom.min.js" />
+    <Content Include="Scripts\lib\jquery-ui-1.9.1.custom.min.js" />
+    <Content Include="Scripts\lib\jquery.tools.min.js" />
+    <Content Include="Scripts\pages\carriers.js" />
+    <Content Include="Scripts\pages\manage.js" />
+    <Content Include="Scripts\pages\search.js" />
+    <Content Include="Scripts\pages\main.js" />
+    <Content Include="Scripts\pages\sorting\BatchInbound.js" />
+    <Content Include="Scripts\pages\sorting\BillFormatPrintSetting.js" />
+    <Content Include="Scripts\pages\sorting\BillPrint.js" />
+    <Content Include="Scripts\pages\sorting\Inbound.js" />
+    <Content Include="Scripts\pages\sorting\Inbound_NoLimitedStation.js" />
+    <Content Include="Scripts\pages\sorting\Outbound.js" />
+    <Content Include="Scripts\pages\sorting\OutboundPrint.js" />
+    <Content Include="Scripts\pages\sorting\OutboundPrintV2.js" />
+    <Content Include="Scripts\pages\sorting\OutboundV2.js" />
+    <Content Include="Scripts\pages\sorting\Outbound_Simple.js" />
+    <Content Include="Scripts\pages\sorting\Outbound_SimpleV2.js" />
+    <Content Include="Scripts\pages\sorting\RangeDefined.js" />
+    <Content Include="Scripts\pages\sorting\Return.js" />
+    <Content Include="Scripts\pages\sorting\ReturnBillSorting.js" />
+    <Content Include="Scripts\pages\sorting\ReturnFormPrint.js" />
+    <Content Include="Scripts\pages\sorting\ReturnSortWeight.js" />
+    <Content Include="Scripts\pages\sorting\sortingpacking.js" />
+    <Content Include="Scripts\pages\sorting\sortingpackingV2.js" />
+    <Content Include="Scripts\pages\sorting\TurnInbound.js" />
+    <Content Include="Scripts\pages\sorting\BatchBillPrint.js" />
+    <Content Include="Scripts\pages\sorting\BillPrintV2.js" />
+    <Content Include="Scripts\pages\sorting\BatchBillPrintV2.js" />
+    <Content Include="Scripts\pages\sorting\InboundV2.js" />
+    <Content Include="Scripts\pages\sorting\BatchInboundV2.js" />
+    <Content Include="Scripts\pages\tab_script.js" />
+    <Content Include="Scripts\pages\ui_script.js" />
+    <Content Include="Scripts\plugins\autocomplete\autocomplete.css" />
+    <Content Include="Scripts\plugins\autocomplete\demo.htm" />
+    <Content Include="Scripts\plugins\autocomplete\jquery.autocomplete.js" />
+    <Content Include="Scripts\plugins\button\button.css" />
+    <Content Include="Scripts\plugins\button\demo.htm" />
+    <Content Include="Scripts\plugins\button\images\btn_left.gif" />
+    <Content Include="Scripts\plugins\button\images\btn_right.gif" />
+    <Content Include="Scripts\plugins\button\images\page_white_edit.png" />
+    <Content Include="Scripts\plugins\button\images\search.png" />
+    <Content Include="Scripts\plugins\button\jquery.button.js" />
+    <Content Include="Scripts\plugins\calendar\calendar.js" />
+    <Content Include="Scripts\plugins\calendar\config.js" />
+    <Content Include="Scripts\plugins\calendar\lang\en.js" />
+    <Content Include="Scripts\plugins\calendar\lang\zh-cn.js" />
+    <Content Include="Scripts\plugins\calendar\lang\zh-tw.js" />
+    <Content Include="Scripts\plugins\calendar\My97DatePicker.htm" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\bg.jpg" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\btnbg.jpg" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\datepicker.css" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\down.jpg" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\left.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\navLeft.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\navRight.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\qs.jpg" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\readme.txt" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\right.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\blue\up.jpg" />
+    <Content Include="Scripts\plugins\calendar\skin\datePicker.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\default\datepicker.css" />
+    <Content Include="Scripts\plugins\calendar\skin\default\img.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\datepicker.css" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\dateselect.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\glass-bg.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\hd-sprite.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\img.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\left-btn.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\left-btn2.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\readme.txt" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\right-btn.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\ext\right-btn2.gif" />
+    <Content Include="Scripts\plugins\calendar\skin\WdatePicker.css" />
+    <Content Include="Scripts\plugins\calendar\skin\whyGreen\bg.jpg" />
+    <Content Include="Scripts\plugins\calendar\skin\whyGreen\datepicker.css" />
+    <Content Include="Scripts\plugins\calendar\skin\whyGreen\img.gif" />
+    <Content Include="Scripts\plugins\calendar\WdatePicker.js" />
+    <Content Include="Scripts\plugins\DataTables\css\DataTables.css" />
+    <Content Include="Scripts\plugins\DataTables\css\demo_page.css" />
+    <Content Include="Scripts\plugins\DataTables\css\demo_table.css" />
+    <Content Include="Scripts\plugins\DataTables\css\demo_table_jui.css" />
+    <Content Include="Scripts\plugins\DataTables\extras\ColVis\css\ColVis.css" />
+    <Content Include="Scripts\plugins\DataTables\extras\ColVis\css\ColVisAlt.css" />
+    <Content Include="Scripts\plugins\DataTables\extras\ColVis\images\button.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\ColVis\js\ColVis.js" />
+    <Content Include="Scripts\plugins\DataTables\extras\ColVis\js\ColVis.min.js" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\css\TableTools.css" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\css\TableTools_JUI.css" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\background.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\collection.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\collection_hover.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\copy.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\copy_hover.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\csv.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\csv_hover.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\pdf.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\pdf_hover.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\print.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\print_hover.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\toolbar_add.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\toolbar_copy.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\toolbar_csv.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\toolbar_del.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\toolbar_pdf.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\toolbar_print.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\toolbar_xls.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\xls.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\images\xls_hover.png" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\js\TableTools.js" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\js\TableTools.min.js" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\js\ZeroClipboard.js" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\swf\copy_cvs_xls.swf" />
+    <Content Include="Scripts\plugins\DataTables\extras\TableTools\swf\copy_cvs_xls_pdf.swf" />
+    <Content Include="Scripts\plugins\DataTables\images\back_disabled.jpg" />
+    <Content Include="Scripts\plugins\DataTables\images\back_enabled.jpg" />
+    <Content Include="Scripts\plugins\DataTables\images\Datatables_BotBar_bg.png" />
+    <Content Include="Scripts\plugins\DataTables\images\Datatables_CbxColumn_bg.png" />
+    <Content Include="Scripts\plugins\DataTables\images\Datatables_Header_bg.png" />
+    <Content Include="Scripts\plugins\DataTables\images\Datatables_Toolbar_bg.png" />
+    <Content Include="Scripts\plugins\DataTables\images\favicon.ico" />
+    <Content Include="Scripts\plugins\DataTables\images\forward_disabled.jpg" />
+    <Content Include="Scripts\plugins\DataTables\images\forward_enabled.jpg" />
+    <Content Include="Scripts\plugins\DataTables\images\sort_asc.png" />
+    <Content Include="Scripts\plugins\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\plugins\DataTables\images\sort_both.png" />
+    <Content Include="Scripts\plugins\DataTables\images\sort_desc.png" />
+    <Content Include="Scripts\plugins\DataTables\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\plugins\DataTables\images\toolbar_add.png" />
+    <Content Include="Scripts\plugins\DataTables\images\toolbar_del.png" />
+    <Content Include="Scripts\plugins\DataTables\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\plugins\DataTables\js\jquery.dataTables.wrap.js" />
+    <Content Include="Scripts\plugins\DataTables\js\jquery.js" />
+    <Content Include="Scripts\plugins\drops\images\drop_down_hover.jpg" />
+    <Content Include="Scripts\plugins\drops\images\drop_down.jpg" />
+    <Content Include="Scripts\imgs\btn.gif" />
+    <Content Include="Scripts\imgs\btnleft.gif" />
+    <Content Include="Scripts\imgs\btnright.gif" />
+    <Content Include="Scripts\imgs\close.gif" />
+    <Content Include="Scripts\imgs\loading.gif" />
+    <Content Include="Scripts\imgs\tab1.gif" />
+    <Content Include="Scripts\imgs\tab1_bottom.gif" />
+    <Content Include="Scripts\imgs\tab2.gif" />
+    <Content Include="Scripts\imgs\tab2_bottom.gif" />
+    <Content Include="Scripts\imgs\tab3.gif" />
+    <Content Include="Scripts\imgs\tab3_bottom.gif" />
+    <Content Include="Scripts\plugins\tab\jquery-tab.css" />
+    <Content Include="Scripts\plugins\tab\jquery.tab.js" />
+    <Content Include="Scripts\plugins\textbox\demo.htm" />
+    <Content Include="Scripts\plugins\textbox\images\datePicker.gif" />
+    <Content Include="Scripts\plugins\textbox\images\drop_down_s_ff.jpg" />
+    <Content Include="Scripts\plugins\textbox\images\drop_down_s_ie7.jpg" />
+    <Content Include="Scripts\plugins\textbox\images\drop_down_s.jpg" />
+    <Content Include="Scripts\plugins\textbox\images\mail.png" />
+    <Content Include="Scripts\plugins\textbox\images\search.png" />
+    <Content Include="Scripts\plugins\textbox\jquery.textbox.js" />
+    <Content Include="Scripts\plugins\textbox\jquery.textbox.min.js" />
+    <Content Include="Scripts\plugins\textbox\jquery.watermark.js" />
+    <Content Include="Scripts\plugins\textbox\textbox.css" />
+    <Content Include="Scripts\plugins\tooltip\jquery.tooltip.js" />
+    <Content Include="Scripts\plugins\tooltip\tooltip.css" />
+    <Content Include="Scripts\plugins\tree\images\arrows.gif" />
+    <Content Include="Scripts\plugins\tree\images\cbs.gif" />
+    <Content Include="Scripts\plugins\tree\images\drop-yes.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-end-minus-nl.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-end-minus.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-end-plus-nl.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-end-plus.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-end.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-line.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-minus-nl.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-minus.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-plus-nl.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow-plus.gif" />
+    <Content Include="Scripts\plugins\tree\images\elbow.gif" />
+    <Content Include="Scripts\plugins\tree\images\folder-open.gif" />
+    <Content Include="Scripts\plugins\tree\images\folder.gif" />
+    <Content Include="Scripts\plugins\tree\images\ico6.gif" />
+    <Content Include="Scripts\plugins\tree\images\leaf.gif" />
+    <Content Include="Scripts\plugins\tree\images\loading.gif" />
+    <Content Include="Scripts\plugins\tree\images\s.gif" />
+    <Content Include="Scripts\plugins\tree\jquery.tree.js" />
+    <Content Include="Scripts\plugins\tree\tree.css" />
+    <Content Include="Scripts\plugins\ymPrompt\changelog.txt" />
+    <Content Include="Scripts\plugins\ymPrompt\demo.html" />
+    <Content Include="Scripts\plugins\ymPrompt\frameset.html" />
+    <Content Include="Scripts\plugins\ymPrompt\iframe.html" />
+    <Content Include="Scripts\plugins\ymPrompt\readme.txt" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\ask.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\btn_bg.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\err.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\ico.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\info.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\title_bg_center.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\title_bg_left.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\images\title_bg_right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\black\ymPrompt.css" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\ask.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\btn_bg.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\err.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\ico.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\info.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\title_bg_center.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\title_bg_left.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\images\title_bg_right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\bluebar\ymPrompt.css" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\ask.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\btn_bg.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\err.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\ico.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\info.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\titleIco.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\title_bg_center.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\title_bg_left.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\title_bg_right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\win_b.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\win_l.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\win_lb.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\win_r.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\images\win_rb.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\dmm-green\ymPrompt.css" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\ask.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\btn_bg.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\content_bg.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\err.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\ico.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\info.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\title_bg_center.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\title_bg_left.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\title_bg_right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\win_b.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\win_l.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\win_lb.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\win_r.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\images\win_rb.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\qq\ymPrompt.css" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple\images\ask.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple\images\err.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple\images\ico.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple\images\info.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple\images\right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple\ymPrompt.css" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple_gray\images\ask.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple_gray\images\err.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple_gray\images\info.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple_gray\images\right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\simple_gray\ymPrompt.css" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\ask.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\btn_bg.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\err.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\ico.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\info.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\title_bg_center.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\title_bg_left.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\title_bg_right.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\win_b.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\win_l.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\win_lb.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\win_r.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\images\win_rb.gif" />
+    <Content Include="Scripts\plugins\ymPrompt\skin\vista\ymPrompt.css" />
+    <Content Include="Scripts\plugins\ymPrompt\ymPrompt.js" />
+    <Content Include="Scripts\plugins\ymPrompt\ymPrompt_Ex.js" />
+    <Content Include="Scripts\plugins\ymPrompt\ymPrompt_source.js" />
+    <Content Include="Scripts\plugins\ymPrompt\ymPrompt.min.js" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\1_close.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\1_open.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\2.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\3.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\4.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\5.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\6.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\7.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\8.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\diy\9.png" />
+    <Content Include="Scripts\plugins\zTree\css\img\line_conn.gif" />
+    <Content Include="Scripts\plugins\zTree\css\img\loading.gif" />
+    <Content Include="Scripts\plugins\zTree\css\img\zTreeStandard.gif" />
+    <Content Include="Scripts\plugins\zTree\css\img\zTreeStandard.png" />
+    <Content Include="Scripts\plugins\zTree\css\zTreeStyle.css" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.all-3.0.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.all-3.0.min.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.all-3.1.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.all-3.1.min.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.core-3.0.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.core-3.0.min.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.core-3.1.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.core-3.1.min.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.excheck-3.0.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.excheck-3.0.min.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.excheck-3.1.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.excheck-3.1.min.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.exedit-3.0.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.exedit-3.0.min.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.exedit-3.1.js" />
+    <Content Include="Scripts\plugins\zTree\js\jquery.ztree.exedit-3.1.min.js" />
+    <Content Include="Scripts\plugins\zTree\zTree3.x.txt" />
+    <Content Include="Scripts\references\jquery-barcode-2.0.2.min.js" />
+    <Content Include="Scripts\references\jquery-ui-1.8.16.js" />
+    <Content Include="Scripts\references\jquery-ui-1.8.16.min.js" />
+    <Content Include="Scripts\references\jquery.blockUI.js" />
+    <Content Include="Scripts\references\jquery.cookie.js" />
+    <Content Include="Scripts\references\jquery.form.js" />
+    <Content Include="Scripts\references\jQuery.tmpl.js" />
+    <Content Include="Scripts\references\jQuery.tmpl.min.js" />
+    <Content Include="Scripts\references\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\references\jquery.validate.js" />
+    <Content Include="Scripts\references\jquery.validate.min.js" />
+    <Content Include="Scripts\lib\json2.js" />
+    <Content Include="Scripts\references\modernizr-1.7.js" />
+    <Content Include="Scripts\references\modernizr-1.7.min.js" />
+    <Content Include="Areas\Report\Views\Web.config" />
+    <Content Include="Areas\Report\Views\ComplexReport\List.cshtml" />
+    <Content Include="Areas\Report\Views\ComplexReport\_PartialComplexReportList.cshtml" />
+    <Content Include="Areas\Report\Views\Shared\_ReportFilter.cshtml" />
+    <Content Include="Areas\SyncManager\Views\Web.config" />
+    <Content Include="Areas\SyncManager\Views\Log\List.cshtml" />
+    <Content Include="Areas\SyncManager\Views\Log\_PartialLogList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Web.config" />
+    <Content Include="Areas\Sorting\Views\SortingPacking\Index.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Truck\List.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Truck\_PartialTruckList.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Truck\Create.cshtml" />
+    <Content Include="Areas\Sorting\Views\Loading\List.cshtml" />
+    <Content Include="Areas\Sorting\Views\Loading\_PartialBillTruckList.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrint\Index.cshtml" />
+    <Content Include="Areas\Sorting\Views\Inbound\Inbound.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Carrier\CompanyList.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Carrier\Info.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Carrier\List.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Carrier\List2.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Carrier\SetDelayCriteria.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\Carrier\_PartialCarrierList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\Index.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\FormPrint.cshtml" />
+    <Content Include="Areas\Sorting\Views\Loading\BillTruckDetail.cshtml" />
+    <Content Include="Areas\Sorting\Views\Loading\_PartialBillTruckDetail.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\Print.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\_PartialPrintList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\SearchOutbound.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\_PartialSearchOutboundList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\PrintReceipt.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\PrintBatchDetails.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\ReturnBillSorting.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\_PartialFormPrintList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\_PartialReturnBillSorting.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\FormPrintDetail.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\_ReturnSortPacking.cshtml" />
+    <Content Include="Areas\DataAPI\Views\Web.config" />
+    <Content Include="Areas\DataAPI\Views\DeliveryImport\List.cshtml" />
+    <Content Include="Areas\DataAPI\Views\DeliveryImport\_PartialDeliveryImportList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Loading\Search.cshtml" />
+    <Content Include="Areas\Sorting\Views\Loading\_PartialSearchList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Search\QueryDeliveryNo.cshtml" />
+    <Content Include="Areas\Sorting\Views\Search\WeighReview.cshtml" />
+    <Content Include="Areas\Sorting\Views\Search\_PartialWeighReviewList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Inbound\Inbound_NoLimitedStation.cshtml" />
+    <Content Include="Areas\Sorting\Views\Inbound\TurnInbound.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\SimpleOutbound.cshtml" />
+    <Content Include="Areas\DataAPI\Views\DeliveryImport\ImportDelivery.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrint\FormatPrintSetting.cshtml" />
+    <Content Include="Areas\Report\Views\CarrierAccountReport\List.cshtml" />
+    <Content Include="Areas\Report\Views\CarrierAccountReport\_PartialCarrierAccountReportList.cshtml" />
+    <Content Include="Areas\Report\Views\CarrierAccountReport\Statistic.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrint\PrintSettingPreview.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\BackPackingPrint.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\MerchantReturnBill.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\MerchantReturnBillPrintDetail.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\_PartialMerchantReturnBillList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Inbound\BatchInbound.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrint\FormatPrintData.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrint\FormatPrint.cshtml" />
+    <Content Include="Areas\DataAPI\Views\DeliveryImport\CreateDeliveryByScan.cshtml" />
+    <Content Include="Areas\DataAPI\Views\DeliveryImport\CreateDeliveryByQuery.cshtml" />
+    <Content Include="Areas\DataAPI\Views\DeliveryImport\_PartialPreDispathInfoList.cshtml" />
+    <Content Include="Areas\Sorting\Views\Return\ReturnBoxDetail.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrint\_PartialPrintDataList.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrint\BatchBillPrint.cshtml" />
+    <Content Include="Areas\Report\Views\CarrierAccountDynamicReport\List.cshtml" />
+    <Content Include="Areas\Report\Views\CarrierAccountDynamicReport\_PartialCarrierAccountReportList.cshtml" />
+    <Content Include="Areas\Report\Views\CarrierAccountDynamicReport\Statistic.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillValidate\Index.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\OutBoundByBox.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\_PartialOutBoundByBox.cshtml" />
+    <Content Include="Areas\SyncManager\Views\Batch\List.cshtml" />
+    <Content Include="Areas\SyncManager\Views\Batch\_PartialBatchList.cshtml" />
+    <Content Include="Areas\Sorting\Views\SortingPacking\PackingPrint.cshtml" />
+    <Content Include="Areas\Sorting\Views\CityScan\Index.cshtml" />
+    <Content Include="Areas\Sorting\Views\Outbound\OutBoundBoxDetail.cshtml" />
+    <Content Include="Areas\Sorting\Views\CityScan\CityScanStatistics.cshtml" />
+    <Content Include="Areas\Sorting\Views\CityScan\_PartialCityScanStatisticsList.cshtml" />
+    <Content Include="Areas\Sorting\Views\CityScan\CityScanPrint.cshtml" />
+    <Content Include="Areas\Sorting\Views\CityScan\ScanBatchList.cshtml" />
+    <Content Include="Areas\Sorting\Views\CityScan\_PartialScanBatchList.cshtml" />
+    <Content Include="Areas\Report\Views\ComplexReport\LogList.cshtml" />
+    <Content Include="Areas\DataAPI\Views\PreDispatchAbnormal\List.cshtml" />
+    <Content Include="Areas\DataAPI\Views\PreDispatchAbnormal\_PartialPreDispatchAbnormalList.cshtml" />
+    <Content Include="Areas\SyncManager\Views\Test\Index.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\AudioSetting\Index.cshtml" />
+    <Content Include="Areas\Sorting\Views\Search\QueryReturnBill.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Web.config" />
+    <Content Include="Areas\LadingBill\Views\Task\Create.cshtml" />
+    <Content Include="Areas\LadingBill\Views\WareHouse\Index.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Plan\Create.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Plan\Edit.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Plan\_PartialSearchList.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Plan\List.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Task\_PartialTaskList.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Task\List.cshtml" />
+    <Content Include="Areas\Sorting\Views\RangeDefined\SearchRange.cshtml" />
+    <Content Include="Areas\Sorting\Views\RangeDefined\_PartialSearchRangeList.cshtml" />
+    <Content Include="Areas\Sorting\Views\RangeDefined\AddRangeDefined.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrintV2\Index.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Task\Reinstall.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Task\Audit.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Feedback\List.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Feedback\_PartialFeedBackList.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Feedback\TaskEdit.cshtml" />
+    <Content Include="Areas\Sorting\Views\OutboundV2\SimpleOutboundV2.cshtml" />
+    <Content Include="Areas\LadingBill\Views\Feedback\PrintTask.cshtml" />
+    <Content Include="Areas\Sorting\Views\BillPrintV2\BatchBillPrint.cshtml" />
+    <Content Include="Areas\Sorting\Views\SortingPacking\IndexV2.cshtml" />
+    <Content Include="Areas\Sorting\Views\OutboundV2\BatchOutbound.cshtml" />
+    <Content Include="Areas\Sorting\Views\InboundV2\Inbound.cshtml" />
+    <Content Include="Areas\Sorting\Views\SortingPacking\PackingPrintV2.cshtml" />
+    <Content Include="Areas\Sorting\Views\OutboundV2\Print.cshtml" />
+    <Content Include="Areas\Sorting\Views\OutboundV2\_PartialPrintList.cshtml" />
+    <Content Include="Areas\Sorting\Views\OutboundV2\PrintReceipt.cshtml" />
+    <Content Include="Areas\Sorting\Views\InboundV2\BatchInbound.cshtml" />
+    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\references\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\references\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\references\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\references\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\references\MicrosoftAjax.js" />
+    <Content Include="Scripts\references\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\references\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\references\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\references\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\references\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Frame\Notice.cshtml" />
+    <Content Include="Views\Shared\OperateLog.cshtml" />
+    <Content Include="Views\Shared\CityAndStation.cshtml" />
+    <Content Include="Views\Shared\ProvinceAndCity.cshtml" />
+    <Content Include="Views\Shared\_wavMedia.cshtml" />
+    <Content Include="Views\Shared\DownLoadFileFaultDialog.cshtml" />
+    <Content Include="Views\Shared\_PartialLineInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\BaseInfo\Views\Shared\" />
+    <Folder Include="Areas\Claim\Views\Shared\" />
+    <Folder Include="Areas\DataAPI\Views\Shared\" />
+    <Folder Include="Areas\KPI\Models\" />
+    <Folder Include="Areas\KPI\Views\Shared\" />
+    <Folder Include="Areas\Report\Models\" />
+    <Folder Include="Areas\Sorting\Views\Shared\" />
+    <Folder Include="Areas\SyncManager\Models\" />
+    <Folder Include="Areas\SyncManager\Views\Shared\" />
+    <Folder Include="Areas\Transport\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\MainFrame.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\BaseInfo\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout_SearchList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.TMS.BLL\Vancl.TMS.BLL.csproj">
+      <Project>{CD008682-46E5-4D34-9725-4DDEC49C27D4}</Project>
+      <Name>Vancl.TMS.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Core\Vancl.TMS.Core.csproj">
+      <Project>{8C7CAD7F-BF41-4A20-AC70-07FB0E2E8F53}</Project>
+      <Name>Vancl.TMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.IBLL\Vancl.TMS.IBLL.csproj">
+      <Project>{D69B4050-2F39-4B7F-A9A0-8F8BA8A66103}</Project>
+      <Name>Vancl.TMS.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Model\Vancl.TMS.Model.csproj">
+      <Project>{2EC92CCF-4212-4CA0-98C8-590382689660}</Project>
+      <Name>Vancl.TMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Web.WebControls\Vancl.TMS.Web.WebControls.csproj">
+      <Project>{349F6187-13FD-4652-B895-2531239B17FC}</Project>
+      <Name>Vancl.TMS.Web.WebControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\BaseInfo\Views\LinePlan\Create.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\List.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\SetFixedPrice.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\SetFormulaPrice.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\SetLadderPrice.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\_PartialLinePlanList.cshtml" />
+    <Content Include="Areas\Transport\Views\Web.config" />
+    <Content Include="Areas\Transport\Views\Plan\List.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\_PartialPlanList.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\AuditList.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\_PartialAuditLinePlanList.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\Create.cshtml" />
+    <Content Include="Areas\Claim\Views\Web.config" />
+    <Content Include="Areas\Claim\Views\DelayHandle\_PartialDelayList.cshtml" />
+    <Content Include="Areas\Claim\Views\DelayHandle\DelayList.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\_PartialChooseLine.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\_PartialChooseLineList.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\_PartialChooseTransitStationList.cshtml" />
+    <Content Include="Areas\Claim\Views\ExpectDelay\List.cshtml" />
+    <Content Include="Areas\Claim\Views\ExpectDelay\_PartialApplyList.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\TransitStationList.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\LinePlanList.cshtml" />
+    <Content Include="Areas\Claim\Views\ExpectDelay\ApplyFor.cshtml" />
+    <Content Include="Areas\Claim\Views\ExpectDelay\Details.cshtml" />
+    <Content Include="Areas\Claim\Views\DelayHandle\DelayHandleApply.cshtml" />
+    <Content Include="Areas\Claim\Views\DelayHandle\DelayHandleApplyList.cshtml" />
+    <Content Include="Areas\Claim\Views\DelayHandle\_PartialDelayHandleApplyList.cshtml" />
+    <Content Include="Areas\Claim\Views\DelayHandle\DelayHandle.cshtml" />
+    <Content Include="Areas\Claim\Views\ExpectDelay\_PartialApproveList.cshtml" />
+    <Content Include="Areas\Claim\Views\ExpectDelay\Approve.cshtml" />
+    <Content Include="Areas\Delivery\Views\SiteAss\_PartialSiteAssList.cshtml" />
+    <Content Include="Areas\Delivery\Views\SiteAss\SiteAssList.cshtml" />
+    <Content Include="Areas\Delivery\Views\Web.config" />
+    <Content Include="Areas\Delivery\Views\SiteAss\Create.cshtml" />
+    <Content Include="Areas\Delivery\Views\InTransit\List.cshtml" />
+    <Content Include="Areas\Delivery\Views\InTransit\_PartialInTransitList.cshtml" />
+    <Content Include="Areas\Delivery\Views\InTransit\Details.cshtml" />
+    <Content Include="Areas\Delivery\Views\InTransit\SetWaybillInfo.cshtml" />
+    <Content Include="Areas\Delivery\Views\InTransit\SetArrive.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\LostList.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\_PartialLostList.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\List.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\_PartialDispatchList.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\Statistic.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\LostBoxList.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\_PartialLostBoxList.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\LostOrderList.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\_PartialLostOrderList.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\Outbound.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\Withdraw.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\AddBox.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\LostApproveList.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\_PartialLostApproveList.cshtml" />
+    <Content Include="Areas\Claim\Views\Lost\Approve.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\InputWaybillNo.cshtml" />
+    <Content Include="Areas\Transport\Views\Plan\_PartialLineList.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\_PartialOutboundLinePlan.cshtml" />
+    <Content Include="Areas\BaseInfo\Views\LinePlan\AuditLinePlan.cshtml" />
+    <Content Include="Connections.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\BaseInfo\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Claim\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Delivery\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Transport\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Delivery\Views\Print\Transition.cshtml" />
+    <Content Include="Areas\Delivery\Views\Print\List.cshtml" />
+    <Content Include="Areas\Delivery\Views\Print\_PartialDispatchList.cshtml" />
+    <Content Include="Areas\Delivery\Views\Print\Print.cshtml" />
+    <Content Include="Authorization.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\KPI\Views\Web.config" />
+    <Content Include="Areas\KPI\Views\CarrierKpi\List.cshtml" />
+    <Content Include="Areas\KPI\Views\CarrierKpi\_PartialCarrierkpiList.cshtml" />
+    <Content Include="Areas\KPI\Views\CarrierKpi\Appraisal.cshtml" />
+    <Content Include="Areas\Delivery\Views\Dispatch\AddBoxList.cshtml" />
+    <None Include="Content\imgs\sprites\Main_sprites.psd" />
+    <None Include="Properties\DataSources\Vancl.TMS.Model.Sorting.BillPrint.BillPrintViewModel.datasource" />
+    <None Include="Scripts\plugins\DataTables\extras\ColVis\js\ColVis.min.js.gz" />
+    <None Include="Scripts\plugins\DataTables\extras\TableTools\js\TableTools.min.js.gz" />
+    <Content Include="Views\Shared\_Layout_Frame.cshtml" />
+    <Content Include="Views\Shared\_PartialDataTableFootPager.cshtml" />
+    <Content Include="Views\Shared\_PartialDataTableEmptyRow.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Enum_RadioButtonList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Enum_CheckboxList.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime_Textbox.cshtml" />
+    <Content Include="Views\Shared\SaveResult.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Welcome.cshtml" />
+    <Content Include="Views\Home\GoLogin.cshtml" />
+    <Content Include="Views\ExpressCompany\ShowTree.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_Error.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Error\Forbidden.cshtml" />
+    <Content Include="App_Code\ViewHelper.cshtml" />
+    <Content Include="Views\ChatTest\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Frame\Main.cshtml" />
+    <Content Include="Views\Frame\Menu.cshtml" />
+    <Content Include="Views\Frame\LeftLine.cshtml" />
+    <Content Include="Views\Frame\TopLine.cshtml" />
+    <Content Include="Views\Frame\TabPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\ReportFiles\Bill.rdlc" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>14914</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:14914/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

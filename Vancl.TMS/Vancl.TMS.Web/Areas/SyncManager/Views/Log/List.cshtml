@@ -1,0 +1,170 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Log.ServiceLogModel>
+@{
+    ViewBag.Title = "日志列表";
+    ViewBag.HideSearch = false;
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+            $("#Tms2LmsOperateType,#Lms2TmsOperateType").attr("name", "OpFunction");
+            $("#ServiceLogType").change(function () {
+                $("#Tms2LmsOperateType,#Lms2TmsOperateType").hide().attr("disabled", "disabled").val("");
+                var val = $(this).val();
+                if (val == "1") {
+                    $("#Tms2LmsOperateType").show().removeAttr("disabled");
+                }
+                else if (val == "0") {
+                    $("#Lms2TmsOperateType").show().removeAttr("disabled");
+                }
+            }).change();
+        })
+
+        function Reset()
+        {
+            var arr = TMS.Page.CheckDataTableChecked(false);
+            if(arr)
+            {
+                var keys = "";
+                var hasHandled = false;
+                arr.each(function(){
+                    keys += $(this).val()+";";
+                    if($(this).attr("ishandled")=="True")
+                    {
+                        hasHandled = true;
+                    }
+                })
+                if(!hasHandled)
+                {
+                    var parms = {ids:keys.substr(0,keys.length-1)};
+                    ymPrompt.confirmInfo({ 
+                        title: '询问',
+                        message: '确定要重新同步选择的 ' + arr.length + ' 项？',
+                        handler: function (tp) {
+                            if (tp == 'ok') {
+                                $.ajax({
+                                    url:"@Url.Action("ResetLogStatus")",
+                                    data:parms,
+                                    dataType:"json",
+                                    success:function(data){
+                                        if(data.IsSuccess)
+                                        {
+                                            ymPrompt.succeedInfo({ title: '提示', message: data.Message });
+                                            //刷新列表
+                                            $("#btnLogListRefresh").click();
+                                        }
+                                        else
+                                        {
+                                            ymPrompt.errorInfo({ title: '提示', message: data.Message });
+                                        }
+                                    },
+                                    error:function()
+                                    {
+                                        ymPrompt.errorInfo({ title: '提示', message: "操作失败!" });
+                                    }});
+                                }
+                            }
+                    });
+                }
+                else
+                {
+                    ymPrompt.errorInfo({ title: '提示', message: "所选项中不能包含已处理的日志!" });
+                }
+            }
+        }
+
+        function ResetLogStatus()
+        {
+            var pwd = window.prompt("请输入密码","");
+            if(pwd)
+            {
+                var parms = { password: pwd };
+                $.ajax({
+                url:"@Url.Action("CompareOperatePwd")",
+                data:parms,
+                dataType:"json",
+                success:function(data){
+                    if(data.IsSuccess)
+                    {
+                        Reset();
+                    }
+                    else
+                    {
+                        alert("密码错误");
+                    }
+                },
+                error:function()
+                {
+                    ymPrompt.errorInfo({ title: '提示', message: "操作失败!" });
+                }});
+            }
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        单号
+                    </th>
+                    <td>
+                        <input id="txtFormCode" name="FormCode" type="text" class="textbox" />
+                    </td>
+                    <th>
+                        同步类型
+                    </th>
+                    <td>
+                        @Html.DropDownList("ServiceLogType", "--请选择--")
+                    </td>
+                    <th>
+                        操作
+                    </th>
+                    <td>
+                        @Html.DropDownList("Tms2LmsOperateType", "--请选择--")
+                        @Html.DropDownList("Lms2TmsOperateType", "--请选择--")
+                    </td>
+                    <th>
+                        同步时间大于
+                    </th>
+                    <td>
+                        @Html.TextBox("CreateTime", string.Format("{0:yyyy-MM-dd HH:mm}", DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd")), new { @class = "Wdate1", onfocus = "WdatePicker({dateFmt:'yyyy-MM-dd'})" })
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        包含同步成功
+                    </th>
+                    <td>
+                        <input type="checkbox" name="IsSuccessed" />
+                    </td>
+                    <th>
+                        包含已处理
+                    </th>
+                    <td>
+                        <input type="checkbox" name="IsHandled" />
+                    </td>
+                    <td class="center">
+                    </td>
+                    <td class="center">
+                    </td>
+                    <td class="center">
+                    </td>
+                    <td>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                        <input id="btnClearSearch" type="button" value="清除查询" class="button" onclick="window.location.reload()" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialLogList", Model); }
+    </div>
+}

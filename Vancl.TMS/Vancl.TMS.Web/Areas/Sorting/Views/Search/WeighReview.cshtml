@@ -1,0 +1,75 @@
+﻿@model  Object
+@{
+    ViewBag.Title = "称重复核查询";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm((AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert Fixed">
+                <tr>
+                    <th>
+                        员工编号
+                    </th>
+                    <td>
+                        <input id="txtEmployeeCode" name="txtEmployeeCode" type="text" class="textbox input"
+                            maxlength="20" style="width: 160px;" />
+                    </td>
+                    <th>
+                        <select id="selFormType" class="ScanType" name="selFormType">
+                            <option value="0" selected="selected">运单号</option>
+                            <option value="1">订单号</option>
+                        </select>
+                    </th>
+                    <td>
+                        <input id="txtFormCode" name="txtFormCode" type="text" class="textbox input" maxlength="20"
+                            style="width: 160px;" />
+                    </td>
+                    <th>
+                        操作时间
+                    </th>
+                    <td>
+                        <input id="txtBeginTime" name="BeginTime" type="text" readonly="readonly" style="width:125px;" value="@DateTime.Now.Date.ToString("yyyy-MM-dd HH:mm:ss")"
+                                onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                    </td>
+                    <th>
+                        到
+                    </th>
+                    <td>
+                        <input id="txtEndTime" name="EndTime" type="text" readonly="readonly" style="width:125px;" value="@DateTime.Now.Date.AddDays(1).AddSeconds(-1).ToString("yyyy-MM-dd HH:mm:ss")"
+                                onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        复核状态
+                    </th>
+                    <td>
+                        <select id="selReviewStatus" name="selReviewStatus">
+                            <option value="1" selected="selected">正常</option>
+                            <option value="2">异常</option>
+                        </select>
+                    </td>
+                    <th>
+                        操作
+                    </th>
+                    <td colspan="5">
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list {
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialWeighReviewList", Model); }
+    </div>
+}

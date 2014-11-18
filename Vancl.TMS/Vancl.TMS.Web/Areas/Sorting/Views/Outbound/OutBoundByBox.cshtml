@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "按箱出库";
+    ViewBag.SearchTitle = "查询项";
+    Layout = "~/Views/Shared/_Layout_SearchList.cshtml";
+}
+@section head{
+    <script src="@Url.Content("~/Scripts/references/jQuery.tmpl.min.js")  " type="text/javascript"></script>
+    <style type="text/css">
+        .tb_insert tr th
+        {
+            width: 130px;
+            text-align: right;
+        }
+        .cur
+        {
+            font-size: large !important;
+            font-weight: bolder !important;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            //单选change事件
+            $('.sortingCenterSelect').change(function () {
+                $("#trSortingCenterSelect select").val(-1);
+                $('.sortingCenterSelect').each(function () {
+                    var o = $(this).parent().next().find("select");
+                    if (typeof ($(this).attr("checked")) == "undefined"
+                        || $(this).attr("checked") == ""
+                        || !$(this).attr("checked")) {
+                        o.attr("disabled", "disabled");
+                    } else {
+                        o.removeAttr("disabled");
+                    }
+                });
+            });
+            $("#SortingCenterList").attr("disabled", "disabled");
+            $("#DistributorList").attr("disabled", "disabled");
+        });
+
+        function ShowBoxDetail(boxNo) {
+            ymPrompt.win('@Url.Action("Detail/")' + boxNo,
+                              600, 400, '运单明细', null, null, null, { id: 1 });
+            return;
+        }
+
+        //出库OP
+        function Outbound() {
+            var selectedType = $(".sortingCenterSelect:checked").val();
+            var stationValue = getStationValue(selectedType);
+            if (stationValue == undefined
+     || stationValue == ""
+     || stationValue == -1) {
+                ymPrompt.errorInfo({ message: '请选择出库目的地' });
+                return;
+            }
+            var obj = TMS.Page.CheckDataTableChecked(false);
+            if (!obj) {
+                return;
+            }
+            if (obj.length == 0) {
+                ymPrompt.errorInfo({ message: "请至少选择一项进行操作！" });
+                return;
+            }
+            var Boxes = "";
+            obj.each(function () {
+                Boxes += $(this).attr("BoxNo") + ",";
+            });
+            Boxes = Boxes.substr(0, Boxes.length - 1);
+            var params = {};
+            params.selectedType = selectedType;
+            params.selectStationValue = stationValue;
+            params.arrCodes = Boxes;
+            ymPrompt.confirmInfo({
+                title: '询问',
+                message: '你确定要出库选择的 ' + obj.length + ' 项？',
+                handler: function (tp) {
+                    if (tp == 'ok') {
+                        $.ajax({
+                            type: "POST",
+                            url: "BoxOutBound",
+                            data: params,
+                            dataType: 'json',
+                            beforeSend: function (xhr) {
+                                $("#Loading").show();
+                            },
+                            success: function (result) {
+                                if (result == null || result == undefined) {
+                                    ymPrompt.errorInfo({ message: '调用出库接口失败[返回result=null].' });
+                                    return;
+                                }
+                                if (result.IsSuccess) {
+                                    if (result.Message != "" && result.Message != undefined) {
+                                        ymPrompt.succeedInfo({ message: result.Message });
+                                    }
+                                }
+                                else {
+                                    ymPrompt.errorInfo({ message: result.Message });
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                $("#Loading").hide();
+                                ymPrompt.errorInfo({ message: '操作超时，服务器无响应' + textStatus + errorThrown });
+                            },
+                            complete: function (XHR, TS) {
+                                XHR = null;
+                                $("#Loading").hide();
+                                $("#btnSearch").click();
+                            }
+                        }); //end ajax
+                    } //end if
+                } // end hander
+            });
+        }
+
+        function getStationValue(selectedType) {
+            if (selectedType == 0) { return $("#selCityAndStation_Station option:selected").val(); }
+            else if (selectedType == 2) { return $("#SortingCenterList option:selected").val(); }
+            else if (selectedType == 3) { return $("#DistributorList option:selected").val(); }
+            return "";
+        }
+    </script>
+}
+@section search
+{
+    <div class="search_condition" id="divSearchCondition">
+        @using (Ajax.BeginForm("SearchOutboundByBox", "OutBound", (AjaxOptions)ViewBag.AjaxOptions))
+        {
+            <table class="tb_insert">
+                <tr id="trSortingCenterSelect">
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="0"
+                            id="rdoStation" checked="checked" />分拣站点：
+                    </th>
+                    <td>
+                        @{Html.RenderPartial("CityAndStation");}
+                    </td>
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="2"
+                            id="rdoSortingCenter" style="margin-left: 50px;" />二级分拣：
+                    </th>
+                    <td>
+                        @Html.DropDownList("SortingCenterList")
+                    </td>
+                    <th>
+                        <input type="radio" name="sortingCenterSelect" class="sortingCenterSelect" value="3"
+                            id="rdoDistribution" style="margin-left: 50px;" />配送商：
+                    </th>
+                    <td>
+                        @Html.DropDownList("DistributorList")
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        箱号
+                    </th>
+                    <td>
+                        <input type="text" id="txtBoxNo" name="BoxNo" value="" />
+                    </td>
+                    <th>
+                        <label for="txtInboundStartTime">
+                            装箱时间</label>
+                    </th>
+                    <td>
+                        <input id="txtInboundStartTime" name="InboundStartTime" type="text" class="textbox" value="@DateTime.Now.ToString("yyyy-MM-dd 00:00:00")"
+                            readonly="readonly" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                    </td>
+                    <th>
+                        <label for="txtInboundEndTime">
+                            到</label>
+                    </th>
+                    <td>
+                        <input id="txtInboundEndTime" name="InboundEndTime" type="text" class="textbox" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd 23:59:59")"
+                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                    </td>
+                    <td>
+                        <input id="btnSearch" type="submit" name="BtnSearch" value="查询" class="button" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+@section list
+{
+    <div id="SearchResultList" class="DataGirdPanel">
+        @{Html.RenderPartial("_PartialOutBoundByBox"); }
+    </div>
+}
+<input type="hidden" id="hdInitData" value="@ViewBag.HiddenValue" />

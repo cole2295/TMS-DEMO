@@ -1,0 +1,63 @@
+﻿@model Vancl.TMS.Web.Areas.Claim.Models.DelayHandleViewModel
+@{
+    ViewBag.Title = "到货延误复议处理";
+    Layout = "~/Views/Shared/_Layout_Frame.cshtml";
+}
+@section header{
+    <script type="text/javascript">
+        $(function () {
+            var DHID = Request.QueryString("DHID");
+            var applyNote = Request.QueryString("applyNote");
+            if (DHID != null && DHID != "") {
+                $("#DHID").val(DHID);
+                $("#NOTE").val(applyNote);
+            }
+        })
+        function Approve(ApproveStatus)
+        {
+            var id = Request.QueryString("DHID");
+            var delayID = Request.QueryString("DelayID");
+            $.ajax({
+                    type: "POST",
+                    url:"@Url.Action("DelayHandle")",
+                    dataType:"json",
+                    data:{ ApproveStatus:ApproveStatus , DHID:id ,DelayID:delayID },
+                    success:function(data){
+                        ymPrompt.doHandler("Success", true,data);
+                    },
+                    error:function(){
+                        ymPrompt.errorInfo({ title: '提示', message: "复议审核操作失败!" });
+                    }
+                });
+        }
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <table class="tb_insert">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    @Html.HiddenFor(model => model.DHID)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="width: 110px;">
+                    @Html.LabelFor(model => model.NOTE)
+                </th>
+                <td>
+                    @Html.TextAreaFor(model => model.NOTE, 5, 30, new { disabled="disabled" })
+                    @Html.ValidationMessageFor(model => model.NOTE)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="split">
+    </div>
+    <div class="center">
+        <input type="button" class="button" value="成立" onclick="Approve(1)" />
+        <input type="button" class="button" value="不成立" onclick="Approve(2)" />
+    </div>
+}

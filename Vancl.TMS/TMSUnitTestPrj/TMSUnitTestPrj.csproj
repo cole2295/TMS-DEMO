@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC815797-F8C0-4777-8EBE-562078C6C8B4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TMSUnitTestPrj</RootNamespace>
+    <AssemblyName>TMSUnitTestPrj</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL" />
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\lab\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=1.0.3.3, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL" />
+    <Reference Include="SysMailerHelper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\Sorting\SortingPackingControllerTest.cs" />
+    <Compile Include="BatchBLLTest.cs" />
+    <Compile Include="BillInfoDALTest.cs" />
+    <Compile Include="ConfigurationTest.cs" />
+    <Compile Include="DESTest.cs" />
+    <Compile Include="DynamicDictionaryModelTest.cs" />
+    <Compile Include="FileVerificationBLLTest.cs" />
+    <Compile Include="IBillBLLTest.cs" />
+    <Compile Include="IBillPrintBLLTest.cs" />
+    <Compile Include="IBillPrintFieldDALTest.cs" />
+    <Compile Include="IBLL\Sorting\Inbound\SortingPackingBLLTest.cs" />
+    <Compile Include="IBoxDALTest.cs" />
+    <Compile Include="IComplexReportBLLTest.cs" />
+    <Compile Include="IDAL\IAssFormulaPriceDALTest.cs" />
+    <Compile Include="IBLL\Dispatch\DispatchBLLTest.cs" />
+    <Compile Include="EnumHelper2Test.cs" />
+    <Compile Include="IBLL\BaseInfo\ICarrierBLLTest.cs" />
+    <Compile Include="IBLL\BaseInfo\IExpressCompanyBLLTest.cs" />
+    <Compile Include="IBLL\BaseInfo\ILineFixedPriceBLLTest.cs" />
+    <Compile Include="IBLL\BaseInfo\ILineFormulaPriceBLLTest.cs" />
+    <Compile Include="IBLL\BaseInfo\ILineLadderPriceBLLTest.cs" />
+    <Compile Include="IBLL\BaseInfo\ILinePlanBLLTest.cs" />
+    <Compile Include="IBLL\Dispatch\PreDispatchBLLTest.cs" />
+    <Compile Include="IBLL\Dispatch\IDispatchBLLTest.cs" />
+    <Compile Include="IDAL\IDispatchDALTest.cs" />
+    <Compile Include="IDAL\ISerialNumberGenerateFormulaDALTest.cs" />
+    <Compile Include="IBLL\Delivery\IDeliveryAssessmentBLLTest.cs" />
+    <Compile Include="IBLL\IOperateLogBLLTest.cs" />
+    <Compile Include="IDeliveryDataEntranceBLLTest.cs" />
+    <Compile Include="IFormulaTest.cs" />
+    <Compile Include="IInboundBLLTest.cs" />
+    <Compile Include="IInboundDALTest.cs" />
+    <Compile Include="IInboundQueueBLLTest.cs" />
+    <Compile Include="IInboundQueueDALTest.cs" />
+    <Compile Include="IInboundSMSQueueBLLTest.cs" />
+    <Compile Include="IInboundSMSQueueDALTest.cs" />
+    <Compile Include="IMERCHANTWAREHOUSEDALTest.cs" />
+    <Compile Include="IOutboundBLLTest.cs" />
+    <Compile Include="IOutboundDALTest.cs" />
+    <Compile Include="IPreDispatchDALTest.cs" />
+    <Compile Include="ISMSSenderTest.cs" />
+    <Compile Include="ISortCenterDALTest.cs" />
+    <Compile Include="ILMS_SYNC_lDALTest.cs" />
+    <Compile Include="ITms2LmsSyncBLLTest.cs" />
+    <Compile Include="ITms2ThridPartyBLLTest.cs" />
+    <Compile Include="Lading_Bill_test.cs" />
+    <Compile Include="MachineKey.cs" />
+    <Compile Include="MvcAuthorizationTest.cs" />
+    <Compile Include="OutboundDALTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendMailTest.cs" />
+    <Compile Include="ServiceLogBLLTest.cs" />
+    <Compile Include="ServiceLogDALTest.cs" />
+    <Compile Include="UnitTest1.cs" />
+    <Compile Include="WaybillStatusChangeLogDALTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vancl.TMS.BLL\Vancl.TMS.BLL.csproj">
+      <Project>{CD008682-46E5-4D34-9725-4DDEC49C27D4}</Project>
+      <Name>Vancl.TMS.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Core\Vancl.TMS.Core.csproj">
+      <Project>{8C7CAD7F-BF41-4A20-AC70-07FB0E2E8F53}</Project>
+      <Name>Vancl.TMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.DAL.Oracle\Vancl.TMS.DAL.Oracle.csproj">
+      <Project>{44011467-DBF0-426F-B507-FC2D227AA211}</Project>
+      <Name>Vancl.TMS.DAL.Oracle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.IBLL\Vancl.TMS.IBLL.csproj">
+      <Project>{D69B4050-2F39-4B7F-A9A0-8F8BA8A66103}</Project>
+      <Name>Vancl.TMS.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.IDAL\Vancl.TMS.IDAL.csproj">
+      <Project>{93C59B44-182B-4AED-9F29-B3E144B56944}</Project>
+      <Name>Vancl.TMS.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Model\Vancl.TMS.Model.csproj">
+      <Project>{2EC92CCF-4212-4CA0-98C8-590382689660}</Project>
+      <Name>Vancl.TMS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Util\Vancl.TMS.Util.csproj">
+      <Project>{CEBC0D91-9079-4372-AB6A-64A9485019FD}</Project>
+      <Name>Vancl.TMS.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Web.WebControls\Vancl.TMS.Web.WebControls.csproj">
+      <Project>{349F6187-13FD-4652-B895-2531239B17FC}</Project>
+      <Name>Vancl.TMS.Web.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vancl.TMS.Web\Vancl.TMS.Web.csproj">
+      <Project>{4A03194A-0227-4863-BF5F-A2DA92BB919A}</Project>
+      <Name>Vancl.TMS.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connections.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

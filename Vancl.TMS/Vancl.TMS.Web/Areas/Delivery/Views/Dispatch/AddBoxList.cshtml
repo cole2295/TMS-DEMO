@@ -1,0 +1,67 @@
+﻿@model IList<Vancl.TMS.Model.Transport.Dispatch.ViewDispatchBoxModel>
+           
+<table cellpadding="0" cellspacing="0" border="0" class="DataTable" id="BoxListTable"
+            style="min-width: 0;">
+            <thead>
+                <tr>
+                    <th class="CbxColumn">
+                        <input type="checkbox" class="CheckAll" />
+                    </th>
+                    <th>
+                        箱号
+                    </th>
+                    <th>
+                        出发地
+                    </th>
+                    <th>
+                        目的地
+                    </th>
+                    <th>
+                        订单数量
+                    </th>
+                    <th>
+                        货物类型
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model == null)
+                    {
+                        Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                    }
+                    else
+                        if (Model.Count == 0)
+                        {
+                            Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                var item = Model[i];
+                    <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                        <td class="CbxColumn">
+                            <input type="checkbox" name="BoxNo" value="@item.BoxNo" ordercount="@item.OrderCount" />
+                        </td>
+                        <td>
+                            @item.BoxNo
+                        </td>
+                        <td>
+                            @item.DepartureName
+                        </td>
+                        <td>
+                            @item.ArrivalName
+                        </td>
+                        <td>
+                            @item.OrderCount
+                        </td>
+                        <td>
+                            @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.GoodsType>((int)item.ContentType))
+                        </td>
+                    </tr>
+                            }
+                        }
+                }
+            </tbody>
+        </table>

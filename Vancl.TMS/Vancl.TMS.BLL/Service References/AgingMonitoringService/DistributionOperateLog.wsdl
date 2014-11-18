@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DistributionOperateLog" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://exchange.wuliusys.com/DistributionMonitorService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://exchange.wuliusys.com/DistributionMonitorService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://exchange.wuliusys.com/DistributionMonitorService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RFD.LMS.Model" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDistributionOperateLog_AddMonitorLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMonitorLog" />
+  </wsdl:message>
+  <wsdl:message name="IDistributionOperateLog_AddMonitorLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMonitorLogResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IDistributionOperateLog">
+    <wsdl:operation name="AddMonitorLog">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDistributionOperateLog/AddMonitorLog" message="tns:IDistributionOperateLog_AddMonitorLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDistributionOperateLog/AddMonitorLogResponse" message="tns:IDistributionOperateLog_AddMonitorLog_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IDistributionOperateLog" type="tns:IDistributionOperateLog">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddMonitorLog">
+      <wsdl:documentation>操作日志添加</wsdl:documentation>
+      <soap:operation soapAction="http://tempuri.org/IDistributionOperateLog/AddMonitorLog" style="document" />
+      <wsdl:input>
+        <wsdl:documentation>操作日志:&lt;br/&gt;
+            &lt;B&gt;DistributionOperateLog 实体&lt;/B&gt;&lt;br/&gt;
+            WaybillNo 运单号 Int64&lt;br/&gt;
+            Status 操作状态id String&lt;br/&gt;
+            OperateTime 操作时间 DateTime&lt;br/&gt;
+            OperateStation 操作部门id Int32&lt;br/&gt;
+            OperateUser 操作人员 Int32&lt;br/&gt;
+            MerchantId 来源商家 Int32&lt;br/&gt;
+            WaybillType 运单类型0普通 1换货 2退货 String&lt;br/&gt;
+            DistributionCode 来源配送商编码 String&lt;br/&gt;
+            CurrentDistributionCode 当前操作配送商编码 String&lt;br/&gt;
+            Province 当前操作所在省id String&lt;br/&gt;
+            City 当前操作所在市id String&lt;br/&gt;
+            Area  当前操作所在区id String&lt;br/&gt; 
+            TransPortType 运输方式 int?&lt;br/&gt;
+            TransPortStationId城际运输的起终站点 int?&lt;br/&gt;
+            ReceiveProvinceId 收件省id String&lt;br/&gt;
+            ReceiveCityId 收件市id String&lt;br/&gt;
+            ReceiveAreaId  收件区id String&lt;br/&gt; 
+            </wsdl:documentation>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdl:documentation>返回值bool：true 成功,false失败</wsdl:documentation>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DistributionOperateLog">
+    <wsdl:documentation>时效监控日志接口</wsdl:documentation>
+    <wsdl:port name="BasicHttpBinding_IDistributionOperateLog" binding="tns:BasicHttpBinding_IDistributionOperateLog">
+      <soap:address location="http://exchange.wuliusys.com/DistributionMonitorService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,121 @@
+﻿@model Vancl.TMS.Util.Pager.PagedList<Vancl.TMS.Model.Claim.ViewExpectDelayModel>
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "ApproveList", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnListRefresh" })</li>
+        <li class="toolbtn">
+            <a class="on" href="javascript:approve();">审核</a>
+        </li>
+    </ul>
+</div>
+<div class="tablelist">
+<table cellpadding="0" cellspacing="0" border="0" class="DataTable" id="DataTables1">
+    <thead>
+        <tr>
+            <th class="CbxColumn">
+                <input type="checkbox" class="CheckAll" />
+            </th>
+            <th>
+                发货时间
+            </th>
+            <th width="90px">
+                提货单号
+            </th>
+            <th>
+                物流单号
+            </th>
+            <th>
+                出发地
+            </th>
+            <th>
+                目的地
+            </th>
+            <th>
+                订单数量
+            </th>
+            <th>
+                承运商
+            </th>
+            <th>
+                运输方式
+            </th>
+            <th>
+                时效
+            </th>
+            <th>
+                总价
+            </th>
+            <th>
+                审核状态
+            </th>
+            <th>
+                修正预计到货时间
+            </th>
+            <th>
+                预计到货时间
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model == null || Model.Count == 0)
+            {
+                Html.RenderPartial("_PartialDataTableEmptyRow", Model);
+            }
+            else
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    var item = Model[i];
+            <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                <td class="CbxColumn">
+                    <input type="checkbox" value="@item.DispatchID" />
+                </td>
+                <td class="center">
+                    @item.DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")
+                </td>
+                <td class="center">
+                    @Html.ActionLink(item.DeliveryNo, "Details", new { id = item.DispatchID }, new { Target = "_blank" })
+                </td>
+                <td class="center">
+                    @item.WaybillNo
+                </td>
+                <td>
+                    @item.DepartureName
+                </td>
+                <td>
+                    @item.ArrivalName
+                </td>
+                <td class="center">
+                    @item.TotalCount
+                </td>
+                <td>
+                    @item.CarrierName
+                </td>
+                <td class="center">
+                    @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.TransportType>(item.TransportType.ToString()))
+                </td>
+                <td class="center">
+                    @item.ArrivalTiming
+                </td>
+                <td class="center">
+                    @item.TotalAmount.ToString("f2")
+                </td>
+                <td class="center">
+                    @(Vancl.TMS.Util.EnumUtil.EnumHelper.GetDescription<Vancl.TMS.Model.Common.Enums.ApproveStatus>(item.ApproveStatus.ToString()))
+                </td>
+                <td>
+                    @(item.ConfirmExpArrivalDate.HasValue?item.ConfirmExpArrivalDate.Value.ToString("yyyy-MM-dd HH:mm:ss"):"")
+                </td>
+                <td>
+                    @(item.ExpectArrivalDate.HasValue ? item.ExpectArrivalDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")
+                </td>
+            </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+</div>
+@{
+    Html.RenderPartial("_PartialDataTableFootPager", Model);
+}

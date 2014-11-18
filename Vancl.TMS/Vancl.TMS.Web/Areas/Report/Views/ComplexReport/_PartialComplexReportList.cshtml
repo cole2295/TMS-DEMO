@@ -1,0 +1,120 @@
+﻿@using Vancl.TMS.Model.Common
+@using Vancl.TMS.Util.EnumUtil
+@using Vancl.TMS.Model.Report
+@using Vancl.TMS.Model.Report.ComplexReport
+@model Vancl.TMS.Model.Report.ComplexReport.ViewComplexReportPageModel
+<div class="toolbar">
+    <ul>
+        <li class="toolbtn">@Ajax.ActionLink("刷新", "List", null, (AjaxOptions)ViewBag.AjaxOptions, new { @class = "refresh", id = "btnComplexReportRefresh" })</li>
+        <li class="toolbtn"><a href="javascript:CustomerSetting();" class="modify">自定义显示</a></li>
+    </ul>
+</div>
+<div class="tablelist">
+    @{
+        if (Model == null || Model.ReportData == null)
+        {
+        <table cellpadding="0" cellspacing="0" border="0" class="DataTable  center" id="ComplexReportTable">
+            <thead>
+                <tr>
+                    @{
+            //取得需要筛选的列表
+            var filter = new List<String>();
+            if (Model != null && Model.Filter != null)
+            {
+                foreach (var item in Model.Filter)
+                {
+                    filter.Add(item.ViewObjPropertyName);
+                }
+            }
+            //取得筛选后的报表标题头
+            var title = new ViewComplexReport().DicProperty(filter.ToArray());
+            if (title != null)
+            {
+                foreach (var item in title)
+                {
+                        <th>
+                            @item.Value
+                        </th>
+                }
+            }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{ Html.RenderPartial("_PartialDataTableEmptyRow", new List<String>());}
+            </tbody>
+        </table>
+        }
+        else
+        {
+            //取得需要筛选的列表
+            var filter = new List<String>();
+            if (Model != null && Model.Filter != null)
+            {
+                foreach (var item in Model.Filter)
+                {
+                    filter.Add(item.ViewObjPropertyName);
+                }
+            }
+            //取得筛选后的报表标题和实际数据
+            var table = Model.ReportData.To2Array(filter.ToArray());
+        <table cellpadding="0" cellspacing="0" border="0" class="DataTable  center" id="ComplexReportTable">
+            <thead>
+                <tr>
+                    @{
+            for (int i = 0; i < table.GetLength(1); i++)
+            {
+                        <th>
+                            @table[0, i]
+                        </th>
+            }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+            if (Model.ReportData.Count == 0)
+            {
+                Html.RenderPartial("_PartialDataTableEmptyRow", Model.ReportData);
+            }
+            else
+            {
+                for (int i = 1; i < table.GetLength(0); i++)
+                {
+                    <tr class="@(i % 2 == 0 ? "even" : "odd")">
+                        @{
+                    for (int j = 0; j < table.GetLength(1); j++)
+                    {
+                        if (table[0, j] == "提货单号")
+                        {
+                            <td>
+                                <a href="javascript:showLogs('@table[i, j]')">@table[i, j]</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @table[i, j]
+                            </td>
+                        }
+                    }
+                        }
+                    </tr>
+                }
+            }
+                }
+            </tbody>
+        </table>
+        }
+    }
+</div>
+@{
+    if (Model != null && Model.ReportData != null)
+    {
+        Html.RenderPartial("_PartialDataTableFootPager", Model.ReportData);
+    }
+    else
+    {
+        Html.RenderPartial("_PartialDataTableFootPager", new Vancl.TMS.Util.Pager.PagedList<String>(new List<String>(), 1, 10));
+    }
+}
